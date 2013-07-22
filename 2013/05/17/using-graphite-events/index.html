@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>using graphite events &ndash; devops type thoughts</title>
+</head>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+
+-->
+</style>
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>using graphite events</h1>
+            <h2>Friday, May 17, 2013 <span>&raquo;</span> <a href="/tags/graphite/">graphite</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>Graphite events allow you to overlay vertical bars on graphs for correlation of events<br>
+and trending data.  I know the <a href="http://codeascraft.com/2010/12/08/track-every-release/" title="etsy events">etsy</a><br>
+guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That<br>
+is a nice and reliable way to do it, but if you are looking for more flexbility using the <br>
+native (&#39;experimental&#39;) events feature may be useful.</p>
+<h4>Posting an event:</h4><pre><code>#!/bin/bash
+curl -X POST http://graphite/events/ -d &#39;{&#34;what&#34;: &#34;did_stuff&#34;, &#34;tags&#34; : &#34;fun,times&#34;}&#39;
+</code></pre><h4>Retrieving events:</h4><pre><code>curl -X GET http://graphite/events/
+
+curl -X GET http://graphite/events/?tags=fun
+</code></pre><h4>Show me only stuff starting at an epoch time:</h4><pre><code>curl -X GET http://graphite/events/?from=1368778407
+</code></pre><h4>Getting lines on graphs</h4>
+<p>Now you have an event that shows up on http://graphite/events and is retrievable by curl.</p>
+<h4>Place it over your graph:</h4><pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;))
+</code></pre>
+<p>You can also go two tags deep which is similar in logic to a SQL join.  So the previous example<br>
+retrieves all &#39;fun&#39; tagged events.  Now we want to get &#39;fun&#39; and correlate with &#39;times&#39;.</p>
+<pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;, &#39;times&#39;))
+</code></pre>
+<p>This returns all &#39;fun&#39; tagged events that also have &#39;times&#39; tags.</p>
+<h4>Where this is useful in real world:</h4><pre><code>#all syncs
+https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;))
+
+#Now code syncs from a specific user:
+https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;, &#39;user&#39;))
+</code></pre>
+<p>Reference:<br>
+<a href="http://graphite.readthedocs.org/en/1.0/functions.html">http://graphite.readthedocs.org/en/1.0/functions.html</a><br>
+<a href="https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142">https://code.launchpad.net/~lucio.torre/graphite/add-events/+merge/69142</a></p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

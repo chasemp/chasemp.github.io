@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>mib basics &ndash; devops type thoughts</title>
+</head>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+
+-->
+</style>
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>mib basics</h1>
+            <h2>Wednesday, June 05, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/mib/">mib</a>, <a href="/tags/snmp/">snmp</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>SNMP is nice but MIB translations can be a pain.  It can also be necessary for figuring<br>
+out what certain numbers mean in the MIB tree.</p>
+<h4>Where does SNMP look for MIBs?</h4><pre><code>net-snmp-config --default-mibdirs
+</code></pre><h4>Make user specific directory (needs to be in above path)</h4><pre><code>mkdir -p /home/&lt;me&gt;/.snmp/mibs
+</code></pre><h4>Grab MIB data from Cisco (or wherever)</h4>
+<p>Example MIB for Firewall info:</p>
+<pre><code>ftp://ftp.cisco.com/pub/mibs/v2/CISCO-UNIFIED-FIREWALL-MIB.my
+</code></pre>
+<p>Copy to:</p>
+<pre><code>/home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+</code></pre><h4>Enable MIB</h4>
+<p>Find out where SNMP is looking for configuration parameters:</p>
+<pre><code>net-snmp-config --snmpconfpath
+</code></pre>
+<p>Edit your user snmp configuration (if path is included in above command)</p>
+<pre><code>n /home/&lt;me&gt;/.snmp/snmp.conf
+mib +CISCO-UNIFIED-FIREWALL-MIB
+</code></pre><h4>Try walking the top OID tree</h4><pre><code>snmpwalk -v2c &lt;community&gt; &lt;remote_device_ip&gt;
+
+MIB search path: /home/&lt;me&gt;/.snmp/mibs:/usr/share/mibs/site:/usr/share/snmp/mibs:/usr/share/mibs/iana:/usr/share/mibs/ietf:/usr/share/mibs/netsnmp
+Cannot find module (CISCO-SMI): At line 37 in /home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+Cannot find module (CISCO-FIREWALL-TC): At line 46 in /home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+</code></pre><h4>What&#39;s with?  &#39;Cannot find module&#39;</h4>
+<p>This means there are MIB dependencies.  You can probably retrieve these from <a href="ftp://ftp.cisco.com/pub/mibs/v2">ftp://ftp.cisco.com/pub/mibs/v2</a>.</p>
+<pre><code>/home/&lt;me&gt;/.snmp/mibs/CISCO-SMI
+/home/&lt;me&gt;/.snmp/mibs/CISCO-FIREWALL-TC
+</code></pre>
+<p>Enable these MIBs as well.</p>
+<h4>Walk the tree and enjoy MIB goodness</h4><pre><code>&lt;me&gt;@&lt;box&gt;:~# snmpwalk -v2c -c &lt;community&gt; &lt;remote_device_ip&gt; &gt;&gt; snmpinfo.txt
+</code></pre><h4>Show me the basic SNMP catagories</h4>
+<p>You can use cut to see the basics as a full snmpwalk can be a lot of data.</p>
+<pre><code>cut -d: -f 1 snmpinfo.txt | uniq | sort
+
+SNMPv2-MIB
+Technical Support
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+SNMPv2-MIB
+DISMAN-EVENT-MIB
+SNMPv2-MIB
+IF-MIB
+RFC1213-MIB
+IP-MIB
+IP-FORWARD-MIB
+IP-MIB
+TCP-MIB
+UDP-MIB
+SNMPv2-SMI
+SNMPv2-MIB
+SNMPv2-SMI
+</code></pre>
+<p>You can check out DISMAN-EVENT-MIB using grep.  If you find a MIB you can use SNMPGET next time.</p>
+<h4>Retrieve Uptime Using MIB&#39;s and SNMPGET</h4><pre><code>&lt;me&gt;@&lt;box&gt;:~# snmpget -v2c -c &lt;community&gt; &lt;remote_device_ip&gt; DISMAN-EVENT-MIB::sysUpTimeInstance
+
+DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.95
+</code></pre><h4>Reference:</h4>
+<p><a href="ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my">ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my</a><br>
+<a href="ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my">ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my</a><br>
+<a href="http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml">http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml</a><br>
+<a href="http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS">http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS</a><br>
+<a href="http://wiki.debian.org/SNMP">http://wiki.debian.org/SNMP</a><br>
+<a href="http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752">http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752</a><br>
+<a href="http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774">http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774</a><br>
+<a href="ftp://ftp.cisco.com/pub/mibs/v2">ftp://ftp.cisco.com/pub/mibs/v2</a><br>
+<a href="ftp://ftp.cisco.com/pub/mibs/contrib">ftp://ftp.cisco.com/pub/mibs/contrib</a></p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

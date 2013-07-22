@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>reading json from bash with python &ndash; devops type thoughts</title>
+</head>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+
+-->
+</style>
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>reading json from bash with python</h1>
+            <h2>Thursday, May 09, 2013 <span>&raquo;</span> <a href="/tags/bash/">bash</a>, <a href="/tags/json/">json</a>, <a href="/tags/python/">python</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>Getting JSON from a flat file in a shell script</p>
+
+<p>JSON is become a defacto serialization standard.  Getting at the info in Bash in nice.</p>
+<h4>Say you have a file with a json serialized dict from python</h4>
+<p>file: /var/myfile</p>
+
+<p>json contents: {&#39;this&#39;: &#39;you&#39;}</p>
+<h4>Create a script that needs access to this data</h4><pre><code>#!/bin/bash
+set -e
+FILE=&#39;/var/file&#39;
+if [[ ! -a $FILE ]]; then
+    exit 0
+fi
+dict_value=`python -c &#39;import json, os; d=json.loads(open(&#34;/var/file&#34;).read()); print d[&#34;this&#34;]&#39;`
+echo $dict_value
+</code></pre><h4>Run it as a command</h4>
+<p>output: you</p>
+
+<p>There really doesn&#39;t seem to be a better way to parse json from bash, but this isn&#39;t too bad.</p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

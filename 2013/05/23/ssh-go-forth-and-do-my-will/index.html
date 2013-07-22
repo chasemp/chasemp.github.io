@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>ssh go forth and do my will &ndash; devops type thoughts</title>
+</head>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+
+-->
+</style>
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>ssh go forth and do my will</h1>
+            <h2>Thursday, May 23, 2013 <span>&raquo;</span> <a href="/tags/bash/">bash</a>, <a href="/tags/ssh/">ssh</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>Commands run via SSH</p>
+
+<p>Occassionally, I need to run a command on a remote host and I don&#39;t have time to wait for<br>
+the output.  If success or failure isn&#39;t a big deal I sometimes use the following method.</p>
+<h4>ls remotely</h4>
+<p>Let&#39;s say I badly need a recursive ls on a box</p>
+<pre><code>ssh &lt;me&gt;@&lt;server&gt; &#39;nohup ls -R &amp;&gt; /tmp/ls.txt &amp;&#39;
+</code></pre><h4>Breaking it down</h4><pre><code>ssh         -- obviously you need the client and server
+&lt;me&gt;@&lt;server&gt;   -- Please be using key based authentication
+&#39;&#39;          -- ssh will accept a one and done command instead of going fully interactive
+nohup       -- tell the command do not listen to HUP signal
+ls -R       -- for fun we need that file list
+&amp;&gt;          -- redirect output.  this is a newer version of this.
+/tmp/ls.txt     -- for me to look at later.  note /tmp does not survive reboots.
+&amp;           -- run me in the background!
+</code></pre><h4>Looks like</h4><pre><code>rush:~$ ssh rush@&lt;server&gt; &#39;nohup sudo ls -R &amp;&gt; /tmp/ls.txt &amp;&#39;
+</code></pre>
+<p>No output to speak of...like I said just go do it.</p>
+<h4>What happened</h4><pre><code>rush:~$ ssh rush@&lt;server&gt; &#39;cat /tmp/ls.txt&#39;
+.:
+1.TXT
+bin
+git
+test.txt
+</code></pre>
+<p>Reference:<br>
+<a href="http://en.wikipedia.org/wiki/Nohup">http://en.wikipedia.org/wiki/Nohup</a><br>
+<a href="http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh">http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh</a></p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

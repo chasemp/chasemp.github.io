@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>syn cookies &ndash; devops type thoughts</title>
+</head>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+
+-->
+</style>
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>syn cookies</h1>
+            <h2>Thursday, May 23, 2013 <span>&raquo;</span> <a href="/tags/ddos/">ddos</a>, <a href="/tags/syn/">syn</a>, <a href="/tags/tcp/">tcp</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>When you&#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like<br>
+syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known<br>
+defenses is syn cookies.</p>
+<h4>Who doesn&#39;t like cookies?</h4><pre><code>SYN cookies are particular choices of initial TCP sequence numbers by TCP servers.
+</code></pre><h4>Linux</h4><pre><code>root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+0
+
+root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+1
+</code></pre>
+<p>Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of <br>
+enabling does not persist through a reboot.</p>
+<h4>Cisco IOS Zone Based FW</h4>
+<p>Global:</p>
+<pre><code>parameter-map type inspect global
+    tcp syn-flood limit 20000
+</code></pre>
+<p>Zone:</p>
+<pre><code>parameter-map type inspect-zone ddos-detection
+   tcp syn-flood rate per-destination 20000
+</code></pre>
+<p>NOTES:</p>
+
+<p>SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.</p>
+<h4>Reference:</h4>
+<p><a href="http://cr.yp.to/syncookies.html">http://cr.yp.to/syncookies.html</a><br>
+<a href="http://www.faqs.org/docs/securing/chap5sec56.html">http://www.faqs.org/docs/securing/chap5sec56.html</a><br>
+<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html">http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html</a><br>
+<a href="http://etherealmind.com/tcp-syn-cookies-ddos-defence/">http://etherealmind.com/tcp-syn-cookies-ddos-defence/</a><br>
+<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html</a><br>
+<a href="http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html">http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html</a><br>
+<a href="http://serverfault.com/questions/353411/syn-cookies-on-internal-machines">http://serverfault.com/questions/353411/syn-cookies-on-internal-machines</a><br>
+<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections</a></p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

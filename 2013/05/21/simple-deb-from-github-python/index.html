@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>simple deb from github python &ndash; devops type thoughts</title>
+</head>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+
+-->
+</style>
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>simple deb from github python</h1>
+            <h2>Tuesday, May 21, 2013 <span>&raquo;</span> <a href="/tags/deb/">deb</a>, <a href="/tags/python/">python</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>One of the things I do often is download projects from github.  Pypi is nice and so is pip, but<br>
+I like to have one reference for packages on a host.  If at all possible I prefer to make <br>
+binaries.  It is nice for reporting, and because we run our own internal repostories it affords<br>
+us certain advantages.</p>
+<h4>Install a few packages:</h4><pre><code>aptitude install python-dev python-setuptools python-stdeb python-support
+</code></pre><h4>Download a project: <a href="https://github.com/xb95/nagios-api.git">https://github.com/xb95/nagios-api.git</a></h4><pre><code>git clone https://github.com/xb95/nagios-api.git
+cd cd nagios-api/
+</code></pre><h4>Making a Deb</h4>
+<p>This where with traditional disutils you would do <em>python setup.py install</em></p>
+
+<p>But we can also do...</p>
+<pre><code>sudo python setup.py --command-packages=stdeb.command bdist_deb
+
+running bdist_deb
+running sdist_dsc
+working around Debian #548392, changing XS-Python-Version: to &#39;current&#39;
+CALLING dpkg-source -b nagios-api-1.2.1 nagios-api_1.2.1.orig.tar.gz (in dir deb_dist)
+dpkg-source: info: using source format `1.0&#39;
+...
+dpkg-deb: building package `python-nagios-api&#39; in `../python-nagios-api_1.2.1-1_all.deb&#39;.
+dpkg-deb: warning: ignoring 1 warning about the control file(s)
+dpkg-genchanges -b &gt;../nagios-api_1.2.1-1_amd64.changes
+dpkg-genchanges: binary-only upload - not including any source code
+dpkg-source --after-build nagios-api-1.2.1
+dpkg-buildpackage: binary only upload (no source included)
+</code></pre>
+<p>That was all it took to create a fully installable binary package:</p>
+<pre><code>dpkg -i deb_dist/python-nagios-api_1.2.1-1_all.deb 
+
+Selecting previously deselected package python-nagios-api.
+(Reading database ... 38260 files and directories currently installed.)
+Unpacking python-nagios-api (from .../python-nagios-api_1.2.1-1_all.deb) ...
+Setting up python-nagios-api (1.2.1-1) ...
+Processing triggers for python-support ...
+</code></pre><h4>Notes</h4>
+<p>Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always<br>
+this can be overcome, but if necessary then you can use:</p>
+<pre><code>python setup.py dh_make
+</code></pre>
+<p>Reference:<br>
+<a href="https://pypi.python.org/pypi">https://pypi.python.org/pypi</a><br>
+<a href="http://lists.debian.org/debian-python/2004/10/msg00017.html">http://lists.debian.org/debian-python/2004/10/msg00017.html</a><br>
+<a href="https://github.com/xb95/nagios-api.git">https://github.com/xb95/nagios-api.git</a></p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,3862 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+    <feed xmlns="http://www.w3.org/2005/Atom">
+        <title>devops type thoughts</title>
+        
+        <link rel="alternate" href="/" />
+        <link rel="self" href="/feed.xml" type="application/atom+xml" />
+        <id>/</id>
+        <updated>2013-07-22T23:57:43Z</updated>
+        
+        <author>
+            <name>Chase Pettet</name>
+            <email>chase.mp@gmail.com</email>
+            <uri>/</uri>
+        </author>
+        
+        
+            <entry>
+                <title>IOS granular permissions</title>
+                <link rel="alternate" href="/2013/07/22/ios-granular-permissions/" type="text/html" />
+                <id>/2013/07/22/ios-granular-permissions/</id>
+                <updated>2013-07-22T21:23:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;If you have tiered levels of administrators, or you want to&lt;br&gt;
+create an account for automation purposes best practice is to&lt;br&gt;
+define a custom security level in IOS.&lt;/p&gt;
+
+&lt;p&gt;Levels 1 and 15 are defined by default.&lt;/p&gt;
+&lt;h4&gt;Allowing lower levels to see your configuration: IOS&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;conf t
+username backup privilege 3 secret &amp;lt;SECRET&amp;gt;
+privilege exec level 3 show startup-config
+privilege exec level 3 show
+wr mem
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Allowing lower levels to see your configuration: FreeRADIUS:&lt;/h4&gt;
+&lt;p&gt;/etc/freeradius/users&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+backup
+    Service-Type = NAS-Prompt-User,
+    cisco-avpair = &#34;shell:priv-lvl=3&#34;,
+    Auth-Type = System,
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looks Like&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+cisco#show start
+Building configuration...
+
+--CONFIGURATION--
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Defining the next user tier for NAT information: IOS&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;conf t
+username natinfo privilege 4 secret &amp;lt;SECRET&amp;gt;
+privilege exec level 4 show nat64 statistics
+wr mem
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Defining the next user tier for NAT information: FreeRADIUS&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+natinfo
+    Service-Type = NAS-Prompt-User,
+    cisco-avpair = &#34;shell:priv-lvl=4&#34;,
+    Auth-Type = System,
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looks Like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;cisco#show ip nat statistics
+--STATS--
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;NOTES&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Permissions stack up which means a user at Level 4 can also issue &amp;#39;show startup-configuration&amp;#39;&lt;/li&gt;
+&lt;li&gt;&amp;#39;show running-config&amp;#39; command does not work in this way for the IOS devices I have tried.&lt;br&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This does not work how you think it does:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;privilege exec level 3 show running-config
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/&#34;&gt;http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html&#34;&gt;http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>proxychains</title>
+                <link rel="alternate" href="/2013/07/18/proxychains/" type="text/html" />
+                <id>/2013/07/18/proxychains/</id>
+                <updated>2013-07-18T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Some commands do not support a proxy (RE: telnet).  Other&lt;br&gt;
+times it is just easier to do a one-off instance rather&lt;br&gt;
+than mess with environment settings.  A lot of people use&lt;br&gt;
+this with Tor.&lt;/p&gt;
+&lt;h4&gt;ProxyChains&lt;/h4&gt;
+&lt;p&gt;Allows you to send traffic through a proxy without the command&lt;br&gt;
+itself having foreknowledge.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;aptitude install proxychains
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Config files&lt;/h4&gt;
+&lt;p&gt;Pick one:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt; ./proxychains.conf&lt;/li&gt;
+&lt;li&gt; $(HOME)/.proxychains/proxychains.conf&lt;/li&gt;
+&lt;li&gt;/etc/proxychains.conf&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;/etc/proxychains.conf the global option&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+strict_chain
+quiet_mode
+tcp_read_time_out 15000
+tcp_connect_time_out 8000
+[ProxyList]
+#replace this with your proxy
+http    192.168.1.1 8080
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;telnet Before Proxychains (behind a proxy)&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/pkg$ telnet google.com 80
+Trying 2404:6800:4005:806::1006...
+Trying 173.194.127.196...
+Trying 173.194.127.193...
+Trying 173.194.127.200...
+Trying 173.194.127.201...
+Trying 173.194.127.198...
+Trying 173.194.127.199...
+Trying 173.194.127.195...
+Trying 173.194.127.192...
+Trying 173.194.127.206...
+Trying 173.194.127.194...
+Trying 173.194.127.197...
+telnet: Unable to connect to remote host: Network is unreachable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;telnet after ProxyChains (behind a proxy)&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/pkg$ proxychains telnet google.com 80
+ProxyChains-3.1 (http://proxychains.sf.net)
+Trying 2404:6800:4005:806::1006...
+Trying 173.194.127.196...
+Connected to google.com.
+Escape character is &#39;^]&#39;.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Excluding traffic from your proxy&lt;/h4&gt;
+&lt;p&gt;In theory you set the localnet option in your configuration file&lt;br&gt;
+but this doesn&amp;#39;t work me with proxychains under debian.&lt;/p&gt;
+
+&lt;p&gt;Just in case you are interested though: &lt;a href=&#34;https://github.com/haad/proxychains/issues/6#issuecomment-4041824&#34;&gt;localnet docs&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://benizi.com/postfix-proxychains&#34;&gt;http://benizi.com/postfix-proxychains&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/&#34;&gt;http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://proxychains.sourceforge.net/howto.html&#34;&gt;http://proxychains.sourceforge.net/howto.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://proxychains.sourceforge.net/howto.html&#34;&gt;http://proxychains.sourceforge.net/howto.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/haad/proxychains&#34;&gt;https://github.com/haad/proxychains&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>allowing env magic via sudo</title>
+                <link rel="alternate" href="/2013/07/18/allowing-env-magic-via-sudo/" type="text/html" />
+                <id>/2013/07/18/allowing-env-magic-via-sudo/</id>
+                <updated>2013-07-18T00:46:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;In an environment with heavy automation and numerous service account&lt;br&gt;
+users it is easy to end up in a situation where compromising one service&lt;br&gt;
+becomes compromising an entire system.&lt;/p&gt;
+&lt;h4&gt;Granting permission to a single command&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;vi /etc/sudoers.d/makingpie
+
+myuser ALL = NOPASSWD: /usr/local/bin/makepie
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks Like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;myuser:#sudo makepie
+&amp;gt;&amp;gt;&amp;gt;&amp;gt;mmmmm...pie
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;What if my user needs to call out to a proxy but &amp;#39;makepie&amp;#39; doesn&amp;#39;t support it?&lt;/h4&gt;
+&lt;p&gt;We use proxychains.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo LD_PRELOAD=libproxychains.so.3 makepie
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Sudo is extra granular and doesn&amp;#39;t like this idea.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo: sorry, you are not allowed to set the following environment variables: LD_PRELOAD
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;The heavy handed way&lt;/h4&gt;
+&lt;p&gt;Don&amp;#39;t reset user enviroments when using sudo&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;visudo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Replace: “Defaults env_reset” with: “Defaults !env_reset”&lt;/p&gt;
+&lt;h4&gt;Piecemeal way&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;vi /etc/sudoers.d/ld_preload
+
+#allow users to use proxychains env variable (using sudo)
+Defaults env_keep += &amp;#34;LD_PRELOAD&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://brandonhutchinson.com/wiki/Sudo_and_environment_variables&#34;&gt;http://brandonhutchinson.com/wiki/Sudo_and_environment_variables&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5&#34;&gt;http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo&#34;&gt;http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/&#34;&gt;http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables&#34;&gt;http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo&#34;&gt;http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.ibm.com/developerworks/aix/library/au-sudo/&#34;&gt;http://www.ibm.com/developerworks/aix/library/au-sudo/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>making trivial debian packages</title>
+                <link rel="alternate" href="/2013/07/17/making-trivial-debian-packages/" type="text/html" />
+                <id>/2013/07/17/making-trivial-debian-packages/</id>
+                <updated>2013-07-17T00:31:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;When possible it is beneficial having a canonical reference for resources installed&lt;br&gt;
+on a server.  Binary packages have built in logic for upgrade, downgrade,&lt;br&gt;
+install, etc.  This makes them an attractive, yet sometimes, overcomplicated&lt;br&gt;
+distribution mechanisms.&lt;/p&gt;
+
+&lt;p&gt;I am going to demonstrate making a simple script into a debian binary&lt;br&gt;
+and installing it.  Adding this to an in-house repo would be a nice next&lt;br&gt;
+step.&lt;/p&gt;
+&lt;h4&gt;Getting Packages&lt;/h4&gt;
+&lt;p&gt;Assuming you have dpkg but if not we need it.  Fakeroot we use to make packages&lt;br&gt;
+with the right permissions on files.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;aptitude install dpkg fakeroot lintian
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We will be using dpkg-deb which is generally considered &amp;#39;built in&amp;#39; to debian.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:# dpkg -S /usr/bin/dpkg-deb
+dpkg: /usr/bin/dpkg-debø
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Package: my-files.&lt;/h4&gt;
+&lt;p&gt;Starting at version 1.0 and meant for all architectures.  &amp;#39;all&amp;#39; is a common&lt;br&gt;
+assignment for architecture when the files/scripts are interpreted such as&lt;br&gt;
+with python or ruby.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir my-files_1.0_all
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Making my package tree&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mkdir -p my-files_1.0_all/usr/local/bin/
+mkdir -p my-files_1.0_all/DEBIAN
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;My script: aptitude easter eggs&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;nano my-files_1.0_all/usr/local/bin/moo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+#!/bin/bash
+aptitude -v -v -v -v -v moo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Adding my &amp;#39;control&amp;#39; file&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#this file contains my package metadata
+nano my-files_1.0_all/DEBIAN/control
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks Like&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+Package: my-files
+Priority: optional
+Section: misc
+Maintainer: Chase &lt;mail@example.com&gt;
+Architecture: all
+Version: 1.0
+Description: stuff I need
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Making my script executable on install&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#postint will be run at the tail end of install by default
+echo &amp;#34;chmod +x /usr/local/bin/moo&amp;#34; &amp;gt; my-files_1.0_all/DEBIAN/postinst
+#set correct permissions to avoid build errors
+chmod 555 my-files_1.0_all/DEBIAN/postinst
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;My full package tree&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+my-files_1.0_all
+|-- DEBIAN
+|   |-- control
+|   `-- postinst
+`-- usr
+    `-- local
+        `-- bin
+            `-- moo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Building my binary&lt;/h4&gt;
+&lt;p&gt;Fakeroot should fix up your permissions, permissions are taken very literally by&lt;br&gt;
+dpkg-deb.  So if you build with a user that does not exist on a host that installs&lt;br&gt;
+this package things break.  But even if you don&amp;#39;t run into that it is considered&lt;br&gt;
+bad form to leave your user permissions as artifacts on binary packaged files.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;fakeroot dpkg-deb -b my-files_1.0_all/
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks Like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;dpkg-deb: building package `my-files&amp;#39; in `my-files_1.0_all.deb&amp;#39;.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Installing and Examining my package&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+me@vm:# dpkg -i my-files_1.0_all.deb 
+Selecting previously unselected package my-files.
+(Reading database ... 49666 files and directories currently installed.)
+Unpacking my-files (from my-files_1.0_all.deb) ...
+Setting up my-files (1.0) ...
+me@vm:# 
+
+me@vm:# dpkg -L my-files             
+/.
+/usr
+/usr/local
+/usr/local/bin
+/usr/local/bin/moo
+
+me@vm:~/pkg# dpkg -s my-files
+Package: my-files
+Status: install ok installed
+Priority: optional
+Section: misc
+Maintainer: Chase &lt;mail@example.com&gt;
+Architecture: all
+Version: 1.0
+Description: stuff I need
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Using Lintian&lt;/h4&gt;
+&lt;p&gt;Lintian breaks down deb binaries and examines them.  If we are making a package for &lt;br&gt;
+repo distribution or contribution upstream in some manner we want this output to look&lt;br&gt;
+at nice as it can.  For this package I am just making sure we understanding what&lt;br&gt;
+compromises we are making.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/pkg$ lintian my-files_1.0_all.deb 
+E: my-files: control-file-has-bad-permissions postinst 0555 != 0755
+E: my-files: no-copyright-file
+E: my-files: extended-description-is-empty
+E: my-files: dir-in-usr-local usr/local/bin/
+E: my-files: file-in-usr-local usr/local/bin/moo
+W: my-files: file-in-unusual-dir usr/local/bin/moo
+W: my-files: script-not-executable usr/local/bin/moo
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Running my command&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+me@vm:# moo
+All right, you win.
+
+                               /----\
+                       -------/      \
+                      /               \
+                     /                |
+   -----------------/                  --------\
+   ----------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man1/dpkg-deb.1.html&#34;&gt;http://manpages.ubuntu.com/manpages/hardy/man1/dpkg-deb.1.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://askubuntu.com/questions/62534/adding-post-deb-install-scripts&#34;&gt;http://askubuntu.com/questions/62534/adding-post-deb-install-scripts&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.debian.org/doc/devel-manuals#maint-guide&#34;&gt;http://www.debian.org/doc/devel-manuals#maint-guide&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html&#34;&gt;http://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://unix.stackexchange.com/questions/30303/how-to-create-a-deb-file-manually&#34;&gt;http://unix.stackexchange.com/questions/30303/how-to-create-a-deb-file-manually&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/&#34;&gt;http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/#AEN108&#34;&gt;http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/#AEN108&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>simple nat outbound asa</title>
+                <link rel="alternate" href="/2013/07/15/simple-nat-outbound-asa/" type="text/html" />
+                <id>/2013/07/15/simple-nat-outbound-asa/</id>
+                <updated>2013-07-15T03:20:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;NAT on the ASA can get complicated but 90% of remote sites need&lt;br&gt;
+some version of this basic configuration.&lt;/p&gt;
+&lt;h4&gt;Interfaces&lt;/h4&gt;
+&lt;p&gt;Establish your NAT roles.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+!
+interface Ethernet0/0
+ nameif Outside
+ security-level 0
+ ip address &lt;external_ip&gt; &lt;ext_mask&gt;
+!
+interface Ethernet0/1
+ nameif Inside
+ security-level 100
+ ip address &lt;interval_ip&gt; &lt;internal_mask&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Client Pool&lt;/h4&gt;
+&lt;p&gt;Define who gets an address for going out.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+object network NAT-CLIENTS
+ !can be a subnet also, etc
+ range 192.168.1.1 192.168.1.10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;NAT Enable&lt;/h4&gt;
+&lt;p&gt;Associate your clients with your external interface for NAT.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+nat (Inside,Outside) source dynamic NAT-CLIENTS interface
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;NOTES&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;This does not require extra global IP&amp;#39;s.&lt;/li&gt;
+&lt;li&gt;This dynamic IP may supercede intended static NAT IP&amp;#39;s&lt;/li&gt;
+&lt;li&gt;Firewall restrictions still apply. See docs on security levels.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157&#34;&gt;https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>making debs with rake</title>
+                <link rel="alternate" href="/2013/07/12/making-debs-with-rake/" type="text/html" />
+                <id>/2013/07/12/making-debs-with-rake/</id>
+                <updated>2013-07-12T22:25:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Some Rake files have built in logic to make a debian binary. &lt;/p&gt;
+&lt;h4&gt;Mcollective&lt;/h4&gt;
+&lt;p&gt;A good example:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/puppetlabs/marionette-collective
+cd marionette-collective/
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Getting Packages&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install rake \
+build-essential 
+rubygem \
+pdebuild-cross \
+devscripts \
+fakeroot \
+dpatch
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Making Debian Package&lt;/h4&gt;
+&lt;p&gt;rake deb&lt;/p&gt;
+&lt;h4&gt;Looks Like&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+rm -r build
+rm -r doc
+Parsing sources...
+
+&lt;omitted&gt;
+
+dpkg-deb: building package `mcollective&#39; in `../mcollective_2.3.2-1_all.deb&#39;.
+dh_gencontrol -pmcollective-client  
+dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
+dh_md5sums -pmcollective-client 
+dh_builddeb -pmcollective-client 
+dpkg-deb: building package `mcollective-client&#39; in `../mcollective-client_2.3.2-1_all.deb&#39;.
+dh_gencontrol -pmcollective-common  
+dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
+dh_md5sums -pmcollective-common 
+dh_builddeb -pmcollective-common 
+dpkg-deb: building package `mcollective-common&#39; in `../mcollective-common_2.3.2-1_all.deb&#39;.
+dh_gencontrol -pmcollective-doc  
+dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
+dh_md5sums -pmcollective-doc 
+dh_builddeb -pmcollective-doc 
+dpkg-deb: building package `mcollective-doc&#39; in `../mcollective-doc_2.3.2-1_all.deb&#39;.
+ dpkg-genchanges  &gt;../mcollective_2.3.2-1_amd64.changes
+dpkg-genchanges: including full source code in upload
+ dpkg-source -i --after-build mcollective-2.3.2
+dpkg-buildpackage: full upload (original source is included)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Normal install&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;dpkg -i mcollective_2.3.2-1_all.deb
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>mcollective bugs debian wheezy</title>
+                <link rel="alternate" href="/2013/07/12/mcollective-bugs-debian-wheezy/" type="text/html" />
+                <id>/2013/07/12/mcollective-bugs-debian-wheezy/</id>
+                <updated>2013-07-12T21:22:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Debian Wheezy is on mcollective 2.0.  There are several agents that require&lt;br&gt;
+at least 2.2.  You can download from the official PuppetLabs repository version &lt;br&gt;
+but for Wheezy there are several bugs.  &lt;/p&gt;
+&lt;h4&gt;Dowloading official Package&lt;/h4&gt;
+&lt;p&gt;Do this:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html&#34;&gt;http://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget http://apt-enterprise.puppetlabs.com/puppetlabs-enterprise-release-extras_1.0-2_all.deb
+sudo dpkg -i puppetlabs-enterprise-release-extras_1.0-2_all.deb
+sudo apt-get update
+aptitude install mcollective
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You will notice it doesn&amp;#39;t work.  Suck.  Ok let&amp;#39;s build our own.&lt;/p&gt;
+&lt;h4&gt;Bug #1 &lt;a href=&#34;http://projects.puppetlabs.com/issues/16572&#34;&gt;fails to run on debian/ubuntu with ruby 1.9&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;The system default for ruby is 1.9.  Mcollective has ruby 1.8 paths hardcoded in several places, but&lt;br&gt;
+the main binary uses the environment settings.  This mismatch causes issues.&lt;/p&gt;
+&lt;h4&gt;Bug demonstration&lt;/h4&gt;
+&lt;p&gt;/etc/init.d/mcollective restart&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require&#39;: cannot load such file -- mcollective (LoadError)
+        from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require&#39;
+    from /usr/sbin/mcollectived:3:in `&lt;main&gt;&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;mcollective puts files under ruby 1.8&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;dpkg -L mcollective-common
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+/usr/lib/ruby/1.8/mcollective
+/usr/lib/ruby/1.8/mcollective/logger
+/usr/lib/ruby/1.8/mcollective/logger/syslog_logger.rb
+/usr/lib/ruby/1.8/mcollective/logger/base.rb
+/usr/lib/ruby/1.8/mcollective/logger/console_logger.rb
+/usr/lib/ruby/1.8/mcollective/logger/file_logger.rb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;But Wheezy uses 1.9&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Simple Fix&lt;/h4&gt;
+&lt;p&gt;vi bin/mcollectived&lt;/p&gt;
+
+&lt;p&gt;This:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/env ruby 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Becomes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/usr/bin/ruby1.8
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Bug 2: &lt;a href=&#34;http://projects.puppetlabs.com/issues/17804&#34;&gt;ubuntu/debian mcollective missing package dependencies&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Depencies are not complete for Debian.&lt;/p&gt;
+&lt;h4&gt;Looks Like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/usr/lib/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require&amp;#39;: no such file to load - -- stomp
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Simple Fix&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;sudo apt-get install ruby-stomp
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Stomp Connector Not Included&lt;/h4&gt;
+&lt;p&gt;This is not my code, it is from somewhere in the mcollective world.  Including here&lt;br&gt;
+for completeness.&lt;/p&gt;
+
+&lt;p&gt;mcollective/connectors/stomp.rb&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+require &#39;stomp&#39;
+
+module MCollective
+  module Connector
+    # Handles sending and receiving messages over the Stomp protocol
+    #
+    # This plugin supports version 1.1 or 1.1.6 and newer of the Stomp rubygem
+    # the versions between those had multi threading issues.
+    #
+    # For all versions you can configure it as follows:
+    #
+    #    connector = stomp
+    #    plugin.stomp.host = stomp.your.net
+    #    plugin.stomp.port = 6163
+    #    plugin.stomp.user = you
+    #    plugin.stomp.password = secret
+    #
+    # All of these can be overriden per user using environment variables:
+    #
+    #    STOMP_SERVER, STOMP_PORT, STOMP_USER, STOMP_PASSWORD
+    #
+    # Version 1.1.6 onward support supplying multiple connections and it will
+    # do failover between these servers, you can configure it as follows:
+    #
+    #     connector = stomp
+    #     plugin.stomp.pool.size = 2
+    #
+    #     plugin.stomp.pool.host1 = stomp1.your.net
+    #     plugin.stomp.pool.port1 = 6163
+    #     plugin.stomp.pool.user1 = you
+    #     plugin.stomp.pool.password1 = secret
+    #     plugin.stomp.pool.ssl1 = true
+    #
+    #     plugin.stomp.pool.host2 = stomp2.your.net
+    #     plugin.stomp.pool.port2 = 6163
+    #     plugin.stomp.pool.user2 = you
+    #     plugin.stomp.pool.password2 = secret
+    #     plugin.stomp.pool.ssl2 = false
+    #
+    # Using this method you can supply just STOMP_USER and STOMP_PASSWORD
+    # you have to supply the hostname for each pool member in the config.
+    # The port will default to 6163 if not specified.
+    #
+    # In addition you can set the following options but only when using
+    # pooled configuration:
+    #
+    #     plugin.stomp.pool.initial_reconnect_delay = 0.01
+    #     plugin.stomp.pool.max_reconnect_delay = 30.0
+    #     plugin.stomp.pool.use_exponential_back_off = true
+    #     plugin.stomp.pool.back_off_multiplier = 2
+    #     plugin.stomp.pool.max_reconnect_attempts = 0
+    #     plugin.stomp.pool.randomize = false
+    #     plugin.stomp.pool.timeout = -1
+    #
+    # For versions of ActiveMQ that supports message priorities
+    # you can set a priority, this will cause a &#34;priority&#34; header
+    # to be emitted if present:
+    #
+    #     plugin.stomp.priority = 4
+    #
+    class Stomp&lt;Base
+      # Older stomp gems do not have these error classes, in order to be able to
+      # handle these exceptions if they are present and still support older gems
+      # we&#39;re assigning the constants to a dummy exception that will never be thrown
+      # by us.  End result is that the code catching these exceptions become noops on
+      # older gems but on newer ones they become usable and handle those new errors
+      # intelligently
+      class DummyError&lt;RuntimeError; end
+
+      ::Stomp::Error = DummyError unless defined?(::Stomp::Error)
+      ::Stomp::Error::NoCurrentConnection = DummyError unless defined?(::Stomp::Error::NoCurrentConnection)
+      ::Stomp::Error::DuplicateSubscription = DummyError unless defined?(::Stomp::Error::DuplicateSubscription)
+
+      # Class for Stomp 1.1.9 callback based logging
+      class EventLogger
+        def on_connecting(params=nil)
+          Log.info(&#34;Connection attempt %d to %s&#34; % [params[:cur_conattempts], stomp_url(params)])
+        rescue
+        end
+
+        def on_connected(params=nil)
+          Log.info(&#34;Conncted to #{stomp_url(params)}&#34;)
+        rescue
+        end
+
+        def on_disconnect(params=nil)
+          Log.info(&#34;Disconnected from #{stomp_url(params)}&#34;)
+        rescue
+        end
+
+        def on_connectfail(params=nil)
+          Log.info(&#34;Connection to #{stomp_url(params)} failed on attempt #{params[:cur_conattempts]}&#34;)
+        rescue
+        end
+
+        def on_miscerr(params, errstr)
+          Log.error(&#34;Unexpected error on connection #{stomp_url(params)}: #{errstr}&#34;)
+        rescue
+        end
+
+        def on_ssl_connecting(params)
+          Log.info(&#34;Performing SSL connection to #{stomp_url(params)}&#34;)
+        rescue
+        end
+
+        def on_ssl_connected(params)
+          Log.info(&#34;Connected SSL socket #{stomp_url(params)}&#34;)
+        rescue
+        end
+
+        def stomp_url(params)
+          &#34;%s://%s@%s:%d&#34; % [ params[:cur_ssl] ? &#34;stomp+ssl&#34; : &#34;stomp&#34;, params[:cur_login], params[:cur_host], params[:cur_port]]
+        end
+      end
+
+      attr_reader :connection
+
+      def initialize
+        @config = Config.instance
+        @subscriptions = []
+      end
+
+      # Connects to the Stomp middleware
+      def connect(connector = ::Stomp::Connection)
+        if @connection
+          Log.debug(&#34;Already connection, not re-initializing connection&#34;)
+          return
+        end
+
+        begin
+          host = nil
+          port = nil
+          user = nil
+          password = nil
+          @base64 = get_bool_option(&#34;stomp.base64&#34;, false)
+          @msgpriority = get_option(&#34;stomp.priority&#34;, 0).to_i
+
+          # Maintain backward compat for older stomps
+          unless @config.pluginconf.include?(&#34;stomp.pool.size&#34;)
+            host = get_env_or_option(&#34;STOMP_SERVER&#34;, &#34;stomp.host&#34;)
+            port = get_env_or_option(&#34;STOMP_PORT&#34;, &#34;stomp.port&#34;, 6163).to_i
+            user = get_env_or_option(&#34;STOMP_USER&#34;, &#34;stomp.user&#34;)
+            password = get_env_or_option(&#34;STOMP_PASSWORD&#34;, &#34;stomp.password&#34;)
+
+            Log.debug(&#34;Connecting to #{host}:#{port}&#34;)
+            @connection = connector.new(user, password, host, port, true)
+          else
+            pools = @config.pluginconf[&#34;stomp.pool.size&#34;].to_i
+            hosts = []
+
+            1.upto(pools) do |poolnum|
+              host = {}
+
+              host[:host] = get_option(&#34;stomp.pool.host#{poolnum}&#34;)
+              host[:port] = get_option(&#34;stomp.pool.port#{poolnum}&#34;, 6163).to_i
+              host[:login] = get_env_or_option(&#34;STOMP_USER&#34;, &#34;stomp.pool.user#{poolnum}&#34;)
+              host[:passcode] = get_env_or_option(&#34;STOMP_PASSWORD&#34;, &#34;stomp.pool.password#{poolnum}&#34;)
+              host[:ssl] = get_bool_option(&#34;stomp.pool.ssl#{poolnum}&#34;, false)
+
+              Log.debug(&#34;Adding #{host[:host]}:#{host[:port]} to the connection pool&#34;)
+              hosts &lt;&lt; host
+            end
+
+            raise &#34;No hosts found for the STOMP connection pool&#34; if hosts.size == 0
+
+            connection = {:hosts =&gt; hosts}
+
+            # Various STOMP gem options, defaults here matches defaults for 1.1.6 the meaning of
+            # these can be guessed, the documentation isn&#39;t clear
+            connection[:initial_reconnect_delay] = get_option(&#34;stomp.pool.initial_reconnect_delay&#34;, 0.01).to_f
+            connection[:max_reconnect_delay] = get_option(&#34;stomp.pool.max_reconnect_delay&#34;, 30.0).to_f
+            connection[:use_exponential_back_off] = get_bool_option(&#34;stomp.pool.use_exponential_back_off&#34;, true)
+            connection[:back_off_multiplier] = get_bool_option(&#34;stomp.pool.back_off_multiplier&#34;, 2).to_i
+            connection[:max_reconnect_attempts] = get_option(&#34;stomp.pool.max_reconnect_attempts&#34;, 0).to_i
+            connection[:randomize] = get_bool_option(&#34;stomp.pool.randomize&#34;, false)
+            connection[:backup] = get_bool_option(&#34;stomp.pool.backup&#34;, false)
+            connection[:timeout] = get_option(&#34;stomp.pool.timeout&#34;, -1).to_i
+            connection[:reliable] = true
+
+            connection[:logger] = EventLogger.new
+
+            @connection = connector.new(connection)
+          end
+        rescue Exception =&gt; e
+          raise(&#34;Could not connect to Stomp Server: #{e}&#34;)
+        end
+      end
+
+      # Receives a message from the Stomp connection
+      def receive
+        Log.debug(&#34;Waiting for a message from Stomp&#34;)
+
+        # When the Stomp library &gt; 1.2.0 is mid reconnecting due to its reliable connection
+        # handling it sets the connection to closed.  If we happen to be receiving at just
+        # that time we will get an exception warning about the closed connection so handling
+        # that here with a sleep and a retry.
+        begin
+          msg = @connection.receive
+        rescue ::Stomp::Error::NoCurrentConnection
+          sleep 1
+          retry
+        end
+
+        Message.new(msg.body, msg, :base64 =&gt; @base64, :headers =&gt; msg.headers)
+      end
+
+      # Sends a message to the Stomp connection
+      def publish(msg)
+        msg.base64_encode! if @base64
+
+        raise &#34;Cannot set specific reply to targets with the STOMP plugin&#34; if msg.reply_to
+
+        if msg.type == :direct_request
+          msg.discovered_hosts.each do |node|
+            target = make_target(msg.agent, msg.type, msg.collective, node)
+
+            Log.debug(&#34;Sending a direct message to STOMP target &#39;#{target}&#39;&#34;)
+
+            publish_msg(target, msg.payload)
+          end
+        else
+          target = make_target(msg.agent, msg.type, msg.collective)
+
+          Log.debug(&#34;Sending a broadcast message to STOMP target &#39;#{target}&#39;&#34;)
+
+          publish_msg(target, msg.payload)
+        end
+      end
+
+      # Subscribe to a topic or queue
+      def subscribe(agent, type, collective)
+        source = make_target(agent, type, collective)
+
+        unless @subscriptions.include?(source)
+          Log.debug(&#34;Subscribing to #{source}&#34;)
+          @connection.subscribe(source)
+          @subscriptions &lt;&lt; source
+        end
+      rescue ::Stomp::Error::DuplicateSubscription
+        Log.debug(&#34;Received subscription for #{source[:name]} but already had a subscription, ignoring&#34;)
+      end
+
+      # Actually sends the message to the middleware
+      def publish_msg(target, msg)
+        # deal with deprecation warnings in newer stomp gems
+        if @connection.respond_to?(&#34;publish&#34;)
+          @connection.publish(target, msg, msgheaders)
+        else
+          @connection.send(target, msg, msgheaders)
+        end
+      end
+
+      # Subscribe to a topic or queue
+      def unsubscribe(agent, type, collective)
+        source = make_target(agent, type, collective)
+
+        Log.debug(&#34;Unsubscribing from #{source}&#34;)
+        @connection.unsubscribe(source)
+        @subscriptions.delete(source)
+      end
+
+      # Disconnects from the Stomp connection
+      def disconnect
+        Log.debug(&#34;Disconnecting from Stomp&#34;)
+        @connection.disconnect
+      end
+
+      def msgheaders
+        headers = {}
+        headers = {&#34;priority&#34; =&gt; @msgpriority} if @msgpriority &gt; 0
+
+        return headers
+      end
+
+      # looks in the environment first then in the config file
+      # for a specific option, accepts an optional default.
+      #
+      # raises an exception when it cant find a value anywhere
+      def get_env_or_option(env, opt, default=nil)
+        return ENV[env] if ENV.include?(env)
+        return @config.pluginconf[opt] if @config.pluginconf.include?(opt)
+        return default if default
+
+        raise(&#34;No #{env} environment or plugin.#{opt} configuration option given&#34;)
+      end
+
+      # looks for a config option, accepts an optional default
+      #
+      # raises an exception when it cant find a value anywhere
+      def get_option(opt, default=nil)
+        return @config.pluginconf[opt] if @config.pluginconf.include?(opt)
+        return default if default
+
+        raise(&#34;No plugin.#{opt} configuration option given&#34;)
+      end
+
+      # gets a boolean option from the config, supports y/n/true/false/1/0
+      def get_bool_option(opt, default)
+        return default unless @config.pluginconf.include?(opt)
+
+        val = @config.pluginconf[opt]
+
+        if val =~ /^1|yes|true/
+          return true
+        elsif val =~ /^0|no|false/
+          return false
+        else
+          return default
+        end
+      end
+
+      def make_target(agent, type, collective, target_node=nil)
+        raise(&#34;Unknown target type #{type}&#34;) unless [:directed, :broadcast, :reply, :request, :direct_request].include?(type)
+        raise(&#34;Unknown collective &#39;#{collective}&#39; known collectives are &#39;#{@config.collectives.join &#39;, &#39;}&#39;&#34;) unless @config.collectives.include?(collective)
+
+        prefix = @config.topicprefix
+
+        case type
+          when :reply
+            suffix = :reply
+          when :broadcast
+            suffix = :command
+          when :request
+            suffix = :command
+          when :direct_request
+            agent = nil
+            prefix = @config.queueprefix
+            suffix = Digest::MD5.hexdigest(target_node)
+          when :directed
+            agent = nil
+            prefix = @config.queueprefix
+            # use a md5 since hostnames might have illegal characters that
+            # the middleware dont understand
+            suffix = Digest::MD5.hexdigest(@config.identity)
+        end
+
+        [&#34;#{prefix}#{collective}&#34;, agent, suffix].compact.join(@config.topicsep)
+      end
+    end
+  end
+end
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline&#34;&gt;http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://projects.puppetlabs.com/issues/17804&#34;&gt;http://projects.puppetlabs.com/issues/17804&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M&#34;&gt;https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library&#34;&gt;http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://anonscm.debian.org/gitweb/?p=pkg-puppet/mcollective.git;a=blob;f=debian/mcollective-common.install;h=829ef98bbed0822f0bdb7fdcd755403b72b4563f;hb=d4d5f2573d82fd565e0c6b460677e05000e53cda&#34;&gt;http://anonscm.debian.org/gitweb/?p=pkg-puppet/mcollective.git;a=blob;f=debian/mcollective-common.install;h=829ef98bbed0822f0bdb7fdcd755403b72b4563f;hb=d4d5f2573d82fd565e0c6b460677e05000e53cda&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/puppetlabs/marionette-collective/tree/master/spec&#34;&gt;https://github.com/puppetlabs/marionette-collective/tree/master/spec&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J&#34;&gt;https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>memcollective tricks</title>
+                <link rel="alternate" href="/2013/07/10/memcollective-tricks/" type="text/html" />
+                <id>/2013/07/10/memcollective-tricks/</id>
+                <updated>2013-07-10T21:22:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;mcollective-isms.  &lt;/p&gt;
+&lt;h4&gt;Find all hosts&lt;/h4&gt;
+&lt;p&gt;/usr/local/bin/mc-find-hosts&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#!/bin/bash
+if [ &#34;$1&#34; == &#34;&#34; ]; then
+    /usr/bin/mco find --wc mcollective
+else
+    /usr/bin/mco find $@
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;mc-find-hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Find host by name matching&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mc-find-hosts --with-id /foo/
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Find hosts by puppet class&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/usr/sbin/mc-find-hosts --with-class &amp;lt;class_name&amp;gt; | sort
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Query service status by class&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mco service --with-class /apache/ apache2 status
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Getting stats about the service itself&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mco rpc rpcutil daemon_stats
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Restarting a service&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mco service --with-identity &amp;lt;host&amp;gt; &amp;lt;service&amp;gt; restart
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Find agents directory&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;sudo find / -name rpcutil.ddl -exec dirname {} \;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Query a fact&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mco facts &amp;lt;fact_name&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Query Puppet Status and get JSON in return&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mco rpc puppet status -j
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>nix lights out failsafe</title>
+                <link rel="alternate" href="/2013/07/10/nix-lights-out-failsafe/" type="text/html" />
+                <id>/2013/07/10/nix-lights-out-failsafe/</id>
+                <updated>2013-07-10T19:08:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Just like for &lt;a href=&#34;http://rush898.github.io/2013/05/29/cisco-lights-out-failsafe/&#34;&gt;cisco&lt;/a&gt; a&lt;br&gt;
+scheduled reboot can be an aggressive but necessary recovery option.  If you are doing&lt;br&gt;
+iptables maintenance remote I always like to store my rules in a script and run them&lt;br&gt;
+without saving.  With a scheduled reboot pending locking myself out is a recoverable&lt;br&gt;
+offense.&lt;/p&gt;
+&lt;h4&gt;/usr/local/bin/rsched&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+#!/bin/bash
+if [ -z &#34;$1&#34; ]
+  then
+    echo &#34;Usage: $0 &lt;minutes_until_reboot&gt;&#34;
+    exit 1
+fi
+echo &#34;reboot interval $1 minutes&#34;
+now=`date +&#34;%s&#34;`
+#convert seconds to minutes
+future_time=`expr $1 \\* 60`
+rtime=`expr $now + $future_time`
+#convert epoch to shutdown friendly format
+time=`date -d @$rtime +&#34;%H:%M&#34;`
+echo $time
+#issue shutdown
+shutdown -k -r $time
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looks like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# rsched 10
+reboot interval 10 minutes
+14:11
+
+The system is going DOWN for reboot in 10 minutes!/0) (Wed Jul 10 14:01:57 20
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Scheduling&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# nohup rsched 10 &amp;amp;
+
+Broadcast message from root@vm (Wed Jul 10 14:03:02 2013):
+
+The system is going DOWN for reboot in 10 minutes!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;do my fw maint&lt;/em&gt;&lt;/p&gt;
+&lt;h4&gt;Canceling&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# fg
+nohup rsched 10
+
+&amp;lt;cntrl+c&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;p&gt;redirect bg process with &amp;amp;&amp;gt; /tmp/reboot&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>cli password generation</title>
+                <link rel="alternate" href="/2013/07/10/cli-password-generation/" type="text/html" />
+                <id>/2013/07/10/cli-password-generation/</id>
+                <updated>2013-07-10T18:35:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I have seen usage of &lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;http://www.pctools.com/guides/password/&lt;/a&gt; and similar sites.  This &lt;br&gt;
+is less than ideal.  APG is my generator of choice.&lt;/p&gt;
+&lt;h4&gt;Six twelve character choices&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# apg -m 12
+recEbrArkyan
+eevocdeirpUd
+tejvivFedAt*
+loolNuag&amp;gt;olk
+ejfoctOdofmu
+pidChiemp2of
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Six twelve character choices with phonetics&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# apg -m 12 -t
+daHedVuobgis (da-Hed-Vu-ob-gis)
+lokhanKujTue (lok-han-Kuj-Tue)
+ebviHeetsos$ (eb-vi-Heets-os-DOLLAR_SIGN)
+agborjotnans (ag-borj-ot-nans)
+RutElAmJomt8 (Rut-El-Am-Jomt-EIGHT)
+DeOsacFerhyu (De-Os-ac-Fer-hyu)
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;One twelve character password&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# apg -m 12 -t -n 1
+JetHikAgVup1 (Jet-Hik-Ag-Vup-ONE)
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;One twelve character password with readback&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# apg -m 12 -t -n 1 -l
+yoawhathuct3 (yoaw-hat-huct-THREE) yankee-oscar-alfa-whiskey-hotel-alfa-tango-hotel-uniform-charlie-tango-THREE
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Increasing randomness with manual entry&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# apg -m 12 -t -n 1 -l -s
+Please enter some random data (only first 16 are significant)
+(eg. your old password):&amp;gt;
+yufNifEyLyff (yuf-Nif-Ey-Lyff) yankee-uniform-foxtrot-November-india-foxtrot-Echo-yankee-Lima-yankee-foxtrot-foxtrot
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;http://www.pctools.com/guides/password/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.linux-magazine.com/Online/Features/Testing-Password-Quality&#34;&gt;http://www.linux-magazine.com/Online/Features/Testing-Password-Quality&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://help.ubuntu.com/community/StrongPasswords#Installing%20APG&#34;&gt;https://help.ubuntu.com/community/StrongPasswords#Installing%20APG&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>when search tells the story</title>
+                <link rel="alternate" href="/2013/07/08/when-search-tells-the-story/" type="text/html" />
+                <id>/2013/07/08/when-search-tells-the-story/</id>
+                <updated>2013-07-08T01:08:00Z</updated>
+                
+                <summary type="html">The first and second results for &amp;#39;linux emoji font&amp;#39; are from&lt;br&gt;
+the same person, and in total opposition.  I don&amp;#39;t know this&lt;br&gt;
+person at all; I just found the rankings humorous.</summary>
+                <content type="html">&lt;p&gt;The first and second results for &amp;#39;linux emoji font&amp;#39; are from&lt;br&gt;
+the same person, and in total opposition.  I don&amp;#39;t know this&lt;br&gt;
+person at all; I just found the rankings humorous.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/emojinope.png&#34; alt=&#34;enabling emoji&#34; title=&#34;Emoji&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Emoji is basically japanese emoticons.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Emoji&#34;&gt;http://en.wikipedia.org/wiki/Emoji&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>virsh halting a host</title>
+                <link rel="alternate" href="/2013/07/02/virsh-halting-a-host/" type="text/html" />
+                <id>/2013/07/02/virsh-halting-a-host/</id>
+                <updated>2013-07-02T01:08:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;KVM is great but I&amp;#39;m aking a note so I remember because this command gives me pause every time.&lt;/p&gt;
+&lt;h4&gt;Sometimes &amp;#39;shutdown&amp;#39; in the virtual shell for KVM fails.&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;virsh # shutdown myvm
+Domain myvm is being shutdown
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;But...&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;114 myvm            running
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;In order to shutdown this host I use the &amp;#39;destroy&amp;#39; command.  Destroy does not&lt;br&gt;
+remove any files or otherwise permanently change the host data.  Which for me, &lt;br&gt;
+is unintuitive.  It does remove it from the list of hosts shown with the &amp;#39;list&amp;#39;&lt;br&gt;
+command.  Destroy is like pulling the plug.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;virsh #destroy myvm
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The command that does what I would expect destroy to do is: &amp;#39;undefine&amp;#39;.&lt;/p&gt;
+
+&lt;p&gt;Reference&lt;br&gt;
+&lt;a href=&#34;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&#34;&gt;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/&#34;&gt;http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>mysql cleanup</title>
+                <link rel="alternate" href="/2013/07/01/mysql-cleanup/" type="text/html" />
+                <id>/2013/07/01/mysql-cleanup/</id>
+                <updated>2013-07-01T01:08:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Show me my non-default databases:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;for d in $(mysql -u root -e &amp;#34;show databases&amp;#34; | \
+grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
+do echo $d; done
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Clean non-default databases:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;for d in $(mysql -u root -e &amp;#34;show databases&amp;#34; | \
+grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
+do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>puppetmaster_3 on debian</title>
+                <link rel="alternate" href="/2013/06/27/puppetmaster3-on-debian/" type="text/html" />
+                <id>/2013/06/27/puppetmaster3-on-debian/</id>
+                <updated>2013-06-27T01:07:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Getting puppetmaster 3.0 on Debian (still squeeze)&lt;/p&gt;
+
+&lt;p&gt;I am trying to test and I keep seeing:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Syntax error at &amp;#39;(&amp;#39;; expected &amp;#39;)&amp;#39; at /repo/modules/apache/manifests/module.pp:34 on node test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I have seen this before and I know it is a result of manifests written for &amp;gt;3.0, at least for this&lt;/p&gt;
+
+&lt;p&gt;specific issue.  That error is rather generic in general.&lt;/p&gt;
+&lt;h4&gt;Can I use backports?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude update
+aptitude -t squeeze-backports install puppetmaster
+
+--&amp;gt; puppet: Depends: puppet-common (= 2.6.2-5+squeeze6) but 2.6.2-5+squeeze8 is to be installed.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;No, backports is still pretty old.&lt;/p&gt;
+&lt;h4&gt;Using the Official Repo&lt;/h4&gt;
+&lt;p&gt;Luckily, PuppetEnterprises publishes a deb for adding their repo.  Similar to what rpmforge does for any&lt;br&gt;
+CentOS folks.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;wget http://apt.puppetlabs.com/puppetlabs-release-sqeeze.deb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;--&amp;gt; 2013-06-27 16:11:21 (159 MB/s) - “puppetlabs-release-squeeze.deb” saved [3440/3440]&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dpkg -i puppetlabs-release-squeeze.deb 
+cat /etc/apt/sources.list.d/puppetlabs.list
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+# Puppetlabs products
+deb http://apt.puppetlabs.com squeeze main
+deb-src http://apt.puppetlabs.com squeeze main
+
+# Puppetlabs dependencies
+deb http://apt.puppetlabs.com squeeze dependencies
+deb-src http://apt.puppetlabs.com squeeze dependencies
+
+# Puppetlabs devel (uncomment to activate)
+# deb http://apt.puppetlabs.com squeeze devel
+# deb-src http://apt.puppetlabs.com squeeze devel
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;sudo aptitude update
+apt-cache show puppetmaster
+
+--&amp;gt; Package: puppetmaster
+--&amp;gt; Version: 2.6.2-5+squeeze6
+
+
+aptitude install puppetmaster
+
+--&amp;gt; Package: puppetmaster
+--&amp;gt; ...
+--&amp;gt; Version: 3.2.2-1puppetlabs1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reference:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install&#34;&gt;http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.puppetlabs.com/guides/puppetlabs####&#34;&gt;http://docs.puppetlabs.com/guides/puppetlabs####&lt;/a&gt; package#### repositories.html&lt;br&gt;
+&lt;a href=&#34;http://packages.debian.org/search?keywords=puppetmaster&amp;amp;searchon=names&amp;amp;section=all&amp;amp;suite=squeeze-backports&#34;&gt;http://packages.debian.org/search?keywords=puppetmaster&amp;amp;searchon=names&amp;amp;section=all&amp;amp;suite=squeeze-backports&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://backports.debian.org/Instructions/&#34;&gt;http://backports.debian.org/Instructions/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>simple site loadtesting</title>
+                <link rel="alternate" href="/2013/06/17/simple-site-loadtesting/" type="text/html" />
+                <id>/2013/06/17/simple-site-loadtesting/</id>
+                <updated>2013-06-17T01:07:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Throwing some load at your setup and seeing how it reacts.&lt;/p&gt;
+
+&lt;p&gt;There is a difference between problem solving, and solving problems &lt;em&gt;at scale&lt;/em&gt;.&lt;/p&gt;
+&lt;h4&gt;Get some tools&lt;/h4&gt;
+&lt;p&gt;On your user host:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;aptitude install httping seige apache2 bc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;On your webserver:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;aptitude install htop
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Seige is a lowkey load test tool, httping is nice for measuring response times in a &lt;br&gt;
+consistent way while load testing, and apache is because we want the apache benchmark&lt;br&gt;
+tool or &amp;#39;ab&amp;#39;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root@&amp;lt;lhost&amp;gt;:~# which ab
+/usr/bin/ab
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Launching a test with seige: 3 concurrent users with 3 connections&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;~# siege -b -c 3 -r 3 &amp;lt;webserver&amp;gt;:80
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+** SIEGE 2.70
+** Preparing 3 concurrent users for battle.
+The server is now under siege...
+HTTP/1.1 200   0.01 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.01 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.01 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.00 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.00 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.00 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.00 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.00 secs:     146 bytes ==&gt; /
+HTTP/1.1 200   0.00 secs:     146 bytes ==&gt; /
+done.
+Transactions:                  9 hits
+Availability:             100.00 %
+Elapsed time:               0.01 secs
+Data transferred:           0.00 MB
+Response time:              0.00 secs
+Transaction rate:         900.00 trans/sec
+Throughput:             0.13 MB/sec
+Concurrency:                3.00
+Successful transactions:           9
+Failed transactions:               0
+Longest transaction:            0.01
+Shortest transaction:           0.00
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is not a great indicator of performance under load.&lt;/p&gt;
+
+&lt;p&gt;When I raise it to 3000 users at 10 requests I start seeing:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;descriptor table full sock.c:108: Too many open files
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So I raise the descriptor limit.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat /proc/sys/fs/file-max
+1645928
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can see your limits using:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ulimit -Sn
+ulimit -Hn
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now I see too much of:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;socket: connection timed out
+[error] socket: unable to connect sock.c:222: Operation already in progress
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So I&amp;#39;m not too happy with seige.  For some tests it seems ok.  For large test pools it hasn&amp;#39;t &lt;br&gt;
+won me over.  Then again the launching host isn&amp;#39;t that great so maybe it&amp;#39;s on my side.&lt;/p&gt;
+
+&lt;p&gt;A good compromise I found was:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;siege -b -c 1000 -r 3 &amp;lt;webserver&amp;gt;:80
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Trying ab...&lt;/h4&gt;
+&lt;p&gt;A thousand concurrent threads with a thousand requests.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ab -n 1000 -c 1000 http://&amp;lt;webserver&amp;gt;/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+This is ApacheBench, Version 2.3 &lt;$Revision: 655654 $&gt;
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking &lt;webserver&gt; (be patient)
+Completed 100 requests
+Completed 200 requests
+Completed 300 requests
+Completed 400 requests
+Completed 500 requests
+Completed 600 requests
+Completed 700 requests
+Completed 800 requests
+Completed 900 requests
+Completed 1000 requests
+Finished 1000 requests
+
+
+Server Software:        Apache/2.2.16
+Server Hostname:        &lt;webserver&gt;
+Server Port:            80
+
+Document Path:          /
+Document Length:        177 bytes
+
+Concurrency Level:      1000
+Time taken for tests:   0.656 seconds
+Complete requests:      1000
+Failed requests:        0
+Write errors:           0
+Total transferred:      453000 bytes
+HTML transferred:       177000 bytes
+Requests per second:    1523.82 [#/sec] (mean)
+Time per request:       656.246 [ms] (mean)
+Time per request:       0.656 [ms] (mean, across all concurrent requests)
+Transfer rate:          674.11 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       11   15   2.9     15      21
+Processing:     6  158 209.8     32     631
+Waiting:        5  158 209.9     32     631
+Total:         20  174 210.7     53     646
+
+Percentage of the requests served within a certain time (ms)
+  50%     53
+  66%    234
+  75%    237
+  80%    238
+  90%    642
+  95%    645
+  98%    646
+  99%    646
+ 100%    646 (longest request)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;ab gives great data, and can generate a lot of load with minimal impact on&lt;br&gt;
+the launching system.&lt;/p&gt;
+
+&lt;p&gt;I eventually settled on:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ab -k -n 2000000 -c 50 http://&amp;lt;webserver&amp;gt;/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Use http-keepalive (for consistency with production) at 2 million requests making 50&lt;br&gt;
+simultaneously.  These numbers were hitting a load of 8+ on my test server.  Anything &lt;br&gt;
+averaging over 3.5 in production would be flagged to look at, but load testing is all&lt;br&gt;
+about pushing limits.  &lt;/p&gt;
+
+&lt;p&gt;Getting macro numbers from ab.  Run your tests a lot and look at overall numbers.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;for i in {1..3}; do ab -n 1000 -c 1000 http://&amp;lt;webserver&amp;gt;/ &amp;gt;&amp;gt; test.txt; done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;What is the average response time for request in the 95th percentile?&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grep 95% test.txt | awk &amp;#39;{total = total + $2}END{print total}&amp;#39; 
+
+4556 #&amp;lt;-- total number
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I know I made 3 passes so my average 95th percentile response is:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo &amp;#34;4556 / 3&amp;#34; | bc
+
+1518 (ms)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This number is of limited value but adding your 95% through 100% and figuring out what&lt;br&gt;
+your response times are for 95th perctile and above can be useful.&lt;/p&gt;
+
+&lt;p&gt;Something like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grep -A 3 95% test.txt | awk &amp;#39;{total = total + $2}END{print total}&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;httping&lt;/h4&gt;
+&lt;p&gt;I like using httping in the background or on another host as a consistent measure of my&lt;br&gt;
+response times.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;httping -c 10 &amp;lt;webserver&amp;gt; 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This makes 10 requests that look like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;connected to &amp;lt;webserver&amp;gt;:80, seq=0 time=0.97 ms 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I like to flood the host with requests:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;httping &amp;lt;webserver&amp;gt;  -f
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://linuxaria.com/article/put-your-site-under-siege?lang=en&#34;&gt;http://linuxaria.com/article/put-your-site-under-siege?lang=en&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/&#34;&gt;http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm&#34;&gt;http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://httpd.apache.org/docs/2.2/programs/ab.html&#34;&gt;http://httpd.apache.org/docs/2.2/programs/ab.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.joedog.org/siege-home/&#34;&gt;http://www.joedog.org/siege-home/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://linux.die.net/man/1/siege&#34;&gt;http://linux.die.net/man/1/siege&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>carna internet map</title>
+                <link rel="alternate" href="/2013/06/17/carna-internet-map/" type="text/html" />
+                <id>/2013/06/17/carna-internet-map/</id>
+                <updated>2013-06-17T01:06:00Z</updated>
+                
+                <summary type="html">&lt;img src=&#34;/assets/images/carna.gif&#34; alt=&#34;carna&#34; title=&#34;botnet map&#34;&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;img src=&#34;/assets/images/carna.gif&#34; alt=&#34;carna&#34; title=&#34;botnet map&#34;&gt;&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.tripwire.com/state-of-security/it-security-data-protection/cyber-security/state-of-security-carna-botnet-ipv4-census-nsa-offensive-cyber-powers-2013-threat-report/&#34;&gt;http://www.tripwire.com/state-of-security/it-security-data-protection/cyber-security/state-of-security-carna-botnet-ipv4-census-nsa-offensive-cyber-powers-2013-threat-report/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://threatpost.com/carna-botnet-analysis-renders-scary-numbers-on-vulnerable-devices/&#34;&gt;http://threatpost.com/carna-botnet-analysis-renders-scary-numbers-on-vulnerable-devices/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blog.caida.org/best_available_data/2013/05/13/carna-botnet-scans/&#34;&gt;http://blog.caida.org/best_available_data/2013/05/13/carna-botnet-scans/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://seclists.org/fulldisclosure/2013/May/160&#34;&gt;http://seclists.org/fulldisclosure/2013/May/160&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Carna_Botnet&#34;&gt;http://en.wikipedia.org/wiki/Carna_Botnet&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>debian graphite install</title>
+                <link rel="alternate" href="/2013/06/15/debian-graphite-install/" type="text/html" />
+                <id>/2013/06/15/debian-graphite-install/</id>
+                <updated>2013-06-15T19:20:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Basic graphite install.&lt;/p&gt;
+&lt;h4&gt;Installs&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+aptitude update
+apt-get install -y python2.6 \
+                   python-pip \
+                   python-cairo \
+                   python-django \
+                   python-django-tagging \
+                   libapache2-mod-wsgi \
+                   python-twisted \
+                   python-memcache \
+                   python-pysqlite2 \
+                   python-simplejson \
+                   apache2 \
+                   libapache2-mod-wsgi
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+pip install whisper
+pip install carbon
+pip install graphite-web
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+wget https://raw.github.com/tmm1/graphite/master/examples/example-graphite-vhost.conf \
+     -O /etc/apache2/sites-available/graphite
+nano /etc/apache2/sites-available/graphite
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Example:&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+WSGISocketPrefix /var/run/apache2/wsgi
+
+ServerName &lt;your_server_url&gt;
+DocumentRoot &#34;/opt/graphite/webapp&#34;
+
+#Allow our external dashboards, etc queries
+Header set Access-Control-Allow-Origin &#34;*&#34;
+Header set Access-Control-Allow-Methods &#34;GET, OPTIONS&#34;
+Header set Access-Control-Allow-Headers &#34;origin, authorization, accept&#34;
+
+# I&#39;ve found that an equal number of processes &amp; threads tends
+# to show the best performance for Graphite (ymmv).
+WSGIDaemonProcess graphite processes=5 threads=5 display-name=&#39;%{GROUP}&#39; inactivity-timeout=120
+WSGIProcessGroup graphite
+WSGIApplicationGroup %{GLOBAL}
+WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
+
+WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi 
+
+#require radius for any access
+&lt;Location /&gt;
+    AuthType Basic
+    AuthName &#34;Graphite auth&#34;
+    #SETUP YOUR AUTH HERE
+&lt;/Location&gt;
+
+Alias /content/ /opt/graphite/webapp/content/
+&lt;Location &#34;/content/&#34;&gt;
+    SetHandler None
+&lt;/Location&gt;
+
+# XXX In order for the django admin site media to work you
+# must change @DJANGO_ROOT@ to be the path to your django
+# installation, which is probably something like:
+# /usr/lib/python2.6/site-packages/django
+Alias /media/ &#34;@DJANGO_ROOT@/contrib/admin/media/&#34;
+&lt;Location &#34;/media/&#34;&gt;
+    SetHandler None
+&lt;/Location&gt;
+
+# The graphite.wsgi file has to be accessible by apache. It won&#39;t
+# be visible to clients because of the DocumentRoot though.
+&lt;Directory /opt/graphite/conf/&gt;
+    Order deny,allow
+    Allow from all
+&lt;/Directory&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+cd /opt/graphite/conf/
+cp graphite.wsgi.example graphite.wsgi
+cp carbon.conf.example carbon.conf
+cp storage-schemas.conf.example storage-schemas.conf
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Setup django db&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;cd /opt/graphite/webapp/graphite
+python manage.py syncdb
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks Like&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+Could not import graphite.local_settings, using defaults!
+Could not import graphite.local_settings, using defaults!
+Creating table account_profile
+Creating table account_variable
+Creating table account_view
+Creating table account_window
+Creating table account_mygraph
+Creating table dashboard_dashboard_owners
+Creating table dashboard_dashboard
+Creating table events_event
+Creating table auth_permission
+Creating table auth_group_permissions
+Creating table auth_group
+Creating table auth_user_user_permissions
+Creating table auth_user_groups
+Creating table auth_user
+Creating table auth_message
+Creating table django_session
+Creating table django_admin_log
+Creating table django_content_type
+Creating table tagging_tag
+Creating table tagging_taggeditem
+
+You just installed Django&#39;s auth system, which means you don&#39;t have any superusers defined.
+Would you like to create one now? (yes/no): yes
+Username (Leave blank to use &#39;root&#39;): 
+E-mail address: 
+Error: That e-mail address is invalid.
+E-mail address: root@localhost.com
+Password: 
+Password (again): 
+Superuser created successfully.
+Installing index for account.Variable model
+Installing index for account.View model
+Installing index for account.Window model
+Installing index for account.MyGraph model
+Installing index for dashboard.Dashboard_owners model
+Installing index for auth.Permission model
+Installing index for auth.Group_permissions model
+Installing index for auth.User_user_permissions model
+Installing index for auth.User_groups model
+Installing index for auth.Message model
+Installing index for admin.LogEntry model
+Installing index for tagging.TaggedItem model
+No fixtures found.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Enable site in Apache&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;a2dissite default
+a2ensite graphite
+sudo chmod -R a+w /opt/graphite/storage
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Start things&lt;/h4&gt;
+&lt;p&gt;/opt/graphite/bin/carbon-cache.py start&lt;br&gt;
+/etc/init.d/apache2 restart&lt;/p&gt;
+&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;p&gt;Logs are located here: /opt/graphite/storage/log/webapp/&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://greenlegos.wordpress.com/2012/09/09/graphite-installation/&#34;&gt;http://greenlegos.wordpress.com/2012/09/09/graphite-installation/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>bash then and now</title>
+                <link rel="alternate" href="/2013/06/14/bash-then-and-now/" type="text/html" />
+                <id>/2013/06/14/bash-then-and-now/</id>
+                <updated>2013-06-14T17:31:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Very small doses of limited Bash wisdom.   Changes in my every day&lt;br&gt;
+Bash behavior that are small but overtime I think make me more productive.&lt;/p&gt;
+&lt;h4&gt;Going home&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ~
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Erasing contents of a file&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cat /dev/null &amp;gt; file
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt; file
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Navigating relative dir&amp;#39;s with cd&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd ../../..
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;uuu
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+alias u=&#39;cd .. &amp;&amp; ls&#39;
+alias uu=&#39;cd ../.. &amp;&amp; ls&#39;
+alias uuu=&#39;cd ../../.. &amp;&amp; ls&#39;
+alias uuuu=&#39;cd ../../../.. &amp;&amp; ls&#39;
+alias uuuuu=&#39;cd ../../../../..&amp;&amp; ls&#39;
+alias uuuuuu=&#39;cd ../../../../../.. &amp;&amp; ls&#39;
+alias uuuuuuu=&#39;cd ../../../../../../.. &amp;&amp; ls&#39;
+alias uuuuuuuu=&#39;cd ../../../../../../../.. &amp;&amp; ls&#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Switching between directories&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd /get/me/there
+cd /back/to/you
+cd /get/me/there
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cd /get/me/there
+cd /back/to/you
+cd -
+
+env | grep OLDPWD
+OLDPWD=/back/to/you
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Realizing I&amp;#39;m not ready to run a command yet&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;~#get#### stuff#### done &amp;lt;realizing now ready&amp;gt;
+&amp;lt;grab mouse, highlight, copy&amp;gt;
+&amp;lt;do pre-get#### stuff#### done&amp;gt;
+&amp;lt;grab mouse, click, paste&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;~#get#### stuff#### done &amp;lt;realizing now ready&amp;gt;
+&amp;lt;cntrl+a enter &amp;#39;:&amp;#39;&amp;gt;
+~#:get#### stuff#### done
+-bash: :get#### stuff#### done: command not found
+&amp;lt;ignore cmd not found&amp;gt;
+&amp;lt;do pre-get#### stuff#### done&amp;gt;
+&amp;lt;up arrow to cmd&amp;gt;
+&amp;lt;cntrl+a delete &amp;#39;:&amp;#39; and enter&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;No mouse required.&lt;/p&gt;
+&lt;h4&gt;Getting my boxes IP&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ifconfig
+
+&amp;lt;visually search for ip&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#ips
+eth0 10.0.0.1/16
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;bash aliases&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;alias ips=&amp;#39;ip brief&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+#IP SHORTCUTS
+ip () {
+    case &#34;$1&#34; in
+        &#39;br&#39;)
+            ip brief
+            ;;
+        &#39;brief&#39;)
+            sudo ip addr show | grep inet | grep -v 127 | awk &#39;{print $7, $2}&#39; | grep -v &#39;::&#39;
+            ;;
+        &#39;alias&#39;)
+            echo $&#34;Usage: ip 
+                         [alias|br|brief]&#34;
+            ;;
+        *)
+        sudo /bin/ip $@
+    esac
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Grepping files&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; cat /etc/services | grep telnet
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grep telnet /etc/services
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Exiting (hey...saves a few keystrokes)&lt;/h4&gt;
+&lt;p&gt;then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#exit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#e
+
+alias EXIT=&amp;#34;exit&amp;#34;
+alias e=&amp;#39;exit&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;New dir trees&lt;/h4&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir /one
+mkdir /one/two
+mkdir /one/two/three
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir -p one/two/three
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Show routing table&lt;/h4&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;route -n
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ip route show
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>puppet tagged runs</title>
+                <link rel="alternate" href="/2013/06/13/puppet-tagged-runs/" type="text/html" />
+                <id>/2013/06/13/puppet-tagged-runs/</id>
+                <updated>2013-06-13T01:05:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Updating only relevant Puppet configurations sections&lt;/p&gt;
+
+&lt;p&gt;As a puppet installation grows the list of used modules can get large.  Especially,&lt;br&gt;
+if you are pulling from &lt;a href=&#34;https://forge.puppetlabs.com/&#34;&gt;https://forge.puppetlabs.com/&lt;/a&gt;.  Testing in its final stages&lt;br&gt;
+is usually done via puppet to ensure repeatability.  The test runs get  longer and longer.&lt;/p&gt;
+&lt;h4&gt;A full catalog run with no expected changes&lt;/h4&gt;
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+sudo /usr/bin/puppet agent --test --logdest syslog&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+Info: Retrieving plugin&lt;br&gt;
+Info: Caching catalog for &lt;myhost&gt;&lt;br&gt;
+Info: Applying configuration version &amp;#39;1371116293&amp;#39;&lt;br&gt;
+Finished catalog run in 16.35 seconds&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;If you need to rerun this every time you are tweaking a config file 16 seconds can be a long time.&lt;/p&gt;
+
+&lt;p&gt;If you are only updating a module called &amp;#39;dhcp&amp;#39; you can do:&lt;/p&gt;
+
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+sudo /usr/bin/puppet agent --test --logdest syslog --tags dhcp&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+Info: Retrieving plugin&lt;br&gt;
+Info: Caching catalog for &lt;myhost&gt;&lt;br&gt;
+Info: Applying configuration version &amp;#39;1371116293&amp;#39;&lt;br&gt;
+Finished catalog run in 8.46 seconds&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This cut the time in half.  Doing tagged runs still compiles the entire update.  That is to&lt;br&gt;
+say, Puppet still runs in the usual way figuring out dependencies and such, but when it &lt;br&gt;
+comes to applicable changes it only looks for changes at the specified tagged resources.&lt;/p&gt;
+
+&lt;p&gt;If you put &amp;#39;--debug&amp;#39; into the update command you will see a lot of:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Debug: /Stage[main]/Mcollective::Client/Package[mcollective-client]: Not tagged with dhcp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This resource does not match the tag specified, and as such will not be updated.&lt;/p&gt;
+
+&lt;p&gt;Tags can be explicit or implicit.  That is to say you can assign them and there are some&lt;br&gt;
+that are assigned by design.  All class/module names are also tags.&lt;/p&gt;
+&lt;h4&gt;This automatically creates a tag called &amp;#39;hiera&amp;#39;:&lt;/h4&gt;
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+class hiera {&lt;br&gt;
+}&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;Resource types are generally given a tag as well.&lt;/h4&gt;
+&lt;p&gt;To update file resources only:&lt;/p&gt;
+
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+sudo /usr/bin/puppet agent --test --logdest syslog --tags file&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+Info: Retrieving plugin&lt;br&gt;
+Info: Caching catalog for &lt;myhost&gt;&lt;br&gt;
+Info: Applying configuration version &amp;#39;1371116293&amp;#39;&lt;br&gt;
+Finished catalog run in 12.39 seconds&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/puppet/2.7/reference/lang_tags.html&#34;&gt;http://docs.puppetlabs.com/puppet/2.7/reference/lang_tags.html&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>mysql full partition</title>
+                <link rel="alternate" href="/2013/06/13/mysql-full-partition/" type="text/html" />
+                <id>/2013/06/13/mysql-full-partition/</id>
+                <updated>2013-06-13T01:04:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Ever go to start mysql and there is not enough disk space.  We need to get&lt;br&gt;
+MySQL past disk full warnings.&lt;/p&gt;
+
+&lt;p&gt;I tried to:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/etc/init.d/mysql start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And saw:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/etc/init.d/mysql: ERROR: The partition with /var/lib/mysql is too full! ... failed!
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Usage&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;df -Th
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Filesystem    Type    Size  Used Avail Use% Mounted on
+/dev/sda1     ext3    7.6G  7.5G     0 100% /
+tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
+udev         tmpfs    244M  172K  244M   1% /dev
+tmpfs        tmpfs    249M     0  249M   0% /dev/shm
+overflow     tmpfs    1.0M  1.0M     0 100% /tmp
+.host:/trunk
+            vmhgfs    233G  127G  107G  55% /www/repo
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So I want to take a look at my top disk hogs:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;du -a | sort -nr | head
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+7920858 .
+5334316 ./var
+3137636 ./var/log
+1220480 ./usr
+1079740 ./var/cache
+1073176 ./var/cache/apt
+1040900 ./var/cache/apt/archives
+983716  ./var/lib
+888564  ./var/log/kern.log
+852852  ./var/log/messages
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like /var/log and apt cache are out of control.&lt;/p&gt;
+
+&lt;p&gt;many rm -fR&amp;#39;s later...&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+/dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
+tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
+udev         tmpfs    244M  172K  244M   1% /dev
+tmpfs        tmpfs    249M     0  249M   0% /dev/shm
+overflow     tmpfs    1.0M  1.0M     0 100% /tmp
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Let&amp;#39;s try to start:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/etc/init.d/mysql start
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Starting MySQL (Percona Server) database server: mysqld ..
+Checking for corrupt, not cleanly closed and upgrade needing tables..
+ERROR 1030 (HY000) at line 2: Got error 28 from storage engine
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine&#34;&gt;StackOverflow&lt;/a&gt; tells us this still means &amp;#39;not enough disk space&amp;#39;.&lt;/p&gt;
+
+&lt;p&gt;Obviously we need to clean up /tmp&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+/dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
+tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
+udev         tmpfs    244M  172K  244M   1% /dev
+tmpfs        tmpfs    249M     0  249M   0% /dev/shm
+overflow     tmpfs    1.0M  1.0M     0 100% /tmp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;rm -fR /tmp/*
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+/dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
+tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
+udev         tmpfs    244M  172K  244M   1% /dev
+tmpfs        tmpfs    249M     0  249M   0% /dev/shm
+overflow     tmpfs    1.0M     0  1.0M   0% /tmp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Ta-da&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/etc/init.d/mysql start
+
+Starting MySQL (Percona Server) database server: mysqld already running.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install tmpreaper
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://packages.debian.org/search?keywords=tmpreaper&#34;&gt;http://packages.debian.org/search?keywords=tmpreaper&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine&#34;&gt;http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.merriam-webster.com/dictionary/ta-da&#34;&gt;http://www.merriam-webster.com/dictionary/ta-da&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>code test beginnings</title>
+                <link rel="alternate" href="/2013/06/07/unit-test-beginnings/" type="text/html" />
+                <id>/2013/06/07/unit-test-beginnings/</id>
+                <updated>2013-06-07T19:11:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Testing your code as you go.  Writing &amp;#39;production&amp;#39; code is really a set of practices&lt;br&gt;
+rather than a specific coding ability.  Everyone breaks things.  When something breaks&lt;br&gt;
+we will all fix it.  The trick is to always know when something breaks.&lt;/p&gt;
+
+&lt;p&gt;How I currently see the world:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt; Write code&lt;/li&gt;
+&lt;li&gt; Run unit tests&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It continues on ...&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt; Run integration tests&lt;/li&gt;
+&lt;li&gt; Run QA/Functionality testing&lt;/li&gt;
+&lt;li&gt; Test at scale&lt;/li&gt;
+&lt;li&gt; Test monitoring&lt;/li&gt;
+&lt;li&gt; Test Security&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There are a lot of ways to break down this basic idea.  Some much better than this.  But I&lt;br&gt;
+feel like if you can visualize these 6 you are going in the right direction.&lt;/p&gt;
+&lt;h4&gt;Write Code&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;def what():
+    return &amp;#39;123&amp;#39;
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    print what()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is my big application.  When I run it I see.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+   123
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Unit Testing - Testing Small Things&lt;/h4&gt;
+&lt;p&gt;My idea of unittesting is if every function and class takes care of itself the entire&lt;br&gt;
+codebase is better off.&lt;/p&gt;
+
+&lt;p&gt;Doctest is a way to write small tests into the docstring.  Some people do not consider this&lt;br&gt;
+to be valid unittesting.  I think it&amp;#39;s a good start.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def what():
+    &amp;#34;&amp;#34;&amp;#34;
+    &amp;gt;&amp;gt;&amp;gt; what()
+    &amp;#39;123&amp;#39;
+    &amp;#34;&amp;#34;&amp;#34;
+    return &amp;#39;123&amp;#39;
+
+if __name__ == &amp;#39;__main__&amp;#39;:
+    what()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&amp;#39;python -m doctest t.py&amp;#39; returns nothing.&lt;/p&gt;
+&lt;h4&gt;But:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;#39;python -m doctest t.py  -v&amp;#39; returns useful output:
+
+
+Trying:
+    what()
+Expecting:
+    &amp;#39;123&amp;#39;
+ok
+1 items had no tests:
+    t
+1items passed all tests:
+   1 tests in t.what
+1 tests in 2 items.
+1 passed and 0 failed.
+Test passed.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Everything passed.  In the most basic sense the code in the doctstring returned expected results.&lt;/p&gt;
+
+&lt;p&gt;What if my function code changes and the doctest becomes invalid?&lt;/p&gt;
+
+&lt;p&gt;Change it to:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def what():
+    &amp;#34;&amp;#34;&amp;#34;
+    &amp;gt;&amp;gt;&amp;gt; what()
+    &amp;#39;1234&amp;#39;
+    &amp;#34;&amp;#34;&amp;#34;
+    return &amp;#39;123&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now we see:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+&lt;me&gt;:~$ python -m doctest t.py -v
+Trying:
+    what()
+Expecting:
+    &#39;1234&#39;
+**********************************************************************
+File &#34;t.py&#34;, line 3, in t.what
+Failed example:
+    what()
+Expected:
+    &#39;1234&#39;
+Got:
+    &#39;123&#39;
+1 items had no tests:
+    t
+**********************************************************************
+1 items had failures:
+   1 of   1 in t.what
+1 tests in 2 items.
+0 passed and 1 failed.
+***Test Failed*** 1 failures.
+&lt;me&gt;:~$ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;You can run this as a pre-commit hook and you will never break this function without knowing.&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mkdir repo
+cd repo
+git init
+nano pre-commit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Contents:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+python -m doctest *
+
+cd .git/hooks/
+ln -s ../../pre-commit pre-commit
+cd ../..
+git add -A
+git commit -m &amp;#39;test&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We see our failure message:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+**********************************************************************
+File &#34;t.py&#34;, line 5, in t.what
+Failed example:
+    what()
+Expected:
+    &#39;1234&#39;
+Got:
+    &#39;123&#39;
+**********************************************************************
+1 items had failures:
+   1 of   1 in t.what
+***Test Failed*** 1 failures.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;We can fix it and make good.&lt;/p&gt;
+&lt;h4&gt;One step up from &amp;#39;-m doctest&amp;#39;&lt;/h4&gt;
+&lt;p&gt;I like to use nose to run my tests.  It can handle tests written in multiple styles&lt;br&gt;
+and most code review tools integrate with it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;aptitude install python-nose
+
+nano pre-commit
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Contents:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+nosetests --all-modules --traverse-namespace --with-doctest --exe
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This output is more readable as your tests grow:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+&lt;me&gt;:~/no$ git commit -m &#39;nose&#39;
+F
+======================================================================
+FAIL: Doctest: t.what
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File &#34;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/doctest.py&#34;, line 2166, in runTest
+    raise self.failureException(self.format_failure(new.getvalue()))
+AssertionError: Failed doctest test for t.what
+  File &#34;/Users/&lt;me&gt;/no/t.py&#34;, line 3, in what
+
+----------------------------------------------------------------------
+File &#34;/Users/&lt;me&gt;/no/t.py&#34;, line 5, in t.what
+Failed example:
+    what()
+Expected:
+    &#39;1234&#39;
+Got:
+    &#39;123&#39;
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.006s
+
+FAILED (failures=1)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Separating your test from your function&lt;/h4&gt;
+&lt;p&gt;Ok up until now we have been validating our docstring and that is valuable.  But&lt;br&gt;
+it is also cluttered and can be unwieldy.  Writing a basic test function.  I also&lt;br&gt;
+added &amp;#39;-v&amp;#39; to the nosetest hook.&lt;/p&gt;
+
+&lt;p&gt;This function should literally start with &amp;#39;test&amp;#39;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+def test_what():
+    assert what() == &#39;123&#39;
+
+def what():
+    return &#39;123&#39;
+
+if __name__ == &#39;__main__&#39;:
+    print what()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looks like&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+t.test_what ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.002s
+
+OK
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Thus the groundlevel for self testing code.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://git-scm.com/book/en/Customizing-Git-Git-Hooks&#34;&gt;http://git-scm.com/book/en/Customizing-Git-Git-Hooks&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;https://nose.readthedocs.org/en/latest/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>IOS DDOS detection</title>
+                <link rel="alternate" href="/2013/06/05/cisco-ios-ddos-detection/" type="text/html" />
+                <id>/2013/06/05/cisco-ios-ddos-detection/</id>
+                <updated>2013-06-05T21:23:00Z</updated>
+                
+                
+                <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
+&lt;p&gt;Basic DDOS detection and defense on IOS FW&lt;/p&gt;
+&lt;h4&gt;Aliases&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;alias exec fstats show policy-firewall stats global
+alias exec zstats show policy-firewall stats zone
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;IOS Zone Based FW Config&lt;/h4&gt;
+&lt;p&gt;Per Zone&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;conf t
+parameter-map type inspect-zone ddos-detection
+ !this is per _your_ hosts not source hosts
+ tcp syn-flood rate per-destination &amp;lt;global_syn_flood_rate_limit_per_host&amp;gt;&amp;gt;
+ alert on
+ threat-detection basic-threat
+ !these alert limits should be changed to something reasonable for your environment
+ threat-detection rate syn-attack average-time-frame 600 average-threshold 100 burst-threshold 100
+ threat-detection rate inspect-drop average-time-frame 600 average-threshold 100 burst-threshold 100
+ threat-detection rate fw-drop average-time-frame 600 average-threshold 100 burst-threshold 100
+
+ !apply pmap to a zone
+ zone security ZONE_INTERNET
+  protection ddos-detection
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Global&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;parameter-map type inspect global
+ !if you want a global sessions threshold
+ session total 3000000
+ !syn flood limit before going to syn cookies globally
+ per-box tcp syn-flood limit 10000
+ alert on
+ !aging out sessions aggressively to help prevent table blocking
+ per-box aggressive-aging high percent 85 low percent 65
+ per-box max-incomplete 100000 aggressive-aging high percent 85 low percent 60
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Show Zone Stats&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;asr01#zstats
+Zone: ZONE_INTERNET
+Parameter-map: ddos-detection
+TCP SYN packet conform limit: 0
+TCP SYN packet exceed limit: 0
+Threat Detection Statistics:
+                        Average(eps)    Current(eps)    Threats Total Events
+10-min SYN attack:      0               0               0               0
+10-min FW inspect:      0               0               0               0
+10-min FW policy:       0               0               0               0
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Show Global Stats&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;Global (Per-Box) statistics
+Total Session Aggressive Aging Period Off, Event Count: 0
+
+         Half Open  
+Protocol Session Cnt     Exceed
+-------- -----------     ------
+All      0               0
+UDP      0               0
+ICMP     0               0
+TCP      0               0
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Logging Shows&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;6052: Jun 6 01:41:28.864: %IOSXE-4-PLATFORM: F0:
+cpp_cp: QFP:00 Thread:007 TS:00000106170032787836
+%THREAT_DEFENSE-4-TD_ERM_AVERAGE_THREAT:
+Event Rate Monitoring: Average threat identified.
+Interface [&amp;lt;your_interface&amp;gt;], event type [firewall inspection drops],
+average [101] configured threshold [100]
+TCP Syn Flood Half Open Count: 1, Exceed: 0
+Half Open Aggressive Aging Period Off, Event Count: 0
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>IOS history size</title>
+                <link rel="alternate" href="/2013/06/05/cisco-ios-history-size/" type="text/html" />
+                <id>/2013/06/05/cisco-ios-history-size/</id>
+                <updated>2013-06-05T21:23:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Changing your session buffer for better command navigation.&lt;/p&gt;
+&lt;h3&gt;Per VTY&lt;/h3&gt;
+&lt;p&gt;History buffer size in IOS is weird.  It&amp;#39;s per VTY.  So you have to &lt;br&gt;
+change it for all virtual terminals in service.&lt;/p&gt;
+
+&lt;p&gt;Your VTY configuration probably looks something like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;line vty 0 4
+ transport input ssh
+ escape-character 3
+line vty 5 15
+ transport input ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;Change settings for VTY&amp;#39;s&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;line vty 0 15
+ !256 is the max
+ history size 256
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;Alias&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;alias exec hg show history | include
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;Looks like:&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;your_device&amp;gt;#hg conf
+    hg conf
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>mib basics</title>
+                <link rel="alternate" href="/2013/06/05/mib-basics/" type="text/html" />
+                <id>/2013/06/05/mib-basics/</id>
+                <updated>2013-06-05T01:02:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;SNMP is nice but MIB translations can be a pain.  It can also be necessary for figuring&lt;br&gt;
+out what certain numbers mean in the MIB tree.&lt;/p&gt;
+&lt;h4&gt;Where does SNMP look for MIBs?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;net-snmp-config --default-mibdirs
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Make user specific directory (needs to be in above path)&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mkdir -p /home/&amp;lt;me&amp;gt;/.snmp/mibs
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Grab MIB data from Cisco (or wherever)&lt;/h4&gt;
+&lt;p&gt;Example MIB for Firewall info:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-UNIFIED-FIREWALL-MIB.my
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Copy to:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/home/&amp;lt;me&amp;gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Enable MIB&lt;/h4&gt;
+&lt;p&gt;Find out where SNMP is looking for configuration parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;net-snmp-config --snmpconfpath
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Edit your user snmp configuration (if path is included in above command)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;n /home/&amp;lt;me&amp;gt;/.snmp/snmp.conf
+mib +CISCO-UNIFIED-FIREWALL-MIB
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Try walking the top OID tree&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;snmpwalk -v2c &amp;lt;community&amp;gt; &amp;lt;remote_device_ip&amp;gt;
+
+MIB search path: /home/&amp;lt;me&amp;gt;/.snmp/mibs:/usr/share/mibs/site:/usr/share/snmp/mibs:/usr/share/mibs/iana:/usr/share/mibs/ietf:/usr/share/mibs/netsnmp
+Cannot find module (CISCO-SMI): At line 37 in /home/&amp;lt;me&amp;gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+Cannot find module (CISCO-FIREWALL-TC): At line 46 in /home/&amp;lt;me&amp;gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;What&amp;#39;s with?  &amp;#39;Cannot find module&amp;#39;&lt;/h4&gt;
+&lt;p&gt;This means there are MIB dependencies.  You can probably retrieve these from &lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2&#34;&gt;ftp://ftp.cisco.com/pub/mibs/v2&lt;/a&gt;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;/home/&amp;lt;me&amp;gt;/.snmp/mibs/CISCO-SMI
+/home/&amp;lt;me&amp;gt;/.snmp/mibs/CISCO-FIREWALL-TC
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Enable these MIBs as well.&lt;/p&gt;
+&lt;h4&gt;Walk the tree and enjoy MIB goodness&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;box&amp;gt;:~# snmpwalk -v2c -c &amp;lt;community&amp;gt; &amp;lt;remote_device_ip&amp;gt; &amp;gt;&amp;gt; snmpinfo.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Show me the basic SNMP catagories&lt;/h4&gt;
+&lt;p&gt;You can use cut to see the basics as a full snmpwalk can be a lot of data.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;cut -d: -f 1 snmpinfo.txt | uniq | sort
+
+SNMPv2-MIB
+Technical Support
+Copyright (c) 1986-2013 by Cisco Systems, Inc.
+SNMPv2-MIB
+DISMAN-EVENT-MIB
+SNMPv2-MIB
+IF-MIB
+RFC1213-MIB
+IP-MIB
+IP-FORWARD-MIB
+IP-MIB
+TCP-MIB
+UDP-MIB
+SNMPv2-SMI
+SNMPv2-MIB
+SNMPv2-SMI
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can check out DISMAN-EVENT-MIB using grep.  If you find a MIB you can use SNMPGET next time.&lt;/p&gt;
+&lt;h4&gt;Retrieve Uptime Using MIB&amp;#39;s and SNMPGET&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;box&amp;gt;:~# snmpget -v2c -c &amp;lt;community&amp;gt; &amp;lt;remote_device_ip&amp;gt; DISMAN-EVENT-MIB::sysUpTimeInstance
+
+DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.95
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my&#34;&gt;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my&#34;&gt;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml&#34;&gt;http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS&#34;&gt;http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://wiki.debian.org/SNMP&#34;&gt;http://wiki.debian.org/SNMP&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752&#34;&gt;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774&#34;&gt;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2&#34;&gt;ftp://ftp.cisco.com/pub/mibs/v2&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/contrib&#34;&gt;ftp://ftp.cisco.com/pub/mibs/contrib&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>email log alerts</title>
+                <link rel="alternate" href="/2013/06/05/email-log-alerts/" type="text/html" />
+                <id>/2013/06/05/email-log-alerts/</id>
+                <updated>2013-06-05T01:01:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Getting emails based on strings that appear in a log file.&lt;/p&gt;
+
+&lt;p&gt;Heavy duty logging platforms are nice but sometimes you have&lt;br&gt;
+to make do with the basics.&lt;/p&gt;
+&lt;h4&gt;Install&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install log2mail rsyslog
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Rsyslog configuration&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#one dir/file per receiver IP
+$template FILENAME,&amp;#34;/var/log/%fromhost-ip%/syslog.log&amp;#34;
+*.* ?FILENAME
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Editing log2mail config&lt;/h4&gt;
+&lt;p&gt;We want to match a text string in our log file.&lt;/p&gt;
+
+&lt;p&gt;Edit: /etc/log2mail/config/default&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+file = /var/log/&lt;IP&gt;/syslog.log
+    pattern = &#34;&lt;YOUR_TEXT_PATTERN&gt;&#34;
+    mailto = &lt;you&gt;@&lt;yourdomain&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;The default alert email&lt;/h4&gt;
+&lt;p&gt;Once your string is matched you should get an email:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Hello!
+
+We have matched your pattern &amp;#34;&amp;lt;YOUR_TEXT_PATTERN&amp;gt;&amp;#34; in &amp;#34;&amp;lt;YOUR_LOG_FILE&amp;gt;&amp;#34; 5 times:
+
+&amp;lt;YOUR LOG FILE MATCHES&amp;gt;
+
+Yours,
+log2mail.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;To edit this default template you need to change: /etc/log2mail/mail&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://people.debian.org/%7Eenrico/log2mail/&#34;&gt;http://people.debian.org/~enrico/log2mail/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>adding a logfile to splunk</title>
+                <link rel="alternate" href="/2013/06/04/adding-a-logfile-to-splunk/" type="text/html" />
+                <id>/2013/06/04/adding-a-logfile-to-splunk/</id>
+                <updated>2013-06-04T18:38:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Getting standard logfiles into Splunk&lt;/h4&gt;
+&lt;p&gt;inputs.conf&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[monitor:///var/log/my/file.log]
+disabled = false
+followTail = 0
+host = &amp;lt;HOST&amp;gt;
+host_segment = 4
+sourcetype = &amp;lt;SOURCE_TYPE_NAME&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;You should add it to to logrotate, Splunk will &amp;#34;tail&amp;#34; it correctly
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>convert mp3 for asterisk</title>
+                <link rel="alternate" href="/2013/06/04/convert-mp3-for-asterisk/" type="text/html" />
+                <id>/2013/06/04/convert-mp3-for-asterisk/</id>
+                <updated>2013-06-04T01:01:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;I want to use mp3&amp;#39;s for hold music, and for fun.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Convert all mp3&amp;#39;s in a directory for use with asterisk.&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
+for f in `ls *.mp3` ; do FILE=$(basename $f .mp3) ; \
+ffmpeg -i $FILE.mp3 -ar 8000 -ac 1 -ab 64 $FILE.wav -ar 8000 \
+-ac 1 -ab 64 -f mulaw $FILE.pcm -map 0:0 -map 0:0 ; done
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Asterisk Configuration&lt;/h4&gt;
+&lt;p&gt;extensions.conf&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;; Answer required as Music On Hold does not answer the call
+exten =&amp;gt; 2112,1,Answer
+exten =&amp;gt; 2112,2,MusicOnHold(rush)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I used this to play 2112 whenever you dial extension 2112.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>iptables flush all rules</title>
+                <link rel="alternate" href="/2013/06/04/iptables-flush-all-rules/" type="text/html" />
+                <id>/2013/06/04/iptables-flush-all-rules/</id>
+                <updated>2013-06-04T01:01:00Z</updated>
+                
+                <summary type="html">Handy for testing.  Flush iptables.</summary>
+                <content type="html">&lt;p&gt;Handy for testing.  Flush iptables.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+iptables -F
+iptables -X
+iptables -t nat -F
+iptables -t nat -X
+iptables -t mangle -F
+iptables -t mangle -X
+iptables -P INPUT ACCEPT
+iptables -P FORWARD ACCEPT
+iptables -P OUTPUT ACCEPT
+iptables -L -n -v
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>simple iptables uses</title>
+                <link rel="alternate" href="/2013/06/04/simple-iptables-uses/" type="text/html" />
+                <id>/2013/06/04/simple-iptables-uses/</id>
+                <updated>2013-06-04T01:01:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Allow ssh from only 192 network (presumably your internal)&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Allow SCCP (VOIP Protocol)&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A INPUT -i eth0 -p tcp --dport 1720 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 1720 -m state --state ESTABLISHED -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Allow h.323 (VOIP)&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A INPUT -i eth0 -p tcp --dport 2000 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 2000 -m state --state ESTABLISHED -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Allow ICMP&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
+iptables -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Allow DNS queries, etc&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A OUTPUT -p udp -o eth0 --dport 53 -j ACCEPT
+iptables -A INPUT -p udp -i eth0 --sport 53 -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Allow mail sending&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A INPUT -i eth0 -p tcp --dport 25 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Allowing SSH and HTTP and self sourced traffic&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A INPUT -i eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -A OUTPUT -o eth0 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
+iptables -A INPUT -m state --state NEW,ESTABLISHED -j ACCEPT
+iptables -P INPUT DROP
+iptables -P FORWARD DROP
+iptables -P OUTPUT ACCEPT
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>query puppetdb facts from cli</title>
+                <link rel="alternate" href="/2013/06/03/query-puppetdb-facts-from-cli/" type="text/html" />
+                <id>/2013/06/03/query-puppetdb-facts-from-cli/</id>
+                <updated>2013-06-03T01:00:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;A need to get host facts when they are not up.  PuppetDB has cached them, and&lt;br&gt;
+I like the CLI.&lt;/p&gt;
+&lt;h4&gt;This doesn&amp;#39;t work like you think it does&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet facts find &amp;lt;myhost.com&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This always returns the facts for the &lt;em&gt;puppetmaster&lt;/em&gt; itself.&lt;/p&gt;
+&lt;h4&gt;Setting Terminus&lt;/h4&gt;
+&lt;p&gt;If you want to query the puppetdb store directly set the terminus.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;puppet facts find &amp;lt;myhost.com&amp;gt; --terminus puppetdb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This returns the &amp;#39;right stuff&amp;#39;.  Beware it could be old because it&amp;#39;s last cached values.&lt;/p&gt;
+&lt;h4&gt;Readability Counts&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet facts find &amp;lt;myhost.com&amp;gt; --terminus puppetdb | python -m json.tool
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/puppetdb/latest/api/query/v2/fact-names.html&#34;&gt;http://docs.puppetlabs.com/puppetdb/latest/api/query/v2/fact-names.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/json.html&#34;&gt;http://docs.python.org/2/library/json.html&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>using snort on pcap</title>
+                <link rel="alternate" href="/2013/06/03/using-snort-on-pcap/" type="text/html" />
+                <id>/2013/06/03/using-snort-on-pcap/</id>
+                <updated>2013-06-03T01:00:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort&lt;br&gt;
+is running as as service inline or at least continually.  Sometimes things happen&lt;br&gt;
+outside of Snort&amp;#39;s purview or you are testing what Snort picks ups.&lt;/p&gt;
+&lt;h4&gt;Install tools&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install snort snort-rules
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Capture your traffic&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;sudo tcpdump -w test
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Generate snort report&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;snort -r test -c /etc/snort/snort.conf -l .
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;View Alerts&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;less alert 
+
+[**] [1:485:4] ICMP Destination Unreachable Communication Administratively Prohibited [**]
+[Classification: Misc activity] [Priority: 3] 
+05/19-01:23:00.201765 74.76.148.114 -&amp;gt; &amp;lt;my_ext_ip&amp;gt;
+ICMP TTL:241 TOS:0x0 ID:32480 IpLen:20 DgmLen:56
+Type:3  Code:13  DESTINATION UNREACHABLE: ADMINISTRATIVELY PROHIBITED,
+PACKET FILTERED
+** ORIGINAL DATAGRAM DUMP:
+&amp;lt;my_ext_ip&amp;gt;:80 -&amp;gt; 74.76.148.114:25657
+TCP TTL:47 TOS:0x0 ID:22893 IpLen:20 DgmLen:44
+Seq: 0x654B5258
+** END OF DUMP
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can edit your snort.conf for what kinds of signatures to look for.  ICMP can be a good indicator&lt;br&gt;
+of shenanigans but is also very noisy.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>bash boiler plate troubleshooting</title>
+                <link rel="alternate" href="/2013/05/30/bash-boiler-plate-troubleshooting/" type="text/html" />
+                <id>/2013/05/30/bash-boiler-plate-troubleshooting/</id>
+                <updated>2013-05-30T01:00:00Z</updated>
+                
+                
+                <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
+&lt;p&gt;I have a bash script that is being called multiple times instead of once.&lt;br&gt;
+I need to track down where it is being called from.&lt;/p&gt;
+
+&lt;p&gt;Boiler plate that is nice for troubleshooting&lt;/p&gt;
+&lt;h4&gt;Snippet&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+function trouble {
+    echo &#34;--------------------&#34;
+    date
+    echo &#34;whoami: $(whoami)&#34;
+    echo &#34;userid: $(id -u)&#34;
+    echo &#34;My pid is $$&#34;
+    echo &#34;working dir: $(pwd)&#34;
+    echo &#34;Called as: $0&#34;
+    echo &#34;Arguments: $@&#34;
+    echo &#34;user_pstree_begin&#34;
+    pstree $(whoami) -l
+    echo &#34;user_pstree_end&#34;
+    echo &#34;pid_pstree_begin&#34;
+    pstree -np $$
+    echo &#34;pid_pstree_end&#34;
+    echo &#34;--------------------&#34;
+}
+
+set -x
+epochtime=$(date +%s)
+file=&#34;/tmp/debug-$epochtime.log&#34;
+logger &#34;Creating: $file&#34;
+trouble &gt; $file
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looks like&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;me&gt;@&lt;host&gt;:~# cat /tmp/debug-1369940847.log 
+--------------------
+Thu May 30 12:07:27 PDT 2013
+whoami: &lt;me&gt;
+userid: 0
+My pid is 19891
+ps_tree_begin
+test.sh(19891)---pstree(19896)
+ps_tree_end
+working dir: /home/&lt;me&gt;
+Called as: ./test.sh
+Arguments: 
+--------------------
+&lt;me&gt;@&lt;host&gt;:~# 
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Syslog shows:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;host&amp;gt; &amp;lt;me&amp;gt;: Creating: /tmp/debug-1369940847.log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is especially helpful for cron jobs or background scripts.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>watching linux filesystem events</title>
+                <link rel="alternate" href="/2013/05/30/watching-linux-filesystem-events/" type="text/html" />
+                <id>/2013/05/30/watching-linux-filesystem-events/</id>
+                <updated>2013-05-30T01:00:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;When you need to watch file system events efficiently.&lt;/p&gt;
+&lt;h4&gt;Install user land tools:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install inotify-tools
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Waiting for a delete&lt;/h4&gt;
+&lt;p&gt;This waits for a file to be deleted and then echo&amp;#39;s:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+inotifywait -e delete_self ./hi/yes  &amp;amp;&amp;amp; echo &amp;#34;gone&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Waiting for a create&lt;/h4&gt;
+&lt;p&gt;This watches for files created in a directory and then echo&amp;#39;s.  This&lt;br&gt;
+is more appropriately done with the -m option in real life:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#!/bin/bash
+while true; do
+
+inotifywait -e create ./hi  &amp;amp;&amp;amp; echo &amp;#34;yo&amp;#34;
+done
+&lt;/code&gt;&lt;/pre&gt;&lt;h3&gt;Watching for changes in /home&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;
+#!/bin/bash
+while true; do
+    touch /var/log/changes
+    inotifywait -r -e create &#34;/home&#34; |
+    while read filename eventlist eventfile
+    do
+        echo &#34;see new $eventfile&#34;
+        echo &#34;creation $eventfile&#34; &gt;&gt; /var/log/changes
+    done
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.infoq.com/articles/inotify-linux-file-system-event-monitoring&#34;&gt;http://www.infoq.com/articles/inotify-linux-file-system-event-monitoring&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://pyinotify.sourceforge.net/&#34;&gt;http://pyinotify.sourceforge.net/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.ibm.com/developerworks/library/l-inotify/&#34;&gt;http://www.ibm.com/developerworks/library/l-inotify/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blog.lagentz.com/general/automate-your-shell-scripts-using-inotify-and-inotifywait/&#34;&gt;http://blog.lagentz.com/general/automate-your-shell-scripts-using-inotify-and-inotifywait/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://linux.die.net/man/1/inotifywait&#34;&gt;http://linux.die.net/man/1/inotifywait&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>launching a syn flood test</title>
+                <link rel="alternate" href="/2013/05/29/launching-a-syn-flood-test/" type="text/html" />
+                <id>/2013/05/29/launching-a-syn-flood-test/</id>
+                <updated>2013-05-29T17:43:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Launching a SYN flood.&lt;/p&gt;
+
+&lt;p&gt;Everyone know DDOS attacks happen and of these SYN floods may be the simplest to organize for&lt;br&gt;
+attackers.  As a defender you don&amp;#39;t want the first time you see this kind of traffic to&lt;br&gt;
+be when you are under attack.&lt;/p&gt;
+&lt;h4&gt;Launching a SYN attack against yourself.&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;You can learn some tools of the trade&lt;/li&gt;
+&lt;li&gt;You can test the weakness of your services&lt;/li&gt;
+&lt;li&gt;You can mitigate those weaknesses&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;Picking a tool&lt;/h4&gt;
+&lt;p&gt;A tool that is simple to use: &lt;a href=&#34;https://github.com/merces/t50&#34;&gt;https://github.com/merces/t50&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;git clone https://github.com/merces/t50.git
+cd t50/
+make
+./t50 --help
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now you have a compiled attack tool and the help is pretty large.  &lt;/p&gt;
+&lt;h4&gt;Launching a SYN Flood&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;./t50 &amp;lt;DEST_IP&amp;gt; --flood -S --turbo
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks like&lt;/h4&gt;
+&lt;p&gt;Start:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;entering in flood mode...
+activating turbo...
+hit CTRL+C to break.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Finish:    &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;T50 5.4.1 successfully launched on May 28th 2013 13:09:24
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;n the destination host:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Traffic:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;
+    tx eth0: 1168 b/s rx eth0: 528 b/s
+    tx eth0: 1056 b/s rx eth0: 9160 b/s
+    tx eth0: 8616 b/s rx eth0: 528 b/s
+    tx eth0: 4944 b/s rx eth0: 528 b/s
+
+        *syn flood starts**
+
+    tx eth0: 10 Mb/s rx eth0: 12 Mb/s
+    tx eth0: 36 Mb/s rx eth0: 43 Mb/s
+    tx eth0: 38 Mb/s rx eth0: 46 Mb/s
+    tx eth0: 39 Mb/s rx eth0: 47 Mb/s
+    tx eth0: 39 Mb/s rx eth0: 47 Mb/s
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Logging (NOTE: SYN Cookies are enabled)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;
+    possible SYN flooding on port 5666. Sending cookies.
+    possible SYN flooding on port 5666. Sending cookies.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Connection Table&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;
+    while true; do netstat -n -p TCP tcp | grep  SYN_RECV | wc -l &gt;&gt; /tmp/syn.log; sleep 2; done
+
+    0
+    5
+    6
+    3
+    2
+    ...
+    **syn flood**
+    ...
+    142
+    140
+    144
+    143
+    142
+    142
+    143
+    142
+    141
+    141
+    140
+    137
+    138
+    140
+    142
+    142
+    142
+    145
+    144
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Effect:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Massive lag in responsiveness for CLI commands&lt;/li&gt;
+&lt;li&gt;Simple web server with (python -m SimpleHTTPServer) crashed&lt;/li&gt;
+&lt;li&gt;Top shows ksoftirqd/0 pegging CPU&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Guidance on size of flood:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;./t50 &amp;lt;target&amp;gt; --threshold 10000 -S #4Mbps
+./t50 &amp;lt;target&amp;gt; --threshold 20000 -S #8Mbps
+./t50 &amp;lt;target&amp;gt; --threshold 40000 -S #16Mbps
+
+#more or less consisten 4Mbps flood
+for i in {1..100}; do ./t50 &amp;lt;target&amp;gt; --threshold 10000 -S; sleep 3; done
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html&#34;&gt;http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.sans.org/security-resources/idfaq/syn_flood.php&#34;&gt;http://www.sans.org/security-resources/idfaq/syn_flood.php&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cs.wm.edu/%7Ehnw/paper/attack.pdf&#34;&gt;http://www.cs.wm.edu/~hnw/paper/attack.pdf&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&#34;&gt;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/&#34;&gt;http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/merces/t50&#34;&gt;https://github.com/merces/t50&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded&#34;&gt;http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&#34;&gt;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://h4xors.wordpress.com/tag/t50/&#34;&gt;http://h4xors.wordpress.com/tag/t50/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>cisco lights out failsafe</title>
+                <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
+                <id>/2013/05/29/cisco-lights-out-failsafe/</id>
+                <updated>2013-05-29T01:00:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices&lt;br&gt;
+your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates&lt;br&gt;
+the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some&lt;br&gt;
+nice &amp;quot;fail back to my previous config&amp;quot; logic that Cisco hasn&amp;#39;t figured out yet.  Yes, this will&lt;br&gt;
+obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best&lt;br&gt;
+you can do.&lt;/p&gt;
+&lt;h4&gt;Walk through:&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;It&amp;#39;s 2 AM and I&amp;#39;m up for maintenace&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload in 30
+System configuration has been modified. Save? [yes/no]: no
+Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+Proceed with reload? [confirm]
+myrtr#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** Making changes *** &lt;/p&gt;
+
+&lt;p&gt;*** How long until a reset? ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#show reload
+Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** test everything is good -- ok clear scheduled reload ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload cancel
+***
+*** --- SHUTDOWN ABORTED ---
+***
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>beginning bgp configuration</title>
+                <link rel="alternate" href="/2013/05/29/beginning-bgp-configuration/" type="text/html" />
+                <id>/2013/05/29/beginning-bgp-configuration/</id>
+                <updated>2013-05-29T00:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h5&gt;Preamble&lt;/h5&gt;
+&lt;p&gt;Getting going with BGP&lt;/p&gt;
+&lt;h4&gt;Configuring Basic BGP (full table)&lt;/h4&gt;
+&lt;p&gt;This configuration is Cisco based but JunOS isn&amp;#39;t too far of a stretch in my experience.&lt;/p&gt;
+
+&lt;p&gt;First off: you need your ASN.  You need your address block.  Your address block must be at least /24.&lt;/p&gt;
+
+&lt;p&gt;A general rule of thumb for awhile has been 2 GB of memory per full BGP table.  Sometimes more is&lt;br&gt;
+required and sometimes significantly less.  The table is still growing and 2 GB is my personal&lt;br&gt;
+baseline required.&lt;/p&gt;
+&lt;h4&gt;Aliases: you will learn to like them&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;alias exec sumbgp6 show bgp ipv6 unicast summary
+alias exec sumbgp show ip bgp summary
+alias exec sbgp show run | section bgp
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Basic BGP stanza&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+config t
+ip bgp-community new-format
+!insert your ASN
+router bgp &lt;OUR_ASN&gt;
+ !your router id should be set explicitly
+ bgp router-id &lt;OUR_ROUTER_ID&gt;
+ no bgp fast-external-fallover
+ !notify syslog of bgp changes
+ bgp log-neighbor-changes
+ bgp graceful-restart restart-time 120
+ bgp graceful-restart stalepath-time 360
+ bgp graceful-restart
+ neighbor &lt;OUR_PROVIDER_IP&gt; remote-as &lt;YOUR_PROVIDERS_ASN&gt;
+ neighbor &lt;OUR_PROVIDER_IP&gt; description &lt;OUR_PROVIDERS_NAME&gt;
+ neighbor &lt;OUR_PROVIDER_IP&gt; version 4
+ neighbor &lt;OUR_PROVIDER_IP&gt; activate
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Our First BGP Summary&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+RTRME(config-router)####do sumbgp
+BGP router identifier &lt;OUR_ROUTER_ID&gt;, local AS number &lt;OUR_ASN&gt;
+BGP table version is 464187, main routing table version 464187
+446501 network entries using 66082148 bytes of memory
+446501 path entries using 28576064 bytes of memory
+73561/73558 BGP path/bestpath attribute entries using 9415808 bytes of memory
+69308 BGP AS-PATH entries using 2555070 bytes of memory
+68 BGP community entries using 1904 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 106630994 total bytes of memory
+BGP activity 460823/1679 prefixes, 461759/2621 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+&lt;OUR_PROVIDER_IP&gt;  4         2914   79993      80   464166    0    0 01:11:19   446501
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;BGP: Why you no work?&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+RTRME(config-router)####do sh ip bgp neighbor &lt;OUR_PROVIDER_IP&gt; advertised-routes
+
+Total number of prefixes 0 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;To Advertise it: We need to know where it is&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+RTRME(config)####sh ip bgp &lt;OUR_ADVERTISED_SUBNET&gt;
+% Network not in table
+
+RTRME(config)####ip route &lt;OUR_ADVERTISED_SUBNET&gt; &lt;OUR_ADVERTISED_SM&gt; null 0 200
+
+RTRME(config)####do sh ip bgp &lt;OUR_ADVERTISED_SUBNET&gt;
+BGP routing table entry for &lt;OUR_ADVERTISED_SUBNET&gt;, version 464822
+Paths: (1 available, best ####1, table default)
+Multipath: eBGP
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    0.0.0.0 from 0.0.0.0 (&lt;OUR_ROUTER_ID&gt;)
+      Origin IGP, metric 0, localpref 100, weight 32768, valid, sourced, local, best
+RTRME(config)####
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Resetting BGP&lt;/h4&gt;
+&lt;p&gt;This is very aggressive and will reset your peering status.  Lookup soft in/out if&lt;br&gt;
+you are alreadying using BGP in production.&lt;br&gt;
+&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+RTRME####clear ip bgp *&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+&lt;h4&gt;Things we know about our neighbor&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;What is their status?&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+RTRME####sh ip bgp neighbors &lt;OUR_PROVIDER_IP&gt;
+BGP neighbor is &lt;OUR_PROVIDER_IP&gt;,  remote AS &lt;PROVIDER_ASN&gt;, external link
+ Description: &lt;OUR_PROVIDERS_NAME&gt;
+  BGP version 4, remote router ID &lt;OUR_PROVIDERS_RTR_ID&gt;
+  BGP state = Established, up for 00:02:11
+  Last read 00:00:03, last write 00:00:21, hold time is 180, keepalive interval is 60 seconds
+  Neighbor sessions:
+    1 active, is not multisession capable (disabled)
+  Neighbor capabilities:
+    Route refresh: advertised and received(new)
+    Four-octets ASN Capability: advertised and received
+    Address family IPv4 Unicast: advertised and received
+    Address family IPv4 Multicast: received
+    Graceful Restart Capability: advertised
+    Enhanced Refresh Capability: advertised
+    Multisession Capability: 
+    Stateful switchover support enabled: NO for session 1
+  Message statistics:
+    InQ depth is 0
+    OutQ depth is 0
+    
+                         Sent       Rcvd
+    Opens:                  1          1
+    Notifications:          0          0
+    Updates:                2      74253
+    Keepalives:             2          2
+    Route Refresh:          0          0
+    Total:                  5      74256
+  Default minimum time between advertisement runs is 30 seconds
+
+ For address family: IPv4 Unicast
+  Session: &lt;OUR_PROVIDER_IP&gt;
+  BGP table version 446725, neighbor version 442403/446725
+  Output queue size : 0
+  Index 3, Advertise bit 0
+  3 update-group member
+  Slow-peer detection is disabled
+  Slow-peer split-update-group dynamic is disabled
+                                 Sent       Rcvd
+  Prefix activity:               ----       ----
+    Prefixes Current:               1     446496 (Consumes 28575744 bytes)
+    Prefixes Total:                 1     446688
+    Implicit Withdraw:              0        159
+    Explicit Withdraw:              0         33
+    Used as bestpath:             n/a     446496
+    Used as multipath:            n/a          0
+
+                                   Outbound    Inbound
+  Local Policy Denied Prefixes:    --------    -------
+    AS_PATH loop:                       n/a          1
+    Bestpath from this peer:         442397        n/a
+    Invalid Path:                         2        n/a
+    Total:                           442399          1
+  Number of NLRIs in the update sent: max 1, min 0
+  Last detected as dynamic slow peer: never
+  Dynamic slow peer recovered: never
+  Refresh Epoch: 1
+  Last Sent Refresh Start-of-rib: never
+  Last Sent Refresh End-of-rib: never
+  Last Received Refresh Start-of-rib: never
+  Last Received Refresh End-of-rib: never
+                               Sent   Rcvd
+    Refresh activity:          ----   ----
+          Refresh Start-of-RIB          0          0
+      Refresh End-of-RIB            0          0
+          
+  Address tracking is enabled, the RIB does have a route to &lt;OUR_PROVIDER_IP&gt;
+  Connections established 3; dropped 2
+  Last reset 00:02:22, due to Peer closed the session
+  Transport(tcp) path-mtu-discovery is enabled
+  Graceful-Restart is enabled, restart-time 120 seconds, stalepath-time 360 seconds
+Connection state is ESTAB, I/O status: 1, unread input bytes: 0        
+Connection is ECN Disabled
+Mininum incoming TTL 0, Outgoing TTL 1
+Local host: &lt;LOCAL_IP&gt;, Local port: &lt;OUR_ASN&gt;
+Foreign host: &lt;OUR_PROVIDER_IP&gt;, Foreign port: 179
+Connection tableid (VRF): 0
+          
+Enqueued packets for retransmit: 0, input: 0  mis-ordered: 0 (0 bytes)
+          
+Event Timers (current time is 0x4FFF0E):
+Timer          Starts    Wakeups            Next
+Retrans             6          0             0x0
+TimeWait            0          0             0x0
+AckHold           583          8             0x0
+SendWnd             0          0             0x0
+KeepAlive           0          0             0x0
+GiveUp              0          0             0x0
+PmtuAger            1          0        0x572440
+DeadWait            0          0             0x0
+Linger              0          0             0x0
+          
+iss:  606418243  snduna:  606418426  sndnxt:  606418426     sndwnd:  65353
+irs:  236441019  rcvnxt:  244436657  rcvwnd:      15353  delrcvwnd:   1031
+
+SRTT: 176 ms, RTTO: 1244 ms, RTV: 1068 ms, KRTT: 0 ms
+minRTT: 94 ms, maxRTT: 397 ms, ACK hold: 200 ms
+Status Flags: none
+Option Flags: higher precendence, nagle, path mtu capable
+          
+Datagrams (max data segment is 1424 bytes):
+Rcvd: 5643 (out of order: 0), with data: 5627, total data bytes: 7995637
+Sent: 5645 (retransmit: 0 fastretransmit: 0),with data: 5, total data bytes: 182
+&lt;/code&gt;&lt;/pre&gt;
+      
+
+&lt;p&gt;&lt;em&gt;What are we advertising to them?&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+RTRME####sh ip bgp neighbors &lt;OUR_PROVIDER_IP&gt; advertised-routes 
+BGP table version is 447010, local router ID is &lt;OUR_ROUTER_ID&gt;
+Status codes: s suppressed, d damped, h history, * valid, &gt; best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, x best-external, f RT-Filter, a additional-path
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*&gt; &lt;OUR_ADVERTISED_SUBNET&gt;     0.0.0.0                  0         32768 i
+
+Total number of prefixes 1 
+&lt;/code&gt;&lt;/pre&gt;    
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a00800945ff.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a00800945ff.shtml&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://lg.above.net/lg.cgi&#34;&gt;http://lg.above.net/lg.cgi&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a0080094309.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a0080094309.shtml&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>monitor interface usage</title>
+                <link rel="alternate" href="/2013/05/28/monitor-interface-usage/" type="text/html" />
+                <id>/2013/05/28/monitor-interface-usage/</id>
+                <updated>2013-05-28T00:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I like to use utilities like iftop, but sometimes simple is better.  I found a small&lt;br&gt;
+example of this but I believe I have improved the conversions.&lt;/p&gt;
+&lt;h4&gt;Example found&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.madmadmod.com/sysadmin/54-how-to-get-the-current-network-bandwidth-usage-on-linux.html&#34;&gt;http://www.madmadmod.com/sysadmin/54-how-to-get-the-current-network-bandwidth-usage-on-linux.html&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;My version&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+#!/bin/bash
+
+if [ -z &#34;$1&#34; ]; then
+        echo
+        echo usage: $0 network-interface
+        echo
+        echo e.g. $0 eth0
+        echo
+        exit
+fi
+
+IF=$1
+
+function bytes2Mbps {
+    Mbps=`expr $1 \* 8 / 1048576`
+    echo $Mbps
+}
+
+while true
+do
+        R1=`cat /sys/class/net/$1/statistics/rx_bytes`
+        T1=`cat /sys/class/net/$1/statistics/tx_bytes`
+        sleep 1
+        R2=`cat /sys/class/net/$1/statistics/rx_bytes`
+        T2=`cat /sys/class/net/$1/statistics/tx_bytes`
+        TBPS=`expr $T2 - $T1`
+        RBPS=`expr $R2 - $R1`
+
+        TRATE=`bytes2Mbps $TBPS`
+        if [ $TRATE -lt 1 ]
+        then
+            TRATE=`expr $TBPS \* 8`
+            TRATE=&#34;$TRATE b/s&#34;
+        else
+            TRATE=&#34;$TRATE Mb/s&#34;
+        fi
+
+        RRATE=`bytes2Mbps $RBPS`
+        if [ $RRATE -lt 1 ]
+        then
+            RRATE=`expr $RBPS \* 8`
+            RRATE=&#34;$RRATE b/s&#34;
+        else
+            RRATE=&#34;$RRATE Mb/s&#34;
+        fi
+
+        echo &#34;tx $1: $TRATE rx $1: $RRATE&#34;
+done
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looks like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@&amp;lt;host&amp;gt;:~# ./bw.sh eth0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If throughput is less than 1Mbps you see:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tx eth0: 0 b/s rx eth0: 528 b/s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If greater than you get:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;tx eth0: 39 Mb/s rx eth0: 47 Mb/s
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>examining PXE boot</title>
+                <link rel="alternate" href="/2013/05/24/examining-pxe-boot/" type="text/html" />
+                <id>/2013/05/24/examining-pxe-boot/</id>
+                <updated>2013-05-24T00:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I have a host with MAC 00:30:48:60:f3:ca.  This host is configured to look&lt;br&gt;
+for a PXE server, but was not matching the correct profile.&lt;/p&gt;
+&lt;h4&gt;Verify my configuration&lt;/h4&gt;
+&lt;p&gt;dhcpd.conf:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+option PXE.mtftp-cport          code 2 = unsigned integer 16;
+option PXE.mtftp-sport          code 3 = unsigned integer 16;
+option PXE.mtftp-tmout          code 4 = unsigned integer 8;
+option PXE.mtftp-delay          code 5 = unsigned integer 8;
+option PXE.discovery-control    code 6 = unsigned integer 8;
+option PXE.discovery-mcast-addr code 7 = ip-address;
+
+authoritative;
+
+class &#34;PXEclients&#34; {
+    match if (
+          (substring (option vendor-class-identifier, 0, 9) = &#34;PXEClient&#34;)
+      or  (substring (option vendor-class-identifier, 0, 9) = &#34;Etherboot&#34;));
+    option vendor-class-identifier &#34;PXEClient&#34;;
+    vendor-option-space PXE;
+    option PXE.mtftp-ip 0.0.0.0;
+    filename &#34;PXElinux.0&#34;;
+    next-server &lt;PXE_server_ip&gt;;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;is DHCP serving correctly?&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;pxe/tftp/server&gt;.da.bootps &gt; &lt;otherhost&gt;.da.bootpc: BOOTP/DHCP, Reply, length 300
+&lt;dhcp_relay&gt;.bootps &gt; &lt;pxe/tftp/server&gt;.da.bootps: BOOTP/DHCP, Request from 00:30:48:60:f3:ca (oui Unknown), length 548
+&lt;pxe/tftp/server&gt;.da.bootps &gt; &lt;dhcp_relay&gt;.bootps: BOOTP/DHCP, Reply, length 319
+&lt;dhcp_relay&gt;.bootps &gt; &lt;pxe/tftp/server&gt;.da.bootps: BOOTP/DHCP, Request from 00:30:48:60:f3:ca (oui Unknown), length 548
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Is TFTP matching correctly?&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;me&gt;@&lt;pxe/tftp/server&gt;:~# tcpdump port 69
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
+10.0.254.247.2070 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  27 RRQ &#34;PXElinux.0&#34; octet tsize 0
+10.0.254.247.2071 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  32 RRQ &#34;PXElinux.0&#34; octet blksize 1456
+10.0.254.247.49152 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  79 RRQ &#34;PXElinux.cfg/53d19f64-d663-a017-8922-00304860f3ca&#34; octet tsize 0 blksize 1408
+10.0.254.247.49153 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  63 RRQ &#34;PXElinux.cfg/01-00-30-48-60-f3-ca&#34; octet tsize 0 blksize 1408
+10.0.254.247.49154 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  51 RRQ &#34;PXElinux.cfg/0A00FEF7&#34; octet tsize 0 blksize 1408
+10.0.254.247.49155 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  50 RRQ &#34;PXElinux.cfg/0A00FEF&#34; octet tsize 0 blksize 1408
+10.0.254.247.49156 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  49 RRQ &#34;PXElinux.cfg/0A00FE&#34; octet tsize 0 blksize 1408
+10.0.254.247.49157 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  48 RRQ &#34;PXElinux.cfg/0A00F&#34; octet tsize 0 blksize 1408
+10.0.254.247.49158 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  47 RRQ &#34;PXElinux.cfg/0A00&#34; octet tsize 0 blksize 1408
+10.0.254.247.49159 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  46 RRQ &#34;PXElinux.cfg/0A0&#34; octet tsize 0 blksize 1408
+10.0.254.247.49160 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  45 RRQ &#34;PXElinux.cfg/0A&#34; octet tsize 0 blksize 1408
+10.0.254.247.49161 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  44 RRQ &#34;PXElinux.cfg/0&#34; octet tsize 0 blksize 1408
+10.0.254.247.49162 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  50 RRQ &#34;PXElinux.cfg/default&#34; octet tsize 0 blksize 1408
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;PXE is looking for entries that match itself.  So PXE thinks it is:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;53d19f64-d663-a017-8922-00304860f3ca
+01-00-30-48-60-f3-ca
+0A00FEF7
+0A00FEF
+0A00FE
+0A00F
+0A00
+0A0
+0A
+0
+default
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;If you look in &amp;#39;/var/tftp/PXElinux.cfg&amp;#39; you see this:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pxe/tftp/server&amp;gt;:/var/tftp/PXElinux.cfg# ls -al
+-rw-r--r--  1 &amp;lt;me&amp;gt; &amp;lt;me&amp;gt; 1833 May  6 16:58 default
+-rw-r--r--  1 &amp;lt;me&amp;gt; &amp;lt;me&amp;gt; 1833 May  6 16:58 reinstall
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This means PXE found the default correctly but I wanted it to find another profile&lt;/p&gt;
+&lt;h4&gt;Create a new match:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;ln -s reinstall 01-00-30-48-60-f3-ca
+
+&amp;lt;me&amp;gt;@&amp;lt;pxe/tftp/server&amp;gt;:/var/tftp/PXElinux.cfg# ls -al
+lrwxrwxrwx  1 &amp;lt;me&amp;gt; &amp;lt;me&amp;gt;    9 May 24 15:02 01-00-30-48-60-f3-ca -&amp;gt; reinstall
+-rw-r--r--  1 &amp;lt;me&amp;gt; &amp;lt;me&amp;gt;  166 May  6 16:58 unattended
+-rw-r--r--  1 &amp;lt;me&amp;gt; &amp;lt;me&amp;gt; 1833 May  6 16:58 reinstall
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now I have a match for my PXE host to find that has non-default instructions.  An unattended install.&lt;/p&gt;
+&lt;h4&gt;Verify TFTP got the changes&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+&lt;me&gt;@&lt;pxe/tftp/server&gt;:~# tcpdump port 69
+lab01.da.2070 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  27 RRQ &#34;PXElinux.0&#34; octet tsize 0
+lab01.da.2071 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  32 RRQ &#34;PXElinux.0&#34; octet blksize 1456
+lab01.da.49152 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  79 RRQ &#34;PXElinux.cfg/53d19f64-d663-a017-8922-00304860f3ca&#34; octet tsize 0 blksize 1408
+lab01.da.49153 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  63 RRQ &#34;PXElinux.cfg/01-00-30-48-60-f3-ca&#34; octet tsize 0 blksize 1408
+lab01.da.49154 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  35 RRQ &#34;linux&#34; octet tsize 0 blksize 1408
+IP lab01.da.49155 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  39 RRQ &#34;initrd.gz&#34; octet tsize 0 blksize 1408
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;PXE has now matched and my host is reinstalling.&lt;/p&gt;
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://wiki.debian.org/PXEBootInstall&#34;&gt;http://wiki.debian.org/PXEBootInstall&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.debian.org/releases/stable/i386/ch04s05.html.en&#34;&gt;http://www.debian.org/releases/stable/i386/ch04s05.html.en&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://andys.org.uk/bits/2010/03/22/pxe-booting-a-debian-squeeze-install/&#34;&gt;http://andys.org.uk/bits/2010/03/22/pxe-booting-a-debian-squeeze-install/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>puppet cert signing</title>
+                <link rel="alternate" href="/2013/05/24/puppet-cert-signing/" type="text/html" />
+                <id>/2013/05/24/puppet-cert-signing/</id>
+                <updated>2013-05-24T00:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Setting up a new host with Puppet.  This assumes you have a Puppet Master already going.  One&lt;br&gt;
+nice thing to do is have a cname that forwards the &amp;#39;puppet&amp;#39; name to your Puppet Master so that&lt;br&gt;
+hosts find it easily as the default.&lt;/p&gt;
+&lt;h4&gt;Did a host have this name previously?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert -l -all | g foo.com
++ &amp;#34;foo.com&amp;#34;           (SHA1) &amp;lt;hash&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Remove old serverside cert&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert --clean foo.com 
+Revoked certificate with serial 596
+Removing file Puppet::SSL::Certificate foo.com at &amp;#39;/var/lib/puppet/ssl/ca/signed/foo.com.pem&amp;#39;
+Removing file Puppet::SSL::Certificate foo.com at &amp;#39;/var/lib/puppet/ssl/certs/foo.com.pem&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Request new cert on the client&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet agent --test
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Verify the request is now pending server side&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert -l
+&amp;#34;blah.com&amp;#34;           (SHA256) &amp;lt;hash&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Sign your cert&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert -s blah.com
+Signed certificate request for blah.com
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Run Puppet client side:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet agent --test
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;And done.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>puppet core dump control</title>
+                <link rel="alternate" href="/2013/05/23/puppet-core-dump-control/" type="text/html" />
+                <id>/2013/05/23/puppet-core-dump-control/</id>
+                <updated>2013-05-23T18:27:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;If you have crashes you can enable core dumps via Puppet&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;file { &amp;#39;/var/core&amp;#39;:
+    ensure =&amp;gt; directory,
+    mode   =&amp;gt; &amp;#39;1777&amp;#39;,
+}
+-&amp;gt;
+# %e = executable name
+# %t = timestamp
+# %p = pid
+sysctl { &amp;#39;kernel.core_pattern&amp;#39;: value =&amp;gt; &amp;#39;/var/core/core.%e.%t.%p&amp;#39; }
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;http://www.cyberciti.biz/tips/linux-core-dumps.html&#34;&gt;http://www.cyberciti.biz/tips/linux-core-dumps.html&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>puppet disables itself if disk fills up</title>
+                <link rel="alternate" href="/2013/05/23/puppet-disables-itself-if-disk-fills-up/" type="text/html" />
+                <id>/2013/05/23/puppet-disables-itself-if-disk-fills-up/</id>
+                <updated>2013-05-23T00:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;A quick note if someone is wondering why puppet has disabled itself.  Make sure&lt;br&gt;
+your disks have not filled up.  Not sure if only the /var partition will cause this&lt;br&gt;
+but in my case:&lt;/p&gt;
+&lt;h4&gt;This machine is behind on it&amp;#39;s configuration.&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;df -Th
+
+Filesystem    Type    Size  Used Avail Use% Mounted on
+/dev/sda1      xfs     94G  91G   91G   100% /
+
+puppet agent --test
+
+Skipping run of Puppet configuration client; administratively disabled 
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Once the space has been cleared&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet agent --enable &amp;amp;&amp;amp; puppet agent --test
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>ssh go forth and do my will</title>
+                <link rel="alternate" href="/2013/05/23/ssh-go-forth-and-do-my-will/" type="text/html" />
+                <id>/2013/05/23/ssh-go-forth-and-do-my-will/</id>
+                <updated>2013-05-23T00:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Commands run via SSH&lt;/p&gt;
+
+&lt;p&gt;Occassionally, I need to run a command on a remote host and I don&amp;#39;t have time to wait for&lt;br&gt;
+the output.  If success or failure isn&amp;#39;t a big deal I sometimes use the following method.&lt;/p&gt;
+&lt;h4&gt;ls remotely&lt;/h4&gt;
+&lt;p&gt;Let&amp;#39;s say I badly need a recursive ls on a box&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssh &amp;lt;me&amp;gt;@&amp;lt;server&amp;gt; &amp;#39;nohup ls -R &amp;amp;&amp;gt; /tmp/ls.txt &amp;amp;&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Breaking it down&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;ssh         -- obviously you need the client and server
+&amp;lt;me&amp;gt;@&amp;lt;server&amp;gt;   -- Please be using key based authentication
+&amp;#39;&amp;#39;          -- ssh will accept a one and done command instead of going fully interactive
+nohup       -- tell the command do not listen to HUP signal
+ls -R       -- for fun we need that file list
+&amp;amp;&amp;gt;          -- redirect output.  this is a newer version of this.
+/tmp/ls.txt     -- for me to look at later.  note /tmp does not survive reboots.
+&amp;amp;           -- run me in the background!
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;rush:~$ ssh rush@&amp;lt;server&amp;gt; &amp;#39;nohup sudo ls -R &amp;amp;&amp;gt; /tmp/ls.txt &amp;amp;&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;No output to speak of...like I said just go do it.&lt;/p&gt;
+&lt;h4&gt;What happened&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;rush:~$ ssh rush@&amp;lt;server&amp;gt; &amp;#39;cat /tmp/ls.txt&amp;#39;
+.:
+1.TXT
+bin
+git
+test.txt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Nohup&#34;&gt;http://en.wikipedia.org/wiki/Nohup&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh&#34;&gt;http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>syn cookies</title>
+                <link rel="alternate" href="/2013/05/23/syn-cookies/" type="text/html" />
+                <id>/2013/05/23/syn-cookies/</id>
+                <updated>2013-05-23T00:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;When you&amp;#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like&lt;br&gt;
+syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known&lt;br&gt;
+defenses is syn cookies.&lt;/p&gt;
+&lt;h4&gt;Who doesn&amp;#39;t like cookies?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;SYN cookies are particular choices of initial TCP sequence numbers by TCP servers.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Linux&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@&amp;lt;server&amp;gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+0
+
+root@&amp;lt;server&amp;gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of &lt;br&gt;
+enabling does not persist through a reboot.&lt;/p&gt;
+&lt;h4&gt;Cisco IOS Zone Based FW&lt;/h4&gt;
+&lt;p&gt;Global:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;parameter-map type inspect global
+    tcp syn-flood limit 20000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Zone:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;parameter-map type inspect-zone ddos-detection
+   tcp syn-flood rate per-destination 20000
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;NOTES:&lt;/p&gt;
+
+&lt;p&gt;SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.&lt;/p&gt;
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://cr.yp.to/syncookies.html&#34;&gt;http://cr.yp.to/syncookies.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.faqs.org/docs/securing/chap5sec56.html&#34;&gt;http://www.faqs.org/docs/securing/chap5sec56.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html&#34;&gt;http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://etherealmind.com/tcp-syn-cookies-ddos-defence/&#34;&gt;http://etherealmind.com/tcp-syn-cookies-ddos-defence/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&#34;&gt;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html&#34;&gt;http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/353411/syn-cookies-on-internal-machines&#34;&gt;http://serverfault.com/questions/353411/syn-cookies-on-internal-machines&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&#34;&gt;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>last puppet update</title>
+                <link rel="alternate" href="/2013/05/23/last-puppet-update/" type="text/html" />
+                <id>/2013/05/23/last-puppet-update/</id>
+                <updated>2013-05-23T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;When was this host last updated via puppet?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
+#prints time since last recorded puppet update
+#you know...for debugging
+last=`grep last_run /var/lib/puppet/state/last_run_summary.yaml | awk {&amp;#39;print $2&amp;#39;}`
+now=`date +%s`
+SECONDS=`expr $nowa - $last`
+MIN=`expr $SECONDS / 60`
+HOURS=`expr $MIN / 60`
+DAYS=`expr $HOURS / 24`
+
+echo &amp;#34;Since last puppet update&amp;#34;
+echo &amp;#39;seconds: &amp;#39;$SECONDS
+echo &amp;#39;minutes: &amp;#39;$MIN
+if [ $HOURS -gt 0 ]; then
+    echo &amp;#39;hours: &amp;#39;$HOURS
+fi
+
+if [ $HOURS -gt 0 ]; then
+    echo &amp;#39;hours: &amp;#39;$HOURS
+fi
+
+if [ $DAYS -gt 0 ]; then
+    echo &amp;#39;days: &amp;#39;$DAYS
+fi
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks like:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;Since last puppet update
+seconds: 1345
+minutes: 22
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;hours and days are only printed if present.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>beginning bgp</title>
+                <link rel="alternate" href="/2013/05/22/beginning-bgp/" type="text/html" />
+                <id>/2013/05/22/beginning-bgp/</id>
+                <updated>2013-05-22T01:00:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I remember hearing a lot of conflicting information about BGP when&lt;br&gt;
+I first started doing network admin stuff.  A lot of time BGP is part of an HA strategy and there&lt;br&gt;
+are people making business decisions surrounding the protocol itself.  This breakdown strives to be &lt;br&gt;
+accurate and laymen without being misleading.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Specific misconceptions:&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;You need a full time admin doing only BGP stuff.
+
+You can accidentally take down the Internet if you mess up.
+
+BGP is hard.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You do not need a &amp;#39;full time&amp;#39; guy thinking about BGP around the clock, although &lt;br&gt;
+you do need designated contacts for just-in-case scenarios.  If your providers are handling&lt;br&gt;
+their own business you don&amp;#39;t have to worry about taking down the Internet.  (Although some small&lt;br&gt;
+version of this happened to YouTube &lt;a href=&#34;http://www.macworld.com/article/1132256/networking.html&#34;&gt;http://www.macworld.com/article/1132256/networking.html&lt;/a&gt;).&lt;br&gt;
+BGP is no harder or easier than anything else.  I have seen configurations that boggle the mind&lt;br&gt;
+work for years.  Correctly administered BGP does involves some savy.&lt;/p&gt;
+&lt;h4&gt;What is BGP?&lt;/h4&gt;
+&lt;p&gt;Usually referring to the current version 4.  Just read it: &lt;a href=&#34;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&#34;&gt;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Seriously, What is BGP for though?&lt;/h4&gt;
+&lt;p&gt;In order to have a service (or anything) available on the Internet it needs to be announced.  Usually, your&lt;br&gt;
+Internet Provider does this announcing for you.  If you want to be the master of your own destiny you need to&lt;br&gt;
+announce yourself.  Literally, you say &amp;quot;here I am&amp;quot; to your provider.  Your provider talks to other providers&lt;br&gt;
+and before long everyone knows how to find you.  When a user connects to their Internet provider they send a&lt;br&gt;
+request for your service. Since you have made yourself known they can find you.&lt;/p&gt;
+
+&lt;p&gt;BGP is how we find people on the Internet.&lt;/p&gt;
+&lt;h4&gt;How can I start announcing myself?&lt;/h4&gt;
+&lt;p&gt;In order to announce that you exist you need to have IP addresses.  It&amp;#39;s a non-human way for tracking down a &lt;br&gt;
+resource; think phone numbers.  The gentlemen at ARIN keep a big list of addresses in use.  If&lt;br&gt;
+you want to use BGP; you need addressing.  If you want addressing; you talk to ARIN.  There are two simultaneous&lt;br&gt;
+IP address pools.  The old is IPv4 and we are scraping the bottom of the bucket.  That bucket&lt;br&gt;
+was large enough to get the Internet this far (4 Billion+ addresses with a large chunk carved out for special reservations).&lt;br&gt;
+The second bucket is called IPv6.  IPv6 is a much deeper bucket, 3.4 x 10 to the 38th power.  That is far, far, far&lt;br&gt;
+more addresses than IPv4 has available.  IPv6 has addresses reserved already for the Moon.  Seriously.&lt;/p&gt;
+
+&lt;p&gt;To get addresses you apply.  It&amp;#39;s that simple.  &lt;a href=&#34;https://www.arin.net/resources/request.html&#34;&gt;https://www.arin.net/resources/request.html&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;...almost that simple.&lt;/h4&gt;
+&lt;p&gt;IPv4 is a dwindling resource.  But it has been one for a long time.  In my experience, getting an IPv6 block&lt;br&gt;
+is very easy.  Getting an IPv4 block requires more justification.  Scarce resources are more valued.  Without a &lt;br&gt;
+block of my own addresses can I use BGP?  Well, maybe.  Some providers will allocate you a block of addresses&lt;br&gt;
+from their pool.  You don&amp;#39;t own them.  You may be able to advertise them out another provider if both providers&lt;br&gt;
+agree that is reasonable.  BGP is all about relationships.  No provider has to allow you to announce your block&lt;br&gt;
+on their network whether it has been issued to you or them.  Thankfully providers are in the business of making&lt;br&gt;
+money, and the only way to make money for them is to move traffic.  If you can get an address block of your very&lt;br&gt;
+own it is called Provider Independent Address Space.  Meaning you can take your addresses and move to any provider&lt;br&gt;
+that will have you.  If you talk a provider into allocating you a block of addresses it is called Provider Dependent&lt;br&gt;
+Address Space.  In order to change providers you have to change IP blocks.  It can be done.&lt;/p&gt;
+&lt;h4&gt;Understanding Addressing&lt;/h4&gt;
+&lt;p&gt;All address space given out is public information.  &lt;/p&gt;
+
+&lt;p&gt;Getting ARIN info for deviantART.com&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/bgp/arin-whois.png&#34; alt=&#34;arin query&#34; title=&#34;ARIN Whois&#34;&gt;&lt;br&gt;
+&lt;img src=&#34;/assets/images/bgp/arin-info.png&#34; alt=&#34;arin info&#34; title=&#34;ARIN Info&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;Yahoo: &lt;a href=&#34;http://whois.arin.net/rest/customer/C00146168&#34;&gt;http://whois.arin.net/rest/customer/C00146168&lt;/a&gt;&lt;br&gt;
+Mozilla: &lt;a href=&#34;http://whois.arin.net/rest/customer/C01111858&#34;&gt;http://whois.arin.net/rest/customer/C01111858&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Wait...They want my ASN?&lt;/h4&gt;
+&lt;p&gt;ASN is automomous system number.  It is both a technical and a nontechnical entity.  In a non-technical sense&lt;br&gt;
+it is a number assigned to networks under a singular control.  Some companies have multiple ASN&amp;#39;s, but in general&lt;br&gt;
+you join ARIN and you get an ASN.  This ASN is unique to you, and it is how providers will know you.  &lt;/p&gt;
+
+&lt;p&gt;BGP thinks in ASN&amp;#39;s.&lt;/p&gt;
+
+&lt;p&gt;It&amp;#39;s like this: You have a 1:1 relationship with your ASN, but a one-to-many relationship with your addressing space.&lt;/p&gt;
+
+&lt;p&gt;Sort of like:   You have a 1:1 relationship with your house address, but a one-to-many relationship for your house address&lt;br&gt;
+                to phone numbers associated with your address.&lt;/p&gt;
+
+&lt;p&gt;Just Read it: &lt;a href=&#34;http://en.wikipedia.org/wiki/Autonomous_System_(Internet)&#34;&gt;http://en.wikipedia.org/wiki/Autonomous_System_(Internet)&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Why ASN&amp;#39;s &lt;em&gt;AND&lt;/em&gt; IP addresses?&lt;/h4&gt;
+&lt;p&gt;When providers talk BGP to each other they refer to you and themselves by ASN number.  That&amp;#39;s the short version.&lt;/p&gt;
+
+&lt;p&gt;BGP is a routing protocol.  Most routing protocols rely on an addressing hierarchy.  Therefore it&amp;#39;s easy to follow&lt;br&gt;
+the numbers and find your destination.  If two roomates live in a house together and use the network 192.168.0.0/16&lt;br&gt;
+and they link up with their neighbors who use 172.16.0.0/16.  They can point routes at each other and communications happens.&lt;br&gt;
+If one roomate in the first house wants his own subnet they can break things down.  192.168.0.0/16 becomes 192.168.0.0/24 &lt;br&gt;
+(first roomate) AND 192.168.1.0/24 (second roomate).  But their neighbors still only use 192.168.0.0/16 as it&amp;#39;s &amp;#39;good enough&amp;#39;&lt;br&gt;
+to get to their house, and their house router knows how to distinguish between their rooms.&lt;/p&gt;
+
+&lt;p&gt;BGP exists on a larger playing field.  10.0.1.0/24 and 10.0.2.0/24 could be assigned to people or companies that have&lt;br&gt;
+no relationship to each other.  Addressing on the Internet is not assigned in a way that makes it contiguous.&lt;/p&gt;
+
+&lt;p&gt;It would be like if the two roomates were still using 192.168.0.0/24 and 192.168.1.0/24 but had now moved to different&lt;br&gt;
+addresses.  We would need to find a way to associate their IP block with their new location.  The location would be&lt;br&gt;
+the ASN and the address block ...would be the address block.&lt;/p&gt;
+
+&lt;p&gt;So when two routers talk BGP to each other they say: ASN 1 has 192.168.0.0/24.  ASN 2 has 192.168.1.0/24&lt;/p&gt;
+
+&lt;p&gt;So if BGPRouter1 says this to BGPRouter2.  BGPRouter1 has to be associated with an ASN too.  Let&amp;#39;s say BGPRouter1 has&lt;br&gt;
+ASN 3.  Now BGPRouter2 knows: when I need to get to ASN1 or ASN2 I send things to ASN3.  Like, if I need to mail this letter&lt;br&gt;
+to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
+&lt;h4&gt;Summation&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;BGP is how people find each other on the Internet.  Usually providers worry about it.&lt;/li&gt;
+&lt;li&gt;BGP is complex, but the basics are very straight forward.&lt;/li&gt;
+&lt;li&gt;BGP is fundamental to understanding the Internet.&lt;/li&gt;
+&lt;li&gt;ASN&amp;#39;s can be assigned by ARIN.  All you need to do is join.&lt;/li&gt;
+&lt;li&gt;Addressing can be assigned by ARIN.  All you need to do is apply.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&#34;&gt;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/IP_address&#34;&gt;http://en.wikipedia.org/wiki/IP_address&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>postfix ssl weak ciphers</title>
+                <link rel="alternate" href="/2013/05/21/postfix-ssl-weak-ciphers/" type="text/html" />
+                <id>/2013/05/21/postfix-ssl-weak-ciphers/</id>
+                <updated>2013-05-21T18:26:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Vuln&lt;/h4&gt;
+&lt;p&gt;Weak ciphers are detected as a level 4 vuln for most scanners.&lt;br&gt;&lt;br&gt;
+If you have to deal with PCI you know all level 4 and 5 vulns must be resolved.&lt;/p&gt;
+&lt;h4&gt;Resolution&lt;/h4&gt;
+&lt;p&gt;/etc/postfix/main.cf&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;# TLS parameters
+smtpd_use_tls=yes
+smtpd_tls_mandatory_ciphers = high
+smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5, DES
+smtpd_tls_security_level = encrypt
+#Ensure TLSv1
+# Preferred form with Postfix ≥ 2.5:
+smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;p&gt;Pre and post scans confirm all is well but...&lt;/p&gt;
+
+&lt;p&gt;Postfix is strange when it comes to SSL, and &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;smtpd_tls_security_level = encrypt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;implies&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ssl_only_use_tls = true.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;So if you have need for non-tls capable clients use caution.&lt;/p&gt;
+
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;https://community.qualys.com/docs/DOC-1141&#34;&gt;https://community.qualys.com/docs/DOC-1141&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.postfix.org/TLS_README.html#server_enable&#34;&gt;http://www.postfix.org/TLS_README.html#server_enable&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>simple deb from github python</title>
+                <link rel="alternate" href="/2013/05/21/simple-deb-from-github-python/" type="text/html" />
+                <id>/2013/05/21/simple-deb-from-github-python/</id>
+                <updated>2013-05-21T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;One of the things I do often is download projects from github.  Pypi is nice and so is pip, but&lt;br&gt;
+I like to have one reference for packages on a host.  If at all possible I prefer to make &lt;br&gt;
+binaries.  It is nice for reporting, and because we run our own internal repostories it affords&lt;br&gt;
+us certain advantages.&lt;/p&gt;
+&lt;h4&gt;Install a few packages:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install python-dev python-setuptools python-stdeb python-support
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Download a project: &lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;https://github.com/xb95/nagios-api.git&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;git clone https://github.com/xb95/nagios-api.git
+cd cd nagios-api/
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Making a Deb&lt;/h4&gt;
+&lt;p&gt;This where with traditional disutils you would do &lt;em&gt;python setup.py install&lt;/em&gt;&lt;/p&gt;
+
+&lt;p&gt;But we can also do...&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sudo python setup.py --command-packages=stdeb.command bdist_deb
+
+running bdist_deb
+running sdist_dsc
+working around Debian #548392, changing XS-Python-Version: to &amp;#39;current&amp;#39;
+CALLING dpkg-source -b nagios-api-1.2.1 nagios-api_1.2.1.orig.tar.gz (in dir deb_dist)
+dpkg-source: info: using source format `1.0&amp;#39;
+...
+dpkg-deb: building package `python-nagios-api&amp;#39; in `../python-nagios-api_1.2.1-1_all.deb&amp;#39;.
+dpkg-deb: warning: ignoring 1 warning about the control file(s)
+dpkg-genchanges -b &amp;gt;../nagios-api_1.2.1-1_amd64.changes
+dpkg-genchanges: binary-only upload - not including any source code
+dpkg-source --after-build nagios-api-1.2.1
+dpkg-buildpackage: binary only upload (no source included)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That was all it took to create a fully installable binary package:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;dpkg -i deb_dist/python-nagios-api_1.2.1-1_all.deb 
+
+Selecting previously deselected package python-nagios-api.
+(Reading database ... 38260 files and directories currently installed.)
+Unpacking python-nagios-api (from .../python-nagios-api_1.2.1-1_all.deb) ...
+Setting up python-nagios-api (1.2.1-1) ...
+Processing triggers for python-support ...
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;p&gt;Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always&lt;br&gt;
+this can be overcome, but if necessary then you can use:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python setup.py dh_make
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;https://pypi.python.org/pypi&#34;&gt;https://pypi.python.org/pypi&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://lists.debian.org/debian-python/2004/10/msg00017.html&#34;&gt;http://lists.debian.org/debian-python/2004/10/msg00017.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;https://github.com/xb95/nagios-api.git&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>basic redis python pubsub</title>
+                <link rel="alternate" href="/2013/05/17/basic-redis-python-pubsub/" type="text/html" />
+                <id>/2013/05/17/basic-redis-python-pubsub/</id>
+                <updated>2013-05-17T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I am serializing a dict as JSON and publishing it.  The subscriber will&lt;br&gt;
+receive and print.  It is not necessary to use JSON as redis has awesome&lt;br&gt;
+datatype compatibility with python: &lt;a href=&#34;http://redis.io/topics/data-types&#34;&gt;http://redis.io/topics/data-types&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using pubsub to distribute messages.  Often the &amp;#39;right way&amp;#39;.&lt;/p&gt;
+&lt;h4&gt;This is using python-redis from the debian repos:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;http://packages.debian.org/wheezy/python-redis
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Publishing an event:&lt;/h4&gt;
+&lt;p&gt;This is just an example.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+    import redis
+    import time
+    import json
+    r_server = redis.Redis(&#34;redis&#34;, db=1)
+    payload = {}
+    payload[&#39;event&#39;] = &#39;played with legos&#39;
+    payload[&#39;ts&#39;] = time.time()
+    json_values = json.dumps(payload, separators=(&#39;,&#39;, &#39;:&#39;))
+    r_server.publish(&#39;kidsgames&#39;, json_values)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Subscribing to events&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+    import redis
+    import time
+    import json
+    r_server = redis.Redis(&#34;redis&#34;, db=1)
+    r_server.subscribe(&#39;kidsgames&#39;)
+    while True:
+        for m in r_server.listen():
+            if m[&#39;type&#39;] == &#39;subscribe&#39;:
+                if m[&#39;data&#39;] == 1:
+                    log.info(&#39;subscribed to: %s&#39; % (m[&#39;channel&#39;]))
+            #this is what most pubsub submissions will match
+            elif m[&#39;type&#39;] == &#39;message&#39;:
+                #our payload is in the data field of the response
+                print json.loads(m[&#39;data&#39;])
+            else:
+                print m
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;http://redis.io/topics/pubsub&#34;&gt;http://redis.io/topics/pubsub&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>extract data with regex python</title>
+                <link rel="alternate" href="/2013/05/17/extract-data-with-regex-python/" type="text/html" />
+                <id>/2013/05/17/extract-data-with-regex-python/</id>
+                <updated>2013-05-17T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;When dealing with totally unstructured data sometimes it is necessary to go full regex.&lt;/p&gt;
+&lt;h4&gt;Extracting values from a string using regex&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+
+import re
+string = &#39;working on X000 for Y1111&#39;
+
+tag_matches = {&#39;x&#39;: &#39;X\d{1,6}&#39;,
+               &#39;y&#39;: &#39;Y\d{1,6}&#39;}
+
+for k, v in tag_matches.iteritems():
+    title_search = re.search(v, string, re.IGNORECASE)
+    if title_search:
+        print k, title_search.group(0)
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looks Like:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;y Y1111
+x X000
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;p&gt;One thing I see people do a lot is use regex to replace values in a string.  In python this&lt;br&gt;
+is as easy as.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;a = &amp;#39;one two three&amp;#39;
+print a.replace(&amp;#39;one&amp;#39;, &amp;#39;turtles&amp;#39;)
+turles two three
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>using graphite events</title>
+                <link rel="alternate" href="/2013/05/17/using-graphite-events/" type="text/html" />
+                <id>/2013/05/17/using-graphite-events/</id>
+                <updated>2013-05-17T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Graphite events allow you to overlay vertical bars on graphs for correlation of events&lt;br&gt;
+and trending data.  I know the &lt;a href=&#34;http://codeascraft.com/2010/12/08/track-every-release/&#34; title=&#34;etsy events&#34;&gt;etsy&lt;/a&gt;&lt;br&gt;
+guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That&lt;br&gt;
+is a nice and reliable way to do it, but if you are looking for more flexbility using the &lt;br&gt;
+native (&amp;#39;experimental&amp;#39;) events feature may be useful.&lt;/p&gt;
+&lt;h4&gt;Posting an event:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
+curl -X POST http://graphite/events/ -d &amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;did_stuff&amp;#34;, &amp;#34;tags&amp;#34; : &amp;#34;fun,times&amp;#34;}&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Retrieving events:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -X GET http://graphite/events/
+
+curl -X GET http://graphite/events/?tags=fun
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Show me only stuff starting at an epoch time:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -X GET http://graphite/events/?from=1368778407
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Getting lines on graphs&lt;/h4&gt;
+&lt;p&gt;Now you have an event that shows up on http://graphite/events and is retrievable by curl.&lt;/p&gt;
+&lt;h4&gt;Place it over your graph:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(events(&amp;#39;fun&amp;#39;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You can also go two tags deep which is similar in logic to a SQL join.  So the previous example&lt;br&gt;
+retrieves all &amp;#39;fun&amp;#39; tagged events.  Now we want to get &amp;#39;fun&amp;#39; and correlate with &amp;#39;times&amp;#39;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(events(&amp;#39;fun&amp;#39;, &amp;#39;times&amp;#39;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This returns all &amp;#39;fun&amp;#39; tagged events that also have &amp;#39;times&amp;#39; tags.&lt;/p&gt;
+&lt;h4&gt;Where this is useful in real world:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#all syncs
+https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(events(&amp;#39;code_sync&amp;#39;))
+
+#Now code syncs from a specific user:
+https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(events(&amp;#39;code_sync&amp;#39;, &amp;#39;user&amp;#39;))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html&#34;&gt;http://graphite.readthedocs.org/en/1.0/functions.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142&#34;&gt;https://code.launchpad.net/~lucio.torre/graphite/add-events/+merge/69142&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>ops guy says timemachine</title>
+                <link rel="alternate" href="/2013/05/16/ops-guy-says-timemachine/" type="text/html" />
+                <id>/2013/05/16/ops-guy-says-timemachine/</id>
+                <updated>2013-05-16T18:17:00Z</updated>
+                
+                <summary type="html">OPS: &amp;quot;When does it need to be done?&amp;quot;&lt;br&gt;
+PM: &amp;quot;Next week at the latest.&amp;quot;&lt;br&gt;
+OPS: &amp;quot;OK, we spend from now to next week working on a time machine.  If we&lt;br&gt;
+had a time machine it would &lt;em&gt;already&lt;/em&gt; be done.&amp;quot;&lt;br&gt;
+PM: &amp;quot;How so?&amp;quot;</summary>
+                <content type="html">&lt;p&gt;OPS: &amp;quot;When does it need to be done?&amp;quot;&lt;br&gt;
+PM: &amp;quot;Next week at the latest.&amp;quot;&lt;br&gt;
+OPS: &amp;quot;OK, we spend from now to next week working on a time machine.  If we&lt;br&gt;
+had a time machine it would &lt;em&gt;already&lt;/em&gt; be done.&amp;quot;&lt;br&gt;
+PM: &amp;quot;How so?&amp;quot;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>puppet file resources in masterless mode</title>
+                <link rel="alternate" href="/2013/05/15/puppet-file-resources-in-masterless-mode/" type="text/html" />
+                <id>/2013/05/15/puppet-file-resources-in-masterless-mode/</id>
+                <updated>2013-05-15T19:13:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Accessing file stores via puppet manifests in the real world.&lt;/p&gt;
+
+&lt;p&gt;If you use Puppet to distribute file resources and you also test things locally it can be a pain.&lt;/p&gt;
+&lt;h4&gt;Define a file resource for Puppet:&lt;/h4&gt;
+&lt;p&gt;&lt;em&gt;fileserver.conf:&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+[configfiles]
+  path /var/configfiles
+  allow *.com
+  deny *.lan
+  allow 192.168.0.0/24
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Refer to file resource in manifest&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;source =&amp;gt; &amp;#34;puppet:///configfiles/&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;and puppet will magically use this source.  &lt;/p&gt;
+&lt;h4&gt;Local Runs Now Have Issues&lt;/h4&gt;
+&lt;p&gt;But when you run something locally like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; puppet apply --debug test.pp
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Errors occurr: &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt; Could not evaluate: Could not retrieve information from environment production source
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Making localruns clean&lt;/h4&gt;
+&lt;p&gt;You can set things up so that Puppet will try your masterful resource and if it&lt;br&gt;
+fails it will do (essentially) a noop by serving a directory to itself.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#if run in master mode grabs files from configfile resource
+#if run locally essentially does a noop refering file source to itself
+$remote_source =&#34;puppet:///configfiles/myconfig&#34;
+$fname = &#34;/tmp/what&#34;
+node default {
+    source =
+    file {$fname:
+        ensure =&gt; &#39;file&#39;
+        source  =&gt; [$remote_source,
+                    $fname,
+                    inline_template(&#39;&lt;%= remote_source.gsub /^puppet:\/\/\//,
+                    &#34;file://#{Dir.pwd}/&#34; %&gt;&#39;)],
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This can be misleading when you test locally because you are not seeing the actual behavior,&lt;br&gt;
+but there is not a way to see the actual behavior because testing locally in a master/slave&lt;br&gt;
+setup only goes so far.  The big advantage to this is that operations that were previously &lt;br&gt;
+failing because of this falsly accussed dependency now can be debugged.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>name.com bummer</title>
+                <link rel="alternate" href="/2013/05/09/name.com-bummer/" type="text/html" />
+                <id>/2013/05/09/name.com-bummer/</id>
+                <updated>2013-05-09T18:11:00Z</updated>
+                
+                <summary type="html">So name.com was hacked and deviantart.com was one of the credentials dumped from their DB.</summary>
+                <content type="html">&lt;p&gt;So name.com was hacked and deviantart.com was one of the credentials dumped from their DB.&lt;/p&gt;
+
+&lt;p&gt;How do I know? &lt;a href=&#34;https://news.ycombinator.com/item?id=5676311&#34;&gt;https://news.ycombinator.com/item?id=5676311&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;What&amp;#39;s interesting is that we know our password and we know their hash of it now.&lt;br&gt;&lt;br&gt;
+Even though the site where it was posted has been taken down at this time.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=5677739&#34;&gt;https://news.ycombinator.com/item?id=5677739&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;And now we know they were/are(?) storing our password using MySQL PASSWORD()&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://news.ycombinator.com/item?id=5679307&#34;&gt;https://news.ycombinator.com/item?id=5679307&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://dev.mysql.com/doc/refman/4.1/en/encryption-functions.html#function_password&#34;&gt;https://dev.mysql.com/doc/refman/4.1/en/encryption-functions.html#function_password&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;No actual damage was done for &lt;em&gt;us&lt;/em&gt; as this point.  Damn, though, that sucks all around.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>json api post with curl</title>
+                <link rel="alternate" href="/2013/05/09/json-api-post-with-curl/" type="text/html" />
+                <id>/2013/05/09/json-api-post-with-curl/</id>
+                <updated>2013-05-09T18:10:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Using curl to test a json rest api&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+curl -H &#34;Content-Type: application/json&#34; \
+     -X POST -d &#39;{&#34;key&#34;: &#34;value&#34;}&#39; \
+      http://localhost:8080/test
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>modular message of day (debian style)</title>
+                <link rel="alternate" href="/2013/05/09/modular-message-of-day-debian-style/" type="text/html" />
+                <id>/2013/05/09/modular-message-of-day-debian-style/</id>
+                <updated>2013-05-09T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Granular control over Debian MOTD&lt;/p&gt;
+
+&lt;p&gt;MOTD should be used for more than welcome messages&lt;/p&gt;
+&lt;h4&gt;What version am I on?&lt;/h4&gt;
+&lt;p&gt;cat /etc/issue&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Debian GNU/Linux 6.0 \n \l
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;PAM has the ability to build a motd on demand&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mkdir /etc/update-motd.d/
+nano /etc/update-motd.d/test
+
+#!/bin/bash
+echo &amp;#39;test&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;em&gt;logout&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;login&lt;/em&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;test
+rush@&amp;lt;box&amp;gt;:~$ 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This way different teams can update the motd, and they can be ordered like 10test, 20test, 30test.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>reading json from bash with python</title>
+                <link rel="alternate" href="/2013/05/09/reading-json-from-bash-with-python/" type="text/html" />
+                <id>/2013/05/09/reading-json-from-bash-with-python/</id>
+                <updated>2013-05-09T00:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Getting JSON from a flat file in a shell script&lt;/p&gt;
+
+&lt;p&gt;JSON is become a defacto serialization standard.  Getting at the info in Bash in nice.&lt;/p&gt;
+&lt;h4&gt;Say you have a file with a json serialized dict from python&lt;/h4&gt;
+&lt;p&gt;file: /var/myfile&lt;/p&gt;
+
+&lt;p&gt;json contents: {&amp;#39;this&amp;#39;: &amp;#39;you&amp;#39;}&lt;/p&gt;
+&lt;h4&gt;Create a script that needs access to this data&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
+set -e
+FILE=&amp;#39;/var/file&amp;#39;
+if [[ ! -a $FILE ]]; then
+    exit 0
+fi
+dict_value=`python -c &amp;#39;import json, os; d=json.loads(open(&amp;#34;/var/file&amp;#34;).read()); print d[&amp;#34;this&amp;#34;]&amp;#39;`
+echo $dict_value
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Run it as a command&lt;/h4&gt;
+&lt;p&gt;output: you&lt;/p&gt;
+
+&lt;p&gt;There really doesn&amp;#39;t seem to be a better way to parse json from bash, but this isn&amp;#39;t too bad.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>basic json rest api client</title>
+                <link rel="alternate" href="/2013/05/09/basic-json-rest-api-client/" type="text/html" />
+                <id>/2013/05/09/basic-json-rest-api-client/</id>
+                <updated>2013-05-09T00:57:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Basic client example for using something like &lt;a href=&#34;https://github.com/xb95/nagios-api&#34;&gt;https://github.com/xb95/nagios-api&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;JSON REST API&amp;#39;s are increasingly common and useful.&lt;/p&gt;
+&lt;h4&gt;Creating a generic client library&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+import sys
+import os
+import urllib
+import json
+import urllib2
+
+class JSONRestClient(object):
+    def __init__(self, remote):
+        self.url = remote
+
+    def _get(self, trail):
+        getme = self.url + trail
+        req = urllib2.Request(getme)
+        return json.loads(urllib2.urlopen(req, timeout=120).read())
+
+    def _post(self, trail, **kwargs):
+        data = json.dumps(kwargs)
+        req = urllib2.Request(self.url + trail, data, {&#39;Content-Type&#39;: &#39;application/json&#39;})
+        f = urllib2.urlopen(req)
+        response = f.read()
+        f.close()
+        return json.loads(response)
+
+    def state(self):
+        return self._get(&#39;state&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Getting state info from nagios api&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;
+r = JSONRestClient(&#39;http://remotehost:8080&#39;)
+print r.state()
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>Finding your metrics.</title>
+                <link rel="alternate" href="/2013/05/04/graphite-all-metrics/" type="text/html" />
+                <id>/2013/05/04/graphite-all-metrics/</id>
+                <updated>2013-05-04T17:24:00Z</updated>
+                
+                <summary type="html">This will return a &amp;#39;list&amp;#39; of all of your metrics:</summary>
+                <content type="html">&lt;p&gt;This will return a &amp;#39;list&amp;#39; of all of your metrics:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://graphite/metrics/index.json
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Or more efficiently you can use the &amp;#39;find&amp;#39; api:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;http://graphite/metrics/find?query=*
+&lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>cisco octets to mbps</title>
+                <link rel="alternate" href="/2013/05/04/cisco-octets-to-mbps/" type="text/html" />
+                <id>/2013/05/04/cisco-octets-to-mbps/</id>
+                <updated>2013-05-04T00:57:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Counters&lt;/h4&gt;
+&lt;p&gt;Depending on the type of counter you want to track you can use one of the two&lt;/p&gt;
+
+&lt;p&gt;following oid&amp;#39;s...&lt;/p&gt;
+
+&lt;p&gt;&amp;#39;64&amp;#39; bit counter =&amp;gt; oid =&amp;gt; &amp;#39;.1.3.6.1.2.1.31.1.1.1&amp;#39;&lt;br&gt;
+&amp;#39;32&amp;#39; bit counter =&amp;gt; oid =&amp;gt; &amp;#39;.1.3.6.1.2.1.2.2&amp;#39;&lt;/p&gt;
+&lt;h4&gt;Example&lt;/h4&gt;
+&lt;p&gt;Transferred octets;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;28879519327687
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;10 seconds later:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;28879428276119
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;That&amp;#39;s 91051568 octets in 10 seconds.&lt;/p&gt;
+
+&lt;p&gt;Divide by 10 for per second value: 9105156&lt;/p&gt;
+
+&lt;p&gt;Multiply by 8 for bits: 72841248&lt;/p&gt;
+
+&lt;p&gt;Divide by 1048576 for Mbps: 69&lt;/p&gt;
+
+&lt;p&gt;Convert octets to Mbps.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;&amp;gt;&amp;gt; 28879519327687 - 28879428276119
+91051568
+&amp;gt;&amp;gt;&amp;gt; 91051568 / 10 
+9105156
+&amp;gt;&amp;gt;&amp;gt; 9105156 * 8
+72841248
+&amp;gt;&amp;gt;&amp;gt; 72841248 / 1048576
+69
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;http://www.webnms.com/webnms/tutorials/ges_tutorial/help/appendix/calculating_bandwidth_utilization.html&#34;&gt;http://www.webnms.com/webnms/tutorials/ges_tutorial/help/appendix/calculating_bandwidth_utilization.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a008009496e.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a008009496e.shtml&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_q_and_a_item09186a00800b69ac.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_q_and_a_item09186a00800b69ac.shtml&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>previous blog long gone -- new beginnings</title>
+                <link rel="alternate" href="/2013/05/03/starting-over/" type="text/html" />
+                <id>/2013/05/03/starting-over/</id>
+                <updated>2013-05-03T17:23:00Z</updated>
+                
+                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!</summary>
+                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!&lt;/p&gt;
+</content>
+            </entry>
+        
+    </feed>
