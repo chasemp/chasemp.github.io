@@ -67,466 +67,8 @@
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/07/22/ios-granular-permissions/">IOS granular permissions</a></h1>
-                <h2>Monday, July 22, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/IOS/">IOS</a>, <a href="/tags/security/">security</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>If you have tiered levels of administrators, or you want to<br>
-create an account for automation purposes best practice is to<br>
-define a custom security level in IOS.</p>
-
-<p>Levels 1 and 15 are defined by default.</p>
-<h4>Allowing lower levels to see your configuration: IOS</h4><pre><code>conf t
-username backup privilege 3 secret &lt;SECRET&gt;
-privilege exec level 3 show startup-config
-privilege exec level 3 show
-wr mem
-</code></pre><h4>Allowing lower levels to see your configuration: FreeRADIUS:</h4>
-<p>/etc/freeradius/users</p>
-
-<pre><code>
-backup
-    Service-Type = NAS-Prompt-User,
-    cisco-avpair = "shell:priv-lvl=3",
-    Auth-Type = System,
-</code></pre>
-<h4>Looks Like</h4>
-<pre><code>
-cisco#show start
-Building configuration...
-
---CONFIGURATION--
-end
-</code></pre>
-<h4>Defining the next user tier for NAT information: IOS</h4><pre><code>conf t
-username natinfo privilege 4 secret &lt;SECRET&gt;
-privilege exec level 4 show nat64 statistics
-wr mem
-</code></pre><h4>Defining the next user tier for NAT information: FreeRADIUS</h4>
-<pre><code>
-natinfo
-    Service-Type = NAS-Prompt-User,
-    cisco-avpair = "shell:priv-lvl=4",
-    Auth-Type = System,
-</code></pre>
-<h4>Looks Like</h4><pre><code>cisco#show ip nat statistics
---STATS--
-</code></pre><h4>NOTES</h4>
-<ul>
-<li>Permissions stack up which means a user at Level 4 can also issue &#39;show startup-configuration&#39;</li>
-<li>&#39;show running-config&#39; command does not work in this way for the IOS devices I have tried.<br></li>
-</ul>
-
-<p>This does not work how you think it does:</p>
-<pre><code>privilege exec level 3 show running-config
-</code></pre><h4>Reference</h4>
-<p><a href="http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/">http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/</a><br>
-<a href="http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html">http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/22/ios-granular-permissions/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/18/proxychains/">proxychains</a></h1>
-                <h2>Thursday, July 18, 2013 <span>&raquo;</span> <a href="/tags/proxychains/">proxychains</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>Some commands do not support a proxy (RE: telnet).  Other<br>
-times it is just easier to do a one-off instance rather<br>
-than mess with environment settings.  A lot of people use<br>
-this with Tor.</p>
-<h4>ProxyChains</h4>
-<p>Allows you to send traffic through a proxy without the command<br>
-itself having foreknowledge.</p>
-<pre><code>aptitude install proxychains
-</code></pre><h4>Config files</h4>
-<p>Pick one:</p>
-
-<ul>
-<li> ./proxychains.conf</li>
-<li> $(HOME)/.proxychains/proxychains.conf</li>
-<li>/etc/proxychains.conf</li>
-</ul>
-<h4>/etc/proxychains.conf the global option</h4>
-<pre><code>
-strict_chain
-quiet_mode
-tcp_read_time_out 15000
-tcp_connect_time_out 8000
-[ProxyList]
-#replace this with your proxy
-http    192.168.1.1 8080
-</code></pre>
-<h4>telnet Before Proxychains (behind a proxy)</h4>
-<pre><code>
-me@vm:~/pkg$ telnet google.com 80
-Trying 2404:6800:4005:806::1006...
-Trying 173.194.127.196...
-Trying 173.194.127.193...
-Trying 173.194.127.200...
-Trying 173.194.127.201...
-Trying 173.194.127.198...
-Trying 173.194.127.199...
-Trying 173.194.127.195...
-Trying 173.194.127.192...
-Trying 173.194.127.206...
-Trying 173.194.127.194...
-Trying 173.194.127.197...
-telnet: Unable to connect to remote host: Network is unreachable
-</code></pre>
-<h4>telnet after ProxyChains (behind a proxy)</h4>
-<pre><code>
-me@vm:~/pkg$ proxychains telnet google.com 80
-ProxyChains-3.1 (http://proxychains.sf.net)
-Trying 2404:6800:4005:806::1006...
-Trying 173.194.127.196...
-Connected to google.com.
-Escape character is '^]'.
-</code></pre>
-<h4>Excluding traffic from your proxy</h4>
-<p>In theory you set the localnet option in your configuration file<br>
-but this doesn&#39;t work me with proxychains under debian.</p>
-
-<p>Just in case you are interested though: <a href="https://github.com/haad/proxychains/issues/6#issuecomment-4041824">localnet docs</a></p>
-<h4>Reference</h4>
-<p><a href="http://benizi.com/postfix-proxychains">http://benizi.com/postfix-proxychains</a><br>
-<a href="http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/">http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/</a><br>
-<a href="http://proxychains.sourceforge.net/howto.html">http://proxychains.sourceforge.net/howto.html</a><br>
-<a href="http://proxychains.sourceforge.net/howto.html">http://proxychains.sourceforge.net/howto.html</a><br>
-<a href="https://github.com/haad/proxychains">https://github.com/haad/proxychains</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/18/proxychains/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/18/allowing-env-magic-via-sudo/">allowing env magic via sudo</a></h1>
-                <h2>Thursday, July 18, 2013 <span>&raquo;</span> <a href="/tags/sudo/">sudo</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>In an environment with heavy automation and numerous service account<br>
-users it is easy to end up in a situation where compromising one service<br>
-becomes compromising an entire system.</p>
-<h4>Granting permission to a single command</h4><pre><code>vi /etc/sudoers.d/makingpie
-
-myuser ALL = NOPASSWD: /usr/local/bin/makepie
-</code></pre><h4>Looks Like</h4><pre><code>myuser:#sudo makepie
-&gt;&gt;&gt;&gt;mmmmm...pie
-</code></pre><h4>What if my user needs to call out to a proxy but &#39;makepie&#39; doesn&#39;t support it?</h4>
-<p>We use proxychains.</p>
-<pre><code>sudo LD_PRELOAD=libproxychains.so.3 makepie
-</code></pre>
-<p>Sudo is extra granular and doesn&#39;t like this idea.</p>
-<pre><code>sudo: sorry, you are not allowed to set the following environment variables: LD_PRELOAD
-</code></pre><h4>The heavy handed way</h4>
-<p>Don&#39;t reset user enviroments when using sudo</p>
-<pre><code>visudo
-</code></pre>
-<p>Replace: “Defaults env_reset” with: “Defaults !env_reset”</p>
-<h4>Piecemeal way</h4><pre><code>vi /etc/sudoers.d/ld_preload
-
-#allow users to use proxychains env variable (using sudo)
-Defaults env_keep += &#34;LD_PRELOAD&#34;
-</code></pre><h4>Reference</h4>
-<p><a href="http://brandonhutchinson.com/wiki/Sudo_and_environment_variables">http://brandonhutchinson.com/wiki/Sudo_and_environment_variables</a><br>
-<a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5">http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5</a><br>
-<a href="http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo">http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo</a><br>
-<a href="http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/">http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/</a><br>
-<a href="http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables">http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables</a><br>
-<a href="http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo">http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo</a><br>
-<a href="http://www.ibm.com/developerworks/aix/library/au-sudo/">http://www.ibm.com/developerworks/aix/library/au-sudo/</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/18/allowing-env-magic-via-sudo/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/17/making-trivial-debian-packages/">making trivial debian packages</a></h1>
-                <h2>Wednesday, July 17, 2013 <span>&raquo;</span> <a href="/tags/deb/">deb</a>, <a href="/tags/debian/">debian</a>, <a href="/tags/dpkg/">dpkg</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>When possible it is beneficial having a canonical reference for resources installed<br>
-on a server.  Binary packages have built in logic for upgrade, downgrade,<br>
-install, etc.  This makes them an attractive, yet sometimes, overcomplicated<br>
-distribution mechanisms.</p>
-
-<p>I am going to demonstrate making a simple script into a debian binary<br>
-and installing it.  Adding this to an in-house repo would be a nice next<br>
-step.</p>
-<h4>Getting Packages</h4>
-<p>Assuming you have dpkg but if not we need it.  Fakeroot we use to make packages<br>
-with the right permissions on files.</p>
-<pre><code>aptitude install dpkg fakeroot lintian
-</code></pre>
-<p>We will be using dpkg-deb which is generally considered &#39;built in&#39; to debian.</p>
-
-<pre><code>
-me@vm:# dpkg -S /usr/bin/dpkg-deb
-dpkg: /usr/bin/dpkg-debø
-</code></pre>
-<h4>Package: my-files.</h4>
-<p>Starting at version 1.0 and meant for all architectures.  &#39;all&#39; is a common<br>
-assignment for architecture when the files/scripts are interpreted such as<br>
-with python or ruby.</p>
-<pre><code>mkdir my-files_1.0_all
-</code></pre><h4>Making my package tree</h4><pre><code>mkdir -p my-files_1.0_all/usr/local/bin/
-mkdir -p my-files_1.0_all/DEBIAN
-</code></pre><h4>My script: aptitude easter eggs</h4><pre><code>nano my-files_1.0_all/usr/local/bin/moo
-</code></pre>
-<pre><code>
-#!/bin/bash
-aptitude -v -v -v -v -v moo
-</code></pre>
-<h4>Adding my &#39;control&#39; file</h4><pre><code>#this file contains my package metadata
-nano my-files_1.0_all/DEBIAN/control
-</code></pre><h4>Looks Like</h4>
-<pre><code>
-Package: my-files
-Priority: optional
-Section: misc
-Maintainer: Chase <mail@example.com>
-Architecture: all
-Version: 1.0
-Description: stuff I need
-</code></pre>
-<h4>Making my script executable on install</h4><pre><code>#postint will be run at the tail end of install by default
-echo &#34;chmod +x /usr/local/bin/moo&#34; &gt; my-files_1.0_all/DEBIAN/postinst
-#set correct permissions to avoid build errors
-chmod 555 my-files_1.0_all/DEBIAN/postinst
-</code></pre><h4>My full package tree</h4>
-<pre><code>
-my-files_1.0_all
-|-- DEBIAN
-|   |-- control
-|   `-- postinst
-`-- usr
-    `-- local
-        `-- bin
-            `-- moo
-</code></pre>
-<h4>Building my binary</h4>
-<p>Fakeroot should fix up your permissions, permissions are taken very literally by<br>
-dpkg-deb.  So if you build with a user that does not exist on a host that installs<br>
-this package things break.  But even if you don&#39;t run into that it is considered<br>
-bad form to leave your user permissions as artifacts on binary packaged files.</p>
-<pre><code>fakeroot dpkg-deb -b my-files_1.0_all/
-</code></pre><h4>Looks Like</h4><pre><code>dpkg-deb: building package `my-files&#39; in `my-files_1.0_all.deb&#39;.
-</code></pre><h4>Installing and Examining my package</h4>
-<pre><code>
-me@vm:# dpkg -i my-files_1.0_all.deb 
-Selecting previously unselected package my-files.
-(Reading database ... 49666 files and directories currently installed.)
-Unpacking my-files (from my-files_1.0_all.deb) ...
-Setting up my-files (1.0) ...
-me@vm:# 
-
-me@vm:# dpkg -L my-files             
-/.
-/usr
-/usr/local
-/usr/local/bin
-/usr/local/bin/moo
-
-me@vm:~/pkg# dpkg -s my-files
-Package: my-files
-Status: install ok installed
-Priority: optional
-Section: misc
-Maintainer: Chase <mail@example.com>
-Architecture: all
-Version: 1.0
-Description: stuff I need
-</code></pre>
-<h4>Using Lintian</h4>
-<p>Lintian breaks down deb binaries and examines them.  If we are making a package for <br>
-repo distribution or contribution upstream in some manner we want this output to look<br>
-at nice as it can.  For this package I am just making sure we understanding what<br>
-compromises we are making.</p>
-
-<pre><code>
-me@vm:~/pkg$ lintian my-files_1.0_all.deb 
-E: my-files: control-file-has-bad-permissions postinst 0555 != 0755
-E: my-files: no-copyright-file
-E: my-files: extended-description-is-empty
-E: my-files: dir-in-usr-local usr/local/bin/
-E: my-files: file-in-usr-local usr/local/bin/moo
-W: my-files: file-in-unusual-dir usr/local/bin/moo
-W: my-files: script-not-executable usr/local/bin/moo
-</code></pre>
-<h4>Running my command</h4>
-<pre><code>
-me@vm:# moo
-All right, you win.
-
-                               /----\
-                       -------/      \
-                      /               \
-                     /                |
-   -----------------/                  --------\
-   ----------------------------------------------
-</code></pre>
-<h4>Reference</h4>
-<p><a href="http://manpages.ubuntu.com/manpages/hardy/man1/dpkg-deb.1.html">http://manpages.ubuntu.com/manpages/hardy/man1/dpkg-deb.1.html</a><br>
-<a href="http://askubuntu.com/questions/62534/adding-post-deb-install-scripts">http://askubuntu.com/questions/62534/adding-post-deb-install-scripts</a><br>
-<a href="http://www.debian.org/doc/devel-manuals#maint-guide">http://www.debian.org/doc/devel-manuals#maint-guide</a><br>
-<a href="http://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html">http://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html</a><br>
-<a href="http://unix.stackexchange.com/questions/30303/how-to-create-a-deb-file-manually">http://unix.stackexchange.com/questions/30303/how-to-create-a-deb-file-manually</a><br>
-<a href="http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/">http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/</a><br>
-<a href="http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/#AEN108">http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/#AEN108</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/17/making-trivial-debian-packages/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/15/simple-nat-outbound-asa/">simple nat outbound asa</a></h1>
-                <h2>Monday, July 15, 2013 <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/nat/">nat</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>NAT on the ASA can get complicated but 90% of remote sites need<br>
-some version of this basic configuration.</p>
-<h4>Interfaces</h4>
-<p>Establish your NAT roles.</p>
-
-<pre><code>
-!
-interface Ethernet0/0
- nameif Outside
- security-level 0
- ip address <external_ip> <ext_mask>
-!
-interface Ethernet0/1
- nameif Inside
- security-level 100
- ip address <interval_ip> <internal_mask>
-</code></pre>
-<h4>Client Pool</h4>
-<p>Define who gets an address for going out.</p>
-
-<pre><code>
-object network NAT-CLIENTS
- !can be a subnet also, etc
- range 192.168.1.1 192.168.1.10
-</code></pre>
-<h4>NAT Enable</h4>
-<p>Associate your clients with your external interface for NAT.</p>
-
-<pre><code>
-nat (Inside,Outside) source dynamic NAT-CLIENTS interface
-</code></pre>
-<h4>NOTES</h4>
-<ul>
-<li>This does not require extra global IP&#39;s.</li>
-<li>This dynamic IP may supercede intended static NAT IP&#39;s</li>
-<li>Firewall restrictions still apply. See docs on security levels.</li>
-</ul>
-<h4>Reference</h4>
-<p><a href="https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157">https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/15/simple-nat-outbound-asa/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/12/making-debs-with-rake/">making debs with rake</a></h1>
-                <h2>Friday, July 12, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/rake/">rake</a>, <a href="/tags/ruby/">ruby</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>Some Rake files have built in logic to make a debian binary. </p>
-<h4>Mcollective</h4>
-<p>A good example:</p>
-<pre><code>git clone https://github.com/puppetlabs/marionette-collective
-cd marionette-collective/
-</code></pre><h4>Getting Packages</h4><pre><code>aptitude install rake \
-build-essential 
-rubygem \
-pdebuild-cross \
-devscripts \
-fakeroot \
-dpatch
-</code></pre><h4>Making Debian Package</h4>
-<p>rake deb</p>
-<h4>Looks Like</h4>
-<pre><code>
-rm -r build
-rm -r doc
-Parsing sources...
-
-<omitted>
-
-dpkg-deb: building package `mcollective' in `../mcollective_2.3.2-1_all.deb'.
-dh_gencontrol -pmcollective-client  
-dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
-dh_md5sums -pmcollective-client 
-dh_builddeb -pmcollective-client 
-dpkg-deb: building package `mcollective-client' in `../mcollective-client_2.3.2-1_all.deb'.
-dh_gencontrol -pmcollective-common  
-dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
-dh_md5sums -pmcollective-common 
-dh_builddeb -pmcollective-common 
-dpkg-deb: building package `mcollective-common' in `../mcollective-common_2.3.2-1_all.deb'.
-dh_gencontrol -pmcollective-doc  
-dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
-dh_md5sums -pmcollective-doc 
-dh_builddeb -pmcollective-doc 
-dpkg-deb: building package `mcollective-doc' in `../mcollective-doc_2.3.2-1_all.deb'.
- dpkg-genchanges  >../mcollective_2.3.2-1_amd64.changes
-dpkg-genchanges: including full source code in upload
- dpkg-source -i --after-build mcollective-2.3.2
-dpkg-buildpackage: full upload (original source is included)
-</code></pre>
-<h4>Normal install</h4><pre><code>dpkg -i mcollective_2.3.2-1_all.deb
-</code></pre></p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/12/making-debs-with-rake/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/12/mcollective-bugs-debian-wheezy/">mcollective bugs debian wheezy</a></h1>
-                <h2>Friday, July 12, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/mcollective/">mcollective</a>, <a href="/tags/wheezy/">wheezy</a></h2>
+                <h1><a href="/2013/07/16/mcollective-bugs-debian-wheezy/">mcollective bugs debian wheezy</a></h1>
+                <h2>Tuesday, July 16, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/mcollective/">mcollective</a>, <a href="/tags/wheezy/">wheezy</a></h2>
             </div>
             
             <div class="body">
@@ -939,7 +481,68 @@ end
             </div>
             
             <div class="footer">
-                <p><a href="/2013/07/12/mcollective-bugs-debian-wheezy/">Continue Reading</a></p>
+                <p><a href="/2013/07/16/mcollective-bugs-debian-wheezy/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/07/12/making-debs-with-rake/">making debs with rake</a></h1>
+                <h2>Friday, July 12, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/rake/">rake</a>, <a href="/tags/ruby/">ruby</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>Some Rake files have built in logic to make a debian binary. </p>
+<h4>Mcollective</h4>
+<p>A good example:</p>
+<pre><code>git clone https://github.com/puppetlabs/marionette-collective
+cd marionette-collective/
+</code></pre><h4>Getting Packages</h4><pre><code>aptitude install rake \
+build-essential 
+rubygem \
+pdebuild-cross \
+devscripts \
+fakeroot \
+dpatch
+</code></pre><h4>Making Debian Package</h4>
+<p>rake deb</p>
+<h4>Looks Like</h4>
+<pre><code>
+rm -r build
+rm -r doc
+Parsing sources...
+
+<omitted>
+
+dpkg-deb: building package `mcollective' in `../mcollective_2.3.2-1_all.deb'.
+dh_gencontrol -pmcollective-client  
+dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
+dh_md5sums -pmcollective-client 
+dh_builddeb -pmcollective-client 
+dpkg-deb: building package `mcollective-client' in `../mcollective-client_2.3.2-1_all.deb'.
+dh_gencontrol -pmcollective-common  
+dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
+dh_md5sums -pmcollective-common 
+dh_builddeb -pmcollective-common 
+dpkg-deb: building package `mcollective-common' in `../mcollective-common_2.3.2-1_all.deb'.
+dh_gencontrol -pmcollective-doc  
+dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
+dh_md5sums -pmcollective-doc 
+dh_builddeb -pmcollective-doc 
+dpkg-deb: building package `mcollective-doc' in `../mcollective-doc_2.3.2-1_all.deb'.
+ dpkg-genchanges  >../mcollective_2.3.2-1_amd64.changes
+dpkg-genchanges: including full source code in upload
+ dpkg-source -i --after-build mcollective-2.3.2
+dpkg-buildpackage: full upload (original source is included)
+</code></pre>
+<h4>Normal install</h4><pre><code>dpkg -i mcollective_2.3.2-1_all.deb
+</code></pre></p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/12/making-debs-with-rake/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -984,110 +587,6 @@ else
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/07/10/nix-lights-out-failsafe/">nix lights out failsafe</a></h1>
-                <h2>Wednesday, July 10, 2013 <span>&raquo;</span> <a href="/tags/bash/">bash</a>, <a href="/tags/linux/">linux</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>Just like for <a href="http://rush898.github.io/2013/05/29/cisco-lights-out-failsafe/">cisco</a> a<br>
-scheduled reboot can be an aggressive but necessary recovery option.  If you are doing<br>
-iptables maintenance remote I always like to store my rules in a script and run them<br>
-without saving.  With a scheduled reboot pending locking myself out is a recoverable<br>
-offense.</p>
-<h4>/usr/local/bin/rsched</h4>
-<pre><code>
-#!/bin/bash
-if [ -z "$1" ]
-  then
-    echo "Usage: $0 <minutes_until_reboot>"
-    exit 1
-fi
-echo "reboot interval $1 minutes"
-now=`date +"%s"`
-#convert seconds to minutes
-future_time=`expr $1 \\* 60`
-rtime=`expr $now + $future_time`
-#convert epoch to shutdown friendly format
-time=`date -d @$rtime +"%H:%M"`
-echo $time
-#issue shutdown
-shutdown -k -r $time
-</code></pre>
-<h4>Looks like</h4><pre><code>root@vm:~# rsched 10
-reboot interval 10 minutes
-14:11
-
-The system is going DOWN for reboot in 10 minutes!/0) (Wed Jul 10 14:01:57 20
-</code></pre><h4>Scheduling</h4><pre><code>root@vm:~# nohup rsched 10 &amp;
-
-Broadcast message from root@vm (Wed Jul 10 14:03:02 2013):
-
-The system is going DOWN for reboot in 10 minutes!
-</code></pre>
-<p><em>do my fw maint</em></p>
-<h4>Canceling</h4><pre><code>root@vm:~# fg
-nohup rsched 10
-
-&lt;cntrl+c&gt;
-</code></pre><h4>Notes</h4>
-<p>redirect bg process with &amp;&gt; /tmp/reboot</p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/10/nix-lights-out-failsafe/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/10/cli-password-generation/">cli password generation</a></h1>
-                <h2>Wednesday, July 10, 2013 <span>&raquo;</span> <a href="/tags/apg/">apg</a>, <a href="/tags/passwd/">passwd</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>I have seen usage of <a href="http://www.pctools.com/guides/password/">http://www.pctools.com/guides/password/</a> and similar sites.  This <br>
-is less than ideal.  APG is my generator of choice.</p>
-<h4>Six twelve character choices</h4><pre><code>root@vm:~# apg -m 12
-recEbrArkyan
-eevocdeirpUd
-tejvivFedAt*
-loolNuag&gt;olk
-ejfoctOdofmu
-pidChiemp2of
-</code></pre><h4>Six twelve character choices with phonetics</h4><pre><code>root@vm:~# apg -m 12 -t
-daHedVuobgis (da-Hed-Vu-ob-gis)
-lokhanKujTue (lok-han-Kuj-Tue)
-ebviHeetsos$ (eb-vi-Heets-os-DOLLAR_SIGN)
-agborjotnans (ag-borj-ot-nans)
-RutElAmJomt8 (Rut-El-Am-Jomt-EIGHT)
-DeOsacFerhyu (De-Os-ac-Fer-hyu)
-</code></pre><h4>One twelve character password</h4><pre><code>root@vm:~# apg -m 12 -t -n 1
-JetHikAgVup1 (Jet-Hik-Ag-Vup-ONE)
-</code></pre><h4>One twelve character password with readback</h4><pre><code>root@vm:~# apg -m 12 -t -n 1 -l
-yoawhathuct3 (yoaw-hat-huct-THREE) yankee-oscar-alfa-whiskey-hotel-alfa-tango-hotel-uniform-charlie-tango-THREE
-</code></pre><h4>Increasing randomness with manual entry</h4><pre><code>root@vm:~# apg -m 12 -t -n 1 -l -s
-Please enter some random data (only first 16 are significant)
-(eg. your old password):&gt;
-yufNifEyLyff (yuf-Nif-Ey-Lyff) yankee-uniform-foxtrot-November-india-foxtrot-Echo-yankee-Lima-yankee-foxtrot-foxtrot
-</code></pre><h4>Reference</h4>
-<p><a href="http://www.pctools.com/guides/password/">http://www.pctools.com/guides/password/</a><br>
-<a href="http://www.linux-magazine.com/Online/Features/Testing-Password-Quality">http://www.linux-magazine.com/Online/Features/Testing-Password-Quality</a><br>
-<a href="https://help.ubuntu.com/community/StrongPasswords#Installing%20APG">https://help.ubuntu.com/community/StrongPasswords#Installing%20APG</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/10/cli-password-generation/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
                 <h1><a href="/2013/07/08/when-search-tells-the-story/">when search tells the story</a></h1>
                 <h2>Monday, July 08, 2013 <span>&raquo;</span> <a href="/tags/emoji/">emoji</a></h2>
             </div>
@@ -1100,61 +599,6 @@ person at all; I just found the rankings humorous.</p>
             
             <div class="footer">
                 <p><a href="/2013/07/08/when-search-tells-the-story/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/02/virsh-halting-a-host/">virsh halting a host</a></h1>
-                <h2>Tuesday, July 02, 2013 <span>&raquo;</span> <a href="/tags/kvm/">kvm</a>, <a href="/tags/virsh/">virsh</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>KVM is great but I&#39;m aking a note so I remember because this command gives me pause every time.</p>
-<h4>Sometimes &#39;shutdown&#39; in the virtual shell for KVM fails.</h4><pre><code>virsh # shutdown myvm
-Domain myvm is being shutdown
-</code></pre><h4>But...</h4><pre><code>114 myvm            running
-</code></pre>
-<p>In order to shutdown this host I use the &#39;destroy&#39; command.  Destroy does not<br>
-remove any files or otherwise permanently change the host data.  Which for me, <br>
-is unintuitive.  It does remove it from the list of hosts shown with the &#39;list&#39;<br>
-command.  Destroy is like pulling the plug.</p>
-<pre><code>virsh #destroy myvm
-</code></pre>
-<p>The command that does what I would expect destroy to do is: &#39;undefine&#39;.</p>
-
-<p>Reference<br>
-<a href="http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html">http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html</a><br>
-<a href="http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/">http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/02/virsh-halting-a-host/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/01/mysql-cleanup/">mysql cleanup</a></h1>
-                <h2>Monday, July 01, 2013 <span>&raquo;</span> <a href="/tags/mysql/">mysql</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Show me my non-default databases:</h4><pre><code>for d in $(mysql -u root -e &#34;show databases&#34; | \
-grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
-do echo $d; done
-</code></pre><h4>Clean non-default databases:</h4><pre><code>for d in $(mysql -u root -e &#34;show databases&#34; | \
-grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
-do echo $d; mysql -u root -e &#34;drop database $d;&#34;; done
-</code></pre></p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/01/mysql-cleanup/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -1233,8 +677,8 @@ aptitude install puppetmaster
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/17/simple-site-loadtesting/">simple site loadtesting</a></h1>
-                <h2>Monday, June 17, 2013 <span>&raquo;</span> <a href="/tags/ab/">ab</a>, <a href="/tags/siege/">siege</a></h2>
+                <h1><a href="/2013/06/25/simple-site-loadtesting/">simple site loadtesting</a></h1>
+                <h2>Tuesday, June 25, 2013 <span>&raquo;</span> <a href="/tags/ab/">ab</a>, <a href="/tags/siege/">siege</a></h2>
             </div>
             
             <div class="body">
@@ -1417,7 +861,7 @@ response times.</p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/17/simple-site-loadtesting/">Continue Reading</a></p>
+                <p><a href="/2013/06/25/simple-site-loadtesting/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -1596,329 +1040,6 @@ sudo chmod -R a+w /opt/graphite/storage
             
             <div class="footer">
                 <p><a href="/2013/06/15/debian-graphite-install/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/06/14/bash-then-and-now/">bash then and now</a></h1>
-                <h2>Friday, June 14, 2013 <span>&raquo;</span> <a href="/tags/bash/">bash</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>Very small doses of limited Bash wisdom.   Changes in my every day<br>
-Bash behavior that are small but overtime I think make me more productive.</p>
-<h4>Going home</h4>
-<p>then:</p>
-<pre><code>cd ~
-</code></pre>
-<p>now:</p>
-<pre><code>cd
-</code></pre><h4>Erasing contents of a file</h4>
-<p>then:</p>
-<pre><code>cat /dev/null &gt; file
-</code></pre>
-<p>now:</p>
-<pre><code>&gt; file
-</code></pre><h4>Navigating relative dir&#39;s with cd</h4>
-<p>then:</p>
-<pre><code>cd ../../..
-</code></pre>
-<p>now:</p>
-<pre><code>uuu
-</code></pre>
-<pre><code>
-alias u='cd .. && ls'
-alias uu='cd ../.. && ls'
-alias uuu='cd ../../.. && ls'
-alias uuuu='cd ../../../.. && ls'
-alias uuuuu='cd ../../../../..&& ls'
-alias uuuuuu='cd ../../../../../.. && ls'
-alias uuuuuuu='cd ../../../../../../.. && ls'
-alias uuuuuuuu='cd ../../../../../../../.. && ls'
-</code></pre>
-<h4>Switching between directories</h4>
-<p>then:</p>
-<pre><code>cd /get/me/there
-cd /back/to/you
-cd /get/me/there
-</code></pre>
-<p>now:</p>
-<pre><code>cd /get/me/there
-cd /back/to/you
-cd -
-
-env | grep OLDPWD
-OLDPWD=/back/to/you
-</code></pre><h4>Realizing I&#39;m not ready to run a command yet</h4>
-<p>then:</p>
-<pre><code>~#get#### stuff#### done &lt;realizing now ready&gt;
-&lt;grab mouse, highlight, copy&gt;
-&lt;do pre-get#### stuff#### done&gt;
-&lt;grab mouse, click, paste&gt;
-</code></pre>
-<p>now:</p>
-<pre><code>~#get#### stuff#### done &lt;realizing now ready&gt;
-&lt;cntrl+a enter &#39;:&#39;&gt;
-~#:get#### stuff#### done
--bash: :get#### stuff#### done: command not found
-&lt;ignore cmd not found&gt;
-&lt;do pre-get#### stuff#### done&gt;
-&lt;up arrow to cmd&gt;
-&lt;cntrl+a delete &#39;:&#39; and enter&gt;
-</code></pre>
-<p>No mouse required.</p>
-<h4>Getting my boxes IP</h4>
-<p>then:</p>
-<pre><code>ifconfig
-
-&lt;visually search for ip&gt;
-</code></pre>
-<p>now:</p>
-<pre><code>#ips
-eth0 10.0.0.1/16
-</code></pre>
-<p>bash aliases</p>
-<pre><code>alias ips=&#39;ip brief&#39;
-</code></pre>
-<pre><code>
-#IP SHORTCUTS
-ip () {
-    case "$1" in
-        'br')
-            ip brief
-            ;;
-        'brief')
-            sudo ip addr show | grep inet | grep -v 127 | awk '{print $7, $2}' | grep -v '::'
-            ;;
-        'alias')
-            echo $"Usage: ip 
-                         [alias|br|brief]"
-            ;;
-        *)
-        sudo /bin/ip $@
-    esac
-}
-</code></pre>
-<h4>Grepping files</h4>
-<p>then:</p>
-<pre><code> cat /etc/services | grep telnet
-</code></pre>
-<p>now:</p>
-<pre><code>grep telnet /etc/services
-</code></pre><h4>Exiting (hey...saves a few keystrokes)</h4>
-<p>then:</p>
-<pre><code>#exit
-</code></pre>
-<p>now:</p>
-<pre><code>#e
-
-alias EXIT=&#34;exit&#34;
-alias e=&#39;exit&#39;
-</code></pre><h4>New dir trees</h4>
-<p>Then:</p>
-<pre><code>mkdir /one
-mkdir /one/two
-mkdir /one/two/three
-</code></pre>
-<p>Now:</p>
-<pre><code>mkdir -p one/two/three
-</code></pre><h4>Show routing table</h4>
-<p>Then:</p>
-<pre><code>route -n
-</code></pre>
-<p>Now:</p>
-<pre><code>ip route show
-</code></pre></p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/06/14/bash-then-and-now/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/06/13/puppet-tagged-runs/">puppet tagged runs</a></h1>
-                <h2>Thursday, June 13, 2013 <span>&raquo;</span> <a href="/tags/puppet/">puppet</a>, <a href="/tags/scaling/">scaling</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>Updating only relevant Puppet configurations sections</p>
-
-<p>As a puppet installation grows the list of used modules can get large.  Especially,<br>
-if you are pulling from <a href="https://forge.puppetlabs.com/">https://forge.puppetlabs.com/</a>.  Testing in its final stages<br>
-is usually done via puppet to ensure repeatability.  The test runs get  longer and longer.</p>
-<h4>A full catalog run with no expected changes</h4>
-<p><pre><code><br>
-sudo /usr/bin/puppet agent --test --logdest syslog<br>
-</pre></code></p>
-
-<p><pre><code><br>
-Info: Retrieving plugin<br>
-Info: Caching catalog for <myhost><br>
-Info: Applying configuration version &#39;1371116293&#39;<br>
-Finished catalog run in 16.35 seconds<br>
-</pre></code></p>
-
-<p>If you need to rerun this every time you are tweaking a config file 16 seconds can be a long time.</p>
-
-<p>If you are only updating a module called &#39;dhcp&#39; you can do:</p>
-
-<p><pre><code><br>
-sudo /usr/bin/puppet agent --test --logdest syslog --tags dhcp<br>
-</pre></code></p>
-
-<p><pre><code><br>
-Info: Retrieving plugin<br>
-Info: Caching catalog for <myhost><br>
-Info: Applying configuration version &#39;1371116293&#39;<br>
-Finished catalog run in 8.46 seconds<br>
-</pre></code></p>
-
-<p>This cut the time in half.  Doing tagged runs still compiles the entire update.  That is to<br>
-say, Puppet still runs in the usual way figuring out dependencies and such, but when it <br>
-comes to applicable changes it only looks for changes at the specified tagged resources.</p>
-
-<p>If you put &#39;--debug&#39; into the update command you will see a lot of:</p>
-<pre><code>Debug: /Stage[main]/Mcollective::Client/Package[mcollective-client]: Not tagged with dhcp
-</code></pre>
-<p>This resource does not match the tag specified, and as such will not be updated.</p>
-
-<p>Tags can be explicit or implicit.  That is to say you can assign them and there are some<br>
-that are assigned by design.  All class/module names are also tags.</p>
-<h4>This automatically creates a tag called &#39;hiera&#39;:</h4>
-<p><pre><code><br>
-class hiera {<br>
-}<br>
-</pre></code></p>
-<h4>Resource types are generally given a tag as well.</h4>
-<p>To update file resources only:</p>
-
-<p><pre><code><br>
-sudo /usr/bin/puppet agent --test --logdest syslog --tags file<br>
-</pre></code></p>
-
-<p><pre><code><br>
-Info: Retrieving plugin<br>
-Info: Caching catalog for <myhost><br>
-Info: Applying configuration version &#39;1371116293&#39;<br>
-Finished catalog run in 12.39 seconds<br>
-</pre></code></p>
-<h4>Reference:</h4>
-<p><a href="http://docs.puppetlabs.com/puppet/2.7/reference/lang_tags.html">http://docs.puppetlabs.com/puppet/2.7/reference/lang_tags.html</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/06/13/puppet-tagged-runs/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/06/13/mysql-full-partition/">mysql full partition</a></h1>
-                <h2>Thursday, June 13, 2013 <span>&raquo;</span> <a href="/tags/mysql/">mysql</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>Ever go to start mysql and there is not enough disk space.  We need to get<br>
-MySQL past disk full warnings.</p>
-
-<p>I tried to:</p>
-<pre><code>/etc/init.d/mysql start
-</code></pre>
-<p>And saw:</p>
-<pre><code>/etc/init.d/mysql: ERROR: The partition with /var/lib/mysql is too full! ... failed!
-</code></pre><h4>Usage</h4><pre><code>df -Th
-</code></pre>
-<pre><code>
-Filesystem    Type    Size  Used Avail Use% Mounted on
-/dev/sda1     ext3    7.6G  7.5G     0 100% /
-tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
-udev         tmpfs    244M  172K  244M   1% /dev
-tmpfs        tmpfs    249M     0  249M   0% /dev/shm
-overflow     tmpfs    1.0M  1.0M     0 100% /tmp
-.host:/trunk
-            vmhgfs    233G  127G  107G  55% /www/repo
-</code></pre>
-
-<p>So I want to take a look at my top disk hogs:</p>
-<pre><code>du -a | sort -nr | head
-</code></pre>
-<pre><code>
-7920858 .
-5334316 ./var
-3137636 ./var/log
-1220480 ./usr
-1079740 ./var/cache
-1073176 ./var/cache/apt
-1040900 ./var/cache/apt/archives
-983716  ./var/lib
-888564  ./var/log/kern.log
-852852  ./var/log/messages
-</code></pre>
-
-<p>Looks like /var/log and apt cache are out of control.</p>
-
-<p>many rm -fR&#39;s later...</p>
-
-<pre><code>
-/dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
-tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
-udev         tmpfs    244M  172K  244M   1% /dev
-tmpfs        tmpfs    249M     0  249M   0% /dev/shm
-overflow     tmpfs    1.0M  1.0M     0 100% /tmp
-</code></pre>
-
-<p>Let&#39;s try to start:</p>
-<pre><code>/etc/init.d/mysql start
-</code></pre>
-<pre><code>
-Starting MySQL (Percona Server) database server: mysqld ..
-Checking for corrupt, not cleanly closed and upgrade needing tables..
-ERROR 1030 (HY000) at line 2: Got error 28 from storage engine
-</code></pre>
-
-<p><a href="http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine">StackOverflow</a> tells us this still means &#39;not enough disk space&#39;.</p>
-
-<p>Obviously we need to clean up /tmp</p>
-
-<pre><code>
-/dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
-tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
-udev         tmpfs    244M  172K  244M   1% /dev
-tmpfs        tmpfs    249M     0  249M   0% /dev/shm
-overflow     tmpfs    1.0M  1.0M     0 100% /tmp
-</code></pre>
-<pre><code>rm -fR /tmp/*
-</code></pre>
-<pre><code>
-/dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
-tmpfs        tmpfs    249M     0  249M   0% /lib/init/rw
-udev         tmpfs    244M  172K  244M   1% /dev
-tmpfs        tmpfs    249M     0  249M   0% /dev/shm
-overflow     tmpfs    1.0M     0  1.0M   0% /tmp
-</code></pre>
-<h4>Ta-da</h4><pre><code>/etc/init.d/mysql start
-
-Starting MySQL (Percona Server) database server: mysqld already running.
-</code></pre><h4>Notes</h4><pre><code>aptitude install tmpreaper
-</code></pre><h4>Reference:</h4>
-<p><a href="http://packages.debian.org/search?keywords=tmpreaper">http://packages.debian.org/search?keywords=tmpreaper</a><br>
-<a href="http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine">http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine</a><br>
-<a href="http://www.merriam-webster.com/dictionary/ta-da">http://www.merriam-webster.com/dictionary/ta-da</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/06/13/mysql-full-partition/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -2226,241 +1347,469 @@ Half Open Aggressive Aging Period Off, Event Count: 0
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/05/cisco-ios-history-size/">IOS history size</a></h1>
-                <h2>Wednesday, June 05, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/IOS/">IOS</a></h2>
+                <h1><a href="/2013/06/03/using-snort-on-pcap/">using snort on pcap</a></h1>
+                <h2>Monday, June 03, 2013 <span>&raquo;</span> <a href="/tags/pcap/">pcap</a>, <a href="/tags/security/">security</a>, <a href="/tags/snort/">snort</a></h2>
             </div>
             
             <div class="body">
                 <p><h4>Preamble</h4>
-<p>Changing your session buffer for better command navigation.</p>
-<h3>Per VTY</h3>
-<p>History buffer size in IOS is weird.  It&#39;s per VTY.  So you have to <br>
-change it for all virtual terminals in service.</p>
+<p>Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort<br>
+is running as as service inline or at least continually.  Sometimes things happen<br>
+outside of Snort&#39;s purview or you are testing what Snort picks ups.</p>
+<h4>Install tools</h4><pre><code>aptitude install snort snort-rules
+</code></pre><h4>Capture your traffic</h4><pre><code>sudo tcpdump -w test
+</code></pre><h4>Generate snort report</h4><pre><code>snort -r test -c /etc/snort/snort.conf -l .
+</code></pre><h4>View Alerts</h4><pre><code>less alert 
 
-<p>Your VTY configuration probably looks something like:</p>
-<pre><code>line vty 0 4
- transport input ssh
- escape-character 3
-line vty 5 15
- transport input ssh
-</code></pre><h3>Change settings for VTY&#39;s</h3><pre><code>line vty 0 15
- !256 is the max
- history size 256
-</code></pre><h3>Alias</h3><pre><code>alias exec hg show history | include
-</code></pre><h3>Looks like:</h3><pre><code>&lt;your_device&gt;#hg conf
-    hg conf
-</code></pre></p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/06/05/cisco-ios-history-size/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/06/05/mib-basics/">mib basics</a></h1>
-                <h2>Wednesday, June 05, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/mib/">mib</a>, <a href="/tags/snmp/">snmp</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>SNMP is nice but MIB translations can be a pain.  It can also be necessary for figuring<br>
-out what certain numbers mean in the MIB tree.</p>
-<h4>Where does SNMP look for MIBs?</h4><pre><code>net-snmp-config --default-mibdirs
-</code></pre><h4>Make user specific directory (needs to be in above path)</h4><pre><code>mkdir -p /home/&lt;me&gt;/.snmp/mibs
-</code></pre><h4>Grab MIB data from Cisco (or wherever)</h4>
-<p>Example MIB for Firewall info:</p>
-<pre><code>ftp://ftp.cisco.com/pub/mibs/v2/CISCO-UNIFIED-FIREWALL-MIB.my
+[**] [1:485:4] ICMP Destination Unreachable Communication Administratively Prohibited [**]
+[Classification: Misc activity] [Priority: 3] 
+05/19-01:23:00.201765 74.76.148.114 -&gt; &lt;my_ext_ip&gt;
+ICMP TTL:241 TOS:0x0 ID:32480 IpLen:20 DgmLen:56
+Type:3  Code:13  DESTINATION UNREACHABLE: ADMINISTRATIVELY PROHIBITED,
+PACKET FILTERED
+** ORIGINAL DATAGRAM DUMP:
+&lt;my_ext_ip&gt;:80 -&gt; 74.76.148.114:25657
+TCP TTL:47 TOS:0x0 ID:22893 IpLen:20 DgmLen:44
+Seq: 0x654B5258
+** END OF DUMP
 </code></pre>
-<p>Copy to:</p>
-<pre><code>/home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
-</code></pre><h4>Enable MIB</h4>
-<p>Find out where SNMP is looking for configuration parameters:</p>
-<pre><code>net-snmp-config --snmpconfpath
-</code></pre>
-<p>Edit your user snmp configuration (if path is included in above command)</p>
-<pre><code>n /home/&lt;me&gt;/.snmp/snmp.conf
-mib +CISCO-UNIFIED-FIREWALL-MIB
-</code></pre><h4>Try walking the top OID tree</h4><pre><code>snmpwalk -v2c &lt;community&gt; &lt;remote_device_ip&gt;
-
-MIB search path: /home/&lt;me&gt;/.snmp/mibs:/usr/share/mibs/site:/usr/share/snmp/mibs:/usr/share/mibs/iana:/usr/share/mibs/ietf:/usr/share/mibs/netsnmp
-Cannot find module (CISCO-SMI): At line 37 in /home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
-Cannot find module (CISCO-FIREWALL-TC): At line 46 in /home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
-</code></pre><h4>What&#39;s with?  &#39;Cannot find module&#39;</h4>
-<p>This means there are MIB dependencies.  You can probably retrieve these from <a href="ftp://ftp.cisco.com/pub/mibs/v2">ftp://ftp.cisco.com/pub/mibs/v2</a>.</p>
-<pre><code>/home/&lt;me&gt;/.snmp/mibs/CISCO-SMI
-/home/&lt;me&gt;/.snmp/mibs/CISCO-FIREWALL-TC
-</code></pre>
-<p>Enable these MIBs as well.</p>
-<h4>Walk the tree and enjoy MIB goodness</h4><pre><code>&lt;me&gt;@&lt;box&gt;:~# snmpwalk -v2c -c &lt;community&gt; &lt;remote_device_ip&gt; &gt;&gt; snmpinfo.txt
-</code></pre><h4>Show me the basic SNMP catagories</h4>
-<p>You can use cut to see the basics as a full snmpwalk can be a lot of data.</p>
-<pre><code>cut -d: -f 1 snmpinfo.txt | uniq | sort
-
-SNMPv2-MIB
-Technical Support
-Copyright (c) 1986-2013 by Cisco Systems, Inc.
-SNMPv2-MIB
-DISMAN-EVENT-MIB
-SNMPv2-MIB
-IF-MIB
-RFC1213-MIB
-IP-MIB
-IP-FORWARD-MIB
-IP-MIB
-TCP-MIB
-UDP-MIB
-SNMPv2-SMI
-SNMPv2-MIB
-SNMPv2-SMI
-</code></pre>
-<p>You can check out DISMAN-EVENT-MIB using grep.  If you find a MIB you can use SNMPGET next time.</p>
-<h4>Retrieve Uptime Using MIB&#39;s and SNMPGET</h4><pre><code>&lt;me&gt;@&lt;box&gt;:~# snmpget -v2c -c &lt;community&gt; &lt;remote_device_ip&gt; DISMAN-EVENT-MIB::sysUpTimeInstance
-
-DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.95
-</code></pre><h4>Reference:</h4>
-<p><a href="ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my">ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my</a><br>
-<a href="ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my">ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my</a><br>
-<a href="http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml">http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml</a><br>
-<a href="http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS">http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS</a><br>
-<a href="http://wiki.debian.org/SNMP">http://wiki.debian.org/SNMP</a><br>
-<a href="http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752">http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752</a><br>
-<a href="http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774">http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774</a><br>
-<a href="ftp://ftp.cisco.com/pub/mibs/v2">ftp://ftp.cisco.com/pub/mibs/v2</a><br>
-<a href="ftp://ftp.cisco.com/pub/mibs/contrib">ftp://ftp.cisco.com/pub/mibs/contrib</a></p>
+<p>You can edit your snort.conf for what kinds of signatures to look for.  ICMP can be a good indicator<br>
+of shenanigans but is also very noisy.</p>
 </p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/05/mib-basics/">Continue Reading</a></p>
+                <p><a href="/2013/06/03/using-snort-on-pcap/">Continue Reading</a></p>
             </div>
         </div>
     
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/05/email-log-alerts/">email log alerts</a></h1>
-                <h2>Wednesday, June 05, 2013 <span>&raquo;</span> <a href="/tags/logs/">logs</a></h2>
+                <h1><a href="/2013/05/30/bash-boiler-plate-troubleshooting/">bash boiler plate troubleshooting</a></h1>
+                <h2>Thursday, May 30, 2013 <span>&raquo;</span> <a href="/tags/bash/">bash</a>, <a href="/tags/debug/">debug</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h3>Preamble</h3>
+<p>I have a bash script that is being called multiple times instead of once.<br>
+I need to track down where it is being called from.</p>
+
+<p>Boiler plate that is nice for troubleshooting</p>
+<h4>Snippet</h4>
+<pre><code>
+function trouble {
+    echo "--------------------"
+    date
+    echo "whoami: $(whoami)"
+    echo "userid: $(id -u)"
+    echo "My pid is $$"
+    echo "working dir: $(pwd)"
+    echo "Called as: $0"
+    echo "Arguments: $@"
+    echo "user_pstree_begin"
+    pstree $(whoami) -l
+    echo "user_pstree_end"
+    echo "pid_pstree_begin"
+    pstree -np $$
+    echo "pid_pstree_end"
+    echo "--------------------"
+}
+
+set -x
+epochtime=$(date +%s)
+file="/tmp/debug-$epochtime.log"
+logger "Creating: $file"
+trouble > $file
+</code></pre>
+<h4>Looks like</h4>
+<pre><code>
+<me>@<host>:~# cat /tmp/debug-1369940847.log 
+--------------------
+Thu May 30 12:07:27 PDT 2013
+whoami: <me>
+userid: 0
+My pid is 19891
+ps_tree_begin
+test.sh(19891)---pstree(19896)
+ps_tree_end
+working dir: /home/<me>
+Called as: ./test.sh
+Arguments: 
+--------------------
+<me>@<host>:~# 
+
+</code></pre>
+<h4>Syslog shows:</h4><pre><code>&lt;host&gt; &lt;me&gt;: Creating: /tmp/debug-1369940847.log
+</code></pre>
+<p>This is especially helpful for cron jobs or background scripts.</p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/05/30/bash-boiler-plate-troubleshooting/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/05/29/launching-a-syn-flood-test/">launching a syn flood test</a></h1>
+                <h2>Wednesday, May 29, 2013 <span>&raquo;</span> <a href="/tags/opsec/">opsec</a>, <a href="/tags/tcp/">tcp</a></h2>
             </div>
             
             <div class="body">
                 <p><h4>Preamble</h4>
-<p>Getting emails based on strings that appear in a log file.</p>
+<p>Launching a SYN flood.</p>
 
-<p>Heavy duty logging platforms are nice but sometimes you have<br>
-to make do with the basics.</p>
-<h4>Install</h4><pre><code>aptitude install log2mail rsyslog
-</code></pre><h4>Rsyslog configuration</h4><pre><code>#one dir/file per receiver IP
-$template FILENAME,&#34;/var/log/%fromhost-ip%/syslog.log&#34;
-*.* ?FILENAME
-</code></pre><h4>Editing log2mail config</h4>
-<p>We want to match a text string in our log file.</p>
-
-<p>Edit: /etc/log2mail/config/default</p>
+<p>Everyone know DDOS attacks happen and of these SYN floods may be the simplest to organize for<br>
+attackers.  As a defender you don&#39;t want the first time you see this kind of traffic to<br>
+be when you are under attack.</p>
+<h4>Launching a SYN attack against yourself.</h4>
+<ol>
+<li>You can learn some tools of the trade</li>
+<li>You can test the weakness of your services</li>
+<li>You can mitigate those weaknesses</li>
+</ol>
+<h4>Picking a tool</h4>
+<p>A tool that is simple to use: <a href="https://github.com/merces/t50">https://github.com/merces/t50</a></p>
+<pre><code>git clone https://github.com/merces/t50.git
+cd t50/
+make
+./t50 --help
+</code></pre>
+<p>Now you have a compiled attack tool and the help is pretty large.  </p>
+<h4>Launching a SYN Flood</h4><pre><code>./t50 &lt;DEST_IP&gt; --flood -S --turbo
+</code></pre><h4>Looks like</h4>
+<p>Start:</p>
+<pre><code>entering in flood mode...
+activating turbo...
+hit CTRL+C to break.
+</code></pre>
+<p>Finish:    </p>
+<pre><code>T50 5.4.1 successfully launched on May 28th 2013 13:09:24
+</code></pre><h4>n the destination host:</h4>
+<ul>
+<li>Traffic:</li>
+</ul>
 
 <pre><code>
-file = /var/log/<IP>/syslog.log
-    pattern = "<YOUR_TEXT_PATTERN>"
-    mailto = <you>@<yourdomain>
+    tx eth0: 1168 b/s rx eth0: 528 b/s
+    tx eth0: 1056 b/s rx eth0: 9160 b/s
+    tx eth0: 8616 b/s rx eth0: 528 b/s
+    tx eth0: 4944 b/s rx eth0: 528 b/s
+
+        *syn flood starts**
+
+    tx eth0: 10 Mb/s rx eth0: 12 Mb/s
+    tx eth0: 36 Mb/s rx eth0: 43 Mb/s
+    tx eth0: 38 Mb/s rx eth0: 46 Mb/s
+    tx eth0: 39 Mb/s rx eth0: 47 Mb/s
+    tx eth0: 39 Mb/s rx eth0: 47 Mb/s
 </code></pre>
-<h4>The default alert email</h4>
-<p>Once your string is matched you should get an email:</p>
-<pre><code>Hello!
 
-We have matched your pattern &#34;&lt;YOUR_TEXT_PATTERN&gt;&#34; in &#34;&lt;YOUR_LOG_FILE&gt;&#34; 5 times:
+<ul>
+<li>Logging (NOTE: SYN Cookies are enabled)</li>
+</ul>
 
-&lt;YOUR LOG FILE MATCHES&gt;
-
-Yours,
-log2mail.
+<pre><code>
+    possible SYN flooding on port 5666. Sending cookies.
+    possible SYN flooding on port 5666. Sending cookies.
 </code></pre>
-<p>To edit this default template you need to change: /etc/log2mail/mail</p>
-<h4>Reference</h4>
-<p><a href="http://people.debian.org/%7Eenrico/log2mail/">http://people.debian.org/~enrico/log2mail/</a></p>
+
+<ul>
+<li>Connection Table</li>
+</ul>
+
+<pre><code>
+    while true; do netstat -n -p TCP tcp | grep  SYN_RECV | wc -l >> /tmp/syn.log; sleep 2; done
+
+    0
+    5
+    6
+    3
+    2
+    ...
+    **syn flood**
+    ...
+    142
+    140
+    144
+    143
+    142
+    142
+    143
+    142
+    141
+    141
+    140
+    137
+    138
+    140
+    142
+    142
+    142
+    145
+    144
+</code></pre>
+
+<p>Effect:</p>
+
+<ul>
+<li>Massive lag in responsiveness for CLI commands</li>
+<li>Simple web server with (python -m SimpleHTTPServer) crashed</li>
+<li>Top shows ksoftirqd/0 pegging CPU</li>
+</ul>
+
+<p>Guidance on size of flood:</p>
+<pre><code>./t50 &lt;target&gt; --threshold 10000 -S #4Mbps
+./t50 &lt;target&gt; --threshold 20000 -S #8Mbps
+./t50 &lt;target&gt; --threshold 40000 -S #16Mbps
+
+#more or less consisten 4Mbps flood
+for i in {1..100}; do ./t50 &lt;target&gt; --threshold 10000 -S; sleep 3; done
+</code></pre><h4>Reference:</h4>
+<p><a href="http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html">http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html</a><br>
+<a href="http://www.sans.org/security-resources/idfaq/syn_flood.php">http://www.sans.org/security-resources/idfaq/syn_flood.php</a><br>
+<a href="http://www.cs.wm.edu/%7Ehnw/paper/attack.pdf">http://www.cs.wm.edu/~hnw/paper/attack.pdf</a><br>
+<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections</a><br>
+<a href="http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/">http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/</a><br>
+<a href="https://github.com/merces/t50">https://github.com/merces/t50</a><br>
+<a href="http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded">http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded</a><br>
+<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html</a><br>
+<a href="http://h4xors.wordpress.com/tag/t50/">http://h4xors.wordpress.com/tag/t50/</a></p>
 </p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/05/email-log-alerts/">Continue Reading</a></p>
+                <p><a href="/2013/05/29/launching-a-syn-flood-test/">Continue Reading</a></p>
             </div>
         </div>
     
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/04/adding-a-logfile-to-splunk/">adding a logfile to splunk</a></h1>
-                <h2>Tuesday, June 04, 2013 <span>&raquo;</span> <a href="/tags/splunk/">splunk</a></h2>
+                <h1><a href="/2013/05/29/cisco-lights-out-failsafe/">cisco lights out failsafe</a></h1>
+                <h2>Wednesday, May 29, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/ios/">ios</a></h2>
             </div>
             
             <div class="body">
-                <p><h4>Getting standard logfiles into Splunk</h4>
-<p>inputs.conf</p>
-<pre><code>[monitor:///var/log/my/file.log]
-disabled = false
-followTail = 0
-host = &lt;HOST&gt;
-host_segment = 4
-sourcetype = &lt;SOURCE_TYPE_NAME&gt;
-</code></pre><h4>Notes</h4><pre><code>You should add it to to logrotate, Splunk will &#34;tail&#34; it correctly
+                <p><h4>Preamble</h4>
+<p>If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices<br>
+your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates<br>
+the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some<br>
+nice &quot;fail back to my previous config&quot; logic that Cisco hasn&#39;t figured out yet.  Yes, this will<br>
+obviously cause an outage, but in a true &#39;lights out&#39; remote scenario this may be the best<br>
+you can do.</p>
+<h4>Walk through:</h4>
+<p><strong><em>It&#39;s 2 AM and I&#39;m up for maintenace</em></strong></p>
+<pre><code>myrtr#reload in 30
+System configuration has been modified. Save? [yes/no]: no
+Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &lt;me&gt; on vty0 (&lt;vty_ip&gt;)
+Reload reason: Reload Command
+Proceed with reload? [confirm]
+myrtr#
+</code></pre>
+<p>*** Making changes *** </p>
+
+<p>*** How long until a reset? ***</p>
+<pre><code>myrtr#show reload
+Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &lt;me&gt; on vty0 (&lt;vty_ip&gt;)
+Reload reason: Reload Command
+</code></pre>
+<p>*** test everything is good -- ok clear scheduled reload ***</p>
+<pre><code>myrtr#reload cancel
+***
+*** --- SHUTDOWN ABORTED ---
+***
 </code></pre></p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/04/adding-a-logfile-to-splunk/">Continue Reading</a></p>
+                <p><a href="/2013/05/29/cisco-lights-out-failsafe/">Continue Reading</a></p>
             </div>
         </div>
     
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/04/convert-mp3-for-asterisk/">convert mp3 for asterisk</a></h1>
-                <h2>Tuesday, June 04, 2013 <span>&raquo;</span> <a href="/tags/asterisk/">asterisk</a>, <a href="/tags/mp3/">mp3</a></h2>
+                <h1><a href="/2013/05/23/syn-cookies/">syn cookies</a></h1>
+                <h2>Thursday, May 23, 2013 <span>&raquo;</span> <a href="/tags/ddos/">ddos</a>, <a href="/tags/syn/">syn</a>, <a href="/tags/tcp/">tcp</a></h2>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4><pre><code>I want to use mp3&#39;s for hold music, and for fun.
-</code></pre><h4>Convert all mp3&#39;s in a directory for use with asterisk.</h4><pre><code>#!/bin/bash
-for f in `ls *.mp3` ; do FILE=$(basename $f .mp3) ; \
-ffmpeg -i $FILE.mp3 -ar 8000 -ac 1 -ab 64 $FILE.wav -ar 8000 \
--ac 1 -ab 64 -f mulaw $FILE.pcm -map 0:0 -map 0:0 ; done
-</code></pre><h4>Asterisk Configuration</h4>
-<p>extensions.conf</p>
-<pre><code>; Answer required as Music On Hold does not answer the call
-exten =&gt; 2112,1,Answer
-exten =&gt; 2112,2,MusicOnHold(rush)
+                <p><h4>Preamble</h4>
+<p>When you&#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like<br>
+syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known<br>
+defenses is syn cookies.</p>
+<h4>Who doesn&#39;t like cookies?</h4><pre><code>SYN cookies are particular choices of initial TCP sequence numbers by TCP servers.
+</code></pre><h4>Linux</h4><pre><code>root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+0
+
+root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+1
 </code></pre>
-<p>I used this to play 2112 whenever you dial extension 2112.</p>
+<p>Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of <br>
+enabling does not persist through a reboot.</p>
+<h4>Cisco IOS Zone Based FW</h4>
+<p>Global:</p>
+<pre><code>parameter-map type inspect global
+    tcp syn-flood limit 20000
+</code></pre>
+<p>Zone:</p>
+<pre><code>parameter-map type inspect-zone ddos-detection
+   tcp syn-flood rate per-destination 20000
+</code></pre>
+<p>NOTES:</p>
+
+<p>SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.</p>
+<h4>Reference:</h4>
+<p><a href="http://cr.yp.to/syncookies.html">http://cr.yp.to/syncookies.html</a><br>
+<a href="http://www.faqs.org/docs/securing/chap5sec56.html">http://www.faqs.org/docs/securing/chap5sec56.html</a><br>
+<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html">http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html</a><br>
+<a href="http://etherealmind.com/tcp-syn-cookies-ddos-defence/">http://etherealmind.com/tcp-syn-cookies-ddos-defence/</a><br>
+<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html</a><br>
+<a href="http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html">http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html</a><br>
+<a href="http://serverfault.com/questions/353411/syn-cookies-on-internal-machines">http://serverfault.com/questions/353411/syn-cookies-on-internal-machines</a><br>
+<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections</a></p>
 </p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/04/convert-mp3-for-asterisk/">Continue Reading</a></p>
+                <p><a href="/2013/05/23/syn-cookies/">Continue Reading</a></p>
             </div>
         </div>
     
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/04/iptables-flush-all-rules/">iptables flush all rules</a></h1>
-                <h2>Tuesday, June 04, 2013 <span>&raquo;</span> <a href="/tags/iptables/">iptables</a></h2>
+                <h1><a href="/2013/05/21/postfix-ssl-weak-ciphers/">postfix ssl weak ciphers</a></h1>
+                <h2>Tuesday, May 21, 2013 <span>&raquo;</span> <a href="/tags/postfix/">postfix</a>, <a href="/tags/ssl/">ssl</a></h2>
             </div>
             
             <div class="body">
-                <p>Handy for testing.  Flush iptables.</p>
+                <p><h4>Vuln</h4>
+<p>Weak ciphers are detected as a level 4 vuln for most scanners.<br><br>
+If you have to deal with PCI you know all level 4 and 5 vulns must be resolved.</p>
+<h4>Resolution</h4>
+<p>/etc/postfix/main.cf</p>
+<pre><code># TLS parameters
+smtpd_use_tls=yes
+smtpd_tls_mandatory_ciphers = high
+smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5, DES
+smtpd_tls_security_level = encrypt
+#Ensure TLSv1
+# Preferred form with Postfix ≥ 2.5:
+smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
+</code></pre><h4>Notes</h4>
+<p>Pre and post scans confirm all is well but...</p>
+
+<p>Postfix is strange when it comes to SSL, and </p>
+<pre><code>smtpd_tls_security_level = encrypt
+</code></pre>
+<p>implies</p>
+<pre><code>ssl_only_use_tls = true.
+</code></pre>
+<p>So if you have need for non-tls capable clients use caution.</p>
+
+<p>Reference:<br>
+<a href="https://community.qualys.com/docs/DOC-1141">https://community.qualys.com/docs/DOC-1141</a><br>
+<a href="http://www.postfix.org/TLS_README.html#server_enable">http://www.postfix.org/TLS_README.html#server_enable</a></p>
+</p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/04/iptables-flush-all-rules/">Continue Reading</a></p>
+                <p><a href="/2013/05/21/postfix-ssl-weak-ciphers/">Continue Reading</a></p>
             </div>
         </div>
     
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/04/simple-iptables-uses/">simple iptables uses</a></h1>
-                <h2>Tuesday, June 04, 2013 <span>&raquo;</span> <a href="/tags/iptables/">iptables</a></h2>
+                <h1><a href="/2013/05/17/using-graphite-events/">using graphite events</a></h1>
+                <h2>Friday, May 17, 2013 <span>&raquo;</span> <a href="/tags/graphite/">graphite</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>Graphite events allow you to overlay vertical bars on graphs for correlation of events<br>
+and trending data.  I know the <a href="http://codeascraft.com/2010/12/08/track-every-release/" title="etsy events">etsy</a><br>
+guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That<br>
+is a nice and reliable way to do it, but if you are looking for more flexbility using the <br>
+native (&#39;experimental&#39;) events feature may be useful.</p>
+<h4>Posting an event:</h4><pre><code>#!/bin/bash
+curl -X POST http://graphite/events/ -d &#39;{&#34;what&#34;: &#34;did_stuff&#34;, &#34;tags&#34; : &#34;fun,times&#34;}&#39;
+</code></pre><h4>Retrieving events:</h4><pre><code>curl -X GET http://graphite/events/
+
+curl -X GET http://graphite/events/?tags=fun
+</code></pre><h4>Show me only stuff starting at an epoch time:</h4><pre><code>curl -X GET http://graphite/events/?from=1368778407
+</code></pre><h4>Getting lines on graphs</h4>
+<p>Now you have an event that shows up on http://graphite/events and is retrievable by curl.</p>
+<h4>Place it over your graph:</h4><pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;))
+</code></pre>
+<p>You can also go two tags deep which is similar in logic to a SQL join.  So the previous example<br>
+retrieves all &#39;fun&#39; tagged events.  Now we want to get &#39;fun&#39; and correlate with &#39;times&#39;.</p>
+<pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;, &#39;times&#39;))
+</code></pre>
+<p>This returns all &#39;fun&#39; tagged events that also have &#39;times&#39; tags.</p>
+<h4>Where this is useful in real world:</h4><pre><code>#all syncs
+https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;))
+
+#Now code syncs from a specific user:
+https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;, &#39;user&#39;))
+</code></pre>
+<p>Reference:<br>
+<a href="http://graphite.readthedocs.org/en/1.0/functions.html">http://graphite.readthedocs.org/en/1.0/functions.html</a><br>
+<a href="https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142">https://code.launchpad.net/~lucio.torre/graphite/add-events/+merge/69142</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/05/17/using-graphite-events/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/05/16/ops-guy-says-timemachine/">ops guy says timemachine</a></h1>
+                <h2>Thursday, May 16, 2013 <span>&raquo;</span> <a href="/tags/says/">says</a></h2>
+            </div>
+            
+            <div class="body">
+                <p>OPS: &quot;When does it need to be done?&quot;<br>
+PM: &quot;Next week at the latest.&quot;<br>
+OPS: &quot;OK, we spend from now to next week working on a time machine.  If we<br>
+had a time machine it would <em>already</em> be done.&quot;<br>
+PM: &quot;How so?&quot;</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/05/16/ops-guy-says-timemachine/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/05/09/name.com-bummer/">name.com bummer</a></h1>
+                <h2>Thursday, May 09, 2013 <span>&raquo;</span> <a href="/tags/dns/">dns</a>, <a href="/tags/name.com/">name.com</a></h2>
+            </div>
+            
+            <div class="body">
+                <p>So name.com was hacked and deviantart.com was one of the credentials dumped from their DB.</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/05/09/name.com-bummer/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/04/19/simple-iptables-uses/">simple iptables uses</a></h1>
+                <h2>Friday, April 19, 2013 <span>&raquo;</span> <a href="/tags/iptables/">iptables</a></h2>
             </div>
             
             <div class="body">
@@ -2488,15 +1837,550 @@ iptables -P OUTPUT ACCEPT
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/04/simple-iptables-uses/">Continue Reading</a></p>
+                <p><a href="/2013/04/19/simple-iptables-uses/">Continue Reading</a></p>
             </div>
         </div>
     
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/06/03/query-puppetdb-facts-from-cli/">query puppetdb facts from cli</a></h1>
-                <h2>Monday, June 03, 2013 <span>&raquo;</span> <a href="/tags/facter/">facter</a>, <a href="/tags/puppet/">puppet</a></h2>
+                <h1><a href="/2013/04/18/beginning-bgp/">beginning bgp</a></h1>
+                <h2>Thursday, April 18, 2013 <span>&raquo;</span> <a href="/tags/arin/">arin</a>, <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>I remember hearing a lot of conflicting information about BGP when<br>
+I first started doing network admin stuff.  A lot of time BGP is part of an HA strategy and there<br>
+are people making business decisions surrounding the protocol itself.  This breakdown strives to be <br>
+accurate and laymen without being misleading.</p>
+
+<p><em>Specific misconceptions:</em></p>
+<pre><code>You need a full time admin doing only BGP stuff.
+
+You can accidentally take down the Internet if you mess up.
+
+BGP is hard.
+</code></pre>
+<p>You do not need a &#39;full time&#39; guy thinking about BGP around the clock, although <br>
+you do need designated contacts for just-in-case scenarios.  If your providers are handling<br>
+their own business you don&#39;t have to worry about taking down the Internet.  (Although some small<br>
+version of this happened to YouTube <a href="http://www.macworld.com/article/1132256/networking.html">http://www.macworld.com/article/1132256/networking.html</a>).<br>
+BGP is no harder or easier than anything else.  I have seen configurations that boggle the mind<br>
+work for years.  Correctly administered BGP does involves some savy.</p>
+<h4>What is BGP?</h4>
+<p>Usually referring to the current version 4.  Just read it: <a href="https://en.wikipedia.org/wiki/Border_Gateway_Protocol">https://en.wikipedia.org/wiki/Border_Gateway_Protocol</a></p>
+<h4>Seriously, What is BGP for though?</h4>
+<p>In order to have a service (or anything) available on the Internet it needs to be announced.  Usually, your<br>
+Internet Provider does this announcing for you.  If you want to be the master of your own destiny you need to<br>
+announce yourself.  Literally, you say &quot;here I am&quot; to your provider.  Your provider talks to other providers<br>
+and before long everyone knows how to find you.  When a user connects to their Internet provider they send a<br>
+request for your service. Since you have made yourself known they can find you.</p>
+
+<p>BGP is how we find people on the Internet.</p>
+<h4>How can I start announcing myself?</h4>
+<p>In order to announce that you exist you need to have IP addresses.  It&#39;s a non-human way for tracking down a <br>
+resource; think phone numbers.  The gentlemen at ARIN keep a big list of addresses in use.  If<br>
+you want to use BGP; you need addressing.  If you want addressing; you talk to ARIN.  There are two simultaneous<br>
+IP address pools.  The old is IPv4 and we are scraping the bottom of the bucket.  That bucket<br>
+was large enough to get the Internet this far (4 Billion+ addresses with a large chunk carved out for special reservations).<br>
+The second bucket is called IPv6.  IPv6 is a much deeper bucket, 3.4 x 10 to the 38th power.  That is far, far, far<br>
+more addresses than IPv4 has available.  IPv6 has addresses reserved already for the Moon.  Seriously.</p>
+
+<p>To get addresses you apply.  It&#39;s that simple.  <a href="https://www.arin.net/resources/request.html">https://www.arin.net/resources/request.html</a></p>
+<h4>...almost that simple.</h4>
+<p>IPv4 is a dwindling resource.  But it has been one for a long time.  In my experience, getting an IPv6 block<br>
+is very easy.  Getting an IPv4 block requires more justification.  Scarce resources are more valued.  Without a <br>
+block of my own addresses can I use BGP?  Well, maybe.  Some providers will allocate you a block of addresses<br>
+from their pool.  You don&#39;t own them.  You may be able to advertise them out another provider if both providers<br>
+agree that is reasonable.  BGP is all about relationships.  No provider has to allow you to announce your block<br>
+on their network whether it has been issued to you or them.  Thankfully providers are in the business of making<br>
+money, and the only way to make money for them is to move traffic.  If you can get an address block of your very<br>
+own it is called Provider Independent Address Space.  Meaning you can take your addresses and move to any provider<br>
+that will have you.  If you talk a provider into allocating you a block of addresses it is called Provider Dependent<br>
+Address Space.  In order to change providers you have to change IP blocks.  It can be done.</p>
+<h4>Understanding Addressing</h4>
+<p>All address space given out is public information.  </p>
+
+<p>Getting ARIN info for deviantART.com</p>
+
+<p><img src="/assets/images/bgp/arin-whois.png" alt="arin query" title="ARIN Whois"><br>
+<img src="/assets/images/bgp/arin-info.png" alt="arin info" title="ARIN Info"></p>
+
+<p>Yahoo: <a href="http://whois.arin.net/rest/customer/C00146168">http://whois.arin.net/rest/customer/C00146168</a><br>
+Mozilla: <a href="http://whois.arin.net/rest/customer/C01111858">http://whois.arin.net/rest/customer/C01111858</a></p>
+<h4>Wait...They want my ASN?</h4>
+<p>ASN is automomous system number.  It is both a technical and a nontechnical entity.  In a non-technical sense<br>
+it is a number assigned to networks under a singular control.  Some companies have multiple ASN&#39;s, but in general<br>
+you join ARIN and you get an ASN.  This ASN is unique to you, and it is how providers will know you.  </p>
+
+<p>BGP thinks in ASN&#39;s.</p>
+
+<p>It&#39;s like this: You have a 1:1 relationship with your ASN, but a one-to-many relationship with your addressing space.</p>
+
+<p>Sort of like:   You have a 1:1 relationship with your house address, but a one-to-many relationship for your house address<br>
+                to phone numbers associated with your address.</p>
+
+<p>Just Read it: <a href="http://en.wikipedia.org/wiki/Autonomous_System_(Internet)">http://en.wikipedia.org/wiki/Autonomous_System_(Internet)</a></p>
+<h4>Why ASN&#39;s <em>AND</em> IP addresses?</h4>
+<p>When providers talk BGP to each other they refer to you and themselves by ASN number.  That&#39;s the short version.</p>
+
+<p>BGP is a routing protocol.  Most routing protocols rely on an addressing hierarchy.  Therefore it&#39;s easy to follow<br>
+the numbers and find your destination.  If two roomates live in a house together and use the network 192.168.0.0/16<br>
+and they link up with their neighbors who use 172.16.0.0/16.  They can point routes at each other and communications happens.<br>
+If one roomate in the first house wants his own subnet they can break things down.  192.168.0.0/16 becomes 192.168.0.0/24 <br>
+(first roomate) AND 192.168.1.0/24 (second roomate).  But their neighbors still only use 192.168.0.0/16 as it&#39;s &#39;good enough&#39;<br>
+to get to their house, and their house router knows how to distinguish between their rooms.</p>
+
+<p>BGP exists on a larger playing field.  10.0.1.0/24 and 10.0.2.0/24 could be assigned to people or companies that have<br>
+no relationship to each other.  Addressing on the Internet is not assigned in a way that makes it contiguous.</p>
+
+<p>It would be like if the two roomates were still using 192.168.0.0/24 and 192.168.1.0/24 but had now moved to different<br>
+addresses.  We would need to find a way to associate their IP block with their new location.  The location would be<br>
+the ASN and the address block ...would be the address block.</p>
+
+<p>So when two routers talk BGP to each other they say: ASN 1 has 192.168.0.0/24.  ASN 2 has 192.168.1.0/24</p>
+
+<p>So if BGPRouter1 says this to BGPRouter2.  BGPRouter1 has to be associated with an ASN too.  Let&#39;s say BGPRouter1 has<br>
+ASN 3.  Now BGPRouter2 knows: when I need to get to ASN1 or ASN2 I send things to ASN3.  Like, if I need to mail this letter<br>
+to Les Sauvages, France the first step is getting it to France.</p>
+<h4>Summation</h4>
+<ul>
+<li>BGP is how people find each other on the Internet.  Usually providers worry about it.</li>
+<li>BGP is complex, but the basics are very straight forward.</li>
+<li>BGP is fundamental to understanding the Internet.</li>
+<li>ASN&#39;s can be assigned by ARIN.  All you need to do is join.</li>
+<li>Addressing can be assigned by ARIN.  All you need to do is apply.</li>
+</ul>
+<h4>Reference:</h4>
+<p><a href="https://en.wikipedia.org/wiki/Border_Gateway_Protocol">https://en.wikipedia.org/wiki/Border_Gateway_Protocol</a><br>
+<a href="http://en.wikipedia.org/wiki/IP_address">http://en.wikipedia.org/wiki/IP_address</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/04/18/beginning-bgp/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/04/16/beginning-bgp-configuration/">beginning bgp configuration</a></h1>
+                <h2>Tuesday, April 16, 2013 <span>&raquo;</span> <a href="/tags/arin/">arin</a>, <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h5>Preamble</h5>
+<p>Getting going with BGP</p>
+<h4>Configuring Basic BGP (full table)</h4>
+<p>This configuration is Cisco based but JunOS isn&#39;t too far of a stretch in my experience.</p>
+
+<p>First off: you need your ASN.  You need your address block.  Your address block must be at least /24.</p>
+
+<p>A general rule of thumb for awhile has been 2 GB of memory per full BGP table.  Sometimes more is<br>
+required and sometimes significantly less.  The table is still growing and 2 GB is my personal<br>
+baseline required.</p>
+<h4>Aliases: you will learn to like them</h4><pre><code>alias exec sumbgp6 show bgp ipv6 unicast summary
+alias exec sumbgp show ip bgp summary
+alias exec sbgp show run | section bgp
+</code></pre><h4>Basic BGP stanza</h4>
+<pre><code>
+config t
+ip bgp-community new-format
+!insert your ASN
+router bgp <OUR_ASN>
+ !your router id should be set explicitly
+ bgp router-id <OUR_ROUTER_ID>
+ no bgp fast-external-fallover
+ !notify syslog of bgp changes
+ bgp log-neighbor-changes
+ bgp graceful-restart restart-time 120
+ bgp graceful-restart stalepath-time 360
+ bgp graceful-restart
+ neighbor <OUR_PROVIDER_IP> remote-as <YOUR_PROVIDERS_ASN>
+ neighbor <OUR_PROVIDER_IP> description <OUR_PROVIDERS_NAME>
+ neighbor <OUR_PROVIDER_IP> version 4
+ neighbor <OUR_PROVIDER_IP> activate
+</code></pre>
+<h4>Our First BGP Summary</h4>
+<pre><code>
+RTRME(config-router)####do sumbgp
+BGP router identifier <OUR_ROUTER_ID>, local AS number <OUR_ASN>
+BGP table version is 464187, main routing table version 464187
+446501 network entries using 66082148 bytes of memory
+446501 path entries using 28576064 bytes of memory
+73561/73558 BGP path/bestpath attribute entries using 9415808 bytes of memory
+69308 BGP AS-PATH entries using 2555070 bytes of memory
+68 BGP community entries using 1904 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 106630994 total bytes of memory
+BGP activity 460823/1679 prefixes, 461759/2621 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+<OUR_PROVIDER_IP>  4         2914   79993      80   464166    0    0 01:11:19   446501
+</code></pre>
+<h4>BGP: Why you no work?</h4>
+<pre><code>
+RTRME(config-router)####do sh ip bgp neighbor <OUR_PROVIDER_IP> advertised-routes
+
+Total number of prefixes 0 
+</code></pre>
+<h4>To Advertise it: We need to know where it is</h4>
+<pre><code>
+RTRME(config)####sh ip bgp <OUR_ADVERTISED_SUBNET>
+% Network not in table
+
+RTRME(config)####ip route <OUR_ADVERTISED_SUBNET> <OUR_ADVERTISED_SM> null 0 200
+
+RTRME(config)####do sh ip bgp <OUR_ADVERTISED_SUBNET>
+BGP routing table entry for <OUR_ADVERTISED_SUBNET>, version 464822
+Paths: (1 available, best ####1, table default)
+Multipath: eBGP
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    0.0.0.0 from 0.0.0.0 (<OUR_ROUTER_ID>)
+      Origin IGP, metric 0, localpref 100, weight 32768, valid, sourced, local, best
+RTRME(config)####
+</code></pre>
+<h4>Resetting BGP</h4>
+<p>This is very aggressive and will reset your peering status.  Lookup soft in/out if<br>
+you are alreadying using BGP in production.<br>
+<pre><code><br>
+RTRME####clear ip bgp *<br>
+</code></pre></p>
+<h4>Things we know about our neighbor</h4>
+<p><em>What is their status?</em></p>
+
+<pre><code>
+RTRME####sh ip bgp neighbors <OUR_PROVIDER_IP>
+BGP neighbor is <OUR_PROVIDER_IP>,  remote AS <PROVIDER_ASN>, external link
+ Description: <OUR_PROVIDERS_NAME>
+  BGP version 4, remote router ID <OUR_PROVIDERS_RTR_ID>
+  BGP state = Established, up for 00:02:11
+  Last read 00:00:03, last write 00:00:21, hold time is 180, keepalive interval is 60 seconds
+  Neighbor sessions:
+    1 active, is not multisession capable (disabled)
+  Neighbor capabilities:
+    Route refresh: advertised and received(new)
+    Four-octets ASN Capability: advertised and received
+    Address family IPv4 Unicast: advertised and received
+    Address family IPv4 Multicast: received
+    Graceful Restart Capability: advertised
+    Enhanced Refresh Capability: advertised
+    Multisession Capability: 
+    Stateful switchover support enabled: NO for session 1
+  Message statistics:
+    InQ depth is 0
+    OutQ depth is 0
+    
+                         Sent       Rcvd
+    Opens:                  1          1
+    Notifications:          0          0
+    Updates:                2      74253
+    Keepalives:             2          2
+    Route Refresh:          0          0
+    Total:                  5      74256
+  Default minimum time between advertisement runs is 30 seconds
+
+ For address family: IPv4 Unicast
+  Session: <OUR_PROVIDER_IP>
+  BGP table version 446725, neighbor version 442403/446725
+  Output queue size : 0
+  Index 3, Advertise bit 0
+  3 update-group member
+  Slow-peer detection is disabled
+  Slow-peer split-update-group dynamic is disabled
+                                 Sent       Rcvd
+  Prefix activity:               ----       ----
+    Prefixes Current:               1     446496 (Consumes 28575744 bytes)
+    Prefixes Total:                 1     446688
+    Implicit Withdraw:              0        159
+    Explicit Withdraw:              0         33
+    Used as bestpath:             n/a     446496
+    Used as multipath:            n/a          0
+
+                                   Outbound    Inbound
+  Local Policy Denied Prefixes:    --------    -------
+    AS_PATH loop:                       n/a          1
+    Bestpath from this peer:         442397        n/a
+    Invalid Path:                         2        n/a
+    Total:                           442399          1
+  Number of NLRIs in the update sent: max 1, min 0
+  Last detected as dynamic slow peer: never
+  Dynamic slow peer recovered: never
+  Refresh Epoch: 1
+  Last Sent Refresh Start-of-rib: never
+  Last Sent Refresh End-of-rib: never
+  Last Received Refresh Start-of-rib: never
+  Last Received Refresh End-of-rib: never
+                               Sent   Rcvd
+    Refresh activity:          ----   ----
+          Refresh Start-of-RIB          0          0
+      Refresh End-of-RIB            0          0
+          
+  Address tracking is enabled, the RIB does have a route to <OUR_PROVIDER_IP>
+  Connections established 3; dropped 2
+  Last reset 00:02:22, due to Peer closed the session
+  Transport(tcp) path-mtu-discovery is enabled
+  Graceful-Restart is enabled, restart-time 120 seconds, stalepath-time 360 seconds
+Connection state is ESTAB, I/O status: 1, unread input bytes: 0        
+Connection is ECN Disabled
+Mininum incoming TTL 0, Outgoing TTL 1
+Local host: <LOCAL_IP>, Local port: <OUR_ASN>
+Foreign host: <OUR_PROVIDER_IP>, Foreign port: 179
+Connection tableid (VRF): 0
+          
+Enqueued packets for retransmit: 0, input: 0  mis-ordered: 0 (0 bytes)
+          
+Event Timers (current time is 0x4FFF0E):
+Timer          Starts    Wakeups            Next
+Retrans             6          0             0x0
+TimeWait            0          0             0x0
+AckHold           583          8             0x0
+SendWnd             0          0             0x0
+KeepAlive           0          0             0x0
+GiveUp              0          0             0x0
+PmtuAger            1          0        0x572440
+DeadWait            0          0             0x0
+Linger              0          0             0x0
+          
+iss:  606418243  snduna:  606418426  sndnxt:  606418426     sndwnd:  65353
+irs:  236441019  rcvnxt:  244436657  rcvwnd:      15353  delrcvwnd:   1031
+
+SRTT: 176 ms, RTTO: 1244 ms, RTV: 1068 ms, KRTT: 0 ms
+minRTT: 94 ms, maxRTT: 397 ms, ACK hold: 200 ms
+Status Flags: none
+Option Flags: higher precendence, nagle, path mtu capable
+          
+Datagrams (max data segment is 1424 bytes):
+Rcvd: 5643 (out of order: 0), with data: 5627, total data bytes: 7995637
+Sent: 5645 (retransmit: 0 fastretransmit: 0),with data: 5, total data bytes: 182
+</code></pre>
+      
+
+<p><em>What are we advertising to them?</em></p>
+
+<pre><code>
+RTRME####sh ip bgp neighbors <OUR_PROVIDER_IP> advertised-routes 
+BGP table version is 447010, local router ID is <OUR_ROUTER_ID>
+Status codes: s suppressed, d damped, h history, * valid, > best, i - internal,
+              r RIB-failure, S Stale, m multipath, b backup-path, x best-external, f RT-Filter, a additional-path
+Origin codes: i - IGP, e - EGP, ? - incomplete
+
+   Network          Next Hop            Metric LocPrf Weight Path
+*> <OUR_ADVERTISED_SUBNET>     0.0.0.0                  0         32768 i
+
+Total number of prefixes 1 
+</code></pre>    
+<h4>Reference:</h4>
+<p><a href="http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a00800945ff.shtml">http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a00800945ff.shtml</a><br>
+<a href="http://lg.above.net/lg.cgi">http://lg.above.net/lg.cgi</a><br>
+<a href="http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a0080094309.shtml">http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a0080094309.shtml</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/04/16/beginning-bgp-configuration/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/04/10/virsh-halting-a-host/">virsh halting a host</a></h1>
+                <h2>Wednesday, April 10, 2013 <span>&raquo;</span> <a href="/tags/kvm/">kvm</a>, <a href="/tags/virsh/">virsh</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>KVM is great but I&#39;m aking a note so I remember because this command gives me pause every time.</p>
+<h4>Sometimes &#39;shutdown&#39; in the virtual shell for KVM fails.</h4><pre><code>virsh # shutdown myvm
+Domain myvm is being shutdown
+</code></pre><h4>But...</h4><pre><code>114 myvm            running
+</code></pre>
+<p>In order to shutdown this host I use the &#39;destroy&#39; command.  Destroy does not<br>
+remove any files or otherwise permanently change the host data.  Which for me, <br>
+is unintuitive.  It does remove it from the list of hosts shown with the &#39;list&#39;<br>
+command.  Destroy is like pulling the plug.</p>
+<pre><code>virsh #destroy myvm
+</code></pre>
+<p>The command that does what I would expect destroy to do is: &#39;undefine&#39;.</p>
+
+<p>Reference<br>
+<a href="http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html">http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html</a><br>
+<a href="http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/">http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/04/10/virsh-halting-a-host/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/04/03/ios-granular-permissions/">IOS granular permissions</a></h1>
+                <h2>Wednesday, April 03, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/IOS/">IOS</a>, <a href="/tags/security/">security</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>If you have tiered levels of administrators, or you want to<br>
+create an account for automation purposes best practice is to<br>
+define a custom security level in IOS.</p>
+
+<p>Levels 1 and 15 are defined by default.</p>
+<h4>Allowing lower levels to see your configuration: IOS</h4><pre><code>conf t
+username backup privilege 3 secret &lt;SECRET&gt;
+privilege exec level 3 show startup-config
+privilege exec level 3 show
+wr mem
+</code></pre><h4>Allowing lower levels to see your configuration: FreeRADIUS:</h4>
+<p>/etc/freeradius/users</p>
+
+<pre><code>
+backup
+    Service-Type = NAS-Prompt-User,
+    cisco-avpair = "shell:priv-lvl=3",
+    Auth-Type = System,
+</code></pre>
+<h4>Looks Like</h4>
+<pre><code>
+cisco#show start
+Building configuration...
+
+--CONFIGURATION--
+end
+</code></pre>
+<h4>Defining the next user tier for NAT information: IOS</h4><pre><code>conf t
+username natinfo privilege 4 secret &lt;SECRET&gt;
+privilege exec level 4 show nat64 statistics
+wr mem
+</code></pre><h4>Defining the next user tier for NAT information: FreeRADIUS</h4>
+<pre><code>
+natinfo
+    Service-Type = NAS-Prompt-User,
+    cisco-avpair = "shell:priv-lvl=4",
+    Auth-Type = System,
+</code></pre>
+<h4>Looks Like</h4><pre><code>cisco#show ip nat statistics
+--STATS--
+</code></pre><h4>NOTES</h4>
+<ul>
+<li>Permissions stack up which means a user at Level 4 can also issue &#39;show startup-configuration&#39;</li>
+<li>&#39;show running-config&#39; command does not work in this way for the IOS devices I have tried.<br></li>
+</ul>
+
+<p>This does not work how you think it does:</p>
+<pre><code>privilege exec level 3 show running-config
+</code></pre><h4>Reference</h4>
+<p><a href="http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/">http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/</a><br>
+<a href="http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html">http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/04/03/ios-granular-permissions/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/03/31/puppet-disables-itself-if-disk-fills-up/">puppet disables itself if disk fills up</a></h1>
+                <h2>Sunday, March 31, 2013 <span>&raquo;</span> <a href="/tags/puppet/">puppet</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>A quick note if someone is wondering why puppet has disabled itself.  Make sure<br>
+your disks have not filled up.  Not sure if only the /var partition will cause this<br>
+but in my case:</p>
+<h4>This machine is behind on it&#39;s configuration.</h4><pre><code>df -Th
+
+Filesystem    Type    Size  Used Avail Use% Mounted on
+/dev/sda1      xfs     94G  91G   91G   100% /
+
+puppet agent --test
+
+Skipping run of Puppet configuration client; administratively disabled 
+</code></pre><h4>Once the space has been cleared</h4><pre><code>puppet agent --enable &amp;&amp; puppet agent --test
+</code></pre></p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/03/31/puppet-disables-itself-if-disk-fills-up/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/03/26/basic-redis-python-pubsub/">basic redis python pubsub</a></h1>
+                <h2>Tuesday, March 26, 2013 <span>&raquo;</span> <a href="/tags/pubsub/">pubsub</a>, <a href="/tags/python/">python</a>, <a href="/tags/redis/">redis</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>I am serializing a dict as JSON and publishing it.  The subscriber will<br>
+receive and print.  It is not necessary to use JSON as redis has awesome<br>
+datatype compatibility with python: <a href="http://redis.io/topics/data-types">http://redis.io/topics/data-types</a>.</p>
+
+<p>Using pubsub to distribute messages.  Often the &#39;right way&#39;.</p>
+<h4>This is using python-redis from the debian repos:</h4><pre><code>http://packages.debian.org/wheezy/python-redis
+</code></pre><h4>Publishing an event:</h4>
+<p>This is just an example.</p>
+
+<pre><code>
+    import redis
+    import time
+    import json
+    r_server = redis.Redis("redis", db=1)
+    payload = {}
+    payload['event'] = 'played with legos'
+    payload['ts'] = time.time()
+    json_values = json.dumps(payload, separators=(',', ':'))
+    r_server.publish('kidsgames', json_values)
+</code></pre>
+<h4>Subscribing to events</h4>
+<pre><code>
+    import redis
+    import time
+    import json
+    r_server = redis.Redis("redis", db=1)
+    r_server.subscribe('kidsgames')
+    while True:
+        for m in r_server.listen():
+            if m['type'] == 'subscribe':
+                if m['data'] == 1:
+                    log.info('subscribed to: %s' % (m['channel']))
+            #this is what most pubsub submissions will match
+            elif m['type'] == 'message':
+                #our payload is in the data field of the response
+                print json.loads(m['data'])
+            else:
+                print m
+</code></pre>
+
+<p>Reference:<br>
+<a href="http://redis.io/topics/pubsub">http://redis.io/topics/pubsub</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/03/26/basic-redis-python-pubsub/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/03/15/query-puppetdb-facts-from-cli/">query puppetdb facts from cli</a></h1>
+                <h2>Friday, March 15, 2013 <span>&raquo;</span> <a href="/tags/facter/">facter</a>, <a href="/tags/puppet/">puppet</a></h2>
             </div>
             
             <div class="body">
@@ -2519,7 +2403,135 @@ I like the CLI.</p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/06/03/query-puppetdb-facts-from-cli/">Continue Reading</a></p>
+                <p><a href="/2013/03/15/query-puppetdb-facts-from-cli/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/03/06/puppet-file-resources-in-masterless-mode/">puppet file resources in masterless mode</a></h1>
+                <h2>Wednesday, March 06, 2013 <span>&raquo;</span> <a href="/tags/puppet/">puppet</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>Accessing file stores via puppet manifests in the real world.</p>
+
+<p>If you use Puppet to distribute file resources and you also test things locally it can be a pain.</p>
+<h4>Define a file resource for Puppet:</h4>
+<p><em>fileserver.conf:</em></p>
+
+<pre><code>
+[configfiles]
+  path /var/configfiles
+  allow *.com
+  deny *.lan
+  allow 192.168.0.0/24
+</code></pre>
+<h4>Refer to file resource in manifest</h4><pre><code>source =&gt; &#34;puppet:///configfiles/&#34;
+</code></pre>
+<p>and puppet will magically use this source.  </p>
+<h4>Local Runs Now Have Issues</h4>
+<p>But when you run something locally like:</p>
+<pre><code> puppet apply --debug test.pp
+</code></pre>
+<p>Errors occurr: </p>
+<pre><code> Could not evaluate: Could not retrieve information from environment production source
+</code></pre><h4>Making localruns clean</h4>
+<p>You can set things up so that Puppet will try your masterful resource and if it<br>
+fails it will do (essentially) a noop by serving a directory to itself.</p>
+
+<pre><code>
+#if run in master mode grabs files from configfile resource
+#if run locally essentially does a noop refering file source to itself
+$remote_source ="puppet:///configfiles/myconfig"
+$fname = "/tmp/what"
+node default {
+    source =
+    file {$fname:
+        ensure => 'file'
+        source  => [$remote_source,
+                    $fname,
+                    inline_template('<%= remote_source.gsub /^puppet:\/\/\//,
+                    "file://#{Dir.pwd}/" %>')],
+    }
+}
+</code></pre>
+
+<p>This can be misleading when you test locally because you are not seeing the actual behavior,<br>
+but there is not a way to see the actual behavior because testing locally in a master/slave<br>
+setup only goes so far.  The big advantage to this is that operations that were previously <br>
+failing because of this falsly accussed dependency now can be debugged.</p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/03/06/puppet-file-resources-in-masterless-mode/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/03/01/graphite-all-metrics/">Finding your metrics.</a></h1>
+                <h2>Friday, March 01, 2013 <span>&raquo;</span> <a href="/tags/graphite/">graphite</a></h2>
+            </div>
+            
+            <div class="body">
+                <p>This will return a &#39;list&#39; of all of your metrics:</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/03/01/graphite-all-metrics/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/02/25/allowing-env-magic-via-sudo/">allowing env magic via sudo</a></h1>
+                <h2>Monday, February 25, 2013 <span>&raquo;</span> <a href="/tags/sudo/">sudo</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>In an environment with heavy automation and numerous service account<br>
+users it is easy to end up in a situation where compromising one service<br>
+becomes compromising an entire system.</p>
+<h4>Granting permission to a single command</h4><pre><code>vi /etc/sudoers.d/makingpie
+
+myuser ALL = NOPASSWD: /usr/local/bin/makepie
+</code></pre><h4>Looks Like</h4><pre><code>myuser:#sudo makepie
+&gt;&gt;&gt;&gt;mmmmm...pie
+</code></pre><h4>What if my user needs to call out to a proxy but &#39;makepie&#39; doesn&#39;t support it?</h4>
+<p>We use proxychains.</p>
+<pre><code>sudo LD_PRELOAD=libproxychains.so.3 makepie
+</code></pre>
+<p>Sudo is extra granular and doesn&#39;t like this idea.</p>
+<pre><code>sudo: sorry, you are not allowed to set the following environment variables: LD_PRELOAD
+</code></pre><h4>The heavy handed way</h4>
+<p>Don&#39;t reset user enviroments when using sudo</p>
+<pre><code>visudo
+</code></pre>
+<p>Replace: “Defaults env_reset” with: “Defaults !env_reset”</p>
+<h4>Piecemeal way</h4><pre><code>vi /etc/sudoers.d/ld_preload
+
+#allow users to use proxychains env variable (using sudo)
+Defaults env_keep += &#34;LD_PRELOAD&#34;
+</code></pre><h4>Reference</h4>
+<p><a href="http://brandonhutchinson.com/wiki/Sudo_and_environment_variables">http://brandonhutchinson.com/wiki/Sudo_and_environment_variables</a><br>
+<a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5">http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5</a><br>
+<a href="http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo">http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo</a><br>
+<a href="http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/">http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/</a><br>
+<a href="http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables">http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables</a><br>
+<a href="http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo">http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo</a><br>
+<a href="http://www.ibm.com/developerworks/aix/library/au-sudo/">http://www.ibm.com/developerworks/aix/library/au-sudo/</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/02/25/allowing-env-magic-via-sudo/">Continue Reading</a></p>
             </div>
         </div>
     
