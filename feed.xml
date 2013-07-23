@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-23T00:28:19Z</updated>
+        <updated>2013-07-23T00:50:12Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,33 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>ubuntuforums.org hacked bummer</title>
+                <link rel="alternate" href="/2013/07/22/ubuntuforums.org-hacked-bummer/" type="text/html" />
+                <id>/2013/07/22/ubuntuforums.org-hacked-bummer/</id>
+                <updated>2013-07-22T00:35:00Z</updated>
+                
+                <summary type="html">I got this email today.  So that&amp;#39;s fun:</summary>
+                <content type="html">&lt;p&gt;I got this email today.  So that&amp;#39;s fun:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+Hello,
+
+You are receiving this message because you have an account registered with this address on ubuntuforums.org.
+
+The Ubuntu forums software was compromised by an external attacker. As a result, the attacker has gained access to read your username, email address and an encrypted copy of your password from the forum database.
+
+If you have used this password and email address to authenticate at any other website, you are urged to reset the password on those accounts immediately as the attacker may be able to use the compromised personal information to access these other accounts. It is important to have a distinct password for different accounts.
+
+The ubuntuforums.org website is currently offline and we are working to restore this service. Please take the time to change your ubuntuforums.org account password when service is restored.
+
+We apologize for any inconvenience to the Ubuntu community, thank you for your understanding.
+
+The Canonical Sysadmins.
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>mcollective bugs debian wheezy</title>
@@ -3739,23 +3766,6 @@ curl -H &#34;Content-Type: application/json&#34; \
             </entry>
         
             <entry>
-                <title>previous blog long gone -- new beginnings</title>
-                <link rel="alternate" href="/2012/07/06/starting-over/" type="text/html" />
-                <id>/2012/07/06/starting-over/</id>
-                <updated>2012-07-06T17:23:00Z</updated>
-                
-                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!</summary>
-                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>reading json from bash with python</title>
                 <link rel="alternate" href="/2012/05/09/reading-json-from-bash-with-python/" type="text/html" />
                 <id>/2012/05/09/reading-json-from-bash-with-python/</id>
@@ -3782,6 +3792,23 @@ echo $dict_value
 &lt;p&gt;output: you&lt;/p&gt;
 
 &lt;p&gt;There really doesn&amp;#39;t seem to be a better way to parse json from bash, but this isn&amp;#39;t too bad.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>previous blog long gone -- new beginnings</title>
+                <link rel="alternate" href="/2012/02/06/starting-over/" type="text/html" />
+                <id>/2012/02/06/starting-over/</id>
+                <updated>2012-02-06T17:23:00Z</updated>
+                
+                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!</summary>
+                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!&lt;/p&gt;
 </content>
             </entry>
         
@@ -3856,6 +3883,43 @@ but this doesn&amp;#39;t work me with proxychains under debian.&lt;/p&gt;
 &lt;a href=&#34;http://proxychains.sourceforge.net/howto.html&#34;&gt;http://proxychains.sourceforge.net/howto.html&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://proxychains.sourceforge.net/howto.html&#34;&gt;http://proxychains.sourceforge.net/howto.html&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://github.com/haad/proxychains&#34;&gt;https://github.com/haad/proxychains&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>internet famous one</title>
+                <link rel="alternate" href="/2012/02/06/internet-famous-one/" type="text/html" />
+                <id>/2012/02/06/internet-famous-one/</id>
+                <updated>2012-02-06T00:50:00Z</updated>
+                
+                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
+and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
+for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
+on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
+it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
+with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
+the lastname Gates.</summary>
+                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
+and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
+for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
+on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
+it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
+with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
+the lastname Gates.&lt;/p&gt;
+
+&lt;p&gt;The original post:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/ione/i1first.png&#34; alt=&#34;the post&#34; title=&#34;blog post&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;The traceback:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/ione/ione-back2.png&#34; alt=&#34;backtrace&#34; title=&#34;backtrace&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;I find the whole thing funny.  It is part of my history now.  Someday I may&lt;br&gt;
+own up my second &amp;#39;Internet Famous&amp;#39; moment.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&#34;&gt;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         

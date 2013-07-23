@@ -67,6 +67,22 @@
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2013/07/22/ubuntuforums.org-hacked-bummer/">ubuntuforums.org hacked bummer</a></h1>
+                <h2>Monday, July 22, 2013 <span>&raquo;</span> <a href="/tags/bummer/">bummer</a>, <a href="/tags/ubuntu/">ubuntu</a></h2>
+            </div>
+            
+            <div class="body">
+                <p>I got this email today.  So that&#39;s fun:</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/22/ubuntuforums.org-hacked-bummer/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2013/07/16/mcollective-bugs-debian-wheezy/">mcollective bugs debian wheezy</a></h1>
                 <h2>Tuesday, July 16, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/mcollective/">mcollective</a>, <a href="/tags/wheezy/">wheezy</a></h2>
             </div>
@@ -2484,54 +2500,6 @@ failing because of this falsly accussed dependency now can be debugged.</p>
             
             <div class="footer">
                 <p><a href="/2013/03/01/graphite-all-metrics/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/02/25/allowing-env-magic-via-sudo/">allowing env magic via sudo</a></h1>
-                <h2>Monday, February 25, 2013 <span>&raquo;</span> <a href="/tags/sudo/">sudo</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>In an environment with heavy automation and numerous service account<br>
-users it is easy to end up in a situation where compromising one service<br>
-becomes compromising an entire system.</p>
-<h4>Granting permission to a single command</h4><pre><code>vi /etc/sudoers.d/makingpie
-
-myuser ALL = NOPASSWD: /usr/local/bin/makepie
-</code></pre><h4>Looks Like</h4><pre><code>myuser:#sudo makepie
-&gt;&gt;&gt;&gt;mmmmm...pie
-</code></pre><h4>What if my user needs to call out to a proxy but &#39;makepie&#39; doesn&#39;t support it?</h4>
-<p>We use proxychains.</p>
-<pre><code>sudo LD_PRELOAD=libproxychains.so.3 makepie
-</code></pre>
-<p>Sudo is extra granular and doesn&#39;t like this idea.</p>
-<pre><code>sudo: sorry, you are not allowed to set the following environment variables: LD_PRELOAD
-</code></pre><h4>The heavy handed way</h4>
-<p>Don&#39;t reset user enviroments when using sudo</p>
-<pre><code>visudo
-</code></pre>
-<p>Replace: “Defaults env_reset” with: “Defaults !env_reset”</p>
-<h4>Piecemeal way</h4><pre><code>vi /etc/sudoers.d/ld_preload
-
-#allow users to use proxychains env variable (using sudo)
-Defaults env_keep += &#34;LD_PRELOAD&#34;
-</code></pre><h4>Reference</h4>
-<p><a href="http://brandonhutchinson.com/wiki/Sudo_and_environment_variables">http://brandonhutchinson.com/wiki/Sudo_and_environment_variables</a><br>
-<a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5">http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5</a><br>
-<a href="http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo">http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo</a><br>
-<a href="http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/">http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/</a><br>
-<a href="http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables">http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables</a><br>
-<a href="http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo">http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo</a><br>
-<a href="http://www.ibm.com/developerworks/aix/library/au-sudo/">http://www.ibm.com/developerworks/aix/library/au-sudo/</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/02/25/allowing-env-magic-via-sudo/">Continue Reading</a></p>
             </div>
         </div>
     
