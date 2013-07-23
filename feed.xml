@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-23T05:09:40Z</updated>
+        <updated>2013-07-23T05:22:43Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,26 +19,27 @@
                 <title>ubuntuforums.org hacked bummer</title>
                 <link rel="alternate" href="/2013/07/22/ubuntuforums.org-hacked-bummer/" type="text/html" />
                 <id>/2013/07/22/ubuntuforums.org-hacked-bummer/</id>
-                <updated>2013-07-22T00:35:00Z</updated>
+                <updated>2013-07-22T05:22:00Z</updated>
                 
-                <summary type="html">I got this email today.  So that&amp;#39;s fun:</summary>
-                <content type="html">&lt;p&gt;I got this email today.  So that&amp;#39;s fun:&lt;/p&gt;
+                <summary type="html">I got this email today:</summary>
+                <content type="html">&lt;p&gt;I got this email today:&lt;/p&gt;
 
-&lt;pre&gt;&lt;code&gt;
-Hello,
+&lt;p&gt;&lt;img src=&#34;/assets/images/ubuntuforumshacked.png&#34; alt=&#34;ubuntu hacked&#34; title=&#34;Ubuntu Forums Hacked&#34;&gt;&lt;/p&gt;
 
-You are receiving this message because you have an account registered with this address on ubuntuforums.org.
+&lt;p&gt;Over the weekend the forums looked like:&lt;/p&gt;
 
-The Ubuntu forums software was compromised by an external attacker. As a result, the attacker has gained access to read your username, email address and an encrypted copy of your password from the forum database.
+&lt;p&gt;&lt;img src=&#34;/assets/images/ubuntuforumshacked2.png&#34; alt=&#34;ubuntu hacked penguin&#34; title=&#34;Ubuntu Forums Hacked Penguin&#34;&gt;&lt;/p&gt;
 
-If you have used this password and email address to authenticate at any other website, you are urged to reset the password on those accounts immediately as the attacker may be able to use the compromised personal information to access these other accounts. It is important to have a distinct password for different accounts.
+&lt;p&gt;Now the forums looks like:&lt;/p&gt;
 
-The ubuntuforums.org website is currently offline and we are working to restore this service. Please take the time to change your ubuntuforums.org account password when service is restored.
+&lt;p&gt;&lt;img src=&#34;/assets/images/ubuntuforumshacked3.png&#34; alt=&#34;ubuntu notice&#34; title=&#34;Ubuntu Forums Hack Message&#34;&gt;&lt;/p&gt;
 
-We apologize for any inconvenience to the Ubuntu community, thank you for your understanding.
-
-The Canonical Sysadmins.
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is the second time credentials associated with me have been released from a security&lt;br&gt;
+breach.  The first was &lt;a href=&#34;http://chasemp.github.io/2013/05/09/name.com-bummer/&#34;&gt;name.com hacked&lt;/a&gt;.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.infosecurity-magazine.com/view/33556/ubuntu-forum-hacked-18-million-accounts-compromised/&#34;&gt;http://www.infosecurity-magazine.com/view/33556/ubuntu-forum-hacked-18-million-accounts-compromised/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://nakedsecurity.sophos.com/2013/07/21/gun-wielding-penguin-takes-over-ubuntu-forums-waves-ak-47-at-linux-users-everywhere/&#34;&gt;http://nakedsecurity.sophos.com/2013/07/21/gun-wielding-penguin-takes-over-ubuntu-forums-waves-ak-47-at-linux-users-everywhere/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.dailydot.com/technology/password-sputn1k-hack-ubuntu-forums/&#34;&gt;http://www.dailydot.com/technology/password-sputn1k-hack-ubuntu-forums/&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
