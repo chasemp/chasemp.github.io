@@ -77,52 +77,56 @@
 not owned by root logrotate needs to know what user should<br>
 be used to rotate.</p>
 <h4>Log Dir</h4>
-<p>me@vm#ls -al /var/log/myapp/<br>
-total 1728<br>
-drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .</p>
-<h4>My logrotate:</h4>
-<p><pre><code><br>
-/var/log/myapp/*.log {</p>
-<pre><code>weekly
-rotate 4
-compress
-
-delaycompress
-missingok
-create 644 appuser appuser
+<pre><code>
+me@vm#ls -al /var/log/myapp/
+total 1728
+drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .
 </code></pre>
-<p>}<br>
-</pre><code></p>
+<h4>My logrotate:</h4>
+<pre><code>
+/var/log/myapp/*.log {
+
+    weekly
+    rotate 4
+    compress
+
+    delaycompress
+    missingok
+    create 644 appuser appuser
+}
+</code></pre>
 <h4>Manual logrotate</h4><pre><code>/usr/sbin/logrotate --verbose /etc/logrotate.conf
 </code></pre><h4>Looks Like</h4>
-<p><pre><code><br>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)<br>
-empty log files are rotated, old logs are removed<br>
-considering log /var/log/myapp/default.log</p>
+<pre><code>
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
+empty log files are rotated, old logs are removed
+considering log /var/log/myapp/default.log
 
-<p>error: skipping &quot;/var/log/myapp/default.log&quot; because parent directory has insecure permissions<br>
-(It&#39;s world writable or writable by group which is not &quot;root&quot;) Set &quot;su&quot; directive in <br>
-config file to tell logrotate which user/group should be used for rotation<br>
-</pre><code></p>
-<h4>Telling logrotate to do the &#39;right thing&#39;</h4>
-<p>/var/log/myapp/*.log {<br>
-    su appuser appuser #&lt;--NEW<br>
-    weekly<br>
-    rotate 4<br>
-    compress</p>
-<pre><code>delaycompress
-missingok
-create 644 appuser appuser
+error: skipping "/var/log/myapp/default.log" because parent directory has insecure permissions
+(It's world writable or writable by group which is not "root") Set "su" directive in 
+config file to tell logrotate which user/group should be used for rotation
 </code></pre>
-<p>}</p>
+<h4>Telling logrotate to do the &#39;right thing&#39;</h4>
+<pre><code>
+/var/log/myapp/*.log {
+    su appuser appuser #<--NEW
+    weekly
+    rotate 4
+    compress
+
+    delaycompress
+    missingok
+    create 644 appuser appuser
+}
+</code></pre>
 <h4>Manually running logrotate post fix</h4>
-<p><pre><code><br>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)<br>
-empty log files are rotated, old logs are removed<br>
-switching euid to 108 and egid to 108<br>
-considering log /var/log/myapp/default.log<br>
-  log needs rotating<br>
-</pre></code></p>
+<pre><code>
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
+empty log files are rotated, old logs are removed
+switching euid to 108 and egid to 108
+considering log /var/log/myapp/default.log
+  log needs rotating
+</code></pre>
 <h4>Reference</h4>
 <p><a href="http://linux.die.net/man/8/logrotate">http://linux.die.net/man/8/logrotate</a></p>
 </p>

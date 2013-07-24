@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-24T21:08:09Z</updated>
+        <updated>2013-07-24T21:10:54Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>su directive logrotate</title>
                 <link rel="alternate" href="/2013/07/24/su-directive-logrotate/" type="text/html" />
                 <id>/2013/07/24/su-directive-logrotate/</id>
-                <updated>2013-07-24T20:58:00Z</updated>
+                <updated>2013-07-24T21:10:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -27,52 +27,56 @@
 not owned by root logrotate needs to know what user should&lt;br&gt;
 be used to rotate.&lt;/p&gt;
 &lt;h4&gt;Log Dir&lt;/h4&gt;
-&lt;p&gt;me@vm#ls -al /var/log/myapp/&lt;br&gt;
-total 1728&lt;br&gt;
-drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .&lt;/p&gt;
-&lt;h4&gt;My logrotate:&lt;/h4&gt;
-&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
-/var/log/myapp/*.log {&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;weekly
-rotate 4
-compress
-
-delaycompress
-missingok
-create 644 appuser appuser
+&lt;pre&gt;&lt;code&gt;
+me@vm#ls -al /var/log/myapp/
+total 1728
+drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;}&lt;br&gt;
-&lt;/pre&gt;&lt;code&gt;&lt;/p&gt;
+&lt;h4&gt;My logrotate:&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+/var/log/myapp/*.log {
+
+    weekly
+    rotate 4
+    compress
+
+    delaycompress
+    missingok
+    create 644 appuser appuser
+}
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Manual logrotate&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/usr/sbin/logrotate --verbose /etc/logrotate.conf
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks Like&lt;/h4&gt;
-&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)&lt;br&gt;
-empty log files are rotated, old logs are removed&lt;br&gt;
-considering log /var/log/myapp/default.log&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
+empty log files are rotated, old logs are removed
+considering log /var/log/myapp/default.log
 
-&lt;p&gt;error: skipping &amp;quot;/var/log/myapp/default.log&amp;quot; because parent directory has insecure permissions&lt;br&gt;
-(It&amp;#39;s world writable or writable by group which is not &amp;quot;root&amp;quot;) Set &amp;quot;su&amp;quot; directive in &lt;br&gt;
-config file to tell logrotate which user/group should be used for rotation&lt;br&gt;
-&lt;/pre&gt;&lt;code&gt;&lt;/p&gt;
-&lt;h4&gt;Telling logrotate to do the &amp;#39;right thing&amp;#39;&lt;/h4&gt;
-&lt;p&gt;/var/log/myapp/*.log {&lt;br&gt;
-    su appuser appuser #&amp;lt;--NEW&lt;br&gt;
-    weekly&lt;br&gt;
-    rotate 4&lt;br&gt;
-    compress&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;delaycompress
-missingok
-create 644 appuser appuser
+error: skipping &#34;/var/log/myapp/default.log&#34; because parent directory has insecure permissions
+(It&#39;s world writable or writable by group which is not &#34;root&#34;) Set &#34;su&#34; directive in 
+config file to tell logrotate which user/group should be used for rotation
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;}&lt;/p&gt;
+&lt;h4&gt;Telling logrotate to do the &amp;#39;right thing&amp;#39;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+/var/log/myapp/*.log {
+    su appuser appuser #&lt;--NEW
+    weekly
+    rotate 4
+    compress
+
+    delaycompress
+    missingok
+    create 644 appuser appuser
+}
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Manually running logrotate post fix&lt;/h4&gt;
-&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)&lt;br&gt;
-empty log files are rotated, old logs are removed&lt;br&gt;
-switching euid to 108 and egid to 108&lt;br&gt;
-considering log /var/log/myapp/default.log&lt;br&gt;
-  log needs rotating&lt;br&gt;
-&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
+empty log files are rotated, old logs are removed
+switching euid to 108 and egid to 108
+considering log /var/log/myapp/default.log
+  log needs rotating
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://linux.die.net/man/8/logrotate&#34;&gt;http://linux.die.net/man/8/logrotate&lt;/a&gt;&lt;/p&gt;
 </content>
