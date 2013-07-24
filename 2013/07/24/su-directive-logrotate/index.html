@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>su directive logrotate &ndash; devops type thoughts</title>
+</head>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+
+-->
+</style>
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>su directive logrotate</h1>
+            <h2>Wednesday, July 24, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/logrotate/">logrotate</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>If the parent directory for logging is world writable and<br>
+not owned by root logrotate needs to know what user should<br>
+be used to rotate.</p>
+<h4>Log Dir</h4>
+<p>me@vm#ls -al /var/log/myapp/<br>
+total 1728<br>
+drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .</p>
+<h4>My logrotate:</h4>
+<p><pre><code><br>
+/var/log/myapp/*.log {</p>
+<pre><code>weekly
+rotate 4
+compress
+
+delaycompress
+missingok
+create 644 appuser appuser
+</code></pre>
+<p>}<br>
+</pre><code></p>
+<h4>Manual logrotate</h4><pre><code>/usr/sbin/logrotate --verbose /etc/logrotate.conf
+</code></pre><h4>Looks Like</h4>
+<p><pre><code><br>
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)<br>
+empty log files are rotated, old logs are removed<br>
+considering log /var/log/myapp/default.log</p>
+
+<p>error: skipping &quot;/var/log/myapp/default.log&quot; because parent directory has insecure permissions<br>
+(It&#39;s world writable or writable by group which is not &quot;root&quot;) Set &quot;su&quot; directive in <br>
+config file to tell logrotate which user/group should be used for rotation<br>
+</pre><code></p>
+<h4>Telling logrotate to do the &#39;right thing&#39;</h4>
+<p>/var/log/myapp/*.log {<br>
+    su appuser appuser #&lt;--NEW<br>
+    weekly<br>
+    rotate 4<br>
+    compress</p>
+<pre><code>delaycompress
+missingok
+create 644 appuser appuser
+</code></pre>
+<p>}</p>
+<h4>Manually running logrotate post fix</h4>
+<p><pre><code><br>
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)<br>
+empty log files are rotated, old logs are removed<br>
+switching euid to 108 and egid to 108<br>
+considering log /var/log/myapp/default.log<br>
+  log needs rotating<br>
+</pre></code></p>
+<h4>Reference</h4>
+<p><a href="http://linux.die.net/man/8/logrotate">http://linux.die.net/man/8/logrotate</a></p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-23T05:47:22Z</updated>
+        <updated>2013-07-24T21:08:09Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,69 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>su directive logrotate</title>
+                <link rel="alternate" href="/2013/07/24/su-directive-logrotate/" type="text/html" />
+                <id>/2013/07/24/su-directive-logrotate/</id>
+                <updated>2013-07-24T20:58:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;If the parent directory for logging is world writable and&lt;br&gt;
+not owned by root logrotate needs to know what user should&lt;br&gt;
+be used to rotate.&lt;/p&gt;
+&lt;h4&gt;Log Dir&lt;/h4&gt;
+&lt;p&gt;me@vm#ls -al /var/log/myapp/&lt;br&gt;
+total 1728&lt;br&gt;
+drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .&lt;/p&gt;
+&lt;h4&gt;My logrotate:&lt;/h4&gt;
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+/var/log/myapp/*.log {&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;weekly
+rotate 4
+compress
+
+delaycompress
+missingok
+create 644 appuser appuser
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;br&gt;
+&lt;/pre&gt;&lt;code&gt;&lt;/p&gt;
+&lt;h4&gt;Manual logrotate&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/usr/sbin/logrotate --verbose /etc/logrotate.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks Like&lt;/h4&gt;
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)&lt;br&gt;
+empty log files are rotated, old logs are removed&lt;br&gt;
+considering log /var/log/myapp/default.log&lt;/p&gt;
+
+&lt;p&gt;error: skipping &amp;quot;/var/log/myapp/default.log&amp;quot; because parent directory has insecure permissions&lt;br&gt;
+(It&amp;#39;s world writable or writable by group which is not &amp;quot;root&amp;quot;) Set &amp;quot;su&amp;quot; directive in &lt;br&gt;
+config file to tell logrotate which user/group should be used for rotation&lt;br&gt;
+&lt;/pre&gt;&lt;code&gt;&lt;/p&gt;
+&lt;h4&gt;Telling logrotate to do the &amp;#39;right thing&amp;#39;&lt;/h4&gt;
+&lt;p&gt;/var/log/myapp/*.log {&lt;br&gt;
+    su appuser appuser #&amp;lt;--NEW&lt;br&gt;
+    weekly&lt;br&gt;
+    rotate 4&lt;br&gt;
+    compress&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;delaycompress
+missingok
+create 644 appuser appuser
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;}&lt;/p&gt;
+&lt;h4&gt;Manually running logrotate post fix&lt;/h4&gt;
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)&lt;br&gt;
+empty log files are rotated, old logs are removed&lt;br&gt;
+switching euid to 108 and egid to 108&lt;br&gt;
+considering log /var/log/myapp/default.log&lt;br&gt;
+  log needs rotating&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://linux.die.net/man/8/logrotate&#34;&gt;http://linux.die.net/man/8/logrotate&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>ubuntuforums.org hacked bummer</title>
@@ -1847,7 +1910,7 @@ Skipping run of Puppet configuration client; administratively disabled
                 <title>basic redis python pubsub</title>
                 <link rel="alternate" href="/2013/03/26/basic-redis-python-pubsub/" type="text/html" />
                 <id>/2013/03/26/basic-redis-python-pubsub/</id>
-                <updated>2013-03-26T00:58:00Z</updated>
+                <updated>2013-03-26T21:07:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1890,9 +1953,36 @@ datatype compatibility with python: &lt;a href=&#34;http://redis.io/topics/data-
             else:
                 print m
 &lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;**** EDIT for Debian Wheezy ****&lt;/h3&gt;
+&lt;p&gt;It seems redis.StrictRedis the way to go now.&lt;/p&gt;
+&lt;h4&gt;Client Example Using StrictRedis&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+import json
+import redis
+import time
+redis_server = &#34;localhost&#34;
+redis_db = 1
+redis_channels = [&#39;kidsgames&#39;]
+r_server = redis.StrictRedis(redis_server, db=redis_db)
 
-&lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://redis.io/topics/pubsub&#34;&gt;http://redis.io/topics/pubsub&lt;/a&gt;&lt;/p&gt;
+def rsub_connect(rinstance, channels):
+    print &#39;subscribing to: %s&#39; % (&#39;,&#39;.join(channels),)
+    sub = rinstance.pubsub()
+    map(sub.psubscribe, redis_channels)
+    return sub
+
+try:
+    pubsub = rsub_connect(r_server, redis_channels)
+    for m in pubsub.listen():
+        print m
+except redis.exceptions.ConnectionError as e:
+    print &#39;warning -- &#39;, str(e)
+    raise
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://redis.io/topics/pubsub&#34;&gt;http://redis.io/topics/pubsub&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://redis-py.readthedocs.org/en/latest/&#34;&gt;https://redis-py.readthedocs.org/en/latest/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/andymccurdy/redis-py&#34;&gt;https://github.com/andymccurdy/redis-py&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
