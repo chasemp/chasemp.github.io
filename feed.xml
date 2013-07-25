@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-25T20:23:00Z</updated>
+        <updated>2013-07-25T21:06:18Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>ubuntu edge</title>
                 <link rel="alternate" href="/2013/07/25/ubuntu-edge/" type="text/html" />
                 <id>/2013/07/25/ubuntu-edge/</id>
-                <updated>2013-07-25T20:22:00Z</updated>
+                <updated>2013-07-25T20:25:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -31,19 +31,19 @@
 still my first love as a server OS at this point.  I have great respect&lt;br&gt;
 for the canonical folks and use it as my primary desktop OS.&lt;/p&gt;
 
-&lt;p&gt;I hate carrier lockin for phones, I bought a (nexus)[&lt;a href=&#34;http://www.google.com/nexus/4/&#34;&gt;http://www.google.com/nexus/4/&lt;/a&gt;].&lt;/p&gt;
+&lt;p&gt;I hate carrier lockin for phones, I bought a &lt;a href=&#34;http://www.google.com/nexus/4/&#34;&gt;nexus&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;I use my phone increasingly to replace my laptop.&lt;/p&gt;
 
 &lt;p&gt;Pentesting will never be the same.&lt;/p&gt;
 &lt;h4&gt;Contributing&lt;/h4&gt;
-&lt;p&gt;(Donate Here)[&lt;a href=&#34;http://www.indiegogo.com/projects/ubuntu-edge&#34;&gt;http://www.indiegogo.com/projects/ubuntu-edge&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.indiegogo.com/projects/ubuntu-edge&#34;&gt;Donate Here&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/edge/edgeperk.png&#34; alt=&#34;edgeperk&#34; title=&#34;perk&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&#34;/assets/images/edge/edgeraised.png&#34; alt=&#34;edgeraised&#34; title=&#34;raised&#34;&gt;&lt;/p&gt;
-
 &lt;p&gt;&lt;img src=&#34;/assets/images/edge/edgethanks.png&#34; alt=&#34;edgethanks&#34; title=&#34;thanks&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/edge/edgeraised.png&#34; alt=&#34;edgeraised&#34; title=&#34;raised&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Refernence&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/&#34;&gt;http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.indiegogo.com/projects/ubuntu-edge&#34;&gt;http://www.indiegogo.com/projects/ubuntu-edge&lt;/a&gt;&lt;br&gt;
