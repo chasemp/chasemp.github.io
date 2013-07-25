@@ -67,6 +67,67 @@
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2013/07/25/ubuntu-edge/">ubuntu edge</a></h1>
+                <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/edge/">edge</a>, <a href="/tags/smartphone/">smartphone</a>, <a href="/tags/ubuntu/">ubuntu</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>I want this phone.</p>
+
+<p><img src="/assets/images/edge/edgeshow.png" alt="edge" title="edge promo"></p>
+
+<p>I started using Ubuntu around early 2006, and even though Debian is<br>
+still my first love as a server OS at this point.  I have great respect<br>
+for the canonical folks and use it as my primary desktop OS.</p>
+
+<p>I hate carrier lockin for phones, I bought a (nexus)[<a href="http://www.google.com/nexus/4/">http://www.google.com/nexus/4/</a>].</p>
+
+<p>I use my phone increasingly to replace my laptop.</p>
+
+<p>Pentesting will never be the same.</p>
+<h4>Contributing</h4>
+<p>(Donate Here)[<a href="http://www.indiegogo.com/projects/ubuntu-edge">http://www.indiegogo.com/projects/ubuntu-edge</a>]</p>
+
+<p><img src="/assets/images/edge/edgeperk.png" alt="edgeperk" title="perk"></p>
+
+<p><img src="/assets/images/edge/edgeraised.png" alt="edgeraised" title="raised"></p>
+
+<p><img src="/assets/images/edge/edgethanks.png" alt="edgethanks" title="thanks"></p>
+<h4>Refernence</h4>
+<p><a href="http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/">http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/</a><br>
+<a href="http://www.indiegogo.com/projects/ubuntu-edge">http://www.indiegogo.com/projects/ubuntu-edge</a><br>
+<a href="http://techcrunch.com/2013/07/25/if-the-ubuntu-edge-crowdfunding-experiment-works-backers-may-get-to-vote-on-the-next-models-specs/">http://techcrunch.com/2013/07/25/if-the-ubuntu-edge-crowdfunding-experiment-works-backers-may-get-to-vote-on-the-next-models-specs/</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/25/ubuntu-edge/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/07/25/iproute2-usage/">iproute2 usage</a></h1>
+                <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/iproute2/">iproute2</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>remove all addresses</h4><pre><code>ip addr flush dev eth0
+</code></pre><h4>Reference</h4>
+<p><a href="http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2">http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/25/iproute2-usage/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2013/07/24/su-directive-logrotate/">su directive logrotate</a></h1>
                 <h2>Wednesday, July 24, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/logrotate/">logrotate</a></h2>
             </div>
@@ -127,7 +188,11 @@ switching euid to 108 and egid to 108
 considering log /var/log/myapp/default.log
   log needs rotating
 </code></pre>
-<h4>Reference</h4>
+<h4>Other solution</h4>
+<p>Depending on why you need the above permissions on your log directory.  This<br>
+may not be the way to go.  But if you can less permissive is always better.</p>
+<pre><code>chmod 0640 /var/log/myapp/
+</code></pre><h4>Reference</h4>
 <p><a href="http://linux.die.net/man/8/logrotate">http://linux.die.net/man/8/logrotate</a></p>
 </p>
             </div>
@@ -801,8 +866,8 @@ sudo chmod -R a+w /opt/graphite/storage
             
             <div class="body">
                 <p><h4>Preamble</h4>
-<p>Testing your code as you go.  Writing &#39;production&#39; code is really a set of practices<br>
-rather than a specific coding ability.  Everyone breaks things.  When something breaks<br>
+<p>Testing your code as you go.  Writing &#39;production&#39; code is really as much a set practices as it<br>
+is a  specific coding ability.  Everyone breaks things.  When something breaks<br>
 we will all fix it.  The trick is to always know when something breaks.</p>
 
 <p>How I currently see the world:</p>
@@ -2149,101 +2214,6 @@ except redis.exceptions.ConnectionError as e:
             
             <div class="footer">
                 <p><a href="/2013/03/26/basic-redis-python-pubsub/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/03/15/query-puppetdb-facts-from-cli/">query puppetdb facts from cli</a></h1>
-                <h2>Friday, March 15, 2013 <span>&raquo;</span> <a href="/tags/facter/">facter</a>, <a href="/tags/puppet/">puppet</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>A need to get host facts when they are not up.  PuppetDB has cached them, and<br>
-I like the CLI.</p>
-<h4>This doesn&#39;t work like you think it does</h4><pre><code>puppet facts find &lt;myhost.com&gt;
-</code></pre>
-<p>This always returns the facts for the <em>puppetmaster</em> itself.</p>
-<h4>Setting Terminus</h4>
-<p>If you want to query the puppetdb store directly set the terminus.</p>
-<pre><code>puppet facts find &lt;myhost.com&gt; --terminus puppetdb
-</code></pre>
-<p>This returns the &#39;right stuff&#39;.  Beware it could be old because it&#39;s last cached values.</p>
-<h4>Readability Counts</h4><pre><code>puppet facts find &lt;myhost.com&gt; --terminus puppetdb | python -m json.tool
-</code></pre><h4>Reference:</h4>
-<p><a href="http://docs.puppetlabs.com/puppetdb/latest/api/query/v2/fact-names.html">http://docs.puppetlabs.com/puppetdb/latest/api/query/v2/fact-names.html</a><br>
-<a href="http://docs.python.org/2/library/json.html">http://docs.python.org/2/library/json.html</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/03/15/query-puppetdb-facts-from-cli/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/03/06/puppet-file-resources-in-masterless-mode/">puppet file resources in masterless mode</a></h1>
-                <h2>Wednesday, March 06, 2013 <span>&raquo;</span> <a href="/tags/puppet/">puppet</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>Accessing file stores via puppet manifests in the real world.</p>
-
-<p>If you use Puppet to distribute file resources and you also test things locally it can be a pain.</p>
-<h4>Define a file resource for Puppet:</h4>
-<p><em>fileserver.conf:</em></p>
-
-<pre><code>
-[configfiles]
-  path /var/configfiles
-  allow *.com
-  deny *.lan
-  allow 192.168.0.0/24
-</code></pre>
-<h4>Refer to file resource in manifest</h4><pre><code>source =&gt; &#34;puppet:///configfiles/&#34;
-</code></pre>
-<p>and puppet will magically use this source.  </p>
-<h4>Local Runs Now Have Issues</h4>
-<p>But when you run something locally like:</p>
-<pre><code> puppet apply --debug test.pp
-</code></pre>
-<p>Errors occurr: </p>
-<pre><code> Could not evaluate: Could not retrieve information from environment production source
-</code></pre><h4>Making localruns clean</h4>
-<p>You can set things up so that Puppet will try your masterful resource and if it<br>
-fails it will do (essentially) a noop by serving a directory to itself.</p>
-
-<pre><code>
-#if run in master mode grabs files from configfile resource
-#if run locally essentially does a noop refering file source to itself
-$remote_source ="puppet:///configfiles/myconfig"
-$fname = "/tmp/what"
-node default {
-    source =
-    file {$fname:
-        ensure => 'file'
-        source  => [$remote_source,
-                    $fname,
-                    inline_template('<%= remote_source.gsub /^puppet:\/\/\//,
-                    "file://#{Dir.pwd}/" %>')],
-    }
-}
-</code></pre>
-
-<p>This can be misleading when you test locally because you are not seeing the actual behavior,<br>
-but there is not a way to see the actual behavior because testing locally in a master/slave<br>
-setup only goes so far.  The big advantage to this is that operations that were previously <br>
-failing because of this falsly accussed dependency now can be debugged.</p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/03/06/puppet-file-resources-in-masterless-mode/">Continue Reading</a></p>
             </div>
         </div>
     

@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>su directive logrotate &ndash; devops type thoughts</title>
+    <title>iproute2 usage &ndash; devops type thoughts</title>
 </head>
 
 <style type="text/css">
@@ -65,72 +65,14 @@
             
     <div class="item">
         <div class="header">
-            <h1>su directive logrotate</h1>
-            <h2>Wednesday, July 24, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/logrotate/">logrotate</a></h2>
+            <h1>iproute2 usage</h1>
+            <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/iproute2/">iproute2</a></h2>
         </div>
         
         <div class="body">
-            <h4>Preamble</h4>
-<p>If the parent directory for logging is world writable and<br>
-not owned by root logrotate needs to know what user should<br>
-be used to rotate.</p>
-<h4>Log Dir</h4>
-<pre><code>
-me@vm#ls -al /var/log/myapp/
-total 1728
-drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .
-</code></pre>
-<h4>My logrotate:</h4>
-<pre><code>
-/var/log/myapp/*.log {
-
-    weekly
-    rotate 4
-    compress
-
-    delaycompress
-    missingok
-    create 644 appuser appuser
-}
-</code></pre>
-<h4>Manual logrotate</h4><pre><code>/usr/sbin/logrotate --verbose /etc/logrotate.conf
-</code></pre><h4>Looks Like</h4>
-<pre><code>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
-empty log files are rotated, old logs are removed
-considering log /var/log/myapp/default.log
-
-error: skipping "/var/log/myapp/default.log" because parent directory has insecure permissions
-(It's world writable or writable by group which is not "root") Set "su" directive in 
-config file to tell logrotate which user/group should be used for rotation
-</code></pre>
-<h4>Telling logrotate to do the &#39;right thing&#39;</h4>
-<pre><code>
-/var/log/myapp/*.log {
-    su appuser appuser #<--NEW
-    weekly
-    rotate 4
-    compress
-
-    delaycompress
-    missingok
-    create 644 appuser appuser
-}
-</code></pre>
-<h4>Manually running logrotate post fix</h4>
-<pre><code>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
-empty log files are rotated, old logs are removed
-switching euid to 108 and egid to 108
-considering log /var/log/myapp/default.log
-  log needs rotating
-</code></pre>
-<h4>Other solution</h4>
-<p>Depending on why you need the above permissions on your log directory.  This<br>
-may not be the way to go.  But if you can less permissive is always better.</p>
-<pre><code>chmod 0640 /var/log/myapp/
+            <h4>remove all addresses</h4><pre><code>ip addr flush dev eth0
 </code></pre><h4>Reference</h4>
-<p><a href="http://linux.die.net/man/8/logrotate">http://linux.die.net/man/8/logrotate</a></p>
+<p><a href="http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2">http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2</a></p>
 
         </div>
     </div>

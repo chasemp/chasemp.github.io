@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>su directive logrotate &ndash; devops type thoughts</title>
+    <title>ubuntu edge &ndash; devops type thoughts</title>
 </head>
 
 <style type="text/css">
@@ -65,72 +65,37 @@
             
     <div class="item">
         <div class="header">
-            <h1>su directive logrotate</h1>
-            <h2>Wednesday, July 24, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/logrotate/">logrotate</a></h2>
+            <h1>ubuntu edge</h1>
+            <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/edge/">edge</a>, <a href="/tags/smartphone/">smartphone</a>, <a href="/tags/ubuntu/">ubuntu</a></h2>
         </div>
         
         <div class="body">
             <h4>Preamble</h4>
-<p>If the parent directory for logging is world writable and<br>
-not owned by root logrotate needs to know what user should<br>
-be used to rotate.</p>
-<h4>Log Dir</h4>
-<pre><code>
-me@vm#ls -al /var/log/myapp/
-total 1728
-drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .
-</code></pre>
-<h4>My logrotate:</h4>
-<pre><code>
-/var/log/myapp/*.log {
+<p>I want this phone.</p>
 
-    weekly
-    rotate 4
-    compress
+<p><img src="/assets/images/edge/edgeshow.png" alt="edge" title="edge promo"></p>
 
-    delaycompress
-    missingok
-    create 644 appuser appuser
-}
-</code></pre>
-<h4>Manual logrotate</h4><pre><code>/usr/sbin/logrotate --verbose /etc/logrotate.conf
-</code></pre><h4>Looks Like</h4>
-<pre><code>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
-empty log files are rotated, old logs are removed
-considering log /var/log/myapp/default.log
+<p>I started using Ubuntu around early 2006, and even though Debian is<br>
+still my first love as a server OS at this point.  I have great respect<br>
+for the canonical folks and use it as my primary desktop OS.</p>
 
-error: skipping "/var/log/myapp/default.log" because parent directory has insecure permissions
-(It's world writable or writable by group which is not "root") Set "su" directive in 
-config file to tell logrotate which user/group should be used for rotation
-</code></pre>
-<h4>Telling logrotate to do the &#39;right thing&#39;</h4>
-<pre><code>
-/var/log/myapp/*.log {
-    su appuser appuser #<--NEW
-    weekly
-    rotate 4
-    compress
+<p>I hate carrier lockin for phones, I bought a (nexus)[<a href="http://www.google.com/nexus/4/">http://www.google.com/nexus/4/</a>].</p>
 
-    delaycompress
-    missingok
-    create 644 appuser appuser
-}
-</code></pre>
-<h4>Manually running logrotate post fix</h4>
-<pre><code>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
-empty log files are rotated, old logs are removed
-switching euid to 108 and egid to 108
-considering log /var/log/myapp/default.log
-  log needs rotating
-</code></pre>
-<h4>Other solution</h4>
-<p>Depending on why you need the above permissions on your log directory.  This<br>
-may not be the way to go.  But if you can less permissive is always better.</p>
-<pre><code>chmod 0640 /var/log/myapp/
-</code></pre><h4>Reference</h4>
-<p><a href="http://linux.die.net/man/8/logrotate">http://linux.die.net/man/8/logrotate</a></p>
+<p>I use my phone increasingly to replace my laptop.</p>
+
+<p>Pentesting will never be the same.</p>
+<h4>Contributing</h4>
+<p>(Donate Here)[<a href="http://www.indiegogo.com/projects/ubuntu-edge">http://www.indiegogo.com/projects/ubuntu-edge</a>]</p>
+
+<p><img src="/assets/images/edge/edgeperk.png" alt="edgeperk" title="perk"></p>
+
+<p><img src="/assets/images/edge/edgeraised.png" alt="edgeraised" title="raised"></p>
+
+<p><img src="/assets/images/edge/edgethanks.png" alt="edgethanks" title="thanks"></p>
+<h4>Refernence</h4>
+<p><a href="http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/">http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/</a><br>
+<a href="http://www.indiegogo.com/projects/ubuntu-edge">http://www.indiegogo.com/projects/ubuntu-edge</a><br>
+<a href="http://techcrunch.com/2013/07/25/if-the-ubuntu-edge-crowdfunding-experiment-works-backers-may-get-to-vote-on-the-next-models-specs/">http://techcrunch.com/2013/07/25/if-the-ubuntu-edge-crowdfunding-experiment-works-backers-may-get-to-vote-on-the-next-models-specs/</a></p>
 
         </div>
     </div>
