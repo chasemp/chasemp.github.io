@@ -67,6 +67,22 @@
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2013/07/26/happy-sysadmin-day/">happy sysadmin day</a></h1>
+                <h2>Friday, July 26, 2013 <span>&raquo;</span> <a href="/tags/funny/">funny</a>, <a href="/tags/sysadmin/">sysadmin</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/jJECepNeCJ0&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/jJECepNeCJ0&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object></p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/26/happy-sysadmin-day/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2013/07/25/ubuntu-edge/">ubuntu edge</a></h1>
                 <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/edge/">edge</a>, <a href="/tags/smartphone/">smartphone</a>, <a href="/tags/ubuntu/">ubuntu</a></h2>
             </div>
@@ -2128,92 +2144,6 @@ Skipping run of Puppet configuration client; administratively disabled
             
             <div class="footer">
                 <p><a href="/2013/03/31/puppet-disables-itself-if-disk-fills-up/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/03/26/basic-redis-python-pubsub/">basic redis python pubsub</a></h1>
-                <h2>Tuesday, March 26, 2013 <span>&raquo;</span> <a href="/tags/pubsub/">pubsub</a>, <a href="/tags/python/">python</a>, <a href="/tags/redis/">redis</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>I am serializing a dict as JSON and publishing it.  The subscriber will<br>
-receive and print.  It is not necessary to use JSON as redis has awesome<br>
-datatype compatibility with python: <a href="http://redis.io/topics/data-types">http://redis.io/topics/data-types</a>.</p>
-
-<p>Using pubsub to distribute messages.  Often the &#39;right way&#39;.</p>
-<h4>This is using python-redis from the debian repos:</h4><pre><code>http://packages.debian.org/wheezy/python-redis
-</code></pre><h4>Publishing an event:</h4>
-<p>This is just an example.</p>
-
-<pre><code>
-    import redis
-    import time
-    import json
-    r_server = redis.Redis("redis", db=1)
-    payload = {}
-    payload['event'] = 'played with legos'
-    payload['ts'] = time.time()
-    json_values = json.dumps(payload, separators=(',', ':'))
-    r_server.publish('kidsgames', json_values)
-</code></pre>
-<h4>Subscribing to events</h4>
-<pre><code>
-    import redis
-    import time
-    import json
-    r_server = redis.Redis("redis", db=1)
-    r_server.subscribe('kidsgames')
-    while True:
-        for m in r_server.listen():
-            if m['type'] == 'subscribe':
-                if m['data'] == 1:
-                    log.info('subscribed to: %s' % (m['channel']))
-            #this is what most pubsub submissions will match
-            elif m['type'] == 'message':
-                #our payload is in the data field of the response
-                print json.loads(m['data'])
-            else:
-                print m
-</code></pre>
-<h3>**** EDIT for Debian Wheezy ****</h3>
-<p>It seems redis.StrictRedis the way to go now.</p>
-<h4>Client Example Using StrictRedis</h4>
-<pre><code>
-import json
-import redis
-import time
-redis_server = "localhost"
-redis_db = 1
-redis_channels = ['kidsgames']
-r_server = redis.StrictRedis(redis_server, db=redis_db)
-
-def rsub_connect(rinstance, channels):
-    print 'subscribing to: %s' % (','.join(channels),)
-    sub = rinstance.pubsub()
-    map(sub.psubscribe, redis_channels)
-    return sub
-
-try:
-    pubsub = rsub_connect(r_server, redis_channels)
-    for m in pubsub.listen():
-        print m
-except redis.exceptions.ConnectionError as e:
-    print 'warning -- ', str(e)
-    raise
-</code></pre>
-<h4>Reference:</h4>
-<p><a href="http://redis.io/topics/pubsub">http://redis.io/topics/pubsub</a><br>
-<a href="https://redis-py.readthedocs.org/en/latest/">https://redis-py.readthedocs.org/en/latest/</a><br>
-<a href="https://github.com/andymccurdy/redis-py">https://github.com/andymccurdy/redis-py</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/03/26/basic-redis-python-pubsub/">Continue Reading</a></p>
             </div>
         </div>
     
