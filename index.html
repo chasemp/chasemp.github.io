@@ -83,6 +83,149 @@
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2013/07/26/getting-to-know-python-import/">getting to know python import</a></h1>
+                <h2>Friday, July 26, 2013 <span>&raquo;</span> <a href="/tags/import/">import</a>, <a href="/tags/python/">python</a>, <a href="/tags/tricks/">tricks</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>Python&#39;s &#39;import&#39; system is one of the things that I enjoy<br>
+about the language.  Exploring it is time well spent.</p>
+<h4>The Terrain</h4>
+<p>I am using the interactive <a href="http://docs.python.org/2/tutorial/interpreter.html">interpreter</a><br>
+and making basic modules are demonstrated.</p>
+
+<pre><code>
+import sys
+sys.version
+'2.7.1 (r271:86832, Aug  5 2011, 03:30:24) \n[GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]'
+</code></pre>
+<h4>Easter Eggs</h4>
+<pre><code>
+>>> from __future__ import braces
+  File "<stdin>", line 1
+SyntaxError: not a chance
+>>> 
+</code></pre>
+
+<pre><code>
+>>> import this
+The Zen of Python, by Tim Peters
+
+Beautiful is better than ugly.
+Explicit is better than implicit.
+Simple is better than complex.
+Complex is better than complicated.
+Flat is better than nested.
+Sparse is better than dense.
+Readability counts.
+Special cases aren't special enough to break the rules.
+Although practicality beats purity.
+Errors should never pass silently.
+Unless explicitly silenced.
+In the face of ambiguity, refuse the temptation to guess.
+There should be one-- and preferably only one --obvious way to do it.
+Although that way may not be obvious at first unless you're Dutch.
+Now is better than never.
+Although never is often better than *right* now.
+If the implementation is hard to explain, it's a bad idea.
+If the implementation is easy to explain, it may be a good idea.
+Namespaces are one honking great idea -- let's do more of those!
+</code></pre>
+
+<pre><code>
+>>> import antigravity
+</code></pre>
+
+<p>You won&#39;t see it here but you get an idea of what it does:</p>
+
+<pre><code>
+import webbrowser
+webbrowser.open("http://xkcd.com/353/")
+</code></pre>
+
+<pre><code>
+>>> import __hello__
+Hello world...
+</code></pre>
+<h4>Top level imports are global</h4>
+<pre><code>
+>>> print globals()
+{'__builtins__': <module '__builtin__' (built-in)>, '__name__': '__main__', '__file__': 'test.py', '__doc__': None, '__package__': None}
+</code></pre>
+
+<pre><code>
+>>> import os
+>>> print globals()
+
+{'__builtins__': <module '__builtin__' (built-in)>, '__file__': 'test.py', '__package__': None, '__name__': '__main__', 'os': <module 'os' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'>, '__doc__': None}
+</code></pre>
+<h4>imports inside a function are local</h4>
+<pre><code>
+>>> def foo():
+>>>     import os
+>>> print globals()
+
+{'__builtins__': <module '__builtin__' (built-in)>, '__file__': 'test.py', '__package__': None, '__name__': '__main__', 'foo': <function foo at 0x105f409b0>, '__doc__': None}
+</code></pre>
+
+<pre><code>
+>>> def foo():
+>>>     import os
+>>>     print locals()
+
+>>>foo()
+>>>print globals()
+
+{'os': <module 'os' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'>}
+{'__builtins__': <module '__builtin__' (built-in)>, '__file__': 'test.py', '__package__': None, '__name__': '__main__', 'foo': <function foo at 0x10124d9b0>, '__doc__': None}
+</code></pre>
+<h4>imported modules are objects</h4>
+<pre><code>
+>>> import re
+>>> dir(re)
+['DEBUG', 'DOTALL', 'I', 'IGNORECASE', 'L', 'LOCALE', 'M', 'MULTILINE', 'S', 'Scanner', 'T', 'TEMPLATE', 'U', 'UNICODE', 'VERBOSE', 'X', '_MAXCACHE', '__all__', '__builtins__', '__doc__', '__file__', '__name__', '__package__', '__version__', '_alphanum', '_cache', '_cache_repl', '_compile', '_compile_repl', '_expand', '_pattern_type', '_pickle', '_subx', 'compile', 'copy_reg', 'error', 'escape', 'findall', 'finditer', 'match', 'purge', 'search', 'split', 'sre_compile', 'sre_parse', 'sub', 'subn', 'sys', 'template']
+>>> 
+>>> type(re)
+<type 'module'>
+</code></pre>
+<h4>&#39;from <strong>future</strong>&#39; is not at its heart a module import</h4>
+<p>source: <a href="http://docs.python.org/2/reference/simple_stmts.html#future-statements">future statements reference</a></p>
+
+<pre><code>
+A future statement is a directive to the compiler that a particular module should be compiled using syntax or semantics that will be available in a specified future release of Python. The future statement is intended to ease migration to future versions of Python that introduce incompatible changes to the language. It allows use of the new features on a per-module basis before the release in which the feature becomes standard.
+</code></pre>
+
+<ul>
+<li>future statements do need to be at the top of the file</li>
+<li>future statements change how your module is parsed</li>
+</ul>
+
+<p>That&#39;s why this namespace import seems funky.  It&#39;s not a standard import&#39;</p>
+
+<pre><code>
+>>> from __future__ import print_function
+#is still 'print' and not 'print_function' call
+print('wtf')
+</code></pre>
+<h4>Reference</h4>
+<p><a href="http://utcc.utoronto.ca/%7Ecks/space/blog/python/ImportTricks">http://utcc.utoronto.ca/~cks/space/blog/python/ImportTricks</a><br>
+<a href="http://ericsnowcurrently.blogspot.com/p/python-imports.html">http://ericsnowcurrently.blogspot.com/p/python-imports.html</a><br>
+<a href="http://stackoverflow.com/questions/7075082/what-is-future-in-python-used-for-and-how-when-to-use-it-and-how-it-works">http://stackoverflow.com/questions/7075082/what-is-future-in-python-used-for-and-how-when-to-use-it-and-how-it-works</a><br>
+<a href="http://docs.python.org/2/reference/simple_stmts.html#future-statements">http://docs.python.org/2/reference/simple_stmts.html#future-statements</a><br>
+<a href="http://docs.python.org/2/library/imp.html">http://docs.python.org/2/library/imp.html</a><br>
+<a href="http://pymotw.com/2/imp/">http://pymotw.com/2/imp/</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/26/getting-to-know-python-import/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2013/07/25/ubuntu-edge/">ubuntu edge</a></h1>
                 <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/edge/">edge</a>, <a href="/tags/smartphone/">smartphone</a>, <a href="/tags/ubuntu/">ubuntu</a></h2>
             </div>
@@ -2115,35 +2258,6 @@ natinfo
             
             <div class="footer">
                 <p><a href="/2013/04/03/ios-granular-permissions/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/03/31/puppet-disables-itself-if-disk-fills-up/">puppet disables itself if disk fills up</a></h1>
-                <h2>Sunday, March 31, 2013 <span>&raquo;</span> <a href="/tags/puppet/">puppet</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>A quick note if someone is wondering why puppet has disabled itself.  Make sure<br>
-your disks have not filled up.  Not sure if only the /var partition will cause this<br>
-but in my case:</p>
-<h4>This machine is behind on it&#39;s configuration.</h4><pre><code>df -Th
-
-Filesystem    Type    Size  Used Avail Use% Mounted on
-/dev/sda1      xfs     94G  91G   91G   100% /
-
-puppet agent --test
-
-Skipping run of Puppet configuration client; administratively disabled 
-</code></pre><h4>Once the space has been cleared</h4><pre><code>puppet agent --enable &amp;&amp; puppet agent --test
-</code></pre></p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/03/31/puppet-disables-itself-if-disk-fills-up/">Continue Reading</a></p>
             </div>
         </div>
     
