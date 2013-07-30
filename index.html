@@ -67,6 +67,36 @@
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2013/07/29/OSX-DNS-Cache-Clearing/">OSX DNS Cache Clearing</a></h1>
+                <h2>Monday, July 29, 2013 <span>&raquo;</span> <a href="/tags/DNS/">DNS</a>, <a href="/tags/OSX/">OSX</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>OSX &lt;10.6 caches DNS.  Which is very helpful unless you move servers between<br>
+VLAN&#39;s a lot.  Then you have to clear your cache often.</p>
+<h4>details on the mDNSResponder</h4><pre><code>man mDNSResponder
+</code></pre>
+<pre><code>
+     mDNSResponder (also known as mdnsd on some systems) is a daemon invoked at boot time to
+     implement Multicast DNS and DNS Service Discovery. On Mac OS X 10.6 (Snow Leopard),
+     mDNSResponder is also the system-wide Unicast DNS Resolver.
+</code></pre>
+<h4>Clear Cache</h4><pre><code>sudo killall -HUP mDNSResponder
+</code></pre><h4>Alias</h4><pre><code>alias cdns=&#39;sudo killall -HUP mDNSResponder&#39;
+</code></pre><h4>Reference</h4>
+<p><a href="http://support.apple.com/kb/ht5343">http://support.apple.com/kb/ht5343</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/29/OSX-DNS-Cache-Clearing/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2013/07/26/happy-sysadmin-day/">happy sysadmin day</a></h1>
                 <h2>Friday, July 26, 2013 <span>&raquo;</span> <a href="/tags/funny/">funny</a>, <a href="/tags/sysadmin/">sysadmin</a></h2>
             </div>
@@ -89,8 +119,17 @@
             
             <div class="body">
                 <p><h4>Preamble</h4>
-<p>Python&#39;s &#39;import&#39; system is one of the things that I enjoy<br>
-about the language.  Exploring it is time well spent.</p>
+<p>Python&#39;s &#39;import&#39; system is one of the things that I enjoy about the language.<br><br>
+Exploring it is time well spent.</p>
+
+<p>&#39;import&#39; is a python keyword.</p>
+
+<pre><code>
+>>> import keyword
+>>> keyword.iskeyword('import')
+True
+>>> 
+</code></pre>
 <h4>The Terrain</h4>
 <p>I am using the interactive <a href="http://docs.python.org/2/tutorial/interpreter.html">interpreter</a><br>
 and making basic modules are demonstrated.</p>
@@ -2190,74 +2229,6 @@ command.  Destroy is like pulling the plug.</p>
             
             <div class="footer">
                 <p><a href="/2013/04/10/virsh-halting-a-host/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/04/03/ios-granular-permissions/">IOS granular permissions</a></h1>
-                <h2>Wednesday, April 03, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/IOS/">IOS</a>, <a href="/tags/security/">security</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>If you have tiered levels of administrators, or you want to<br>
-create an account for automation purposes best practice is to<br>
-define a custom security level in IOS.</p>
-
-<p>Levels 1 and 15 are defined by default.</p>
-<h4>Allowing lower levels to see your configuration: IOS</h4><pre><code>conf t
-username backup privilege 3 secret &lt;SECRET&gt;
-privilege exec level 3 show startup-config
-privilege exec level 3 show
-wr mem
-</code></pre><h4>Allowing lower levels to see your configuration: FreeRADIUS:</h4>
-<p>/etc/freeradius/users</p>
-
-<pre><code>
-backup
-    Service-Type = NAS-Prompt-User,
-    cisco-avpair = "shell:priv-lvl=3",
-    Auth-Type = System,
-</code></pre>
-<h4>Looks Like</h4>
-<pre><code>
-cisco#show start
-Building configuration...
-
---CONFIGURATION--
-end
-</code></pre>
-<h4>Defining the next user tier for NAT information: IOS</h4><pre><code>conf t
-username natinfo privilege 4 secret &lt;SECRET&gt;
-privilege exec level 4 show nat64 statistics
-wr mem
-</code></pre><h4>Defining the next user tier for NAT information: FreeRADIUS</h4>
-<pre><code>
-natinfo
-    Service-Type = NAS-Prompt-User,
-    cisco-avpair = "shell:priv-lvl=4",
-    Auth-Type = System,
-</code></pre>
-<h4>Looks Like</h4><pre><code>cisco#show ip nat statistics
---STATS--
-</code></pre><h4>NOTES</h4>
-<ul>
-<li>Permissions stack up which means a user at Level 4 can also issue &#39;show startup-configuration&#39;</li>
-<li>&#39;show running-config&#39; command does not work in this way for the IOS devices I have tried.<br></li>
-</ul>
-
-<p>This does not work how you think it does:</p>
-<pre><code>privilege exec level 3 show running-config
-</code></pre><h4>Reference</h4>
-<p><a href="http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/">http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/</a><br>
-<a href="http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html">http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/04/03/ios-granular-permissions/">Continue Reading</a></p>
             </div>
         </div>
     
