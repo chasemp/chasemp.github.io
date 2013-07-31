@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-30T02:14:28Z</updated>
+        <updated>2013-07-31T20:31:09Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -40,35 +40,17 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
             </entry>
         
             <entry>
-                <title>happy sysadmin day</title>
-                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
-                <id>/2013/07/26/happy-sysadmin-day/</id>
-                <updated>2013-07-26T17:55:00Z</updated>
-                
-                <summary type="html">&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;</summary>
-                <content type="html">&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T02:14:00Z</updated>
+                <updated>2013-07-26T20:30:00Z</updated>
                 
                 
-                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Python&amp;#39;s &amp;#39;import&amp;#39; system is one of the things that I enjoy about the language.&lt;br&gt;&lt;br&gt;
-Exploring it is time well spent.&lt;/p&gt;
-
-&lt;p&gt;&amp;#39;import&amp;#39; is a python keyword.&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;
-&gt;&gt;&gt; import keyword
-&gt;&gt;&gt; keyword.iskeyword(&#39;import&#39;)
-True
-&gt;&gt;&gt; 
-&lt;/code&gt;&lt;/pre&gt;
+                <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
+&lt;p&gt;Python&amp;#39;s &lt;a href=&#34;https://phrac.deviantart.net/D3628&#34;&gt;import&lt;/a&gt; system is one of the things that I enjoy about the language.&lt;br&gt;&lt;br&gt;
+Exploring it is time well spent.  This is somewhat of a practical walk through.  The import system goes pretty deep.&lt;br&gt;
+There are finders and loaders and all kinds of awesome details I&amp;#39;m not getting into.  This is not exhaustive but&lt;br&gt;
+hopefully is useful enough to be worthwhile.&lt;/p&gt;
 &lt;h4&gt;The Terrain&lt;/h4&gt;
 &lt;p&gt;I am using the interactive &lt;a href=&#34;http://docs.python.org/2/tutorial/interpreter.html&#34;&gt;interpreter&lt;/a&gt;&lt;br&gt;
 and making basic modules are demonstrated.&lt;/p&gt;
@@ -78,7 +60,7 @@ import sys
 sys.version
 &#39;2.7.1 (r271:86832, Aug  5 2011, 03:30:24) \n[GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]&#39;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;Easter Eggs&lt;/h4&gt;
+&lt;h3&gt;Easter Eggs&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;
 &gt;&gt;&gt; from __future__ import braces
   File &#34;&lt;stdin&gt;&#34;, line 1
@@ -126,11 +108,60 @@ webbrowser.open(&#34;http://xkcd.com/353/&#34;)
 &gt;&gt;&gt; import __hello__
 Hello world...
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;Top level imports are global&lt;/h4&gt;
+&lt;h3&gt;Importing a module&lt;/h3&gt;
+&lt;p&gt;&amp;#39;import&amp;#39; is a python keyword.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+&gt;&gt;&gt; import keyword
+&gt;&gt;&gt; keyword.iskeyword(&#39;import&#39;)
+True
+&gt;&gt;&gt; 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When you say:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;import urllib
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Python does:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;sys.modules: looks for a cached module&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;sys.meta_path: import &amp;#39;meta hooks&amp;#39; are loaded which can alter import behavior&lt;/p&gt;
+
+&lt;p&gt;This allows meta hooks to override sys.path processing, frozen modules, or even built-in modules&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;sys.path: Looks for module by name in a list of system paths (on disk -- including stdlib modules)&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://docs.python.org/dev/reference/import.html#loaders&#34;&gt;Loads&lt;/a&gt; the module or raises an &lt;a href=&#34;http://docs.python.org/dev/library/exceptions.html#ImportError&#34;&gt;ImportError&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;pre&gt;&lt;code&gt;
+The importlib implementation avoids using the return value directly.
+Instead, it gets the module object by looking the module name up in sys.modules.
+The indirect effect of this is that an imported module may replace itself in sys.modules.
+This is implementation-specific behavior that is not guaranteed to work in other Python implementations.
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+&gt;&gt;&gt; if &#39;urllib&#39; in sys.modules:
+...    print &#39;yes!&#39;
+... 
+yes!
+&gt;&gt;&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;&amp;#39;urllib&amp;#39; is now part of the namespace of my program and references the stdlib module.&lt;/p&gt;
+&lt;h4&gt;Where did I find the module using sys.path?&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+&gt;&gt;&gt; print urllib.__file__
+/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib.pyc
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3&gt;Import and Namespace&lt;/h3&gt;&lt;h4&gt;Top level imports are global variables&lt;/h4&gt;
+&lt;p&gt;Before importing os:&lt;/p&gt;
+
 &lt;pre&gt;&lt;code&gt;
 &gt;&gt;&gt; print globals()
 {&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;, &#39;__name__&#39;: &#39;__main__&#39;, &#39;__file__&#39;: &#39;test.py&#39;, &#39;__doc__&#39;: None, &#39;__package__&#39;: None}
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;After importing os:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 &gt;&gt;&gt; import os
@@ -139,33 +170,136 @@ Hello world...
 {&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;, &#39;__file__&#39;: &#39;test.py&#39;, &#39;__package__&#39;: None, &#39;__name__&#39;: &#39;__main__&#39;, &#39;os&#39;: &lt;module &#39;os&#39; from &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc&#39;&gt;, &#39;__doc__&#39;: None}
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;imports inside a function are local&lt;/h4&gt;
+&lt;p&gt;json does not show up in my global dict even though I have imported it. Because&lt;br&gt;
+it is contained in the local namespace of my foo() function.&lt;/p&gt;
+
 &lt;pre&gt;&lt;code&gt;
 &gt;&gt;&gt; def foo():
-&gt;&gt;&gt;     import os
+...     import json
+... 
+&gt;&gt;&gt; foo()
 &gt;&gt;&gt; print globals()
 
-{&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;, &#39;__file__&#39;: &#39;test.py&#39;, &#39;__package__&#39;: None, &#39;__name__&#39;: &#39;__main__&#39;, &#39;foo&#39;: &lt;function foo at 0x105f409b0&gt;, &#39;__doc__&#39;: None}
+{&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;, &#39;__name__&#39;: &#39;__main__&#39;, &#39;foo&#39;: &lt;function foo at 0x106b0f9b0&gt;, &#39;__doc__&#39;: None, &#39;__package__&#39;: None}
+
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here json is shown in the local dictionary within foo(), but does not show up in globals.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 &gt;&gt;&gt; def foo():
-&gt;&gt;&gt;     import os
-&gt;&gt;&gt;     print locals()
-
-&gt;&gt;&gt;foo()
-&gt;&gt;&gt;print globals()
-
-{&#39;os&#39;: &lt;module &#39;os&#39; from &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc&#39;&gt;}
-{&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;, &#39;__file__&#39;: &#39;test.py&#39;, &#39;__package__&#39;: None, &#39;__name__&#39;: &#39;__main__&#39;, &#39;foo&#39;: &lt;function foo at 0x10124d9b0&gt;, &#39;__doc__&#39;: None}
+...     import json
+...     print locals()
+... 
+&gt;&gt;&gt; foo()
+{&#39;json&#39;: &lt;module &#39;json&#39; from &#39;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.pyc&#39;&gt;}
+&gt;&gt;&gt; print globals()
+{&#39;__builtins__&#39;: &lt;module &#39;__builtin__&#39; (built-in)&gt;, &#39;__name__&#39;: &#39;__main__&#39;, &#39;foo&#39;: &lt;function foo at 0x10a5fd9b0&gt;, &#39;__doc__&#39;: None, &#39;__package__&#39;: None}
+&gt;&gt;&gt; 
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;imported modules are objects&lt;/h4&gt;
+&lt;h3&gt;modules are objects&lt;/h3&gt;
+&lt;p&gt;Exploring via &lt;a href=&#34;http://docs.python.org/2/library/functions.html#dir&#34;&gt;dir&lt;/a&gt; and &lt;a href=&#34;http://docs.python.org/2/library/functions.html#type&#34;&gt;type&lt;/a&gt;&lt;/p&gt;
+
 &lt;pre&gt;&lt;code&gt;
 &gt;&gt;&gt; import re
 &gt;&gt;&gt; dir(re)
-[&#39;DEBUG&#39;, &#39;DOTALL&#39;, &#39;I&#39;, &#39;IGNORECASE&#39;, &#39;L&#39;, &#39;LOCALE&#39;, &#39;M&#39;, &#39;MULTILINE&#39;, &#39;S&#39;, &#39;Scanner&#39;, &#39;T&#39;, &#39;TEMPLATE&#39;, &#39;U&#39;, &#39;UNICODE&#39;, &#39;VERBOSE&#39;, &#39;X&#39;, &#39;_MAXCACHE&#39;, &#39;__all__&#39;, &#39;__builtins__&#39;, &#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;__version__&#39;, &#39;_alphanum&#39;, &#39;_cache&#39;, &#39;_cache_repl&#39;, &#39;_compile&#39;, &#39;_compile_repl&#39;, &#39;_expand&#39;, &#39;_pattern_type&#39;, &#39;_pickle&#39;, &#39;_subx&#39;, &#39;compile&#39;, &#39;copy_reg&#39;, &#39;error&#39;, &#39;escape&#39;, &#39;findall&#39;, &#39;finditer&#39;, &#39;match&#39;, &#39;purge&#39;, &#39;search&#39;, &#39;split&#39;, &#39;sre_compile&#39;, &#39;sre_parse&#39;, &#39;sub&#39;, &#39;subn&#39;, &#39;sys&#39;, &#39;template&#39;]
+[&#39;DEBUG&#39;, &#39;DOTALL&#39;, &#39;I&#39;, &#39;IGNORECASE&#39;, &#39;L&#39;, &#39;LOCALE&#39;, &#39;M&#39;, &#39;MULTILINE&#39;, &#39;S&#39;, &#39;Scanner&#39;, 
+&#39;T&#39;, &#39;TEMPLATE&#39;, &#39;U&#39;, &#39;UNICODE&#39;, &#39;VERBOSE&#39;, &#39;X&#39;, &#39;_MAXCACHE&#39;, &#39;__all__&#39;, &#39;__builtins__&#39;, 
+&#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;__version__&#39;, &#39;_alphanum&#39;, &#39;_cache&#39;, &#39;_cache_repl&#39;, &#39;_compile&#39;, &#39;_compile_repl&#39;, &#39;_expand&#39;, &#39;_pattern_type&#39;, &#39;_pickle&#39;, &#39;_subx&#39;, &#39;compile&#39;, &#39;copy_reg&#39;, &#39;error&#39;, &#39;escape&#39;, &#39;findall&#39;, &#39;finditer&#39;, &#39;match&#39;, &#39;purge&#39;, &#39;search&#39;, &#39;split&#39;, &#39;sre_compile&#39;, &#39;sre_parse&#39;, &#39;sub&#39;, &#39;subn&#39;, &#39;sys&#39;, &#39;template&#39;]
 &gt;&gt;&gt; 
 &gt;&gt;&gt; type(re)
 &lt;type &#39;module&#39;&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;You can access their attributes.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+&gt;&gt;&gt; import re
+&gt;&gt;&gt; print re.__doc__
+Support for regular expressions (RE).
+
+This module provides regular expression matching operations similar to
+those found in Perl.  It supports both 8-bit and Unicode strings; both
+the pattern and the strings being processed can contain null bytes and
+characters outside the US ASCII range.
+
+Regular expressions can contain both special and ordinary characters.
+Most ordinary characters, like &#34;A&#34;, &#34;a&#34;, or &#34;0&#34;, are the simplest
+regular expressions; they simply match themselves.  You can
+concatenate ordinary characters, so last matches the string &#39;last&#39;.
+
+The special characters are:
+    &#34;.&#34;      Matches any character except a newline.
+    &#34;^&#34;      Matches the start of the string.
+    &#34;$&#34;      Matches the end of the string or just before the newline at
+             the end of the string.
+    &#34;*&#34;      Matches 0 or more (greedy) repetitions of the preceding RE.
+             Greedy means that it will match as many repetitions as possible.
+    &#34;+&#34;      Matches 1 or more (greedy) repetitions of the preceding RE.
+    &#34;?&#34;      Matches 0 or 1 (greedy) of the preceding RE.
+    *?,+?,?? Non-greedy versions of the previous three special characters.
+    {m,n}    Matches from m to n repetitions of the preceding RE.
+    {m,n}?   Non-greedy version of the above.
+    &#34;\\&#34;     Either escapes special characters or signals a special sequence.
+    []       Indicates a set of characters.
+             A &#34;^&#34; as the first character indicates a complementing set.
+    &#34;|&#34;      A|B, creates an RE that will match either A or B.
+    (...)    Matches the RE inside the parentheses.
+             The contents can be retrieved or matched later in the string.
+    (?iLmsux) Set the I, L, M, S, U, or X flag for the RE (see below).
+    (?:...)  Non-grouping version of regular parentheses.
+    (?P&lt;name&gt;...) The substring matched by the group is accessible by name.
+    (?P=name)     Matches the text matched earlier by the group named name.
+    (?#...)  A comment; ignored.
+    (?=...)  Matches if ... matches next, but doesn&#39;t consume the string.
+    (?!...)  Matches if ... doesn&#39;t match next.
+    (?&lt;=...) Matches if preceded by ... (must be fixed length).
+    (?&lt;!...) Matches if not preceded by ... (must be fixed length).
+    (?(id/name)yes|no) Matches yes pattern if the group with id/name matched,
+                       the (optional) no pattern otherwise.
+
+The special sequences consist of &#34;\\&#34; and a character from the list
+below.  If the ordinary character is not on the list, then the
+resulting RE will match the second character.
+    \number  Matches the contents of the group of the same number.
+    \A       Matches only at the start of the string.
+    \Z       Matches only at the end of the string.
+    \b       Matches the empty string, but only at the start or end of a word.
+    \B       Matches the empty string, but not at the start or end of a word.
+    \d       Matches any decimal digit; equivalent to the set [0-9].
+    \D       Matches any non-digit character; equivalent to the set [^0-9].
+    \s       Matches any whitespace character; equivalent to [ \t\n\r\f\v].
+    \S       Matches any non-whitespace character; equiv. to [^ \t\n\r\f\v].
+    \w       Matches any alphanumeric character; equivalent to [a-zA-Z0-9_].
+             With LOCALE, it will match the set [0-9_] plus characters defined
+             as letters for the current locale.
+    \W       Matches the complement of \w.
+    \\       Matches a literal backslash.
+
+This module exports the following functions:
+    match    Match a regular expression pattern to the beginning of a string.
+    search   Search a string for the presence of a pattern.
+    sub      Substitute occurrences of a pattern found in a string.
+    subn     Same as sub, but also return the number of substitutions made.
+    split    Split a string by the occurrences of a pattern.
+    findall  Find all occurrences of a pattern in a string.
+    finditer Return an iterator yielding a match object for each match.
+    compile  Compile a pattern into a RegexObject.
+    purge    Clear the regular expression cache.
+    escape   Backslash all non-alphanumerics in a string.
+
+Some of the functions in this module takes flags as optional parameters:
+    I  IGNORECASE  Perform case-insensitive matching.
+    L  LOCALE      Make \w, \W, \b, \B, dependent on the current locale.
+    M  MULTILINE   &#34;^&#34; matches the beginning of lines (after a newline)
+                   as well as the string.
+                   &#34;$&#34; matches the end of lines (before a newline) as well
+                   as the end of the string.
+    S  DOTALL      &#34;.&#34; matches any character at all, including the newline.
+    X  VERBOSE     Ignore whitespace and comments for nicer looking RE&#39;s.
+    U  UNICODE     Make \w, \W, \b, \B, dependent on the Unicode locale.
+
+This module also defines an exception &#39;error&#39;.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;&amp;#39;from &lt;strong&gt;future&lt;/strong&gt;&amp;#39; is not at its heart a module import&lt;/h4&gt;
 &lt;p&gt;source: &lt;a href=&#34;http://docs.python.org/2/reference/simple_stmts.html#future-statements&#34;&gt;future statements reference&lt;/a&gt;&lt;/p&gt;
@@ -187,12 +321,27 @@ A future statement is a directive to the compiler that a particular module shoul
 print(&#39;wtf&#39;)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://utcc.utoronto.ca/%7Ecks/space/blog/python/ImportTricks&#34;&gt;http://utcc.utoronto.ca/~cks/space/blog/python/ImportTricks&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://ericsnowcurrently.blogspot.com/p/python-imports.html&#34;&gt;http://ericsnowcurrently.blogspot.com/p/python-imports.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://stackoverflow.com/questions/7075082/what-is-future-in-python-used-for-and-how-when-to-use-it-and-how-it-works&#34;&gt;http://stackoverflow.com/questions/7075082/what-is-future-in-python-used-for-and-how-when-to-use-it-and-how-it-works&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://docs.python.org/2/reference/simple_stmts.html#future-statements&#34;&gt;http://docs.python.org/2/reference/simple_stmts.html#future-statements&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://docs.python.org/2/library/imp.html&#34;&gt;http://docs.python.org/2/library/imp.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://pymotw.com/2/imp/&#34;&gt;http://pymotw.com/2/imp/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://ericsnowcurrently.blogspot.com/p/python-imports.html&#34;&gt;imports one&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://utcc.utoronto.ca/%7Ecks/space/blog/python/ImportTricks&#34;&gt;imports two&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/imp.html&#34;&gt;imp docs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://pymotw.com/2/imp/&#34;&gt;imp module motw&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.slideshare.net/audreyr/python-tricks-that-you-cant-live-without&#34;&gt;python-tricks-that-you-cant-live-without&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blog.dowski.com/2008/07/31/customizing-the-python-import-system/&#34;&gt;customizing-the-python-import-system&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/__future__.html&#34;&gt;future statements&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/reference/simple_stmts.html#future-statements&#34;&gt;future statements summary&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/7075082/what-is-future-in-python-used-for-and-how-when-to-use-it-and-how-it-works&#34;&gt;so future staments&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.python.org/dev/peps/pep-0420/&#34;&gt;PEP 420 -- Implicit Namespace Packages&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>happy sysadmin day</title>
+                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
+                <id>/2013/07/26/happy-sysadmin-day/</id>
+                <updated>2013-07-26T17:55:00Z</updated>
+                
+                <summary type="html">&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
 </content>
             </entry>
         
