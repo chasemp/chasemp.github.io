@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-31T20:51:06Z</updated>
+        <updated>2013-07-31T20:55:04Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -43,7 +43,7 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T20:51:00Z</updated>
+                <updated>2013-07-26T20:55:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -97,7 +97,7 @@ Namespaces are one honking great idea -- let&#39;s do more of those!
 &gt;&gt;&gt; import antigravity
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;You won&amp;#39;t see it here but you get an idea of what it does:&lt;/p&gt;
+&lt;p&gt;You can see it &lt;a href=&#34;http://xkcd.com/353/&#34;&gt;here&lt;/a&gt; but here is the code:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 import webbrowser
