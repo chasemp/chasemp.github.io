@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-31T20:31:09Z</updated>
+        <updated>2013-07-31T20:36:48Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -43,17 +43,17 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T20:30:00Z</updated>
+                <updated>2013-07-26T20:36:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
-&lt;p&gt;Python&amp;#39;s &lt;a href=&#34;https://phrac.deviantart.net/D3628&#34;&gt;import&lt;/a&gt; system is one of the things that I enjoy about the language.&lt;br&gt;&lt;br&gt;
-Exploring it is time well spent.  This is somewhat of a practical walk through.  The import system goes pretty deep.&lt;br&gt;
-There are finders and loaders and all kinds of awesome details I&amp;#39;m not getting into.  This is not exhaustive but&lt;br&gt;
-hopefully is useful enough to be worthwhile.&lt;/p&gt;
+&lt;p&gt;Python&amp;#39;s &lt;a href=&#34;https://phrac.deviantart.net/D3628&#34;&gt;import&lt;/a&gt; system is one of the things that I&lt;br&gt;
+enjoy about the language. Exploring it is time well spent.  This is somewhat of a practical&lt;br&gt;
+walk through.  The import system goes pretty deep. There are finders and loaders and all &lt;br&gt;
+kinds of awesome details I&amp;#39;m not getting into.  This is not exhaustive but hopefully is&lt;br&gt;
+useful enough to be worthwhile.&lt;/p&gt;
 &lt;h4&gt;The Terrain&lt;/h4&gt;
-&lt;p&gt;I am using the interactive &lt;a href=&#34;http://docs.python.org/2/tutorial/interpreter.html&#34;&gt;interpreter&lt;/a&gt;&lt;br&gt;
-and making basic modules are demonstrated.&lt;/p&gt;
+&lt;p&gt;I am using the interactive &lt;a href=&#34;http://docs.python.org/2/tutorial/interpreter.html&#34;&gt;interpreter&lt;/a&gt; and making basic modules are demonstrated.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 import sys
@@ -125,10 +125,16 @@ True
 
 &lt;ul&gt;
 &lt;li&gt;sys.modules: looks for a cached module&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;sys.meta_path: import &amp;#39;meta hooks&amp;#39; are loaded which can alter import behavior&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;sys.meta_path: import &amp;#39;meta hooks&amp;#39; are loaded &lt;br&gt;
+which can alter import behavior&lt;/p&gt;
 
-&lt;p&gt;This allows meta hooks to override sys.path processing, frozen modules, or even built-in modules&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;sys.path: Looks for module by name in a list of system paths (on disk -- including stdlib modules)&lt;/p&gt;&lt;/li&gt;
+&lt;p&gt;Quote:&lt;br&gt;
+&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+This allows meta hooks to override sys.path processing,&lt;br&gt;
+frozen modules, or even built-in modules&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;sys.path: Looks for module by name in a list of system&lt;br&gt;
+paths (on disk -- including stdlib modules)&lt;/p&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://docs.python.org/dev/reference/import.html#loaders&#34;&gt;Loads&lt;/a&gt; the module or raises an &lt;a href=&#34;http://docs.python.org/dev/library/exceptions.html#ImportError&#34;&gt;ImportError&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
