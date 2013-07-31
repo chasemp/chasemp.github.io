@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-31T20:36:48Z</updated>
+        <updated>2013-07-31T20:46:55Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -43,7 +43,7 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T20:36:00Z</updated>
+                <updated>2013-07-26T20:46:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -211,7 +211,10 @@ it is contained in the local namespace of my foo() function.&lt;/p&gt;
 &gt;&gt;&gt; dir(re)
 [&#39;DEBUG&#39;, &#39;DOTALL&#39;, &#39;I&#39;, &#39;IGNORECASE&#39;, &#39;L&#39;, &#39;LOCALE&#39;, &#39;M&#39;, &#39;MULTILINE&#39;, &#39;S&#39;, &#39;Scanner&#39;, 
 &#39;T&#39;, &#39;TEMPLATE&#39;, &#39;U&#39;, &#39;UNICODE&#39;, &#39;VERBOSE&#39;, &#39;X&#39;, &#39;_MAXCACHE&#39;, &#39;__all__&#39;, &#39;__builtins__&#39;, 
-&#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;__version__&#39;, &#39;_alphanum&#39;, &#39;_cache&#39;, &#39;_cache_repl&#39;, &#39;_compile&#39;, &#39;_compile_repl&#39;, &#39;_expand&#39;, &#39;_pattern_type&#39;, &#39;_pickle&#39;, &#39;_subx&#39;, &#39;compile&#39;, &#39;copy_reg&#39;, &#39;error&#39;, &#39;escape&#39;, &#39;findall&#39;, &#39;finditer&#39;, &#39;match&#39;, &#39;purge&#39;, &#39;search&#39;, &#39;split&#39;, &#39;sre_compile&#39;, &#39;sre_parse&#39;, &#39;sub&#39;, &#39;subn&#39;, &#39;sys&#39;, &#39;template&#39;]
+&#39;__doc__&#39;, &#39;__file__&#39;, &#39;__name__&#39;, &#39;__package__&#39;, &#39;__version__&#39;, &#39;_alphanum&#39;, &#39;_cache&#39;,
+&#39;_cache_repl&#39;, &#39;_compile&#39;, &#39;_compile_repl&#39;, &#39;_expand&#39;, &#39;_pattern_type&#39;, &#39;_pickle&#39;, &#39;_subx&#39;,
+&#39;compile&#39;, &#39;copy_reg&#39;, &#39;error&#39;, &#39;escape&#39;, &#39;findall&#39;, &#39;finditer&#39;, &#39;match&#39;, &#39;purge&#39;, &#39;search&#39;,
+&#39;split&#39;, &#39;sre_compile&#39;, &#39;sre_parse&#39;, &#39;sub&#39;, &#39;subn&#39;, &#39;sys&#39;, &#39;template&#39;]
 &gt;&gt;&gt; 
 &gt;&gt;&gt; type(re)
 &lt;type &#39;module&#39;&gt;
@@ -234,78 +237,7 @@ Most ordinary characters, like &#34;A&#34;, &#34;a&#34;, or &#34;0&#34;, are the
 regular expressions; they simply match themselves.  You can
 concatenate ordinary characters, so last matches the string &#39;last&#39;.
 
-The special characters are:
-    &#34;.&#34;      Matches any character except a newline.
-    &#34;^&#34;      Matches the start of the string.
-    &#34;$&#34;      Matches the end of the string or just before the newline at
-             the end of the string.
-    &#34;*&#34;      Matches 0 or more (greedy) repetitions of the preceding RE.
-             Greedy means that it will match as many repetitions as possible.
-    &#34;+&#34;      Matches 1 or more (greedy) repetitions of the preceding RE.
-    &#34;?&#34;      Matches 0 or 1 (greedy) of the preceding RE.
-    *?,+?,?? Non-greedy versions of the previous three special characters.
-    {m,n}    Matches from m to n repetitions of the preceding RE.
-    {m,n}?   Non-greedy version of the above.
-    &#34;\\&#34;     Either escapes special characters or signals a special sequence.
-    []       Indicates a set of characters.
-             A &#34;^&#34; as the first character indicates a complementing set.
-    &#34;|&#34;      A|B, creates an RE that will match either A or B.
-    (...)    Matches the RE inside the parentheses.
-             The contents can be retrieved or matched later in the string.
-    (?iLmsux) Set the I, L, M, S, U, or X flag for the RE (see below).
-    (?:...)  Non-grouping version of regular parentheses.
-    (?P&lt;name&gt;...) The substring matched by the group is accessible by name.
-    (?P=name)     Matches the text matched earlier by the group named name.
-    (?#...)  A comment; ignored.
-    (?=...)  Matches if ... matches next, but doesn&#39;t consume the string.
-    (?!...)  Matches if ... doesn&#39;t match next.
-    (?&lt;=...) Matches if preceded by ... (must be fixed length).
-    (?&lt;!...) Matches if not preceded by ... (must be fixed length).
-    (?(id/name)yes|no) Matches yes pattern if the group with id/name matched,
-                       the (optional) no pattern otherwise.
-
-The special sequences consist of &#34;\\&#34; and a character from the list
-below.  If the ordinary character is not on the list, then the
-resulting RE will match the second character.
-    \number  Matches the contents of the group of the same number.
-    \A       Matches only at the start of the string.
-    \Z       Matches only at the end of the string.
-    \b       Matches the empty string, but only at the start or end of a word.
-    \B       Matches the empty string, but not at the start or end of a word.
-    \d       Matches any decimal digit; equivalent to the set [0-9].
-    \D       Matches any non-digit character; equivalent to the set [^0-9].
-    \s       Matches any whitespace character; equivalent to [ \t\n\r\f\v].
-    \S       Matches any non-whitespace character; equiv. to [^ \t\n\r\f\v].
-    \w       Matches any alphanumeric character; equivalent to [a-zA-Z0-9_].
-             With LOCALE, it will match the set [0-9_] plus characters defined
-             as letters for the current locale.
-    \W       Matches the complement of \w.
-    \\       Matches a literal backslash.
-
-This module exports the following functions:
-    match    Match a regular expression pattern to the beginning of a string.
-    search   Search a string for the presence of a pattern.
-    sub      Substitute occurrences of a pattern found in a string.
-    subn     Same as sub, but also return the number of substitutions made.
-    split    Split a string by the occurrences of a pattern.
-    findall  Find all occurrences of a pattern in a string.
-    finditer Return an iterator yielding a match object for each match.
-    compile  Compile a pattern into a RegexObject.
-    purge    Clear the regular expression cache.
-    escape   Backslash all non-alphanumerics in a string.
-
-Some of the functions in this module takes flags as optional parameters:
-    I  IGNORECASE  Perform case-insensitive matching.
-    L  LOCALE      Make \w, \W, \b, \B, dependent on the current locale.
-    M  MULTILINE   &#34;^&#34; matches the beginning of lines (after a newline)
-                   as well as the string.
-                   &#34;$&#34; matches the end of lines (before a newline) as well
-                   as the end of the string.
-    S  DOTALL      &#34;.&#34; matches any character at all, including the newline.
-    X  VERBOSE     Ignore whitespace and comments for nicer looking RE&#39;s.
-    U  UNICODE     Make \w, \W, \b, \B, dependent on the Unicode locale.
-
-This module also defines an exception &#39;error&#39;.
+--- excluded for brevity ---
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;&amp;#39;from &lt;strong&gt;future&lt;/strong&gt;&amp;#39; is not at its heart a module import&lt;/h4&gt;
 &lt;p&gt;source: &lt;a href=&#34;http://docs.python.org/2/reference/simple_stmts.html#future-statements&#34;&gt;future statements reference&lt;/a&gt;&lt;/p&gt;
