@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-07-31T20:46:55Z</updated>
+        <updated>2013-07-31T20:51:06Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -43,7 +43,7 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T20:46:00Z</updated>
+                <updated>2013-07-26T20:51:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -58,7 +58,7 @@ useful enough to be worthwhile.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
 import sys
 sys.version
-&#39;2.7.1 (r271:86832, Aug  5 2011, 03:30:24) \n[GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]&#39;
+&#39;2.7.1 (r271:86832, Aug  5 2011, 03:30:24) \n[GCC 4.2.1]&#39;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h3&gt;Easter Eggs&lt;/h3&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -239,15 +239,18 @@ concatenate ordinary characters, so last matches the string &#39;last&#39;.
 
 --- excluded for brevity ---
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;&amp;#39;from &lt;strong&gt;future&lt;/strong&gt;&amp;#39; is not at its heart a module import&lt;/h4&gt;
-&lt;p&gt;source: &lt;a href=&#34;http://docs.python.org/2/reference/simple_stmts.html#future-statements&#34;&gt;future statements reference&lt;/a&gt;&lt;/p&gt;
-
+&lt;h3&gt;&lt;strong&gt;future&lt;/strong&gt; allows use of future features&lt;/h3&gt;&lt;h4&gt;&lt;a href=&#34;http://docs.python.org/2/reference/simple_stmts.html#future-statements&#34;&gt;&lt;strong&gt;future&lt;/strong&gt;&lt;/a&gt; is not at its heart a module import&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
-A future statement is a directive to the compiler that a particular module should be compiled using syntax or semantics that will be available in a specified future release of Python. The future statement is intended to ease migration to future versions of Python that introduce incompatible changes to the language. It allows use of the new features on a per-module basis before the release in which the feature becomes standard.
+A future statement is a directive to the compiler that a particular module
+should be compiled using syntax or semantics that will be available in a
+specified future release of Python. The future statement is intended to ease
+migration to future versions of Python that introduce incompatible changes to
+the language. It allows use of the new features on a per-module basis before
+the release in which the feature becomes standard.
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;ul&gt;
-&lt;li&gt;future statements do need to be at the top of the file&lt;/li&gt;
+&lt;li&gt;future statements need to be at the top of the file&lt;/li&gt;
 &lt;li&gt;future statements change how your module is parsed&lt;/li&gt;
 &lt;/ul&gt;
 

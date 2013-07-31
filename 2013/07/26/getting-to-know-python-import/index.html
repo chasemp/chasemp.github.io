@@ -82,7 +82,7 @@ useful enough to be worthwhile.</p>
 <pre><code>
 import sys
 sys.version
-'2.7.1 (r271:86832, Aug  5 2011, 03:30:24) \n[GCC 4.2.1 (Based on Apple Inc. build 5658) (LLVM build 2335.15.00)]'
+'2.7.1 (r271:86832, Aug  5 2011, 03:30:24) \n[GCC 4.2.1]'
 </code></pre>
 <h3>Easter Eggs</h3>
 <pre><code>
@@ -263,15 +263,18 @@ concatenate ordinary characters, so last matches the string 'last'.
 
 --- excluded for brevity ---
 </code></pre>
-<h4>&#39;from <strong>future</strong>&#39; is not at its heart a module import</h4>
-<p>source: <a href="http://docs.python.org/2/reference/simple_stmts.html#future-statements">future statements reference</a></p>
-
+<h3><strong>future</strong> allows use of future features</h3><h4><a href="http://docs.python.org/2/reference/simple_stmts.html#future-statements"><strong>future</strong></a> is not at its heart a module import</h4>
 <pre><code>
-A future statement is a directive to the compiler that a particular module should be compiled using syntax or semantics that will be available in a specified future release of Python. The future statement is intended to ease migration to future versions of Python that introduce incompatible changes to the language. It allows use of the new features on a per-module basis before the release in which the feature becomes standard.
+A future statement is a directive to the compiler that a particular module
+should be compiled using syntax or semantics that will be available in a
+specified future release of Python. The future statement is intended to ease
+migration to future versions of Python that introduce incompatible changes to
+the language. It allows use of the new features on a per-module basis before
+the release in which the feature becomes standard.
 </code></pre>
 
 <ul>
-<li>future statements do need to be at the top of the file</li>
+<li>future statements need to be at the top of the file</li>
 <li>future statements change how your module is parsed</li>
 </ul>
 
