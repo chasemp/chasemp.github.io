@@ -67,6 +67,120 @@
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2013/08/01/PEP8-Guide-Updates/">PEP8 Guide Updates</a></h1>
+                <h2>Thursday, August 01, 2013 <span>&raquo;</span> <a href="/tags/PEP8/">PEP8</a>, <a href="/tags/Python/">Python</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p><a href="http://www.python.org/dev/peps/pep-0008/">PEP8</a> is the &#39;official&#39; style guide for Python.  The idea being if the Python<br>
+community can rally around a set of standards it makes the overall quality of<br>
+code in the community better.  At least that&#39;s my idea.</p>
+
+<p>The guide has now been updated.  Here are some things I found notable.</p>
+<h4>Style Guide Exclusions</h4>
+<p>Then:</p>
+<pre><code>-Two good reasons to break a particular rule:
+
+-1. When applying the rule would make the code less readable, even for
+-   someone who is used to reading code that follows the rules.
+</code></pre>
+<p>Now:</p>
+<pre><code>+In particular: do not break backwards compatibility just to comply with
++this PEP!
+
++Some other good reasons to ignore a particular guideline:
++
++1. When applying the guideline would make the code less readable, even
++   for someone who is used to reading code that follows this PEP.
+
++3. Because the code in question predates the introduction of the
++   guideline and there is no other reason to be modifying that code.
++
++4. When the code needs to remain compatible with older versions of
++   Python that don&#39;t support the feature recommended by the style guide.
+</code></pre><h4>Line Characters</h4>
+<p>Then:</p>
+<pre><code>-Limit all lines to a maximum of 79 characters.
+</code></pre>
+<p>Now:</p>
+<pre><code>+Aim to limit all lines to a maximum of 79 characters, but up to 99
++characters is acceptable when it improves readability.
+
++For flowing long blocks of text with fewer structural restrictions
++(docstrings or comments), limiting the line length to 72 characters
++is recommended.
+</code></pre><h4>UTF-8 Is The Future</h4>
+<p>Then:</p>
+
+<p>-Code in the core Python distribution should always use the ASCII or<br>
+   -Latin-1 encoding (a.k.a. ISO-8859-1).  For Python 3.0 and beyond,<br>
+   -UTF-8 is preferred over Latin-1, see PEP 3120.</p>
+
+<p>Now:</p>
+
+<p>+Code in the core Python distribution should always use UTF-8 (or ASCII<br>
+   +in Python 2).</p>
+
+<ul>
+<li> Note that in Python 3, <code>unicode</code> and <code>basestring</code> no longer exist</li>
+<li> (there is only <code>str</code>) and a bytes object is no longer a kind of</li>
+<li> string (it is a sequence of integers instead)
++</li>
+</ul>
+<h4>Relative vs. Absolute Imports</h4>
+<p>Then:</p>
+
+<ul>
+<li>Relative imports for intra-package imports are highly discouraged.</li>
+<li> Always use the absolute package path for all imports.  Even now that</li>
+<li> PEP 328 is fully implemented in Python 2.5, its style of explicit</li>
+<li> relative imports is actively discouraged; absolute imports are more</li>
+<li> portable and usually more readable.</li>
+</ul>
+
+<p>Now:</p>
+
+<ul>
+<li>Absolute imports are recommended, as they are usually more readable</li>
+<li> and tend to be better behaved (or at least give better error</li>
+<li> messages) if the import system is incorrectly configured (such as</li>
+<li> when a directory inside a package ends up on <code>sys.path</code>)::
++</li>
+<li>   import mypkg.sibling</li>
+<li>   from mypkg import sibling</li>
+<li>   from mypkg.sibling import example
++</li>
+<li> However, explicit relative imports are an acceptable alternative to</li>
+<li> absolute imports, especially when dealing with complex package layouts</li>
+<li> where using absolute imports would be unecessarily verbose::
++</li>
+<li>   from . import sibling</li>
+<li>   from .sibling import example</li>
+</ul>
+<h4>Other Lessons Learned</h4>
+<ul>
+<li>Use &#39;def&#39; and not named lambda&#39;s</li>
+<li>Backwards compability is only expected for public interfaces</li>
+<li>Use &#39;&#39;.Join() over concatenation with performance and portablity in mind</li>
+<li>Use &#39;with&#39; statements with local resources.  try/finally is still ok.</li>
+<li>Don&#39;t break old code just to apply the style guide on principle.</li>
+<li>Python3.x does not allow mixing tabs and spaces</li>
+</ul>
+<h4>References</h4>
+<p><a href="http://hg.python.org/peps/rev/fb24c80e9afb">PEP8 Revision</a><br>
+<a href="http://hg.python.org/peps/file/fb24c80e9afb/pep-0008.txt">PEP8 Full</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/08/01/PEP8-Guide-Updates/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2013/07/29/OSX-DNS-Cache-Clearing/">OSX DNS Cache Clearing</a></h1>
                 <h2>Monday, July 29, 2013 <span>&raquo;</span> <a href="/tags/DNS/">DNS</a>, <a href="/tags/OSX/">OSX</a></h2>
             </div>
@@ -2260,39 +2374,6 @@ Total number of prefixes 1
             
             <div class="footer">
                 <p><a href="/2013/04/16/beginning-bgp-configuration/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/04/10/virsh-halting-a-host/">virsh halting a host</a></h1>
-                <h2>Wednesday, April 10, 2013 <span>&raquo;</span> <a href="/tags/kvm/">kvm</a>, <a href="/tags/virsh/">virsh</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>KVM is great but I&#39;m aking a note so I remember because this command gives me pause every time.</p>
-<h4>Sometimes &#39;shutdown&#39; in the virtual shell for KVM fails.</h4><pre><code>virsh # shutdown myvm
-Domain myvm is being shutdown
-</code></pre><h4>But...</h4><pre><code>114 myvm            running
-</code></pre>
-<p>In order to shutdown this host I use the &#39;destroy&#39; command.  Destroy does not<br>
-remove any files or otherwise permanently change the host data.  Which for me, <br>
-is unintuitive.  It does remove it from the list of hosts shown with the &#39;list&#39;<br>
-command.  Destroy is like pulling the plug.</p>
-<pre><code>virsh #destroy myvm
-</code></pre>
-<p>The command that does what I would expect destroy to do is: &#39;undefine&#39;.</p>
-
-<p>Reference<br>
-<a href="http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html">http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html</a><br>
-<a href="http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/">http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/04/10/virsh-halting-a-host/">Continue Reading</a></p>
             </div>
         </div>
     

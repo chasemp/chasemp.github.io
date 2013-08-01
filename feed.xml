@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-01T16:19:07Z</updated>
+        <updated>2013-08-01T17:38:07Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,114 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>PEP8 Guide Updates</title>
+                <link rel="alternate" href="/2013/08/01/PEP8-Guide-Updates/" type="text/html" />
+                <id>/2013/08/01/PEP8-Guide-Updates/</id>
+                <updated>2013-08-01T17:37:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.python.org/dev/peps/pep-0008/&#34;&gt;PEP8&lt;/a&gt; is the &amp;#39;official&amp;#39; style guide for Python.  The idea being if the Python&lt;br&gt;
+community can rally around a set of standards it makes the overall quality of&lt;br&gt;
+code in the community better.  At least that&amp;#39;s my idea.&lt;/p&gt;
+
+&lt;p&gt;The guide has now been updated.  Here are some things I found notable.&lt;/p&gt;
+&lt;h4&gt;Style Guide Exclusions&lt;/h4&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;-Two good reasons to break a particular rule:
+
+-1. When applying the rule would make the code less readable, even for
+-   someone who is used to reading code that follows the rules.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+In particular: do not break backwards compatibility just to comply with
++this PEP!
+
++Some other good reasons to ignore a particular guideline:
++
++1. When applying the guideline would make the code less readable, even
++   for someone who is used to reading code that follows this PEP.
+
++3. Because the code in question predates the introduction of the
++   guideline and there is no other reason to be modifying that code.
++
++4. When the code needs to remain compatible with older versions of
++   Python that don&amp;#39;t support the feature recommended by the style guide.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Line Characters&lt;/h4&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;-Limit all lines to a maximum of 79 characters.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;+Aim to limit all lines to a maximum of 79 characters, but up to 99
++characters is acceptable when it improves readability.
+
++For flowing long blocks of text with fewer structural restrictions
++(docstrings or comments), limiting the line length to 72 characters
++is recommended.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;UTF-8 Is The Future&lt;/h4&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+
+&lt;p&gt;-Code in the core Python distribution should always use the ASCII or&lt;br&gt;
+   -Latin-1 encoding (a.k.a. ISO-8859-1).  For Python 3.0 and beyond,&lt;br&gt;
+   -UTF-8 is preferred over Latin-1, see PEP 3120.&lt;/p&gt;
+
+&lt;p&gt;Now:&lt;/p&gt;
+
+&lt;p&gt;+Code in the core Python distribution should always use UTF-8 (or ASCII&lt;br&gt;
+   +in Python 2).&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt; Note that in Python 3, &lt;code&gt;unicode&lt;/code&gt; and &lt;code&gt;basestring&lt;/code&gt; no longer exist&lt;/li&gt;
+&lt;li&gt; (there is only &lt;code&gt;str&lt;/code&gt;) and a bytes object is no longer a kind of&lt;/li&gt;
+&lt;li&gt; string (it is a sequence of integers instead)
++&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Relative vs. Absolute Imports&lt;/h4&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Relative imports for intra-package imports are highly discouraged.&lt;/li&gt;
+&lt;li&gt; Always use the absolute package path for all imports.  Even now that&lt;/li&gt;
+&lt;li&gt; PEP 328 is fully implemented in Python 2.5, its style of explicit&lt;/li&gt;
+&lt;li&gt; relative imports is actively discouraged; absolute imports are more&lt;/li&gt;
+&lt;li&gt; portable and usually more readable.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Now:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Absolute imports are recommended, as they are usually more readable&lt;/li&gt;
+&lt;li&gt; and tend to be better behaved (or at least give better error&lt;/li&gt;
+&lt;li&gt; messages) if the import system is incorrectly configured (such as&lt;/li&gt;
+&lt;li&gt; when a directory inside a package ends up on &lt;code&gt;sys.path&lt;/code&gt;)::
++&lt;/li&gt;
+&lt;li&gt;   import mypkg.sibling&lt;/li&gt;
+&lt;li&gt;   from mypkg import sibling&lt;/li&gt;
+&lt;li&gt;   from mypkg.sibling import example
++&lt;/li&gt;
+&lt;li&gt; However, explicit relative imports are an acceptable alternative to&lt;/li&gt;
+&lt;li&gt; absolute imports, especially when dealing with complex package layouts&lt;/li&gt;
+&lt;li&gt; where using absolute imports would be unecessarily verbose::
++&lt;/li&gt;
+&lt;li&gt;   from . import sibling&lt;/li&gt;
+&lt;li&gt;   from .sibling import example&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Other Lessons Learned&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &amp;#39;def&amp;#39; and not named lambda&amp;#39;s&lt;/li&gt;
+&lt;li&gt;Backwards compability is only expected for public interfaces&lt;/li&gt;
+&lt;li&gt;Use &amp;#39;&amp;#39;.Join() over concatenation with performance and portablity in mind&lt;/li&gt;
+&lt;li&gt;Use &amp;#39;with&amp;#39; statements with local resources.  try/finally is still ok.&lt;/li&gt;
+&lt;li&gt;Don&amp;#39;t break old code just to apply the style guide on principle.&lt;/li&gt;
+&lt;li&gt;Python3.x does not allow mixing tabs and spaces&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;References&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://hg.python.org/peps/rev/fb24c80e9afb&#34;&gt;PEP8 Revision&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://hg.python.org/peps/file/fb24c80e9afb/pep-0008.txt&#34;&gt;PEP8 Full&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>OSX DNS Cache Clearing</title>
@@ -407,7 +515,7 @@ may not be the way to go.  But if you can less permissive is always better.&lt;/
                 <title>ubuntuforums.org hacked bummer</title>
                 <link rel="alternate" href="/2013/07/22/ubuntuforums.org-hacked-bummer/" type="text/html" />
                 <id>/2013/07/22/ubuntuforums.org-hacked-bummer/</id>
-                <updated>2013-07-22T16:19:00Z</updated>
+                <updated>2013-07-22T16:54:00Z</updated>
                 
                 <summary type="html">I got this email today:</summary>
                 <content type="html">&lt;p&gt;I got this email today:&lt;/p&gt;
@@ -424,6 +532,8 @@ may not be the way to go.  But if you can less permissive is always better.&lt;/
 
 &lt;p&gt;This is the second time credentials associated with me have been released from a security&lt;br&gt;
 breach.  The first was &lt;a href=&#34;http://chasemp.github.io/2013/05/09/name.com-bummer/&#34;&gt;name.com hacked&lt;/a&gt;.&lt;/p&gt;
+&lt;h4&gt;Update&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://blog.canonical.com/2013/07/30/ubuntu-forums-are-back-up-and-a-post-mortem/&#34;&gt;Post Mortem&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://www.infosecurity-magazine.com/view/33556/ubuntu-forum-hacked-18-million-accounts-compromised/&#34;&gt;http://www.infosecurity-magazine.com/view/33556/ubuntu-forum-hacked-18-million-accounts-compromised/&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://nakedsecurity.sophos.com/2013/07/21/gun-wielding-penguin-takes-over-ubuntu-forums-waves-ak-47-at-linux-users-everywhere/&#34;&gt;http://nakedsecurity.sophos.com/2013/07/21/gun-wielding-penguin-takes-over-ubuntu-forums-waves-ak-47-at-linux-users-everywhere/&lt;/a&gt;&lt;br&gt;
