@@ -17,6 +17,7 @@
   background-color: #5f664c;
 }
 
+
 * {
   margin: 0px;
   padding: 0px;
@@ -25,7 +26,7 @@
 }
 
 body {
-  background-image:url('/assets/images/bg.png');
+  background-image:url('/assets/images/middlecanvas.jpg ');
   color: #33FF66;
   font-family: "Courier New", "Lucida Console", Monospace;
   font-size: 16px;
@@ -114,6 +115,10 @@ h2, h3 {
   font-style: normal;
   padding-bottom: 5px;
   border-bottom: 1px solid #A4A4A4;
+}
+
+h6 {
+  text-align: center;
 }
 
 h4, h5, h6 {
@@ -255,9 +260,11 @@ ul.unstyled {
 }
 
 a {
-  color: #5e8000;
+  color: #00FF00;
   text-decoration: none;
+  font-weight: bold;
 }
+
 a:hover {
   text-decoration: underline;
 }
@@ -282,9 +289,13 @@ small a {
   color: #4d4d4d;
 }
 
+/*puts site in middle band*/
 #container {
-  margin: 0px auto 0px auto;
-  width: 900px;
+  background-image:url('/assets/images/trybg.jpg');
+  width:900px;
+  margin:0 auto 0 auto;
+  padding:5px;
+  border:1px solid #cccccc;
 }
 
 #nav:before, #nav:after {
@@ -344,7 +355,10 @@ small a {
 #header {
   margin: 40px 0px 40px 0px;
 }
+
 #header h1, #header h2 {
+  font-family: "Lucida Bright", Georgia, serif;
+  text-align: center;
   margin: 0px;
   padding: 0px;
 }
