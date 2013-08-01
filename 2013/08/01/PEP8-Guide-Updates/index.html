@@ -111,51 +111,52 @@ code in the community better.  At least that&#39;s my idea.</p>
 </code></pre><h4>UTF-8 Is The Future</h4>
 <p>Then:</p>
 
-<p>-Code in the core Python distribution should always use the ASCII or<br>
-   -Latin-1 encoding (a.k.a. ISO-8859-1).  For Python 3.0 and beyond,<br>
-   -UTF-8 is preferred over Latin-1, see PEP 3120.</p>
+<pre><code>
+   -Code in the core Python distribution should always use the ASCII or
+   -Latin-1 encoding (a.k.a. ISO-8859-1).  For Python 3.0 and beyond,
+   -UTF-8 is preferred over Latin-1, see PEP 3120.
+</code></pre>
 
 <p>Now:</p>
 
-<p>+Code in the core Python distribution should always use UTF-8 (or ASCII<br>
-   +in Python 2).</p>
+<pre><code>
+   +Code in the core Python distribution should always use UTF-8 (or ASCII
+   +in Python 2).
 
-<ul>
-<li> Note that in Python 3, <code>unicode</code> and <code>basestring</code> no longer exist</li>
-<li> (there is only <code>str</code>) and a bytes object is no longer a kind of</li>
-<li> string (it is a sequence of integers instead)
-+</li>
-</ul>
+   +  Note that in Python 3, ``unicode`` and ``basestring`` no longer exist
+   +  (there is only ``str``) and a bytes object is no longer a kind of
+   +  string (it is a sequence of integers instead)
+</code></pre>
 <h4>Relative vs. Absolute Imports</h4>
 <p>Then:</p>
 
-<ul>
-<li>Relative imports for intra-package imports are highly discouraged.</li>
-<li> Always use the absolute package path for all imports.  Even now that</li>
-<li> PEP 328 is fully implemented in Python 2.5, its style of explicit</li>
-<li> relative imports is actively discouraged; absolute imports are more</li>
-<li> portable and usually more readable.</li>
-</ul>
+<pre><code>
+   - Relative imports for intra-package imports are highly discouraged.
+   -  Always use the absolute package path for all imports.  Even now that
+   -  PEP 328 is fully implemented in Python 2.5, its style of explicit
+   -  relative imports is actively discouraged; absolute imports are more
+   -  portable and usually more readable.
+</code></pre>
 
 <p>Now:</p>
 
-<ul>
-<li>Absolute imports are recommended, as they are usually more readable</li>
-<li> and tend to be better behaved (or at least give better error</li>
-<li> messages) if the import system is incorrectly configured (such as</li>
-<li> when a directory inside a package ends up on <code>sys.path</code>)::
-+</li>
-<li>   import mypkg.sibling</li>
-<li>   from mypkg import sibling</li>
-<li>   from mypkg.sibling import example
-+</li>
-<li> However, explicit relative imports are an acceptable alternative to</li>
-<li> absolute imports, especially when dealing with complex package layouts</li>
-<li> where using absolute imports would be unecessarily verbose::
-+</li>
-<li>   from . import sibling</li>
-<li>   from .sibling import example</li>
-</ul>
+<pre><code>
+   + Absolute imports are recommended, as they are usually more readable
+   +  and tend to be better behaved (or at least give better error
+   +  messages) if the import system is incorrectly configured (such as
+   +  when a directory inside a package ends up on ``sys.path``)::
+   +
+   +    import mypkg.sibling
+   +    from mypkg import sibling
+   +    from mypkg.sibling import example
+   +
+   +  However, explicit relative imports are an acceptable alternative to
+   +  absolute imports, especially when dealing with complex package layouts
+   +  where using absolute imports would be unecessarily verbose::
+   +
+   +    from . import sibling
+   +    from .sibling import example
+</code></pre>
 <h4>Other Lessons Learned</h4>
 <ul>
 <li>Use &#39;def&#39; and not named lambda&#39;s</li>

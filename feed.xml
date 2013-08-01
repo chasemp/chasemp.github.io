@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-01T17:38:07Z</updated>
+        <updated>2013-08-01T18:13:20Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>PEP8 Guide Updates</title>
                 <link rel="alternate" href="/2013/08/01/PEP8-Guide-Updates/" type="text/html" />
                 <id>/2013/08/01/PEP8-Guide-Updates/</id>
-                <updated>2013-08-01T17:37:00Z</updated>
+                <updated>2013-08-01T17:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -63,51 +63,52 @@ code in the community better.  At least that&amp;#39;s my idea.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;UTF-8 Is The Future&lt;/h4&gt;
 &lt;p&gt;Then:&lt;/p&gt;
 
-&lt;p&gt;-Code in the core Python distribution should always use the ASCII or&lt;br&gt;
-   -Latin-1 encoding (a.k.a. ISO-8859-1).  For Python 3.0 and beyond,&lt;br&gt;
-   -UTF-8 is preferred over Latin-1, see PEP 3120.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+   -Code in the core Python distribution should always use the ASCII or
+   -Latin-1 encoding (a.k.a. ISO-8859-1).  For Python 3.0 and beyond,
+   -UTF-8 is preferred over Latin-1, see PEP 3120.
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now:&lt;/p&gt;
 
-&lt;p&gt;+Code in the core Python distribution should always use UTF-8 (or ASCII&lt;br&gt;
-   +in Python 2).&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+   +Code in the core Python distribution should always use UTF-8 (or ASCII
+   +in Python 2).
 
-&lt;ul&gt;
-&lt;li&gt; Note that in Python 3, &lt;code&gt;unicode&lt;/code&gt; and &lt;code&gt;basestring&lt;/code&gt; no longer exist&lt;/li&gt;
-&lt;li&gt; (there is only &lt;code&gt;str&lt;/code&gt;) and a bytes object is no longer a kind of&lt;/li&gt;
-&lt;li&gt; string (it is a sequence of integers instead)
-+&lt;/li&gt;
-&lt;/ul&gt;
+   +  Note that in Python 3, ``unicode`` and ``basestring`` no longer exist
+   +  (there is only ``str``) and a bytes object is no longer a kind of
+   +  string (it is a sequence of integers instead)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Relative vs. Absolute Imports&lt;/h4&gt;
 &lt;p&gt;Then:&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;Relative imports for intra-package imports are highly discouraged.&lt;/li&gt;
-&lt;li&gt; Always use the absolute package path for all imports.  Even now that&lt;/li&gt;
-&lt;li&gt; PEP 328 is fully implemented in Python 2.5, its style of explicit&lt;/li&gt;
-&lt;li&gt; relative imports is actively discouraged; absolute imports are more&lt;/li&gt;
-&lt;li&gt; portable and usually more readable.&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;
+   - Relative imports for intra-package imports are highly discouraged.
+   -  Always use the absolute package path for all imports.  Even now that
+   -  PEP 328 is fully implemented in Python 2.5, its style of explicit
+   -  relative imports is actively discouraged; absolute imports are more
+   -  portable and usually more readable.
+&lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Now:&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;Absolute imports are recommended, as they are usually more readable&lt;/li&gt;
-&lt;li&gt; and tend to be better behaved (or at least give better error&lt;/li&gt;
-&lt;li&gt; messages) if the import system is incorrectly configured (such as&lt;/li&gt;
-&lt;li&gt; when a directory inside a package ends up on &lt;code&gt;sys.path&lt;/code&gt;)::
-+&lt;/li&gt;
-&lt;li&gt;   import mypkg.sibling&lt;/li&gt;
-&lt;li&gt;   from mypkg import sibling&lt;/li&gt;
-&lt;li&gt;   from mypkg.sibling import example
-+&lt;/li&gt;
-&lt;li&gt; However, explicit relative imports are an acceptable alternative to&lt;/li&gt;
-&lt;li&gt; absolute imports, especially when dealing with complex package layouts&lt;/li&gt;
-&lt;li&gt; where using absolute imports would be unecessarily verbose::
-+&lt;/li&gt;
-&lt;li&gt;   from . import sibling&lt;/li&gt;
-&lt;li&gt;   from .sibling import example&lt;/li&gt;
-&lt;/ul&gt;
+&lt;pre&gt;&lt;code&gt;
+   + Absolute imports are recommended, as they are usually more readable
+   +  and tend to be better behaved (or at least give better error
+   +  messages) if the import system is incorrectly configured (such as
+   +  when a directory inside a package ends up on ``sys.path``)::
+   +
+   +    import mypkg.sibling
+   +    from mypkg import sibling
+   +    from mypkg.sibling import example
+   +
+   +  However, explicit relative imports are an acceptable alternative to
+   +  absolute imports, especially when dealing with complex package layouts
+   +  where using absolute imports would be unecessarily verbose::
+   +
+   +    from . import sibling
+   +    from .sibling import example
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Other Lessons Learned&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;Use &amp;#39;def&amp;#39; and not named lambda&amp;#39;s&lt;/li&gt;
