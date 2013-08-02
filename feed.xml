@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-01T18:13:20Z</updated>
+        <updated>2013-08-02T18:44:55Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -3068,7 +3068,7 @@ Finished catalog run in 12.39 seconds&lt;br&gt;
                 <title>mysql full partition</title>
                 <link rel="alternate" href="/2012/11/02/mysql-full-partition/" type="text/html" />
                 <id>/2012/11/02/mysql-full-partition/</id>
-                <updated>2012-11-02T01:04:00Z</updated>
+                <updated>2012-11-02T18:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3155,9 +3155,9 @@ overflow     tmpfs    1.0M     0  1.0M   0% /tmp
 Starting MySQL (Percona Server) database server: mysqld already running.
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install tmpreaper
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://packages.debian.org/search?keywords=tmpreaper&#34;&gt;http://packages.debian.org/search?keywords=tmpreaper&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine&#34;&gt;http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.merriam-webster.com/dictionary/ta-da&#34;&gt;http://www.merriam-webster.com/dictionary/ta-da&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://packages.debian.org/search?keywords=tmpreaper&#34;&gt;Debian tmpreaper&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/10631387/1030-got-error-28-from-storage-engine&#34;&gt;so errors ref&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.merriam-webster.com/dictionary/ta-da&#34;&gt;ta-da&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3165,7 +3165,7 @@ Starting MySQL (Percona Server) database server: mysqld already running.
                 <title>mib basics</title>
                 <link rel="alternate" href="/2012/10/29/mib-basics/" type="text/html" />
                 <id>/2012/10/29/mib-basics/</id>
-                <updated>2012-10-29T01:02:00Z</updated>
+                <updated>2012-10-29T18:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3224,15 +3224,14 @@ SNMPv2-SMI
 
 DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.95
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my&#34;&gt;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my&#34;&gt;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml&#34;&gt;http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS&#34;&gt;http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://wiki.debian.org/SNMP&#34;&gt;http://wiki.debian.org/SNMP&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752&#34;&gt;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774&#34;&gt;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2&#34;&gt;ftp://ftp.cisco.com/pub/mibs/v2&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/contrib&#34;&gt;ftp://ftp.cisco.com/pub/mibs/contrib&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-SMI.my&#34;&gt;SMI-MIB&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2/CISCO-FIREWALL-TC.my&#34;&gt;FIRWALL-MIB&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/public/sw-center/netmgmt/cmtk/mibs.shtml&#34;&gt;MIBS Ref&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.net-snmp.org/wiki/index.php/TUT:Using_and_loading_MIBS&#34;&gt;NETSNMP Howto&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://wiki.debian.org/SNMP&#34;&gt;Debian SNMP Wiki&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1034752&#34;&gt;ASR MIB Info One&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/routers/asr1000/mib/guide/asr1mib2.html#wp1024774&#34;&gt;ASR MIB Info Two&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;ftp://ftp.cisco.com/pub/mibs/v2&#34;&gt;Cisco MIB FTP&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3240,7 +3239,7 @@ DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.9
                 <title>email log alerts</title>
                 <link rel="alternate" href="/2012/10/23/email-log-alerts/" type="text/html" />
                 <id>/2012/10/23/email-log-alerts/</id>
-                <updated>2012-10-23T01:01:00Z</updated>
+                <updated>2012-10-23T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3275,7 +3274,7 @@ log2mail.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;To edit this default template you need to change: /etc/log2mail/mail&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://people.debian.org/%7Eenrico/log2mail/&#34;&gt;http://people.debian.org/~enrico/log2mail/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://people.debian.org/%7Eenrico/log2mail/&#34;&gt;log2mail ref&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3283,7 +3282,7 @@ log2mail.
                 <title>iptables flush all rules</title>
                 <link rel="alternate" href="/2012/10/15/iptables-flush-all-rules/" type="text/html" />
                 <id>/2012/10/15/iptables-flush-all-rules/</id>
-                <updated>2012-10-15T01:01:00Z</updated>
+                <updated>2012-10-15T18:42:00Z</updated>
                 
                 <summary type="html">Handy for testing.  Flush iptables.</summary>
                 <content type="html">&lt;p&gt;Handy for testing.  Flush iptables.&lt;/p&gt;
@@ -3305,7 +3304,7 @@ iptables -L -n -v
                 <title>adding a logfile to splunk</title>
                 <link rel="alternate" href="/2012/10/02/adding-a-logfile-to-splunk/" type="text/html" />
                 <id>/2012/10/02/adding-a-logfile-to-splunk/</id>
-                <updated>2012-10-02T18:38:00Z</updated>
+                <updated>2012-10-02T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Getting standard logfiles into Splunk&lt;/h4&gt;
@@ -3324,7 +3323,7 @@ sourcetype = &amp;lt;SOURCE_TYPE_NAME&amp;gt;
                 <title>nix lights out failsafe</title>
                 <link rel="alternate" href="/2012/09/30/nix-lights-out-failsafe/" type="text/html" />
                 <id>/2012/09/30/nix-lights-out-failsafe/</id>
-                <updated>2012-09-30T19:08:00Z</updated>
+                <updated>2012-09-30T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3377,7 +3376,7 @@ nohup rsched 10
                 <title>watching linux filesystem events</title>
                 <link rel="alternate" href="/2012/09/18/watching-linux-filesystem-events/" type="text/html" />
                 <id>/2012/09/18/watching-linux-filesystem-events/</id>
-                <updated>2012-09-18T01:00:00Z</updated>
+                <updated>2012-09-18T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3409,11 +3408,12 @@ while true; do
 done
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.infoq.com/articles/inotify-linux-file-system-event-monitoring&#34;&gt;http://www.infoq.com/articles/inotify-linux-file-system-event-monitoring&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://pyinotify.sourceforge.net/&#34;&gt;http://pyinotify.sourceforge.net/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.ibm.com/developerworks/library/l-inotify/&#34;&gt;http://www.ibm.com/developerworks/library/l-inotify/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://blog.lagentz.com/general/automate-your-shell-scripts-using-inotify-and-inotifywait/&#34;&gt;http://blog.lagentz.com/general/automate-your-shell-scripts-using-inotify-and-inotifywait/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://linux.die.net/man/1/inotifywait&#34;&gt;http://linux.die.net/man/1/inotifywait&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.infoq.com/articles/inotify-linux-file-system-event-monitoring&#34;&gt;inotify article&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://pyinotify.sourceforge.net/&#34;&gt;pyinotify libs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.ibm.com/developerworks/library/l-inotify/&#34;&gt;IBM docs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blog.lagentz.com/general/automate-your-shell-scripts-using-inotify-and-inotifywait/&#34;&gt;shell script article&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://linux.die.net/man/1/inotifywait&#34;&gt;inotifywait man&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/splitbrain/Watcher&#34;&gt;Python Watch Script&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3421,7 +3421,7 @@ done
                 <title>monitor interface usage</title>
                 <link rel="alternate" href="/2012/09/13/monitor-interface-usage/" type="text/html" />
                 <id>/2012/09/13/monitor-interface-usage/</id>
-                <updated>2012-09-13T00:59:00Z</updated>
+                <updated>2012-09-13T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3494,7 +3494,7 @@ done
                 <title>puppet cert signing</title>
                 <link rel="alternate" href="/2012/09/03/puppet-cert-signing/" type="text/html" />
                 <id>/2012/09/03/puppet-cert-signing/</id>
-                <updated>2012-09-03T00:59:00Z</updated>
+                <updated>2012-09-03T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3522,7 +3522,7 @@ Signed certificate request for blah.com
                 <title>examining PXE boot</title>
                 <link rel="alternate" href="/2012/08/29/examining-pxe-boot/" type="text/html" />
                 <id>/2012/08/29/examining-pxe-boot/</id>
-                <updated>2012-08-29T00:59:00Z</updated>
+                <updated>2012-08-29T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3619,9 +3619,9 @@ IP lab01.da.49155 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  39 RRQ &#34;initrd.gz&#
 
 &lt;p&gt;PXE has now matched and my host is reinstalling.&lt;/p&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://wiki.debian.org/PXEBootInstall&#34;&gt;http://wiki.debian.org/PXEBootInstall&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.debian.org/releases/stable/i386/ch04s05.html.en&#34;&gt;http://www.debian.org/releases/stable/i386/ch04s05.html.en&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://andys.org.uk/bits/2010/03/22/pxe-booting-a-debian-squeeze-install/&#34;&gt;http://andys.org.uk/bits/2010/03/22/pxe-booting-a-debian-squeeze-install/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://wiki.debian.org/PXEBootInstall&#34;&gt;pxe debian wiki&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.debian.org/releases/stable/i386/ch04s05.html.en&#34;&gt;relase info&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://andys.org.uk/bits/2010/03/22/pxe-booting-a-debian-squeeze-install/&#34;&gt;howto&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3629,7 +3629,7 @@ IP lab01.da.49155 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  39 RRQ &#34;initrd.gz&#
                 <title>ssh go forth and do my will</title>
                 <link rel="alternate" href="/2012/08/21/ssh-go-forth-and-do-my-will/" type="text/html" />
                 <id>/2012/08/21/ssh-go-forth-and-do-my-will/</id>
-                <updated>2012-08-21T00:59:00Z</updated>
+                <updated>2012-08-21T18:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3659,8 +3659,8 @@ git
 test.txt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://en.wikipedia.org/wiki/Nohup&#34;&gt;http://en.wikipedia.org/wiki/Nohup&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh&#34;&gt;http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Nohup&#34;&gt;nohup wiki&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh&#34;&gt;so notes&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3668,7 +3668,7 @@ test.txt
                 <title>puppet core dump control</title>
                 <link rel="alternate" href="/2012/08/17/puppet-core-dump-control/" type="text/html" />
                 <id>/2012/08/17/puppet-core-dump-control/</id>
-                <updated>2012-08-17T18:27:00Z</updated>
+                <updated>2012-08-17T18:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;If you have crashes you can enable core dumps via Puppet&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;file { &amp;#39;/var/core&amp;#39;:
@@ -3682,7 +3682,7 @@ test.txt
 sysctl { &amp;#39;kernel.core_pattern&amp;#39;: value =&amp;gt; &amp;#39;/var/core/core.%e.%t.%p&amp;#39; }
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://www.cyberciti.biz/tips/linux-core-dumps.html&#34;&gt;http://www.cyberciti.biz/tips/linux-core-dumps.html&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;http://www.cyberciti.biz/tips/linux-core-dumps.html&#34;&gt;cyberciti notes&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3729,7 +3729,7 @@ minutes: 22
                 <title>simple deb from github python</title>
                 <link rel="alternate" href="/2012/08/08/simple-deb-from-github-python/" type="text/html" />
                 <id>/2012/08/08/simple-deb-from-github-python/</id>
-                <updated>2012-08-08T00:58:00Z</updated>
+                <updated>2012-08-08T18:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3771,11 +3771,10 @@ Processing triggers for python-support ...
 &lt;p&gt;Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always&lt;br&gt;
 this can be overcome, but if necessary then you can use:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;python setup.py dh_make
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;https://pypi.python.org/pypi&#34;&gt;https://pypi.python.org/pypi&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://lists.debian.org/debian-python/2004/10/msg00017.html&#34;&gt;http://lists.debian.org/debian-python/2004/10/msg00017.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;https://github.com/xb95/nagios-api.git&lt;/a&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://pypi.python.org/pypi&#34;&gt;pypi&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://lists.debian.org/debian-python/2004/10/msg00017.html&#34;&gt;debian list notes&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;nagios-api github&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3783,7 +3782,7 @@ this can be overcome, but if necessary then you can use:&lt;/p&gt;
                 <title>extract data with regex python</title>
                 <link rel="alternate" href="/2012/08/02/extract-data-with-regex-python/" type="text/html" />
                 <id>/2012/08/02/extract-data-with-regex-python/</id>
-                <updated>2012-08-02T00:58:00Z</updated>
+                <updated>2012-08-02T18:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3818,7 +3817,7 @@ turles two three
                 <title>basic json rest api client</title>
                 <link rel="alternate" href="/2012/07/24/basic-json-rest-api-client/" type="text/html" />
                 <id>/2012/07/24/basic-json-rest-api-client/</id>
-                <updated>2012-07-24T00:57:00Z</updated>
+                <updated>2012-07-24T18:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3865,7 +3864,7 @@ print r.state()
                 <title>modular message of day (debian style)</title>
                 <link rel="alternate" href="/2012/07/21/modular-message-of-day-debian-style/" type="text/html" />
                 <id>/2012/07/21/modular-message-of-day-debian-style/</id>
-                <updated>2012-07-21T00:58:00Z</updated>
+                <updated>2012-07-21T18:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3910,7 +3909,7 @@ curl -H &#34;Content-Type: application/json&#34; \
                 <title>cisco octets to mbps</title>
                 <link rel="alternate" href="/2012/07/12/cisco-octets-to-mbps/" type="text/html" />
                 <id>/2012/07/12/cisco-octets-to-mbps/</id>
-                <updated>2012-07-12T00:57:00Z</updated>
+                <updated>2012-07-12T18:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Counters&lt;/h4&gt;
@@ -3946,9 +3945,9 @@ curl -H &#34;Content-Type: application/json&#34; \
 69
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://www.webnms.com/webnms/tutorials/ges_tutorial/help/appendix/calculating_bandwidth_utilization.html&#34;&gt;http://www.webnms.com/webnms/tutorials/ges_tutorial/help/appendix/calculating_bandwidth_utilization.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a008009496e.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a008009496e.shtml&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_q_and_a_item09186a00800b69ac.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_q_and_a_item09186a00800b69ac.shtml&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;http://www.webnms.com/webnms/tutorials/ges_tutorial/help/appendix/calculating_bandwidth_utilization.html&#34;&gt;howto calc bw&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a008009496e.shtml&#34;&gt;cisco docs one&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_q_and_a_item09186a00800b69ac.shtml&#34;&gt;cisco docs two&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3956,7 +3955,7 @@ curl -H &#34;Content-Type: application/json&#34; \
                 <title>reading json from bash with python</title>
                 <link rel="alternate" href="/2012/05/09/reading-json-from-bash-with-python/" type="text/html" />
                 <id>/2012/05/09/reading-json-from-bash-with-python/</id>
-                <updated>2012-05-09T00:58:00Z</updated>
+                <updated>2012-05-09T18:39:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3983,19 +3982,39 @@ echo $dict_value
             </entry>
         
             <entry>
-                <title>previous blog long gone -- new beginnings</title>
-                <link rel="alternate" href="/2012/02/06/starting-over/" type="text/html" />
-                <id>/2012/02/06/starting-over/</id>
-                <updated>2012-02-06T17:23:00Z</updated>
+                <title>internet notoriety one</title>
+                <link rel="alternate" href="/2012/02/06/internet-famous-one/" type="text/html" />
+                <id>/2012/02/06/internet-famous-one/</id>
+                <updated>2012-02-06T18:39:00Z</updated>
                 
-                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!</summary>
-                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!&lt;/p&gt;
+                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
+and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
+for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
+on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
+it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
+with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
+the lastname Gates.</summary>
+                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
+and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
+for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
+on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
+it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
+with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
+the lastname Gates.&lt;/p&gt;
+
+&lt;p&gt;The original post:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/ione/i1first.png&#34; alt=&#34;the post&#34; title=&#34;blog post&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;The traceback:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/ione/ione-back2.png&#34; alt=&#34;backtrace&#34; title=&#34;backtrace&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;I find the whole thing funny.  It is part of my history now.  Someday I may&lt;br&gt;
+own up my second &amp;#39;Internet Famous&amp;#39; moment.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;caffeine coder&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&#34;&gt;msdn traceback&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -4003,7 +4022,7 @@ to express my thoughts more clearly than before!&lt;/p&gt;
                 <title>proxychains</title>
                 <link rel="alternate" href="/2012/02/06/proxychains/" type="text/html" />
                 <id>/2012/02/06/proxychains/</id>
-                <updated>2012-02-06T00:58:00Z</updated>
+                <updated>2012-02-06T18:39:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4065,48 +4084,27 @@ but this doesn&amp;#39;t work me with proxychains under debian.&lt;/p&gt;
 
 &lt;p&gt;Just in case you are interested though: &lt;a href=&#34;https://github.com/haad/proxychains/issues/6#issuecomment-4041824&#34;&gt;localnet docs&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://benizi.com/postfix-proxychains&#34;&gt;http://benizi.com/postfix-proxychains&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/&#34;&gt;http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://proxychains.sourceforge.net/howto.html&#34;&gt;http://proxychains.sourceforge.net/howto.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://proxychains.sourceforge.net/howto.html&#34;&gt;http://proxychains.sourceforge.net/howto.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://github.com/haad/proxychains&#34;&gt;https://github.com/haad/proxychains&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://benizi.com/postfix-proxychains&#34;&gt;article one&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/&#34;&gt;article two&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://proxychains.sourceforge.net/howto.html&#34;&gt;official howto&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/haad/proxychains&#34;&gt;github&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
             <entry>
-                <title>internet famous one</title>
-                <link rel="alternate" href="/2012/02/06/internet-famous-one/" type="text/html" />
-                <id>/2012/02/06/internet-famous-one/</id>
-                <updated>2012-02-06T00:50:00Z</updated>
+                <title>previous blog long gone -- new beginnings</title>
+                <link rel="alternate" href="/2012/02/06/starting-over/" type="text/html" />
+                <id>/2012/02/06/starting-over/</id>
+                <updated>2012-02-06T17:23:00Z</updated>
                 
-                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
-and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
-for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
-on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
-it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
-with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
-the lastname Gates.</summary>
-                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
-and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
-for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
-on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
-it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
-with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
-the lastname Gates.&lt;/p&gt;
-
-&lt;p&gt;The original post:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/assets/images/ione/i1first.png&#34; alt=&#34;the post&#34; title=&#34;blog post&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;The traceback:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/assets/images/ione/ione-back2.png&#34; alt=&#34;backtrace&#34; title=&#34;backtrace&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;I find the whole thing funny.  It is part of my history now.  Someday I may&lt;br&gt;
-own up my second &amp;#39;Internet Famous&amp;#39; moment.&lt;/p&gt;
-&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&#34;&gt;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&lt;/a&gt;&lt;/p&gt;
+                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!</summary>
+                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!&lt;/p&gt;
 </content>
             </entry>
         
