@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-02T18:44:55Z</updated>
+        <updated>2013-08-04T04:36:27Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,17 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>test</title>
+                <link rel="alternate" href="/2013/08/03/test/" type="text/html" />
+                <id>/2013/08/03/test/</id>
+                <updated>2013-08-03T04:35:00Z</updated>
+                
+                <summary type="html">hi</summary>
+                <content type="html">&lt;p&gt;hi&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>PEP8 Guide Updates</title>
