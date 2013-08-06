@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-05T21:16:24Z</updated>
+        <updated>2013-08-06T00:00:56Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,13 +19,13 @@
                 <title>configserver firewall and config script</title>
                 <link rel="alternate" href="/2013/08/05/configserver-firewall-and-config-script/" type="text/html" />
                 <id>/2013/08/05/configserver-firewall-and-config-script/</id>
-                <updated>2013-08-05T21:15:00Z</updated>
+                <updated>2013-08-05T21:23:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I have seen an all-in-one configure script for linux security mentioned&lt;br&gt;
-several times on &lt;a href=&#34;http://reddit.com/r/linuxadmin&#34;&gt;/r/linuxadmin&lt;/a&gt; and I&lt;br&gt;
-am giving it a quick runthrough to explore.&lt;/p&gt;
+&lt;p&gt;I have seen an all-in-one configure script for linux security mentioned several&lt;br&gt;
+times on &lt;a href=&#34;http://reddit.com/r/linuxadmin&#34;&gt;/r/linuxadmin&lt;/a&gt; and I am giving it a&lt;br&gt;
+quick runthrough to explore.&lt;/p&gt;
 &lt;h4&gt;Install&lt;/h4&gt;
 &lt;p&gt;Linux wheezytester 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1 x86_64 GNU/Linux&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wget http://configserver.com/free/csf.tgz
@@ -262,9 +262,8 @@ update-rc.d: using dependency based boot sequencing
 
 Installation Completed
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;Checking out default status&lt;/h4&gt;
-&lt;p&gt;root@wheezytester:/etc/csf# /etc/init.d/csf status&lt;/p&gt;
-
+&lt;h4&gt;Checking out default status&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/etc/init.d/csf status
+&lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
 Status of csf:Chain INPUT (policy ACCEPT 1622 packets, 145K bytes)
 num   pkts bytes target     prot opt in     out     source               destination         
@@ -298,9 +297,36 @@ the features packed in.  Here is a partial configuration I created to play with.
 have shortened the default descriptions to my own line notes.&lt;/p&gt;
 
 &lt;p&gt;Configured Sections:&lt;/p&gt;
-&lt;h1&gt;SECTION:Initial Settings&lt;/h1&gt;&lt;h1&gt;SECTION:IPv4 Port Settings&lt;/h1&gt;&lt;h1&gt;SECTION:IPv6 Port Settings&lt;/h1&gt;&lt;h1&gt;SECTION:General Settings&lt;/h1&gt;&lt;h1&gt;SECTION:SMTP Settings&lt;/h1&gt;&lt;h1&gt;SECTION:Port Flood Settings&lt;/h1&gt;&lt;h1&gt;SECTION:Logging Settings&lt;/h1&gt;
+
+&lt;p&gt;Initial Settings&lt;br&gt;
+IPv4 Port Settings&lt;br&gt;
+IPv6 Port Settings&lt;br&gt;
+General Settings&lt;br&gt;
+SMTP Settings&lt;br&gt;
+Port Flood Settings&lt;br&gt;
+Logging Settings&lt;/p&gt;
+
 &lt;p&gt;Unconfigured sections:&lt;/p&gt;
-&lt;h1&gt;SECTION:Reporting Settings&lt;/h1&gt;&lt;h1&gt;SECTION:Country Code Lists and Settings&lt;/h1&gt;&lt;h1&gt;SECTION:Login Failure Blocking and Alerts&lt;/h1&gt;&lt;h1&gt;SECTION:Directory Watching &amp;amp; Integrity&lt;/h1&gt;&lt;h1&gt;SECTION:Distributed Attacks&lt;/h1&gt;&lt;h1&gt;SECTION:Login Tracking&lt;/h1&gt;&lt;h1&gt;SECTION:Connection Tracking&lt;/h1&gt;&lt;h1&gt;SECTION:Process Tracking&lt;/h1&gt;&lt;h1&gt;SECTION:Port Scan Tracking&lt;/h1&gt;&lt;h1&gt;SECTION:User ID Tracking&lt;/h1&gt;&lt;h1&gt;SECTION:Account Tracking&lt;/h1&gt;&lt;h1&gt;SECTION:Integrated User Interface&lt;/h1&gt;&lt;h1&gt;SECTION:Messenger service&lt;/h1&gt;&lt;h1&gt;SECTION:lfd Clustering&lt;/h1&gt;&lt;h1&gt;SECTION:Port Knocking&lt;/h1&gt;&lt;h1&gt;SECTION:Log Scanner&lt;/h1&gt;&lt;h1&gt;SECTION:Statistics Settings&lt;/h1&gt;&lt;h1&gt;SECTION:OS Specific Settings&lt;/h1&gt;&lt;pre&gt;&lt;code&gt;nano /etc/csf/csf.conf
+
+&lt;p&gt;Reporting Settings&lt;br&gt;
+Country Code Lists and Settings&lt;br&gt;
+Login Failure Blocking and Alerts&lt;br&gt;
+Directory Watching &amp;amp; Integrity &lt;br&gt;
+Distributed Attacks&lt;br&gt;
+Login Tracking&lt;br&gt;
+Connection Tracking&lt;br&gt;
+Process Tracking&lt;br&gt;
+Port Scan Tracking&lt;br&gt;
+User ID Tracking&lt;br&gt;
+Account Tracking&lt;br&gt;
+Integrated User Interface&lt;br&gt;
+Messenger service&lt;br&gt;
+lfd Clustering&lt;br&gt;
+Port Knocking&lt;br&gt;
+Log Scanner&lt;br&gt;
+Statistics Settings&lt;br&gt;
+OS Specific Settings&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;nano /etc/csf/csf.conf
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
 #for real
@@ -582,32 +608,36 @@ LEN=328 TOS=0x00 PREC=0x00 TTL=64 ID=0 DF PROTO=UDP SPT=68 DPT=67 LEN=308 UID=0 
 &lt;p&gt;The CSF pack if pretty powerfull and I have a general idea of the usage experience.  I have&lt;br&gt;
 not tested this with Webmin or cPanel or any other wrapper.  I wouldn&amp;#39;t use them if I had&lt;br&gt;
 the choice anyways.  I think this exists in a weird space as anyone who does operations &lt;br&gt;
-probably would feel limited by it, and anyone who has no experience in linux administration&lt;br&gt;
-would do well to side step it and learn the underlying tools directly.  I appreciate what&lt;br&gt;
-they have going here and I can tell a lot of thought went into it.  However, if I  were talking&lt;br&gt;
-to myself as I was starting out with a personal Debian server I would still not recommend&lt;br&gt;
-going this route.  &lt;/p&gt;
+probably would feel limited by it, and anyone who has no experience in linux&lt;br&gt;
+administration would do well to side step it and learn the underlying tools directly.  I&lt;br&gt;
+appreciate what they have going here and I can tell a lot of thought went into it.&lt;br&gt;
+However, if I  were talking to myself as I was starting out with a personal Debian server&lt;br&gt;
+I would still not recommend going this route.  &lt;/p&gt;
 
-&lt;p&gt;Instead I would do something like:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;* disable root account remote access
-* lock SSH down to key based auth
-* whitelist your IP
-* basic ip tables [setup](http://chasemp.github.io/2013/04/19/simple-iptables-uses/)
-* avoid running sendmail, instead try [nullmailer](http://untroubled.org/nullmailer/)
-* avoid running BIND 
-* use [fail2ban](http://www.fail2ban.org/wiki/index.php/Main_Page)
-* Don&amp;#39;t worry about portscanning, it&amp;#39;s inevitable
-* Try something like [CloudFlare&amp;#39;s](https://www.cloudflare.com/) free service
-* Use Puppet and Git for deploying even small setups
-* Backup up stuff outside of your server
-* Use static site generators if feasible: [jekyll](http://jekyllrb.com/) or [mynt](https://github.com/Anomareh/mynt)
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This is the basic approach that I prefer, but kudos the the CSF guys for putting&lt;br&gt;
-something out there to help people.  I can see using this in a lab to quick reconfigure&lt;br&gt;
+&lt;p&gt;Instead I might recommend:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;disable root account remote access&lt;/li&gt;
+&lt;li&gt;lock SSH down to key based auth&lt;/li&gt;
+&lt;li&gt;whitelist your IP&lt;/li&gt;
+&lt;li&gt;basic ip tables &lt;a href=&#34;http://chasemp.github.io/2013/04/19/simple-iptables-uses/&#34;&gt;setup&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;avoid running sendmail, instead try &lt;a href=&#34;http://untroubled.org/nullmailer/&#34;&gt;nullmailer&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;avoid running BIND &lt;/li&gt;
+&lt;li&gt;use &lt;a href=&#34;http://www.fail2ban.org/wiki/index.php/Main_Page&#34;&gt;fail2ban&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Don&amp;#39;t worry about portscanning, it&amp;#39;s inevitable&lt;/li&gt;
+&lt;li&gt;Try something like &lt;a href=&#34;https://www.cloudflare.com/&#34;&gt;CloudFlare&amp;#39;s&lt;/a&gt; free service&lt;/li&gt;
+&lt;li&gt;Use Puppet and Git for deploying even small setups&lt;/li&gt;
+&lt;li&gt;Backup up stuff outside of your server&lt;/li&gt;
+&lt;li&gt;Use static site generators if feasible: &lt;a href=&#34;http://jekyllrb.com/&#34;&gt;jekyll&lt;/a&gt; or &lt;a href=&#34;https://github.com/Anomareh/mynt&#34;&gt;mynt&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;This is the basic approach that I prefer, but kudos to the CSF guys for putting&lt;br&gt;
+something out there to help people.  I can see using this in a lab to quickly reconfigure&lt;br&gt;
 a dummy host for attacking or tutorials.&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://configserver.com/cp/csf.html&#34;&gt;CSF&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://forum.configserver.com/&#34;&gt;CSF Forum&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;http://forum.configserver.com/&#34;&gt;CSF Forum&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.reddit.com/r/linuxadmin&#34;&gt;/r/linuxadmin&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
