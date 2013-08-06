@@ -654,7 +654,19 @@ LEN=328 TOS=0x00 PREC=0x00 TTL=64 ID=0 DF PROTO=UDP SPT=68 DPT=67 LEN=308 UID=0 
 </code></pre>
 <p>Syslog analyzer</p>
 <pre><code>Aug  5 15:48:20 wheezytester lfd[2394]: SYSLOG check [zRX2uBS2T5C3gm33v9BCJDVK5]
-</code></pre><h4>Thoughts</h4>
+</code></pre><h4>Removal</h4>
+<p>Uninstalling csf and lfd...</p>
+
+<pre><code>
+Flushing chain `INPUT'
+
+<redacted for brevity>
+
+removed directory: `/var/lib/csf'
+
+...Done
+</code></pre>
+<h4>Thoughts</h4>
 <p>The CSF pack if pretty powerfull and I have a general idea of the usage experience.  I have<br>
 not tested this with Webmin or cPanel or any other wrapper.  I wouldn&#39;t use them if I had<br>
 the choice anyways.  I think this exists in a weird space as anyone who does operations <br>
