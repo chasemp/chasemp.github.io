@@ -93,17 +93,14 @@ poundlist <a href="http://www.apsis.ch/pound/pound_list/archive/2007/2007-01/116
     AuthUserFile "/etc/htpasswd/.htpasswd"
     Satisfy Any
     Require valid-user
-</pre></code>
-
-#### Everyone needs to authenticate except for internal
-
-Deny from all but Satisfy Any is triggered by a '10.' host or valid auth.
+</code></pre>
+<h4>Everyone needs to authenticate except for internal hosts</h4>
+<p>Deny from all but Satisfy Any is triggered by a &#39;192.&#39; host or valid auth.</p>
 
 <pre><code>
     Order deny,allow
     Deny from all
-    Allow from 10
-    AuthType Basic
+    Allow from 192
     AuthType Basic
     AuthName "Authentication Required"
     AuthUserFile "/etc/htpasswd/.htpasswd"
@@ -114,7 +111,7 @@ Deny from all but Satisfy Any is triggered by a '10.' host or valid auth.
 </code></pre>
 <pre><code>
 ##
-T 10.0.12.101:53639 -> 10.1.107.27:80 [AP]
+T 192.168.0.101:53639 -> 192.168.1.27:80 [AP]
   GET /favicon.ico HTTP/1.1..User-Agent: Mozilla/5.0 
   (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHT
   ML, like Gecko) Chrome/28.0.1500.71 Safari/537.36..
@@ -142,8 +139,7 @@ IP of the reverse proxy.  This means everyone is allowed.</p>
 <pre><code>
     Order deny,allow
     Deny from all
-    Allow from 10.1.100.
-    Allow from 10.1.103.
+    Allow from 192.168.1.
     AuthType Basic
     AuthName "Authentication Required"
     AuthUserFile "/etc/htpasswd/.htpasswd"
@@ -152,8 +148,8 @@ IP of the reverse proxy.  This means everyone is allowed.</p>
 </code></pre>
 
 <p>This is not a great fix as it allows for a future re-IP to cause chaos.</p>
-<h4>Solution</h4>
-<p>Use <a href="https://github.com/ttkzw/mod_remoteip-httpd22">mode_remoteip gh</a></p>
+<h4>Possible Solution</h4>
+<p>Use <a href="https://github.com/ttkzw/mod_remoteip-httpd22">mode_remoteip</a></p>
 <h4>Reference</h4>
 <p><a href="http://httpd.apache.org/docs/2.0/mod/mod_access.html">mod_access docs</a><br>
 <a href="http://www.askapache.com/htaccess/apache-authentication-in-htaccess.html">ask apache doc</a><br>

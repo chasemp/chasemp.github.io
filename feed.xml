@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-06T22:10:42Z</updated>
+        <updated>2013-08-06T22:29:45Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>debian rpaf fools mod_access</title>
                 <link rel="alternate" href="/2013/08/06/debian-rpaf-fools-mod_access/" type="text/html" />
                 <id>/2013/08/06/debian-rpaf-fools-mod_access/</id>
-                <updated>2013-08-06T22:10:00Z</updated>
+                <updated>2013-08-06T22:17:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -45,17 +45,14 @@ poundlist &lt;a href=&#34;http://www.apsis.ch/pound/pound_list/archive/2007/2007
     AuthUserFile &#34;/etc/htpasswd/.htpasswd&#34;
     Satisfy Any
     Require valid-user
-&lt;/pre&gt;&lt;/code&gt;
-
-#### Everyone needs to authenticate except for internal
-
-Deny from all but Satisfy Any is triggered by a &#39;10.&#39; host or valid auth.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Everyone needs to authenticate except for internal hosts&lt;/h4&gt;
+&lt;p&gt;Deny from all but Satisfy Any is triggered by a &amp;#39;192.&amp;#39; host or valid auth.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
     Order deny,allow
     Deny from all
-    Allow from 10
-    AuthType Basic
+    Allow from 192
     AuthType Basic
     AuthName &#34;Authentication Required&#34;
     AuthUserFile &#34;/etc/htpasswd/.htpasswd&#34;
@@ -66,7 +63,7 @@ Deny from all but Satisfy Any is triggered by a &#39;10.&#39; host or valid auth
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
 ##
-T 10.0.12.101:53639 -&gt; 10.1.107.27:80 [AP]
+T 192.168.0.101:53639 -&gt; 192.168.1.27:80 [AP]
   GET /favicon.ico HTTP/1.1..User-Agent: Mozilla/5.0 
   (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHT
   ML, like Gecko) Chrome/28.0.1500.71 Safari/537.36..
@@ -94,8 +91,7 @@ IP of the reverse proxy.  This means everyone is allowed.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;
     Order deny,allow
     Deny from all
-    Allow from 10.1.100.
-    Allow from 10.1.103.
+    Allow from 192.168.1.
     AuthType Basic
     AuthName &#34;Authentication Required&#34;
     AuthUserFile &#34;/etc/htpasswd/.htpasswd&#34;
@@ -104,8 +100,8 @@ IP of the reverse proxy.  This means everyone is allowed.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;This is not a great fix as it allows for a future re-IP to cause chaos.&lt;/p&gt;
-&lt;h4&gt;Solution&lt;/h4&gt;
-&lt;p&gt;Use &lt;a href=&#34;https://github.com/ttkzw/mod_remoteip-httpd22&#34;&gt;mode_remoteip gh&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Possible Solution&lt;/h4&gt;
+&lt;p&gt;Use &lt;a href=&#34;https://github.com/ttkzw/mod_remoteip-httpd22&#34;&gt;mode_remoteip&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://httpd.apache.org/docs/2.0/mod/mod_access.html&#34;&gt;mod_access docs&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.askapache.com/htaccess/apache-authentication-in-htaccess.html&#34;&gt;ask apache doc&lt;/a&gt;&lt;br&gt;
