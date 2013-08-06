@@ -67,6 +67,113 @@
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2013/08/06/debian-rpaf-fools-mod_access/">debian rpaf fools mod_access</a></h1>
+                <h2>Tuesday, August 06, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/rpaf/">rpaf</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h4>Preamble</h4>
+<p>If you have a reverse proxy in front of apache you need a way to<br>
+persist the original host IP for logging, etc.  <a href="http://stderr.net/apache/rpaf/">rpaf</a> does<br>
+this.  Essentially handles letting apache see the proxy provided<br>
+field of <a href="http://en.wikipedia.org/wiki/X-Forwarded-For">x-forward-for</a> so things are handled in a sane manner.</p>
+
+<p>Unfortunately this seems to have problems working with  <a href="http://httpd.apache.org/docs/2.0/mod/mod_access.html">mod_access</a>.</p>
+
+<p>Debian <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697644">report</a><br>
+Debian <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=653330">report</a><br>
+ubuntu <a href="https://bugs.launchpad.net/ubuntu/+source/libapache2-mod-rpaf/+bug/1029003">report</a><br>
+poundlist <a href="http://www.apsis.ch/pound/pound_list/archive/2007/2007-01/1169244573000/index_html?fullMode=1#1169947453000">report</a></p>
+<h4>Everyone needs to authenticate</h4>
+<p>Deny from all, but if it is a valid user then it will trigger Satisfy Any.</p>
+
+<pre><code>
+    Order deny,allow
+    Deny from all
+    AuthType Basic
+    AuthName "Authentication Required"
+    AuthUserFile "/etc/htpasswd/.htpasswd"
+    Satisfy Any
+    Require valid-user
+</pre></code>
+
+#### Everyone needs to authenticate except for internal
+
+Deny from all but Satisfy Any is triggered by a '10.' host or valid auth.
+
+<pre><code>
+    Order deny,allow
+    Deny from all
+    Allow from 10
+    AuthType Basic
+    AuthType Basic
+    AuthName "Authentication Required"
+    AuthUserFile "/etc/htpasswd/.htpasswd"
+    Satisfy Any
+    Require valid-user
+</code></pre>
+<h4>Looking-At-X-Foward-For</h4><pre><code>ngrep port 80
+</code></pre>
+<pre><code>
+##
+T 10.0.12.101:53639 -> 10.1.107.27:80 [AP]
+  GET /favicon.ico HTTP/1.1..User-Agent: Mozilla/5.0 
+  (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHT
+  ML, like Gecko) Chrome/28.0.1500.71 Safari/537.36..
+  X-Forwarded-For: 99.9.236.147..Accept: */*..SSLClientCertS
+  tatus: NoClientCert..Accept-Language: en-US,en;q=0.8..
+  Authorization: Basic cnVzaDpYcDlndzNsMSEl..SSLClientCip
+  her: SSL_RSA_WITH_RC4_128_SHA, version=TLSv1.1, bits=128..
+  Host: graphite.deviantart.net..SSLSessionID: 71C838
+  5EF2B8A9FC5705BF7EBC8C15B10627835642A1D7157DB996C1FBE96F5B..
+   X-Cluster-Client-Ip: 99.9.236.147..
+##
+</code></pre>
+
+<p>--&gt; <code>X-Forwarded-For: 99.9.236.147</code></p>
+
+<p>In Apache my host shows up as: 99.9.236.147.</p>
+<h4>Hmmmm....</h4>
+<p>The configuration from &#39;Everyone needs to authenticate except for internal&#39; should allow<br>
+only internal hosts to bypass auth, except in this case it is allowing everyone because<br>
+Apache is not using the post-rpaf x-forward-for IP in its ACL lookup.  It is using the<br>
+IP of the reverse proxy.  This means everyone is allowed.</p>
+<h4>Workaround: Getting more specific with our allowances</h4>
+<p>Only allow specific internal ranges that do not include the reverse proxy referrer.  </p>
+
+<pre><code>
+    Order deny,allow
+    Deny from all
+    Allow from 10.1.100.
+    Allow from 10.1.103.
+    AuthType Basic
+    AuthName "Authentication Required"
+    AuthUserFile "/etc/htpasswd/.htpasswd"
+    Require valid-user
+    Satisfy Any
+</code></pre>
+
+<p>This is not a great fix as it allows for a future re-IP to cause chaos.</p>
+<h4>Solution</h4>
+<p>Use <a href="https://github.com/ttkzw/mod_remoteip-httpd22">mode_remoteip gh</a></p>
+<h4>Reference</h4>
+<p><a href="http://httpd.apache.org/docs/2.0/mod/mod_access.html">mod_access docs</a><br>
+<a href="http://www.askapache.com/htaccess/apache-authentication-in-htaccess.html">ask apache doc</a><br>
+<a href="http://chrismorris.org/passing-ip-from-nginx-to-apache/">nginx x-forward-for</a><br>
+<a href="https://github.com/ttkzw/mod_remoteip-httpd22">mode_remoteip gh</a><br>
+<a href="http://us.generation-nt.com/answer/bug-697644-apache2-mod-rpaf-failure-work-authz-allow-deny-should-be-documented-help-210345472.html">use mod_remoteip</a><br>
+<a href="http://serverfault.com/questions/235648/apache-use-x-forwarded-for-for-allow">use setevn</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/08/06/debian-rpaf-fools-mod_access/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2013/08/05/configserver-firewall-and-config-script/">configserver firewall and config script</a></h1>
                 <h2>Monday, August 05, 2013 <span>&raquo;</span> <a href="/tags/configserver/">configserver</a>, <a href="/tags/iptables/">iptables</a>, <a href="/tags/linux/">linux</a></h2>
             </div>
@@ -2673,128 +2780,6 @@ iptables -P OUTPUT ACCEPT
             
             <div class="footer">
                 <p><a href="/2013/04/19/simple-iptables-uses/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/04/18/beginning-bgp/">beginning bgp</a></h1>
-                <h2>Thursday, April 18, 2013 <span>&raquo;</span> <a href="/tags/arin/">arin</a>, <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Preamble</h4>
-<p>I remember hearing a lot of conflicting information about BGP when<br>
-I first started doing network admin stuff.  A lot of time BGP is part of an HA strategy and there<br>
-are people making business decisions surrounding the protocol itself.  This breakdown strives to be <br>
-accurate and laymen without being misleading.</p>
-
-<p><em>Specific misconceptions:</em></p>
-<pre><code>You need a full time admin doing only BGP stuff.
-
-You can accidentally take down the Internet if you mess up.
-
-BGP is hard.
-</code></pre>
-<p>You do not need a &#39;full time&#39; guy thinking about BGP around the clock, although <br>
-you do need designated contacts for just-in-case scenarios.  If your providers are handling<br>
-their own business you don&#39;t have to worry about taking down the Internet.  (Although some small<br>
-version of this happened to YouTube <a href="http://www.macworld.com/article/1132256/networking.html">http://www.macworld.com/article/1132256/networking.html</a>).<br>
-BGP is no harder or easier than anything else.  I have seen configurations that boggle the mind<br>
-work for years.  Correctly administered BGP does involves some savy.</p>
-<h4>What is BGP?</h4>
-<p>Usually referring to the current version 4.  Just read it: <a href="https://en.wikipedia.org/wiki/Border_Gateway_Protocol">https://en.wikipedia.org/wiki/Border_Gateway_Protocol</a></p>
-<h4>Seriously, What is BGP for though?</h4>
-<p>In order to have a service (or anything) available on the Internet it needs to be announced.  Usually, your<br>
-Internet Provider does this announcing for you.  If you want to be the master of your own destiny you need to<br>
-announce yourself.  Literally, you say &quot;here I am&quot; to your provider.  Your provider talks to other providers<br>
-and before long everyone knows how to find you.  When a user connects to their Internet provider they send a<br>
-request for your service. Since you have made yourself known they can find you.</p>
-
-<p>BGP is how we find people on the Internet.</p>
-<h4>How can I start announcing myself?</h4>
-<p>In order to announce that you exist you need to have IP addresses.  It&#39;s a non-human way for tracking down a <br>
-resource; think phone numbers.  The gentlemen at ARIN keep a big list of addresses in use.  If<br>
-you want to use BGP; you need addressing.  If you want addressing; you talk to ARIN.  There are two simultaneous<br>
-IP address pools.  The old is IPv4 and we are scraping the bottom of the bucket.  That bucket<br>
-was large enough to get the Internet this far (4 Billion+ addresses with a large chunk carved out for special reservations).<br>
-The second bucket is called IPv6.  IPv6 is a much deeper bucket, 3.4 x 10 to the 38th power.  That is far, far, far<br>
-more addresses than IPv4 has available.  IPv6 has addresses reserved already for the Moon.  Seriously.</p>
-
-<p>To get addresses you apply.  It&#39;s that simple.  <a href="https://www.arin.net/resources/request.html">https://www.arin.net/resources/request.html</a></p>
-<h4>...almost that simple.</h4>
-<p>IPv4 is a dwindling resource.  But it has been one for a long time.  In my experience, getting an IPv6 block<br>
-is very easy.  Getting an IPv4 block requires more justification.  Scarce resources are more valued.  Without a <br>
-block of my own addresses can I use BGP?  Well, maybe.  Some providers will allocate you a block of addresses<br>
-from their pool.  You don&#39;t own them.  You may be able to advertise them out another provider if both providers<br>
-agree that is reasonable.  BGP is all about relationships.  No provider has to allow you to announce your block<br>
-on their network whether it has been issued to you or them.  Thankfully providers are in the business of making<br>
-money, and the only way to make money for them is to move traffic.  If you can get an address block of your very<br>
-own it is called Provider Independent Address Space.  Meaning you can take your addresses and move to any provider<br>
-that will have you.  If you talk a provider into allocating you a block of addresses it is called Provider Dependent<br>
-Address Space.  In order to change providers you have to change IP blocks.  It can be done.</p>
-<h4>Understanding Addressing</h4>
-<p>All address space given out is public information.  </p>
-
-<p>Getting ARIN info for deviantART.com</p>
-
-<p><img src="/assets/images/bgp/arin-whois.png" alt="arin query" title="ARIN Whois"><br>
-<img src="/assets/images/bgp/arin-info.png" alt="arin info" title="ARIN Info"></p>
-
-<p>Yahoo: <a href="http://whois.arin.net/rest/customer/C00146168">http://whois.arin.net/rest/customer/C00146168</a><br>
-Mozilla: <a href="http://whois.arin.net/rest/customer/C01111858">http://whois.arin.net/rest/customer/C01111858</a></p>
-<h4>Wait...They want my ASN?</h4>
-<p>ASN is automomous system number.  It is both a technical and a nontechnical entity.  In a non-technical sense<br>
-it is a number assigned to networks under a singular control.  Some companies have multiple ASN&#39;s, but in general<br>
-you join ARIN and you get an ASN.  This ASN is unique to you, and it is how providers will know you.  </p>
-
-<p>BGP thinks in ASN&#39;s.</p>
-
-<p>It&#39;s like this: You have a 1:1 relationship with your ASN, but a one-to-many relationship with your addressing space.</p>
-
-<p>Sort of like:   You have a 1:1 relationship with your house address, but a one-to-many relationship for your house address<br>
-                to phone numbers associated with your address.</p>
-
-<p>Just Read it: <a href="http://en.wikipedia.org/wiki/Autonomous_System_(Internet)">http://en.wikipedia.org/wiki/Autonomous_System_(Internet)</a></p>
-<h4>Why ASN&#39;s <em>AND</em> IP addresses?</h4>
-<p>When providers talk BGP to each other they refer to you and themselves by ASN number.  That&#39;s the short version.</p>
-
-<p>BGP is a routing protocol.  Most routing protocols rely on an addressing hierarchy.  Therefore it&#39;s easy to follow<br>
-the numbers and find your destination.  If two roomates live in a house together and use the network 192.168.0.0/16<br>
-and they link up with their neighbors who use 172.16.0.0/16.  They can point routes at each other and communications happens.<br>
-If one roomate in the first house wants his own subnet they can break things down.  192.168.0.0/16 becomes 192.168.0.0/24 <br>
-(first roomate) AND 192.168.1.0/24 (second roomate).  But their neighbors still only use 192.168.0.0/16 as it&#39;s &#39;good enough&#39;<br>
-to get to their house, and their house router knows how to distinguish between their rooms.</p>
-
-<p>BGP exists on a larger playing field.  10.0.1.0/24 and 10.0.2.0/24 could be assigned to people or companies that have<br>
-no relationship to each other.  Addressing on the Internet is not assigned in a way that makes it contiguous.</p>
-
-<p>It would be like if the two roomates were still using 192.168.0.0/24 and 192.168.1.0/24 but had now moved to different<br>
-addresses.  We would need to find a way to associate their IP block with their new location.  The location would be<br>
-the ASN and the address block ...would be the address block.</p>
-
-<p>So when two routers talk BGP to each other they say: ASN 1 has 192.168.0.0/24.  ASN 2 has 192.168.1.0/24</p>
-
-<p>So if BGPRouter1 says this to BGPRouter2.  BGPRouter1 has to be associated with an ASN too.  Let&#39;s say BGPRouter1 has<br>
-ASN 3.  Now BGPRouter2 knows: when I need to get to ASN1 or ASN2 I send things to ASN3.  Like, if I need to mail this letter<br>
-to Les Sauvages, France the first step is getting it to France.</p>
-<h4>Summation</h4>
-<ul>
-<li>BGP is how people find each other on the Internet.  Usually providers worry about it.</li>
-<li>BGP is complex, but the basics are very straight forward.</li>
-<li>BGP is fundamental to understanding the Internet.</li>
-<li>ASN&#39;s can be assigned by ARIN.  All you need to do is join.</li>
-<li>Addressing can be assigned by ARIN.  All you need to do is apply.</li>
-</ul>
-<h4>Reference:</h4>
-<p><a href="https://en.wikipedia.org/wiki/Border_Gateway_Protocol">https://en.wikipedia.org/wiki/Border_Gateway_Protocol</a><br>
-<a href="http://en.wikipedia.org/wiki/IP_address">http://en.wikipedia.org/wiki/IP_address</a></p>
-</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/04/18/beginning-bgp/">Continue Reading</a></p>
             </div>
         </div>
     

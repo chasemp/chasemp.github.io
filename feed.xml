@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-06T01:04:12Z</updated>
+        <updated>2013-08-06T22:10:42Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,107 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>debian rpaf fools mod_access</title>
+                <link rel="alternate" href="/2013/08/06/debian-rpaf-fools-mod_access/" type="text/html" />
+                <id>/2013/08/06/debian-rpaf-fools-mod_access/</id>
+                <updated>2013-08-06T22:10:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;If you have a reverse proxy in front of apache you need a way to&lt;br&gt;
+persist the original host IP for logging, etc.  &lt;a href=&#34;http://stderr.net/apache/rpaf/&#34;&gt;rpaf&lt;/a&gt; does&lt;br&gt;
+this.  Essentially handles letting apache see the proxy provided&lt;br&gt;
+field of &lt;a href=&#34;http://en.wikipedia.org/wiki/X-Forwarded-For&#34;&gt;x-forward-for&lt;/a&gt; so things are handled in a sane manner.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately this seems to have problems working with  &lt;a href=&#34;http://httpd.apache.org/docs/2.0/mod/mod_access.html&#34;&gt;mod_access&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Debian &lt;a href=&#34;http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697644&#34;&gt;report&lt;/a&gt;&lt;br&gt;
+Debian &lt;a href=&#34;http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=653330&#34;&gt;report&lt;/a&gt;&lt;br&gt;
+ubuntu &lt;a href=&#34;https://bugs.launchpad.net/ubuntu/+source/libapache2-mod-rpaf/+bug/1029003&#34;&gt;report&lt;/a&gt;&lt;br&gt;
+poundlist &lt;a href=&#34;http://www.apsis.ch/pound/pound_list/archive/2007/2007-01/1169244573000/index_html?fullMode=1#1169947453000&#34;&gt;report&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Everyone needs to authenticate&lt;/h4&gt;
+&lt;p&gt;Deny from all, but if it is a valid user then it will trigger Satisfy Any.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+    Order deny,allow
+    Deny from all
+    AuthType Basic
+    AuthName &#34;Authentication Required&#34;
+    AuthUserFile &#34;/etc/htpasswd/.htpasswd&#34;
+    Satisfy Any
+    Require valid-user
+&lt;/pre&gt;&lt;/code&gt;
+
+#### Everyone needs to authenticate except for internal
+
+Deny from all but Satisfy Any is triggered by a &#39;10.&#39; host or valid auth.
+
+&lt;pre&gt;&lt;code&gt;
+    Order deny,allow
+    Deny from all
+    Allow from 10
+    AuthType Basic
+    AuthType Basic
+    AuthName &#34;Authentication Required&#34;
+    AuthUserFile &#34;/etc/htpasswd/.htpasswd&#34;
+    Satisfy Any
+    Require valid-user
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Looking-At-X-Foward-For&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;ngrep port 80
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+##
+T 10.0.12.101:53639 -&gt; 10.1.107.27:80 [AP]
+  GET /favicon.ico HTTP/1.1..User-Agent: Mozilla/5.0 
+  (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHT
+  ML, like Gecko) Chrome/28.0.1500.71 Safari/537.36..
+  X-Forwarded-For: 99.9.236.147..Accept: */*..SSLClientCertS
+  tatus: NoClientCert..Accept-Language: en-US,en;q=0.8..
+  Authorization: Basic cnVzaDpYcDlndzNsMSEl..SSLClientCip
+  her: SSL_RSA_WITH_RC4_128_SHA, version=TLSv1.1, bits=128..
+  Host: graphite.deviantart.net..SSLSessionID: 71C838
+  5EF2B8A9FC5705BF7EBC8C15B10627835642A1D7157DB996C1FBE96F5B..
+   X-Cluster-Client-Ip: 99.9.236.147..
+##
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;--&amp;gt; &lt;code&gt;X-Forwarded-For: 99.9.236.147&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;In Apache my host shows up as: 99.9.236.147.&lt;/p&gt;
+&lt;h4&gt;Hmmmm....&lt;/h4&gt;
+&lt;p&gt;The configuration from &amp;#39;Everyone needs to authenticate except for internal&amp;#39; should allow&lt;br&gt;
+only internal hosts to bypass auth, except in this case it is allowing everyone because&lt;br&gt;
+Apache is not using the post-rpaf x-forward-for IP in its ACL lookup.  It is using the&lt;br&gt;
+IP of the reverse proxy.  This means everyone is allowed.&lt;/p&gt;
+&lt;h4&gt;Workaround: Getting more specific with our allowances&lt;/h4&gt;
+&lt;p&gt;Only allow specific internal ranges that do not include the reverse proxy referrer.  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+    Order deny,allow
+    Deny from all
+    Allow from 10.1.100.
+    Allow from 10.1.103.
+    AuthType Basic
+    AuthName &#34;Authentication Required&#34;
+    AuthUserFile &#34;/etc/htpasswd/.htpasswd&#34;
+    Require valid-user
+    Satisfy Any
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is not a great fix as it allows for a future re-IP to cause chaos.&lt;/p&gt;
+&lt;h4&gt;Solution&lt;/h4&gt;
+&lt;p&gt;Use &lt;a href=&#34;https://github.com/ttkzw/mod_remoteip-httpd22&#34;&gt;mode_remoteip gh&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://httpd.apache.org/docs/2.0/mod/mod_access.html&#34;&gt;mod_access docs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.askapache.com/htaccess/apache-authentication-in-htaccess.html&#34;&gt;ask apache doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://chrismorris.org/passing-ip-from-nginx-to-apache/&#34;&gt;nginx x-forward-for&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/ttkzw/mod_remoteip-httpd22&#34;&gt;mode_remoteip gh&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://us.generation-nt.com/answer/bug-697644-apache2-mod-rpaf-failure-work-authz-allow-deny-should-be-documented-help-210345472.html&#34;&gt;use mod_remoteip&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/235648/apache-use-x-forwarded-for-for-allow&#34;&gt;use setevn&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>configserver firewall and config script</title>
@@ -2654,7 +2755,7 @@ to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
                 <title>beginning bgp configuration</title>
                 <link rel="alternate" href="/2013/04/16/beginning-bgp-configuration/" type="text/html" />
                 <id>/2013/04/16/beginning-bgp-configuration/</id>
-                <updated>2013-04-16T00:59:00Z</updated>
+                <updated>2013-04-16T01:12:00Z</updated>
                 
                 
                 <content type="html">&lt;h5&gt;Preamble&lt;/h5&gt;
@@ -2872,7 +2973,7 @@ Total number of prefixes 1
                 <title>virsh halting a host</title>
                 <link rel="alternate" href="/2013/04/10/virsh-halting-a-host/" type="text/html" />
                 <id>/2013/04/10/virsh-halting-a-host/</id>
-                <updated>2013-04-10T01:08:00Z</updated>
+                <updated>2013-04-10T01:12:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2890,8 +2991,8 @@ command.  Destroy is like pulling the plug.&lt;/p&gt;
 &lt;p&gt;The command that does what I would expect destroy to do is: &amp;#39;undefine&amp;#39;.&lt;/p&gt;
 
 &lt;p&gt;Reference&lt;br&gt;
-&lt;a href=&#34;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&#34;&gt;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/&#34;&gt;http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&#34;&gt;fedora project virsh doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/&#34;&gt;cyberciti doc&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2899,7 +3000,7 @@ command.  Destroy is like pulling the plug.&lt;/p&gt;
                 <title>IOS granular permissions</title>
                 <link rel="alternate" href="/2013/04/03/ios-granular-permissions/" type="text/html" />
                 <id>/2013/04/03/ios-granular-permissions/</id>
-                <updated>2013-04-03T21:23:00Z</updated>
+                <updated>2013-04-03T01:12:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2952,8 +3053,8 @@ natinfo
 &lt;p&gt;This does not work how you think it does:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;privilege exec level 3 show running-config
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/&#34;&gt;http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html&#34;&gt;http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.techrepublic.com/article/understand-the-levels-of-privilege-in-the-cisco-ios/&#34;&gt;tech republic cisco priv doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/12_2/security/configuration/guide/scfpass.html&#34;&gt;cisco sec guide&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2961,7 +3062,7 @@ natinfo
                 <title>puppet disables itself if disk fills up</title>
                 <link rel="alternate" href="/2013/03/31/puppet-disables-itself-if-disk-fills-up/" type="text/html" />
                 <id>/2013/03/31/puppet-disables-itself-if-disk-fills-up/</id>
-                <updated>2013-03-31T00:59:00Z</updated>
+                <updated>2013-03-31T01:11:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2984,7 +3085,7 @@ Skipping run of Puppet configuration client; administratively disabled
                 <title>basic redis python pubsub</title>
                 <link rel="alternate" href="/2013/03/26/basic-redis-python-pubsub/" type="text/html" />
                 <id>/2013/03/26/basic-redis-python-pubsub/</id>
-                <updated>2013-03-26T21:07:00Z</updated>
+                <updated>2013-03-26T01:11:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3054,9 +3155,9 @@ except redis.exceptions.ConnectionError as e:
     raise
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://redis.io/topics/pubsub&#34;&gt;http://redis.io/topics/pubsub&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://redis-py.readthedocs.org/en/latest/&#34;&gt;https://redis-py.readthedocs.org/en/latest/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://github.com/andymccurdy/redis-py&#34;&gt;https://github.com/andymccurdy/redis-py&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://redis.io/topics/pubsub&#34;&gt;redis pubsub&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://redis-py.readthedocs.org/en/latest/&#34;&gt;redis py doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/andymccurdy/redis-py&#34;&gt;redis py github&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3064,7 +3165,7 @@ except redis.exceptions.ConnectionError as e:
                 <title>query puppetdb facts from cli</title>
                 <link rel="alternate" href="/2013/03/15/query-puppetdb-facts-from-cli/" type="text/html" />
                 <id>/2013/03/15/query-puppetdb-facts-from-cli/</id>
-                <updated>2013-03-15T01:00:00Z</updated>
+                <updated>2013-03-15T01:11:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3080,8 +3181,8 @@ I like the CLI.&lt;/p&gt;
 &lt;p&gt;This returns the &amp;#39;right stuff&amp;#39;.  Beware it could be old because it&amp;#39;s last cached values.&lt;/p&gt;
 &lt;h4&gt;Readability Counts&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet facts find &amp;lt;myhost.com&amp;gt; --terminus puppetdb | python -m json.tool
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/puppetdb/latest/api/query/v2/fact-names.html&#34;&gt;http://docs.puppetlabs.com/puppetdb/latest/api/query/v2/fact-names.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://docs.python.org/2/library/json.html&#34;&gt;http://docs.python.org/2/library/json.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/puppetdb/latest/api/query/v2/fact-names.html&#34;&gt;puppet fact names doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/json.html&#34;&gt;python json&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3089,7 +3190,7 @@ I like the CLI.&lt;/p&gt;
                 <title>puppet file resources in masterless mode</title>
                 <link rel="alternate" href="/2013/03/06/puppet-file-resources-in-masterless-mode/" type="text/html" />
                 <id>/2013/03/06/puppet-file-resources-in-masterless-mode/</id>
-                <updated>2013-03-06T19:13:00Z</updated>
+                <updated>2013-03-06T01:11:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3162,7 +3263,7 @@ failing because of this falsly accussed dependency now can be debugged.&lt;/p&gt
                 <title>allowing env magic via sudo</title>
                 <link rel="alternate" href="/2013/02/25/allowing-env-magic-via-sudo/" type="text/html" />
                 <id>/2013/02/25/allowing-env-magic-via-sudo/</id>
-                <updated>2013-02-25T00:46:00Z</updated>
+                <updated>2013-02-25T01:11:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3190,13 +3291,12 @@ myuser ALL = NOPASSWD: /usr/local/bin/makepie
 #allow users to use proxychains env variable (using sudo)
 Defaults env_keep += &amp;#34;LD_PRELOAD&amp;#34;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://brandonhutchinson.com/wiki/Sudo_and_environment_variables&#34;&gt;http://brandonhutchinson.com/wiki/Sudo_and_environment_variables&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5&#34;&gt;http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo&#34;&gt;http://askubuntu.com/questions/57915/environment-variables-when-run-with-sudo&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/&#34;&gt;http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables&#34;&gt;http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo&#34;&gt;http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.ibm.com/developerworks/aix/library/au-sudo/&#34;&gt;http://www.ibm.com/developerworks/aix/library/au-sudo/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://brandonhutchinson.com/wiki/Sudo_and_environment_variables&#34;&gt;sudo and env blog&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5&#34;&gt;unix help doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://webonrails.com/2012/07/02/allowing-user-to-set-environment-variable-with-sudo/&#34;&gt;blog doc allow&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables&#34;&gt;preserving env&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://askubuntu.com/questions/128413/setting-the-path-so-it-applies-to-all-users-including-root-sudo&#34;&gt;ask ubuntu doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.ibm.com/developerworks/aix/library/au-sudo/&#34;&gt;ibm info doc&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3204,7 +3304,7 @@ Defaults env_keep += &amp;#34;LD_PRELOAD&amp;#34;
                 <title>making trivial debian packages</title>
                 <link rel="alternate" href="/2013/02/19/making-trivial-debian-packages/" type="text/html" />
                 <id>/2013/02/19/making-trivial-debian-packages/</id>
-                <updated>2013-02-19T00:31:00Z</updated>
+                <updated>2013-02-19T01:09:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3329,13 +3429,13 @@ All right, you win.
    ----------------------------------------------
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man1/dpkg-deb.1.html&#34;&gt;http://manpages.ubuntu.com/manpages/hardy/man1/dpkg-deb.1.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://askubuntu.com/questions/62534/adding-post-deb-install-scripts&#34;&gt;http://askubuntu.com/questions/62534/adding-post-deb-install-scripts&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.debian.org/doc/devel-manuals#maint-guide&#34;&gt;http://www.debian.org/doc/devel-manuals#maint-guide&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html&#34;&gt;http://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://unix.stackexchange.com/questions/30303/how-to-create-a-deb-file-manually&#34;&gt;http://unix.stackexchange.com/questions/30303/how-to-create-a-deb-file-manually&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/&#34;&gt;http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/#AEN108&#34;&gt;http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/#AEN108&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man1/dpkg-deb.1.html&#34;&gt;dpkg-deb reference&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://askubuntu.com/questions/62534/adding-post-deb-install-scripts&#34;&gt;post install scripts doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.debian.org/doc/devel-manuals#maint-guidea&#34;&gt;debian maint guide&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.debian.org/doc/manuals/debian-faq/ch-pkg_basics.en.html&#34;&gt;packaging basics&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://unix.stackexchange.com/questions/30303/how-to-create-a-deb-file-manually&#34;&gt;se deb howto&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://ailoo.net/2009/06/repack-a-deb-archive-with-dpkg-deb/&#34;&gt;deb howto blog post&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO/#AEN108&#34;&gt;tldp deb howto&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3343,7 +3443,7 @@ All right, you win.
                 <title>simple nat outbound asa</title>
                 <link rel="alternate" href="/2013/01/23/simple-nat-outbound-asa/" type="text/html" />
                 <id>/2013/01/23/simple-nat-outbound-asa/</id>
-                <updated>2013-01-23T03:20:00Z</updated>
+                <updated>2013-01-23T01:08:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3385,7 +3485,7 @@ nat (Inside,Outside) source dynamic NAT-CLIENTS interface
 &lt;li&gt;Firewall restrictions still apply. See docs on security levels.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157&#34;&gt;https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157&#34;&gt;cisco nat docs&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3393,7 +3493,7 @@ nat (Inside,Outside) source dynamic NAT-CLIENTS interface
                 <title>cli password generation</title>
                 <link rel="alternate" href="/2013/01/15/cli-password-generation/" type="text/html" />
                 <id>/2013/01/15/cli-password-generation/</id>
-                <updated>2013-01-15T18:35:00Z</updated>
+                <updated>2013-01-15T01:08:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3422,9 +3522,9 @@ Please enter some random data (only first 16 are significant)
 (eg. your old password):&amp;gt;
 yufNifEyLyff (yuf-Nif-Ey-Lyff) yankee-uniform-foxtrot-November-india-foxtrot-Echo-yankee-Lima-yankee-foxtrot-foxtrot
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;http://www.pctools.com/guides/password/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.linux-magazine.com/Online/Features/Testing-Password-Quality&#34;&gt;http://www.linux-magazine.com/Online/Features/Testing-Password-Quality&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://help.ubuntu.com/community/StrongPasswords#Installing%20APG&#34;&gt;https://help.ubuntu.com/community/StrongPasswords#Installing%20APG&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;online random password gen -- don&amp;#39;t use&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.linux-magazine.com/Online/Features/Testing-Password-Quality&#34;&gt;article in linux mag&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://help.ubuntu.com/community/StrongPasswords#Installing%20APG&#34;&gt;installing apg&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3448,7 +3548,7 @@ do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
                 <title>bash then and now</title>
                 <link rel="alternate" href="/2012/12/03/bash-then-and-now/" type="text/html" />
                 <id>/2012/12/03/bash-then-and-now/</id>
-                <updated>2012-12-03T00:17:00Z</updated>
+                <updated>2012-12-03T01:07:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3504,14 +3604,11 @@ OLDPWD=/back/to/you
 &amp;lt;grab mouse, click, paste&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;now:&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;~#get#### stuff#### done &amp;lt;realizing now ready&amp;gt;
-&amp;lt;cntrl+a enter &amp;#39;:&amp;#39;&amp;gt;
-~#:get#### stuff#### done
--bash: :get#### stuff#### done: command not found
-&amp;lt;ignore cmd not found&amp;gt;
-&amp;lt;do pre-get#### stuff#### done&amp;gt;
-&amp;lt;up arrow to cmd&amp;gt;
-&amp;lt;cntrl+a delete &amp;#39;:&amp;#39; and enter&amp;gt;
+&lt;pre&gt;&lt;code&gt;#command_one... &amp;lt;realizing now ready&amp;gt;
+&amp;lt;cntrl+a enter&amp;gt; #goto beginning of line
+&amp;lt;cntrl+k enter&amp;gt; #puts in buffer
+#do thing that gets me ready for command_one
+&amp;lt;cntrl+y enter&amp;gt; #paste from buffer
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;No mouse required.&lt;/p&gt;
 &lt;h4&gt;Getting my boxes IP&lt;/h4&gt;
@@ -3582,7 +3679,7 @@ mkdir /one/two/three
                 <title>convert mp3 for asterisk</title>
                 <link rel="alternate" href="/2012/11/24/convert-mp3-for-asterisk/" type="text/html" />
                 <id>/2012/11/24/convert-mp3-for-asterisk/</id>
-                <updated>2012-11-24T01:01:00Z</updated>
+                <updated>2012-11-24T01:05:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;I want to use mp3&amp;#39;s for hold music, and for fun.
@@ -3604,7 +3701,7 @@ exten =&amp;gt; 2112,2,MusicOnHold(rush)
                 <title>IOS history size</title>
                 <link rel="alternate" href="/2012/11/21/cisco-ios-history-size/" type="text/html" />
                 <id>/2012/11/21/cisco-ios-history-size/</id>
-                <updated>2012-11-21T21:23:00Z</updated>
+                <updated>2012-11-21T01:05:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3698,7 +3795,7 @@ Info: Applying configuration version &amp;#39;1371116293&amp;#39;&lt;br&gt;
 Finished catalog run in 12.39 seconds&lt;br&gt;
 &lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/puppet/2.7/reference/lang_tags.html&#34;&gt;http://docs.puppetlabs.com/puppet/2.7/reference/lang_tags.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.puppetlabs.com/puppet/2.7/reference/lang_tags.html&#34;&gt;puppet docs&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         

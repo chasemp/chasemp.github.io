@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>simple nat outbound asa &ndash; devops type thoughts</title>
+    <title>Tag  &rsaquo; rpaf &ndash; devops type thoughts</title>
 </head>
 
 <style type="text/css">
@@ -63,56 +63,22 @@
         
         <div id="content">
             
-    <div class="item">
-        <div class="header">
-            <h1>simple nat outbound asa</h1>
-            <h2>Wednesday, January 23, 2013 <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/nat/">nat</a></h2>
-        </div>
-        
-        <div class="body">
-            <h4>Preamble</h4>
-<p>NAT on the ASA can get complicated but 90% of remote sites need<br>
-some version of this basic configuration.</p>
-<h4>Interfaces</h4>
-<p>Establish your NAT roles.</p>
-
-<pre><code>
-!
-interface Ethernet0/0
- nameif Outside
- security-level 0
- ip address <external_ip> <ext_mask>
-!
-interface Ethernet0/1
- nameif Inside
- security-level 100
- ip address <interval_ip> <internal_mask>
-</code></pre>
-<h4>Client Pool</h4>
-<p>Define who gets an address for going out.</p>
-
-<pre><code>
-object network NAT-CLIENTS
- !can be a subnet also, etc
- range 192.168.1.1 192.168.1.10
-</code></pre>
-<h4>NAT Enable</h4>
-<p>Associate your clients with your external interface for NAT.</p>
-
-<pre><code>
-nat (Inside,Outside) source dynamic NAT-CLIENTS interface
-</code></pre>
-<h4>NOTES</h4>
-<ul>
-<li>This does not require extra global IP&#39;s.</li>
-<li>This dynamic IP may supercede intended static NAT IP&#39;s</li>
-<li>Firewall restrictions still apply. See docs on security levels.</li>
-</ul>
-<h4>Reference</h4>
-<p><a href="https://sso.cisco.com/autho/forms/CDClogin.html#wp1118157">cisco nat docs</a></p>
-
-        </div>
-    </div>
+    <h2>Tag &rsaquo; rpaf</h2>
+    
+        <dl class="archives">
+            <dt><a href="/archives/2013/">2013</a></dt>
+            <dd>
+                <dl>
+                    
+                        
+                            <dt>Aug 06</dt>
+                            <dd><a href="/2013/08/06/debian-rpaf-fools-mod_access/">debian rpaf fools mod_access</a><small>Tagged <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/rpaf/">rpaf</a></small></dd>
+                        
+                    
+                </dl>
+            </dd>
+        </dl>
+    
 
         </div>
         
