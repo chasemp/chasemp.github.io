@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-07T04:09:46Z</updated>
+        <updated>2013-08-07T18:59:24Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -886,21 +886,10 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
             </entry>
         
             <entry>
-                <title>happy sysadmin day</title>
-                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
-                <id>/2013/07/26/happy-sysadmin-day/</id>
-                <updated>2013-07-26T17:55:00Z</updated>
-                
-                <summary type="html">&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;</summary>
-                <content type="html">&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T03:30:00Z</updated>
+                <updated>2013-07-26T18:59:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -980,20 +969,19 @@ True
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Python does:&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt;sys.modules: looks for a cached module&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;sys.meta_path: import &amp;#39;meta hooks&amp;#39; are loaded &lt;br&gt;
-which can alter import behavior&lt;/p&gt;
+&lt;p&gt;sys.modules: looks for a cached module&lt;/p&gt;
 
-&lt;p&gt;Quote:&lt;br&gt;
-&lt;pre&gt;&lt;code&gt;&lt;br&gt;
-This allows meta hooks to override sys.path processing,&lt;br&gt;
-frozen modules, or even built-in modules&lt;br&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;sys.path: Looks for module by name in a list of system&lt;br&gt;
-paths (on disk -- including stdlib modules)&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://docs.python.org/dev/reference/import.html#loaders&#34;&gt;Loads&lt;/a&gt; the module or raises an &lt;a href=&#34;http://docs.python.org/dev/library/exceptions.html#ImportError&#34;&gt;ImportError&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;sys meta_path and name lookup magic here&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Quote:
+
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;
+This allows meta hooks to override sys.path processing,
+frozen modules, or even built-in modules
+&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;sys.path: Looks for module by name&lt;/p&gt;
+
+&lt;p&gt;--&amp;gt; &lt;a href=&#34;http://docs.python.org/dev/reference/import.html#loaders&#34;&gt;Loads&lt;/a&gt; the module or raises an &lt;a href=&#34;http://docs.python.org/dev/library/exceptions.html#ImportError&#34;&gt;ImportError&lt;/a&gt;&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 The importlib implementation avoids using the return value directly.
@@ -1129,6 +1117,17 @@ print(&#39;wtf&#39;)
 &lt;a href=&#34;http://docs.python.org/2/reference/simple_stmts.html#future-statements&#34;&gt;future statements summary&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://stackoverflow.com/questions/7075082/what-is-future-in-python-used-for-and-how-when-to-use-it-and-how-it-works&#34;&gt;so future staments&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.python.org/dev/peps/pep-0420/&#34;&gt;PEP 420 -- Implicit Namespace Packages&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>happy sysadmin day</title>
+                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
+                <id>/2013/07/26/happy-sysadmin-day/</id>
+                <updated>2013-07-26T17:55:00Z</updated>
+                
+                <summary type="html">&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
 </content>
             </entry>
         

@@ -147,20 +147,19 @@ True
 </code></pre>
 <p>Python does:</p>
 
-<ul>
-<li>sys.modules: looks for a cached module</li>
-<li><p>sys.meta_path: import &#39;meta hooks&#39; are loaded <br>
-which can alter import behavior</p>
+<p>sys.modules: looks for a cached module</p>
 
-<p>Quote:<br>
-<pre><code><br>
-This allows meta hooks to override sys.path processing,<br>
-frozen modules, or even built-in modules<br>
-</code></pre></p></li>
-<li><p>sys.path: Looks for module by name in a list of system<br>
-paths (on disk -- including stdlib modules)</p></li>
-<li><p><a href="http://docs.python.org/dev/reference/import.html#loaders">Loads</a> the module or raises an <a href="http://docs.python.org/dev/library/exceptions.html#ImportError">ImportError</a></p></li>
-</ul>
+<p>sys meta_path and name lookup magic here</p>
+<pre><code>Quote:
+
+&lt;pre&gt;&lt;code&gt;
+This allows meta hooks to override sys.path processing,
+frozen modules, or even built-in modules
+&lt;/code&gt;&lt;/pre&gt;
+</code></pre>
+<p>sys.path: Looks for module by name</p>
+
+<p>--&gt; <a href="http://docs.python.org/dev/reference/import.html#loaders">Loads</a> the module or raises an <a href="http://docs.python.org/dev/library/exceptions.html#ImportError">ImportError</a></p>
 
 <pre><code>
 The importlib implementation avoids using the return value directly.
