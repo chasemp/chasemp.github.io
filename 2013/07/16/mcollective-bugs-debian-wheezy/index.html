@@ -116,7 +116,8 @@ the main binary uses the environment settings.  This mismatch causes issues.</p>
 <pre><code>#!/usr/bin/ruby1.8
 </code></pre><h4>Bug 2: <a href="http://projects.puppetlabs.com/issues/17804">ubuntu/debian mcollective missing package dependencies</a></h4>
 <p>Depencies are not complete for Debian.</p>
-<h4>Looks Like</h4><pre><code>/usr/lib/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require&#39;: no such file to load - -- stomp
+<h4>Looks Like</h4><pre><code>/usr/lib/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:36:in
+`gem_original_require&#39;: no such file to load - -- stomp
 </code></pre><h4>Simple Fix</h4><pre><code>sudo apt-get install ruby-stomp
 </code></pre><h4>Stomp Connector Not Included</h4>
 <p>This is not my code, it is from somewhere in the mcollective world.  Including here<br>

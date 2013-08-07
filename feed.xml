@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-07T03:31:00Z</updated>
+        <updated>2013-08-07T04:09:46Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -1283,7 +1283,7 @@ breach.  The first was &lt;a href=&#34;http://chasemp.github.io/2013/05/09/name.
                 <title>mcollective bugs debian wheezy</title>
                 <link rel="alternate" href="/2013/07/16/mcollective-bugs-debian-wheezy/" type="text/html" />
                 <id>/2013/07/16/mcollective-bugs-debian-wheezy/</id>
-                <updated>2013-07-16T03:28:00Z</updated>
+                <updated>2013-07-16T04:09:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1332,7 +1332,8 @@ the main binary uses the environment settings.  This mismatch causes issues.&lt;
 &lt;pre&gt;&lt;code&gt;#!/usr/bin/ruby1.8
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Bug 2: &lt;a href=&#34;http://projects.puppetlabs.com/issues/17804&#34;&gt;ubuntu/debian mcollective missing package dependencies&lt;/a&gt;&lt;/h4&gt;
 &lt;p&gt;Depencies are not complete for Debian.&lt;/p&gt;
-&lt;h4&gt;Looks Like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/usr/lib/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:36:in `gem_original_require&amp;#39;: no such file to load - -- stomp
+&lt;h4&gt;Looks Like&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/usr/lib/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:36:in
+`gem_original_require&amp;#39;: no such file to load - -- stomp
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Simple Fix&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;sudo apt-get install ruby-stomp
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Stomp Connector Not Included&lt;/h4&gt;
 &lt;p&gt;This is not my code, it is from somewhere in the mcollective world.  Including here&lt;br&gt;
