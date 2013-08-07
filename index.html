@@ -130,9 +130,11 @@ T 192.168.0.101:53639 -> 192.168.1.27:80 [AP]
 <p>--&gt; <code>X-Forwarded-For: 99.9.236.147</code></p>
 
 <p>In Apache my host shows up as: 99.9.236.147.</p>
-<h4>Hmmmm....</h4>
+<h4>Hmmmm....Access Granted</h4>
+<p>Apache&#39;s ACL system is still treating my requests as if they were sourced from 192.168.0.101.</p>
+
 <p>The configuration from &#39;Everyone needs to authenticate except for internal&#39; should allow<br>
-only internal hosts to bypass auth, except in this case it is allowing everyone because<br>
+only internal hosts to bypass auth.  In this case it is allowing everyone because<br>
 Apache is not using the post-rpaf x-forward-for IP in its ACL lookup.  It is using the<br>
 IP of the reverse proxy.  This means everyone is allowed.</p>
 <h4>Workaround: Getting more specific with our allowances</h4>
@@ -947,12 +949,28 @@ VLAN&#39;s a lot.  Then you have to clear your cache often.</p>
 <h4>Clear Cache</h4><pre><code>sudo killall -HUP mDNSResponder
 </code></pre><h4>Alias</h4><pre><code>alias cdns=&#39;sudo killall -HUP mDNSResponder&#39;
 </code></pre><h4>Reference</h4>
-<p><a href="http://support.apple.com/kb/ht5343">http://support.apple.com/kb/ht5343</a></p>
+<p><a href="http://support.apple.com/kb/ht5343">apple KB</a></p>
 </p>
             </div>
             
             <div class="footer">
                 <p><a href="/2013/07/29/OSX-DNS-Cache-Clearing/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/07/26/happy-sysadmin-day/">happy sysadmin day</a></h1>
+                <h2>Friday, July 26, 2013 <span>&raquo;</span> <a href="/tags/funny/">funny</a>, <a href="/tags/sysadmin/">sysadmin</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object></p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/07/26/happy-sysadmin-day/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -1201,16 +1219,16 @@ print('wtf')
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/07/26/happy-sysadmin-day/">happy sysadmin day</a></h1>
-                <h2>Friday, July 26, 2013 <span>&raquo;</span> <a href="/tags/funny/">funny</a>, <a href="/tags/sysadmin/">sysadmin</a></h2>
+                <h1><a href="/2013/07/25/ubuntu-edge/">ubuntu edge</a></h1>
+                <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/edge/">edge</a>, <a href="/tags/smartphone/">smartphone</a>, <a href="/tags/ubuntu/">ubuntu</a></h2>
             </div>
             
             <div class="body">
-                <p><object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object></p>
+                <p><img src="/assets/images/edge/edgeshow.png" alt="edge" title="edge promo"></p>
             </div>
             
             <div class="footer">
-                <p><a href="/2013/07/26/happy-sysadmin-day/">Continue Reading</a></p>
+                <p><a href="/2013/07/25/ubuntu-edge/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -1224,28 +1242,12 @@ print('wtf')
             <div class="body">
                 <p><h4>remove all addresses</h4><pre><code>ip addr flush dev eth0
 </code></pre><h4>Reference</h4>
-<p><a href="http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2">http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2</a></p>
+<p><a href="http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2">iproute2 docs</a></p>
 </p>
             </div>
             
             <div class="footer">
                 <p><a href="/2013/07/25/iproute2-usage/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/07/25/ubuntu-edge/">ubuntu edge</a></h1>
-                <h2>Thursday, July 25, 2013 <span>&raquo;</span> <a href="/tags/edge/">edge</a>, <a href="/tags/smartphone/">smartphone</a>, <a href="/tags/ubuntu/">ubuntu</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><img src="/assets/images/edge/edgeshow.png" alt="edge" title="edge promo"></p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/07/25/ubuntu-edge/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -1317,7 +1319,7 @@ considering log /var/log/myapp/default.log
 may not be the way to go.  But if you can less permissive is always better.</p>
 <pre><code>chmod 0640 /var/log/myapp/
 </code></pre><h4>Reference</h4>
-<p><a href="http://linux.die.net/man/8/logrotate">http://linux.die.net/man/8/logrotate</a></p>
+<p><a href="http://linux.die.net/man/8/logrotate">logrotate man</a></p>
 </p>
             </div>
             
@@ -1406,13 +1408,12 @@ for completeness.</p>
 
 <p><a href="https://raw.github.com/chasemp/bin/master/mcollective/stomp.rb">stomp.rb</a></p>
 <h4>Reference</h4>
-<p><a href="http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline">http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline</a><br>
-<a href="http://projects.puppetlabs.com/issues/17804">http://projects.puppetlabs.com/issues/17804</a><br>
-<a href="https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M">https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M</a><br>
-<a href="http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library">http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library</a><br>
-<a href="http://anonscm.debian.org/gitweb/?p=pkg-puppet/mcollective.git;a=blob;f=debian/mcollective-common.install;h=829ef98bbed0822f0bdb7fdcd755403b72b4563f;hb=d4d5f2573d82fd565e0c6b460677e05000e53cda">http://anonscm.debian.org/gitweb/?p=pkg-puppet/mcollective.git;a=blob;f=debian/mcollective-common.install;h=829ef98bbed0822f0bdb7fdcd755403b72b4563f;hb=d4d5f2573d82fd565e0c6b460677e05000e53cda</a><br>
-<a href="https://github.com/puppetlabs/marionette-collective/tree/master/spec">https://github.com/puppetlabs/marionette-collective/tree/master/spec</a><br>
-<a href="https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J">https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J</a></p>
+<p><a href="http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline">download debs</a><br>
+<a href="http://projects.puppetlabs.com/issues/17804">puppet bug</a><br>
+<a href="https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M">google groups info</a><br>
+<a href="http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library">sf mc info</a><br>
+<a href="https://github.com/puppetlabs/marionette-collective/tree/master/spec">mc on gh</a><br>
+<a href="https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J">google groups info two</a></p>
 </p>
             </div>
             
@@ -1598,12 +1599,11 @@ aptitude install puppetmaster
 --&gt; ...
 --&gt; Version: 3.2.2-1puppetlabs1
 </code></pre>
-<p>Reference:</p>
-
-<p><a href="http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install">http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install</a><br>
-<a href="http://docs.puppetlabs.com/guides/puppetlabs####">http://docs.puppetlabs.com/guides/puppetlabs####</a> package#### repositories.html<br>
-<a href="http://packages.debian.org/search?keywords=puppetmaster&amp;searchon=names&amp;section=all&amp;suite=squeeze-backports">http://packages.debian.org/search?keywords=puppetmaster&amp;searchon=names&amp;section=all&amp;suite=squeeze-backports</a><br>
-<a href="http://backports.debian.org/Instructions/">http://backports.debian.org/Instructions/</a></p>
+<p>Reference:<br>
+<a href="http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install">view available packages</a><br>
+<a href="http://docs.puppetlabs.com/guides/puppetlabs####%20package####%20repositories.html">puppet repo</a><br>
+<a href="http://packages.debian.org/search?keywords=puppetmaster&amp;searchon=names&amp;section=all&amp;suite=squeeze-backports">backports search</a><br>
+<a href="http://backports.debian.org/Instructions/">backports howto</a></p>
 </p>
             </div>
             
@@ -1789,12 +1789,12 @@ response times.</p>
 <p>I like to flood the host with requests:</p>
 <pre><code>httping &lt;webserver&gt;  -f
 </code></pre><h4>Reference</h4>
-<p><a href="http://linuxaria.com/article/put-your-site-under-siege?lang=en">http://linuxaria.com/article/put-your-site-under-siege?lang=en</a><br>
-<a href="http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/">http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/</a><br>
-<a href="http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm">http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm</a><br>
-<a href="http://httpd.apache.org/docs/2.2/programs/ab.html">http://httpd.apache.org/docs/2.2/programs/ab.html</a><br>
-<a href="http://www.joedog.org/siege-home/">http://www.joedog.org/siege-home/</a><br>
-<a href="http://linux.die.net/man/1/siege">http://linux.die.net/man/1/siege</a></p>
+<p><a href="http://linuxaria.com/article/put-your-site-under-siege?lang=en">using seige</a><br>
+<a href="http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/">increase file desc</a><br>
+<a href="http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm">using seige 2</a><br>
+<a href="http://httpd.apache.org/docs/2.2/programs/ab.html">using ab</a><br>
+<a href="http://www.joedog.org/siege-home/">seige home</a><br>
+<a href="http://linux.die.net/man/1/siege">seige man</a></p>
 </p>
             </div>
             
@@ -1972,7 +1972,7 @@ sudo chmod -R a+w /opt/graphite/storage
 <h4>Notes</h4>
 <p>Logs are located here: /opt/graphite/storage/log/webapp/</p>
 <h4>Reference</h4>
-<p><a href="http://greenlegos.wordpress.com/2012/09/09/graphite-installation/">http://greenlegos.wordpress.com/2012/09/09/graphite-installation/</a></p>
+<p><a href="http://greenlegos.wordpress.com/2012/09/09/graphite-installation/">graphite install doc</a></p>
 </p>
             </div>
             
@@ -2197,8 +2197,8 @@ OK
 
 <p>Thus the groundlevel for self testing code.</p>
 <h4>Reference</h4>
-<p><a href="http://git-scm.com/book/en/Customizing-Git-Git-Hooks">http://git-scm.com/book/en/Customizing-Git-Git-Hooks</a><br>
-<a href="https://nose.readthedocs.org/en/latest/">https://nose.readthedocs.org/en/latest/</a></p>
+<p><a href="http://git-scm.com/book/en/Customizing-Git-Git-Hooks">git hooks doc</a><br>
+<a href="https://nose.readthedocs.org/en/latest/">nosetest</a></p>
 </p>
             </div>
             
@@ -2507,15 +2507,15 @@ hit CTRL+C to break.
 #more or less consisten 4Mbps flood
 for i in {1..100}; do ./t50 &lt;target&gt; --threshold 10000 -S; sleep 3; done
 </code></pre><h4>Reference:</h4>
-<p><a href="http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html">http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html</a><br>
-<a href="http://www.sans.org/security-resources/idfaq/syn_flood.php">http://www.sans.org/security-resources/idfaq/syn_flood.php</a><br>
-<a href="http://www.cs.wm.edu/%7Ehnw/paper/attack.pdf">http://www.cs.wm.edu/~hnw/paper/attack.pdf</a><br>
-<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections</a><br>
-<a href="http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/">http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/</a><br>
-<a href="https://github.com/merces/t50">https://github.com/merces/t50</a><br>
-<a href="http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded">http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded</a><br>
-<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html</a><br>
-<a href="http://h4xors.wordpress.com/tag/t50/">http://h4xors.wordpress.com/tag/t50/</a></p>
+<p><a href="http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html">dealing with syn flood blog post</a><br>
+<a href="http://www.sans.org/security-resources/idfaq/syn_flood.php">sans on syn flood</a><br>
+<a href="http://www.cs.wm.edu/%7Ehnw/paper/attack.pdf">syn flood attack paper</a><br>
+<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">sf syn flood info</a><br>
+<a href="http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/">am I under ddos?</a><br>
+<a href="https://github.com/merces/t50">t50 gh</a><br>
+<a href="http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded">fulldisclosure info</a><br>
+<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">cisco on syn floods</a><br>
+<a href="http://h4xors.wordpress.com/tag/t50/">t50 info</a></p>
 </p>
             </div>
             
@@ -2602,14 +2602,14 @@ enabling does not persist through a reboot.</p>
 
 <p>SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.</p>
 <h4>Reference:</h4>
-<p><a href="http://cr.yp.to/syncookies.html">http://cr.yp.to/syncookies.html</a><br>
-<a href="http://www.faqs.org/docs/securing/chap5sec56.html">http://www.faqs.org/docs/securing/chap5sec56.html</a><br>
-<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html">http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html</a><br>
-<a href="http://etherealmind.com/tcp-syn-cookies-ddos-defence/">http://etherealmind.com/tcp-syn-cookies-ddos-defence/</a><br>
-<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html</a><br>
-<a href="http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html">http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html</a><br>
-<a href="http://serverfault.com/questions/353411/syn-cookies-on-internal-machines">http://serverfault.com/questions/353411/syn-cookies-on-internal-machines</a><br>
-<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections</a></p>
+<p><a href="http://cr.yp.to/syncookies.html">syncookies readme</a><br>
+<a href="http://www.faqs.org/docs/securing/chap5sec56.html">linux syncookies enable</a><br>
+<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html">cisco doc one</a><br>
+<a href="http://etherealmind.com/tcp-syn-cookies-ddos-defence/">syn cookies blog post</a><br>
+<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">cisco on syn floods</a><br>
+<a href="http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html">downside of syn cookies</a><br>
+<a href="http://serverfault.com/questions/353411/syn-cookies-on-internal-machines">sf syn cookies one</a><br>
+<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">sf syn cookies two</a></p>
 </p>
             </div>
             
@@ -2651,8 +2651,8 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
 <p>So if you have need for non-tls capable clients use caution.</p>
 
 <p>Reference:<br>
-<a href="https://community.qualys.com/docs/DOC-1141">https://community.qualys.com/docs/DOC-1141</a><br>
-<a href="http://www.postfix.org/TLS_README.html#server_enable">http://www.postfix.org/TLS_README.html#server_enable</a></p>
+<a href="https://community.qualys.com/docs/DOC-1141">QID 38140</a><br>
+<a href="http://www.postfix.org/TLS_README.html#server_enable">postfix server enable</a></p>
 </p>
             </div>
             
@@ -2697,8 +2697,8 @@ https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#
 https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;, &#39;user&#39;))
 </code></pre>
 <p>Reference:<br>
-<a href="http://graphite.readthedocs.org/en/1.0/functions.html">http://graphite.readthedocs.org/en/1.0/functions.html</a><br>
-<a href="https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142">https://code.launchpad.net/~lucio.torre/graphite/add-events/+merge/69142</a></p>
+<a href="http://graphite.readthedocs.org/en/1.0/functions.html">graphite docs</a><br>
+<a href="https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142">garphite events</a></p>
 </p>
             </div>
             

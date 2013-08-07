@@ -128,9 +128,11 @@ T 192.168.0.101:53639 -> 192.168.1.27:80 [AP]
 <p>--&gt; <code>X-Forwarded-For: 99.9.236.147</code></p>
 
 <p>In Apache my host shows up as: 99.9.236.147.</p>
-<h4>Hmmmm....</h4>
+<h4>Hmmmm....Access Granted</h4>
+<p>Apache&#39;s ACL system is still treating my requests as if they were sourced from 192.168.0.101.</p>
+
 <p>The configuration from &#39;Everyone needs to authenticate except for internal&#39; should allow<br>
-only internal hosts to bypass auth, except in this case it is allowing everyone because<br>
+only internal hosts to bypass auth.  In this case it is allowing everyone because<br>
 Apache is not using the post-rpaf x-forward-for IP in its ACL lookup.  It is using the<br>
 IP of the reverse proxy.  This means everyone is allowed.</p>
 <h4>Workaround: Getting more specific with our allowances</h4>

@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-06T22:29:45Z</updated>
+        <updated>2013-08-07T03:31:00Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>debian rpaf fools mod_access</title>
                 <link rel="alternate" href="/2013/08/06/debian-rpaf-fools-mod_access/" type="text/html" />
                 <id>/2013/08/06/debian-rpaf-fools-mod_access/</id>
-                <updated>2013-08-06T22:17:00Z</updated>
+                <updated>2013-08-06T03:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -80,9 +80,11 @@ T 192.168.0.101:53639 -&gt; 192.168.1.27:80 [AP]
 &lt;p&gt;--&amp;gt; &lt;code&gt;X-Forwarded-For: 99.9.236.147&lt;/code&gt;&lt;/p&gt;
 
 &lt;p&gt;In Apache my host shows up as: 99.9.236.147.&lt;/p&gt;
-&lt;h4&gt;Hmmmm....&lt;/h4&gt;
+&lt;h4&gt;Hmmmm....Access Granted&lt;/h4&gt;
+&lt;p&gt;Apache&amp;#39;s ACL system is still treating my requests as if they were sourced from 192.168.0.101.&lt;/p&gt;
+
 &lt;p&gt;The configuration from &amp;#39;Everyone needs to authenticate except for internal&amp;#39; should allow&lt;br&gt;
-only internal hosts to bypass auth, except in this case it is allowing everyone because&lt;br&gt;
+only internal hosts to bypass auth.  In this case it is allowing everyone because&lt;br&gt;
 Apache is not using the post-rpaf x-forward-for IP in its ACL lookup.  It is using the&lt;br&gt;
 IP of the reverse proxy.  This means everyone is allowed.&lt;/p&gt;
 &lt;h4&gt;Workaround: Getting more specific with our allowances&lt;/h4&gt;
@@ -116,7 +118,7 @@ IP of the reverse proxy.  This means everyone is allowed.&lt;/p&gt;
                 <title>configserver firewall and config script</title>
                 <link rel="alternate" href="/2013/08/05/configserver-firewall-and-config-script/" type="text/html" />
                 <id>/2013/08/05/configserver-firewall-and-config-script/</id>
-                <updated>2013-08-05T00:57:00Z</updated>
+                <updated>2013-08-05T03:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -754,7 +756,7 @@ a dummy host for attacking or tutorials.&lt;/p&gt;
                 <title>PEP8 Guide Updates</title>
                 <link rel="alternate" href="/2013/08/01/PEP8-Guide-Updates/" type="text/html" />
                 <id>/2013/08/01/PEP8-Guide-Updates/</id>
-                <updated>2013-08-01T17:40:00Z</updated>
+                <updated>2013-08-01T03:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -863,7 +865,7 @@ code in the community better.  At least that&amp;#39;s my idea.&lt;/p&gt;
                 <title>OSX DNS Cache Clearing</title>
                 <link rel="alternate" href="/2013/07/29/OSX-DNS-Cache-Clearing/" type="text/html" />
                 <id>/2013/07/29/OSX-DNS-Cache-Clearing/</id>
-                <updated>2013-07-29T01:49:00Z</updated>
+                <updated>2013-07-29T03:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -879,7 +881,18 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
 &lt;h4&gt;Clear Cache&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;sudo killall -HUP mDNSResponder
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Alias&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;alias cdns=&amp;#39;sudo killall -HUP mDNSResponder&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://support.apple.com/kb/ht5343&#34;&gt;http://support.apple.com/kb/ht5343&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://support.apple.com/kb/ht5343&#34;&gt;apple KB&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>happy sysadmin day</title>
+                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
+                <id>/2013/07/26/happy-sysadmin-day/</id>
+                <updated>2013-07-26T17:55:00Z</updated>
+                
+                <summary type="html">&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -887,7 +900,7 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T23:24:00Z</updated>
+                <updated>2013-07-26T03:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -1120,34 +1133,10 @@ print(&#39;wtf&#39;)
             </entry>
         
             <entry>
-                <title>happy sysadmin day</title>
-                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
-                <id>/2013/07/26/happy-sysadmin-day/</id>
-                <updated>2013-07-26T17:55:00Z</updated>
-                
-                <summary type="html">&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;</summary>
-                <content type="html">&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
-                <title>iproute2 usage</title>
-                <link rel="alternate" href="/2013/07/25/iproute2-usage/" type="text/html" />
-                <id>/2013/07/25/iproute2-usage/</id>
-                <updated>2013-07-25T19:36:00Z</updated>
-                
-                
-                <content type="html">&lt;h4&gt;remove all addresses&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;ip addr flush dev eth0
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2&#34;&gt;http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2&lt;/a&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>ubuntu edge</title>
                 <link rel="alternate" href="/2013/07/25/ubuntu-edge/" type="text/html" />
                 <id>/2013/07/25/ubuntu-edge/</id>
-                <updated>2013-07-25T16:19:00Z</updated>
+                <updated>2013-07-25T03:30:00Z</updated>
                 
                 <summary type="html">&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;</summary>
                 <content type="html">&lt;p&gt;&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;&lt;/p&gt;
@@ -1170,9 +1159,22 @@ for the canonical folks and use it as my primary desktop OS.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/edge/edgeraised.png&#34; alt=&#34;edgeraised&#34; title=&#34;raised&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Refernence&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/&#34;&gt;http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.indiegogo.com/projects/ubuntu-edge&#34;&gt;http://www.indiegogo.com/projects/ubuntu-edge&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://techcrunch.com/2013/07/25/if-the-ubuntu-edge-crowdfunding-experiment-works-backers-may-get-to-vote-on-the-next-models-specs/&#34;&gt;http://techcrunch.com/2013/07/25/if-the-ubuntu-edge-crowdfunding-experiment-works-backers-may-get-to-vote-on-the-next-models-specs/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.reddit.com/r/IAmA/comments/1j166z/hi_im_mark_shuttleworth_founder_of_ubuntu/&#34;&gt;reddit ama&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.indiegogo.com/projects/ubuntu-edge&#34;&gt;indiegogo&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://techcrunch.com/2013/07/25/if-the-ubuntu-edge-crowdfunding-experiment-works-backers-may-get-to-vote-on-the-next-models-specs/&#34;&gt;techcrunch&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>iproute2 usage</title>
+                <link rel="alternate" href="/2013/07/25/iproute2-usage/" type="text/html" />
+                <id>/2013/07/25/iproute2-usage/</id>
+                <updated>2013-07-25T03:29:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;remove all addresses&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;ip addr flush dev eth0
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2&#34;&gt;iproute2 docs&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1180,7 +1182,7 @@ for the canonical folks and use it as my primary desktop OS.&lt;/p&gt;
                 <title>su directive logrotate</title>
                 <link rel="alternate" href="/2013/07/24/su-directive-logrotate/" type="text/html" />
                 <id>/2013/07/24/su-directive-logrotate/</id>
-                <updated>2013-07-24T00:15:00Z</updated>
+                <updated>2013-07-24T03:29:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1243,7 +1245,7 @@ considering log /var/log/myapp/default.log
 may not be the way to go.  But if you can less permissive is always better.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;chmod 0640 /var/log/myapp/
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://linux.die.net/man/8/logrotate&#34;&gt;http://linux.die.net/man/8/logrotate&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://linux.die.net/man/8/logrotate&#34;&gt;logrotate man&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1251,7 +1253,7 @@ may not be the way to go.  But if you can less permissive is always better.&lt;/
                 <title>ubuntuforums.org hacked bummer</title>
                 <link rel="alternate" href="/2013/07/22/ubuntuforums.org-hacked-bummer/" type="text/html" />
                 <id>/2013/07/22/ubuntuforums.org-hacked-bummer/</id>
-                <updated>2013-07-22T16:54:00Z</updated>
+                <updated>2013-07-22T03:29:00Z</updated>
                 
                 <summary type="html">I got this email today:</summary>
                 <content type="html">&lt;p&gt;I got this email today:&lt;/p&gt;
@@ -1271,9 +1273,9 @@ breach.  The first was &lt;a href=&#34;http://chasemp.github.io/2013/05/09/name.
 &lt;h4&gt;Update&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://blog.canonical.com/2013/07/30/ubuntu-forums-are-back-up-and-a-post-mortem/&#34;&gt;Post Mortem&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.infosecurity-magazine.com/view/33556/ubuntu-forum-hacked-18-million-accounts-compromised/&#34;&gt;http://www.infosecurity-magazine.com/view/33556/ubuntu-forum-hacked-18-million-accounts-compromised/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://nakedsecurity.sophos.com/2013/07/21/gun-wielding-penguin-takes-over-ubuntu-forums-waves-ak-47-at-linux-users-everywhere/&#34;&gt;http://nakedsecurity.sophos.com/2013/07/21/gun-wielding-penguin-takes-over-ubuntu-forums-waves-ak-47-at-linux-users-everywhere/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.dailydot.com/technology/password-sputn1k-hack-ubuntu-forums/&#34;&gt;http://www.dailydot.com/technology/password-sputn1k-hack-ubuntu-forums/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.infosecurity-magazine.com/view/33556/ubuntu-forum-hacked-18-million-accounts-compromised/&#34;&gt;infosec mag article&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://nakedsecurity.sophos.com/2013/07/21/gun-wielding-penguin-takes-over-ubuntu-forums-waves-ak-47-at-linux-users-everywhere/&#34;&gt;blog post info&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.dailydot.com/technology/password-sputn1k-hack-ubuntu-forums/&#34;&gt;daily dot report&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1281,7 +1283,7 @@ breach.  The first was &lt;a href=&#34;http://chasemp.github.io/2013/05/09/name.
                 <title>mcollective bugs debian wheezy</title>
                 <link rel="alternate" href="/2013/07/16/mcollective-bugs-debian-wheezy/" type="text/html" />
                 <id>/2013/07/16/mcollective-bugs-debian-wheezy/</id>
-                <updated>2013-07-16T05:46:00Z</updated>
+                <updated>2013-07-16T03:28:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1340,13 +1342,12 @@ for completeness.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;https://raw.github.com/chasemp/bin/master/mcollective/stomp.rb&#34;&gt;stomp.rb&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline&#34;&gt;http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://projects.puppetlabs.com/issues/17804&#34;&gt;http://projects.puppetlabs.com/issues/17804&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M&#34;&gt;https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library&#34;&gt;http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://anonscm.debian.org/gitweb/?p=pkg-puppet/mcollective.git;a=blob;f=debian/mcollective-common.install;h=829ef98bbed0822f0bdb7fdcd755403b72b4563f;hb=d4d5f2573d82fd565e0c6b460677e05000e53cda&#34;&gt;http://anonscm.debian.org/gitweb/?p=pkg-puppet/mcollective.git;a=blob;f=debian/mcollective-common.install;h=829ef98bbed0822f0bdb7fdcd755403b72b4563f;hb=d4d5f2573d82fd565e0c6b460677e05000e53cda&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://github.com/puppetlabs/marionette-collective/tree/master/spec&#34;&gt;https://github.com/puppetlabs/marionette-collective/tree/master/spec&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J&#34;&gt;https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline&#34;&gt;download debs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://projects.puppetlabs.com/issues/17804&#34;&gt;puppet bug&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M&#34;&gt;google groups info&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library&#34;&gt;sf mc info&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/puppetlabs/marionette-collective/tree/master/spec&#34;&gt;mc on gh&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J&#34;&gt;google groups info two&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1354,7 +1355,7 @@ for completeness.&lt;/p&gt;
                 <title>making debs with rake</title>
                 <link rel="alternate" href="/2013/07/12/making-debs-with-rake/" type="text/html" />
                 <id>/2013/07/12/making-debs-with-rake/</id>
-                <updated>2013-07-12T22:25:00Z</updated>
+                <updated>2013-07-12T03:27:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1443,7 +1444,7 @@ else
                 <title>when search tells the story</title>
                 <link rel="alternate" href="/2013/07/08/when-search-tells-the-story/" type="text/html" />
                 <id>/2013/07/08/when-search-tells-the-story/</id>
-                <updated>2013-07-08T01:08:00Z</updated>
+                <updated>2013-07-08T03:27:00Z</updated>
                 
                 <summary type="html">The first and second results for &amp;#39;linux emoji font&amp;#39; are from&lt;br&gt;
 the same person, and in total opposition.  I don&amp;#39;t know this&lt;br&gt;
@@ -1456,7 +1457,7 @@ person at all; I just found the rankings humorous.&lt;/p&gt;
 
 &lt;p&gt;Emoji is basically japanese emoticons.&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Emoji&#34;&gt;http://en.wikipedia.org/wiki/Emoji&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Emoji&#34;&gt;emoji wiki&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1464,7 +1465,7 @@ person at all; I just found the rankings humorous.&lt;/p&gt;
                 <title>puppetmaster_3 on debian</title>
                 <link rel="alternate" href="/2013/06/27/puppetmaster3-on-debian/" type="text/html" />
                 <id>/2013/06/27/puppetmaster3-on-debian/</id>
-                <updated>2013-06-27T01:07:00Z</updated>
+                <updated>2013-06-27T03:27:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1517,12 +1518,11 @@ aptitude install puppetmaster
 --&amp;gt; ...
 --&amp;gt; Version: 3.2.2-1puppetlabs1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Reference:&lt;/p&gt;
-
-&lt;p&gt;&lt;a href=&#34;http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install&#34;&gt;http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://docs.puppetlabs.com/guides/puppetlabs####&#34;&gt;http://docs.puppetlabs.com/guides/puppetlabs####&lt;/a&gt; package#### repositories.html&lt;br&gt;
-&lt;a href=&#34;http://packages.debian.org/search?keywords=puppetmaster&amp;amp;searchon=names&amp;amp;section=all&amp;amp;suite=squeeze-backports&#34;&gt;http://packages.debian.org/search?keywords=puppetmaster&amp;amp;searchon=names&amp;amp;section=all&amp;amp;suite=squeeze-backports&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://backports.debian.org/Instructions/&#34;&gt;http://backports.debian.org/Instructions/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Reference:&lt;br&gt;
+&lt;a href=&#34;http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install&#34;&gt;view available packages&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.puppetlabs.com/guides/puppetlabs####%20package####%20repositories.html&#34;&gt;puppet repo&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://packages.debian.org/search?keywords=puppetmaster&amp;amp;searchon=names&amp;amp;section=all&amp;amp;suite=squeeze-backports&#34;&gt;backports search&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://backports.debian.org/Instructions/&#34;&gt;backports howto&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1530,7 +1530,7 @@ aptitude install puppetmaster
                 <title>simple site loadtesting</title>
                 <link rel="alternate" href="/2013/06/25/simple-site-loadtesting/" type="text/html" />
                 <id>/2013/06/25/simple-site-loadtesting/</id>
-                <updated>2013-06-25T21:34:00Z</updated>
+                <updated>2013-06-25T03:26:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1702,12 +1702,12 @@ response times.&lt;/p&gt;
 &lt;p&gt;I like to flood the host with requests:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;httping &amp;lt;webserver&amp;gt;  -f
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://linuxaria.com/article/put-your-site-under-siege?lang=en&#34;&gt;http://linuxaria.com/article/put-your-site-under-siege?lang=en&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/&#34;&gt;http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm&#34;&gt;http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://httpd.apache.org/docs/2.2/programs/ab.html&#34;&gt;http://httpd.apache.org/docs/2.2/programs/ab.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.joedog.org/siege-home/&#34;&gt;http://www.joedog.org/siege-home/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://linux.die.net/man/1/siege&#34;&gt;http://linux.die.net/man/1/siege&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://linuxaria.com/article/put-your-site-under-siege?lang=en&#34;&gt;using seige&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/&#34;&gt;increase file desc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm&#34;&gt;using seige 2&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://httpd.apache.org/docs/2.2/programs/ab.html&#34;&gt;using ab&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.joedog.org/siege-home/&#34;&gt;seige home&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://linux.die.net/man/1/siege&#34;&gt;seige man&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1715,16 +1715,16 @@ response times.&lt;/p&gt;
                 <title>carna internet map</title>
                 <link rel="alternate" href="/2013/06/17/carna-internet-map/" type="text/html" />
                 <id>/2013/06/17/carna-internet-map/</id>
-                <updated>2013-06-17T01:06:00Z</updated>
+                <updated>2013-06-17T03:25:00Z</updated>
                 
                 <summary type="html">&lt;img src=&#34;/assets/images/carna.gif&#34; alt=&#34;carna&#34; title=&#34;botnet map&#34;&gt;</summary>
                 <content type="html">&lt;p&gt;&lt;img src=&#34;/assets/images/carna.gif&#34; alt=&#34;carna&#34; title=&#34;botnet map&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.tripwire.com/state-of-security/it-security-data-protection/cyber-security/state-of-security-carna-botnet-ipv4-census-nsa-offensive-cyber-powers-2013-threat-report/&#34;&gt;http://www.tripwire.com/state-of-security/it-security-data-protection/cyber-security/state-of-security-carna-botnet-ipv4-census-nsa-offensive-cyber-powers-2013-threat-report/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://threatpost.com/carna-botnet-analysis-renders-scary-numbers-on-vulnerable-devices/&#34;&gt;http://threatpost.com/carna-botnet-analysis-renders-scary-numbers-on-vulnerable-devices/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://blog.caida.org/best_available_data/2013/05/13/carna-botnet-scans/&#34;&gt;http://blog.caida.org/best_available_data/2013/05/13/carna-botnet-scans/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://seclists.org/fulldisclosure/2013/May/160&#34;&gt;http://seclists.org/fulldisclosure/2013/May/160&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://en.wikipedia.org/wiki/Carna_Botnet&#34;&gt;http://en.wikipedia.org/wiki/Carna_Botnet&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.tripwire.com/state-of-security/it-security-data-protection/cyber-security/state-of-security-carna-botnet-ipv4-census-nsa-offensive-cyber-powers-2013-threat-report&#34;&gt;tripwire doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://threatpost.com/carna-botnet-analysis-renders-scary-numbers-on-vulnerable-devices/&#34;&gt;threatpost doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blog.caida.org/best_available_data/2013/05/13/carna-botnet-scans/&#34;&gt;blog post&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://seclists.org/fulldisclosure/2013/May/160&#34;&gt;sec list info&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Carna_Botnet&#34;&gt;wikipedia&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1732,7 +1732,7 @@ response times.&lt;/p&gt;
                 <title>debian graphite install</title>
                 <link rel="alternate" href="/2013/06/15/debian-graphite-install/" type="text/html" />
                 <id>/2013/06/15/debian-graphite-install/</id>
-                <updated>2013-06-15T19:20:00Z</updated>
+                <updated>2013-06-15T03:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1880,7 +1880,7 @@ sudo chmod -R a+w /opt/graphite/storage
 &lt;h4&gt;Notes&lt;/h4&gt;
 &lt;p&gt;Logs are located here: /opt/graphite/storage/log/webapp/&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://greenlegos.wordpress.com/2012/09/09/graphite-installation/&#34;&gt;http://greenlegos.wordpress.com/2012/09/09/graphite-installation/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://greenlegos.wordpress.com/2012/09/09/graphite-installation/&#34;&gt;graphite install doc&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -1888,7 +1888,7 @@ sudo chmod -R a+w /opt/graphite/storage
                 <title>code test beginnings</title>
                 <link rel="alternate" href="/2013/06/07/unit-test-beginnings/" type="text/html" />
                 <id>/2013/06/07/unit-test-beginnings/</id>
-                <updated>2013-06-07T21:34:00Z</updated>
+                <updated>2013-06-07T03:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2099,8 +2099,8 @@ OK
 
 &lt;p&gt;Thus the groundlevel for self testing code.&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://git-scm.com/book/en/Customizing-Git-Git-Hooks&#34;&gt;http://git-scm.com/book/en/Customizing-Git-Git-Hooks&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;https://nose.readthedocs.org/en/latest/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://git-scm.com/book/en/Customizing-Git-Git-Hooks&#34;&gt;git hooks doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://nose.readthedocs.org/en/latest/&#34;&gt;nosetest&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2108,7 +2108,7 @@ OK
                 <title>IOS DDOS detection</title>
                 <link rel="alternate" href="/2013/06/05/cisco-ios-ddos-detection/" type="text/html" />
                 <id>/2013/06/05/cisco-ios-ddos-detection/</id>
-                <updated>2013-06-05T21:23:00Z</updated>
+                <updated>2013-06-05T03:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -2177,7 +2177,7 @@ Half Open Aggressive Aging Period Off, Event Count: 0
                 <title>using snort on pcap</title>
                 <link rel="alternate" href="/2013/06/03/using-snort-on-pcap/" type="text/html" />
                 <id>/2013/06/03/using-snort-on-pcap/</id>
-                <updated>2013-06-03T01:00:00Z</updated>
+                <updated>2013-06-03T03:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2210,7 +2210,7 @@ of shenanigans but is also very noisy.&lt;/p&gt;
                 <title>bash boiler plate troubleshooting</title>
                 <link rel="alternate" href="/2013/05/30/bash-boiler-plate-troubleshooting/" type="text/html" />
                 <id>/2013/05/30/bash-boiler-plate-troubleshooting/</id>
-                <updated>2013-05-30T01:00:00Z</updated>
+                <updated>2013-05-30T03:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -2272,7 +2272,7 @@ Arguments:
                 <title>launching a syn flood test</title>
                 <link rel="alternate" href="/2013/05/29/launching-a-syn-flood-test/" type="text/html" />
                 <id>/2013/05/29/launching-a-syn-flood-test/</id>
-                <updated>2013-05-29T17:43:00Z</updated>
+                <updated>2013-05-29T03:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2385,15 +2385,15 @@ hit CTRL+C to break.
 #more or less consisten 4Mbps flood
 for i in {1..100}; do ./t50 &amp;lt;target&amp;gt; --threshold 10000 -S; sleep 3; done
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html&#34;&gt;http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.sans.org/security-resources/idfaq/syn_flood.php&#34;&gt;http://www.sans.org/security-resources/idfaq/syn_flood.php&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cs.wm.edu/%7Ehnw/paper/attack.pdf&#34;&gt;http://www.cs.wm.edu/~hnw/paper/attack.pdf&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&#34;&gt;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/&#34;&gt;http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://github.com/merces/t50&#34;&gt;https://github.com/merces/t50&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded&#34;&gt;http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&#34;&gt;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://h4xors.wordpress.com/tag/t50/&#34;&gt;http://h4xors.wordpress.com/tag/t50/&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html&#34;&gt;dealing with syn flood blog post&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.sans.org/security-resources/idfaq/syn_flood.php&#34;&gt;sans on syn flood&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cs.wm.edu/%7Ehnw/paper/attack.pdf&#34;&gt;syn flood attack paper&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&#34;&gt;sf syn flood info&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/&#34;&gt;am I under ddos?&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/merces/t50&#34;&gt;t50 gh&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded&#34;&gt;fulldisclosure info&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&#34;&gt;cisco on syn floods&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://h4xors.wordpress.com/tag/t50/&#34;&gt;t50 info&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2401,7 +2401,7 @@ for i in {1..100}; do ./t50 &amp;lt;target&amp;gt; --threshold 10000 -S; sleep 3
                 <title>cisco lights out failsafe</title>
                 <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
                 <id>/2013/05/29/cisco-lights-out-failsafe/</id>
-                <updated>2013-05-29T01:00:00Z</updated>
+                <updated>2013-05-29T03:22:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2439,7 +2439,7 @@ Reload reason: Reload Command
                 <title>syn cookies</title>
                 <link rel="alternate" href="/2013/05/23/syn-cookies/" type="text/html" />
                 <id>/2013/05/23/syn-cookies/</id>
-                <updated>2013-05-23T00:59:00Z</updated>
+                <updated>2013-05-23T03:22:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2468,14 +2468,14 @@ enabling does not persist through a reboot.&lt;/p&gt;
 
 &lt;p&gt;SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.&lt;/p&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://cr.yp.to/syncookies.html&#34;&gt;http://cr.yp.to/syncookies.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.faqs.org/docs/securing/chap5sec56.html&#34;&gt;http://www.faqs.org/docs/securing/chap5sec56.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html&#34;&gt;http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://etherealmind.com/tcp-syn-cookies-ddos-defence/&#34;&gt;http://etherealmind.com/tcp-syn-cookies-ddos-defence/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&#34;&gt;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html&#34;&gt;http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://serverfault.com/questions/353411/syn-cookies-on-internal-machines&#34;&gt;http://serverfault.com/questions/353411/syn-cookies-on-internal-machines&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&#34;&gt;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://cr.yp.to/syncookies.html&#34;&gt;syncookies readme&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.faqs.org/docs/securing/chap5sec56.html&#34;&gt;linux syncookies enable&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html&#34;&gt;cisco doc one&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://etherealmind.com/tcp-syn-cookies-ddos-defence/&#34;&gt;syn cookies blog post&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&#34;&gt;cisco on syn floods&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html&#34;&gt;downside of syn cookies&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/353411/syn-cookies-on-internal-machines&#34;&gt;sf syn cookies one&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections&#34;&gt;sf syn cookies two&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2483,7 +2483,7 @@ enabling does not persist through a reboot.&lt;/p&gt;
                 <title>postfix ssl weak ciphers</title>
                 <link rel="alternate" href="/2013/05/21/postfix-ssl-weak-ciphers/" type="text/html" />
                 <id>/2013/05/21/postfix-ssl-weak-ciphers/</id>
-                <updated>2013-05-21T18:26:00Z</updated>
+                <updated>2013-05-21T03:21:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Vuln&lt;/h4&gt;
@@ -2511,8 +2511,8 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
 &lt;p&gt;So if you have need for non-tls capable clients use caution.&lt;/p&gt;
 
 &lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;https://community.qualys.com/docs/DOC-1141&#34;&gt;https://community.qualys.com/docs/DOC-1141&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.postfix.org/TLS_README.html#server_enable&#34;&gt;http://www.postfix.org/TLS_README.html#server_enable&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;https://community.qualys.com/docs/DOC-1141&#34;&gt;QID 38140&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.postfix.org/TLS_README.html#server_enable&#34;&gt;postfix server enable&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2520,7 +2520,7 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
                 <title>using graphite events</title>
                 <link rel="alternate" href="/2013/05/17/using-graphite-events/" type="text/html" />
                 <id>/2013/05/17/using-graphite-events/</id>
-                <updated>2013-05-17T00:58:00Z</updated>
+                <updated>2013-05-17T03:20:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2551,8 +2551,8 @@ https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(event
 https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(events(&amp;#39;code_sync&amp;#39;, &amp;#39;user&amp;#39;))
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html&#34;&gt;http://graphite.readthedocs.org/en/1.0/functions.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142&#34;&gt;https://code.launchpad.net/~lucio.torre/graphite/add-events/+merge/69142&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html&#34;&gt;graphite docs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142&#34;&gt;garphite events&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2605,7 +2605,7 @@ Even though the site where it was posted has been taken down at this time.&lt;/p
                 <title>simple iptables uses</title>
                 <link rel="alternate" href="/2013/04/19/simple-iptables-uses/" type="text/html" />
                 <id>/2013/04/19/simple-iptables-uses/</id>
-                <updated>2013-04-19T01:01:00Z</updated>
+                <updated>2013-04-19T03:20:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Allow ssh from only 192 network (presumably your internal)&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
@@ -2635,7 +2635,7 @@ iptables -P OUTPUT ACCEPT
                 <title>beginning bgp</title>
                 <link rel="alternate" href="/2013/04/18/beginning-bgp/" type="text/html" />
                 <id>/2013/04/18/beginning-bgp/</id>
-                <updated>2013-04-18T01:00:00Z</updated>
+                <updated>2013-04-18T03:20:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2742,8 +2742,8 @@ to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
 &lt;li&gt;Addressing can be assigned by ARIN.  All you need to do is apply.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&#34;&gt;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://en.wikipedia.org/wiki/IP_address&#34;&gt;http://en.wikipedia.org/wiki/IP_address&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&#34;&gt;BGP wiki&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/IP_address&#34;&gt;IP Address wiki&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -2751,7 +2751,7 @@ to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
                 <title>beginning bgp configuration</title>
                 <link rel="alternate" href="/2013/04/16/beginning-bgp-configuration/" type="text/html" />
                 <id>/2013/04/16/beginning-bgp-configuration/</id>
-                <updated>2013-04-16T01:12:00Z</updated>
+                <updated>2013-04-16T03:20:00Z</updated>
                 
                 
                 <content type="html">&lt;h5&gt;Preamble&lt;/h5&gt;
@@ -2959,9 +2959,9 @@ Origin codes: i - IGP, e - EGP, ? - incomplete
 Total number of prefixes 1 
 &lt;/code&gt;&lt;/pre&gt;    
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a00800945ff.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a00800945ff.shtml&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://lg.above.net/lg.cgi&#34;&gt;http://lg.above.net/lg.cgi&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a0080094309.shtml&#34;&gt;http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a0080094309.shtml&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a00800945ff.shtml&#34;&gt;Troubleshooting When BGP Routes Are Not Advertised&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://lg.above.net/lg.cgi&#34;&gt;BGP looking glass&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_configuration_example09186a0080094309.shtml&#34;&gt;Configuring and Verifying the BGP Conditional Advertisement Feature&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
