@@ -32,6 +32,14 @@
     <title>devops type thoughts</title>
 </head>
 
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+function toggleDiv(divId) {
+   $("#"+divId).toggle();
+}
+</script>
+
 <style type="text/css">
 <!--
 #nav ul li a {
@@ -39,9 +47,9 @@
 }
 
 #nav ul li a:hover {color: blue;}
-
 -->
 </style>
+
 <body>
     <div id="container">
         <div id="nav">
@@ -63,6 +71,75 @@
         
         <div id="content">
             
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/08/09/VPN-encryption-mismatch/">encryption mismatch</a></h1>
+                <h2>Friday, August 09, 2013 <span>&raquo;</span> <a href="/tags/vdirector/">vdirector</a>, <a href="/tags/vpn/">vpn</a></h2>
+            </div>
+            
+            <div class="body">
+                <p><h3>Preamble</h3>
+<p>A site-to-site VPN between vshield and a Cisco ASA.</p>
+<h4>The Go-To Example</h4>
+<p>Everyone seems to reference:</p>
+
+<p><a href="http://www.datastore365.co.uk/news/configuring-a-vmware-vcloud-director-external-ipsec-site-to-site-vpn-connection-to-a-cisco-asa-firewall/">vpn instructions</a></p>
+
+<p>Following this the tunnel is not establishing</p>
+<pre><code>debug crypto isakmp 127
+debug crypto ipsec 127
+term mon
+</code></pre>
+<p>IPSEC isn&#39;t establishing a security association properly</p>
+<pre><code>Aug 07 15:05:51 [IKEv1 DEBUG]: Group = 192.168.1.1, IP = 192.168.1.1, processing IPSec SA payload
+Aug 07 15:05:51 [IKEv1]: Group = 192.168.1.1, IP = 192.168.1.1, All IPSec SA proposals found unacceptable!
+</code></pre>
+<p>Followed by the SA in progress being discarded</p>
+<pre><code>Aug 07 15:05:51 [IKEv1]: Ignoring msg to mark SA with dsID 52281344 dead because SA deleted
+</code></pre>
+<p>I know this isn&#39;t an isakmp negotation issue as Phase 1 is completing</p>
+<pre><code>Aug 07 15:05:50 [IKEv1 DEBUG]: IP = 192.168.1.1, IKE SA Proposal # 1, Transform # 0 \
+acceptable  Matches global IKE entry # 8
+</code></pre>
+<p>The IPSEC proposals do not match in the tutorial.</p>
+
+<p>For demonstrations sake fixing it on the ASA side looks like</p>
+<pre><code>crypto ipsec transform-set ESP-3DES-SHA esp-3des esp-sha-hmac 
+crypto map outside_map 10 set transform-set ESP-3DES-SHA
+un all
+</code></pre>
+<p>This means the IPSEC tunnel will establish with 3DES as the encryption mechanism.  In <br>
+practice I will change both sides to use AES256.</p>
+<pre><code>crypto ipsec transform-set ESP-AES-256-MD5-TRANS esp-aes-256 esp-md5-hmac
+</code></pre><h4>Reference</h4>
+<p><a href="http://www.datastore365.co.uk/news/configuring-a-vmware-vcloud-director-external-ipsec-site-to-site-vpn-connection-to-a-cisco-asa-firewall/">instructions</a><br>
+<a href="http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a0080950890.shtml">cisco asa vpn example</a><br>
+<a href="http://www.cisco.com/en/US/docs/ios/12_2/debug/command/reference/dbfippim.html">debug info</a></p>
+</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/08/09/VPN-encryption-mismatch/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/08/08/submerging-an-asr-1002/">submerging an asr 1002</a></h1>
+                <h2>Thursday, August 08, 2013 <span>&raquo;</span> <a href="/tags/asr/">asr</a>, <a href="/tags/cisco/">cisco</a></h2>
+            </div>
+            
+            <div class="body">
+                <p>It turns out Cisco ASR routers are not water resistent.</p>
+            </div>
+            
+            <div class="footer">
+                <p><a href="/2013/08/08/submerging-an-asr-1002/">Continue Reading</a></p>
+            </div>
+        </div>
     
         
         <div class="item">
@@ -2724,58 +2801,6 @@ PM: &quot;How so?&quot;</p>
             
             <div class="footer">
                 <p><a href="/2013/05/16/ops-guy-says-timemachine/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/05/09/name.com-bummer/">name.com bummer</a></h1>
-                <h2>Thursday, May 09, 2013 <span>&raquo;</span> <a href="/tags/dns/">dns</a>, <a href="/tags/name.com/">name.com</a></h2>
-            </div>
-            
-            <div class="body">
-                <p>So name.com was hacked and deviantart.com was one of the credentials dumped from their DB.</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/05/09/name.com-bummer/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/04/19/simple-iptables-uses/">simple iptables uses</a></h1>
-                <h2>Friday, April 19, 2013 <span>&raquo;</span> <a href="/tags/iptables/">iptables</a></h2>
-            </div>
-            
-            <div class="body">
-                <p><h4>Allow ssh from only 192 network (presumably your internal)</h4><pre><code>iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
-</code></pre><h4>Allow SCCP (VOIP Protocol)</h4><pre><code>iptables -A INPUT -i eth0 -p tcp --dport 1720 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -o eth0 -p tcp --sport 1720 -m state --state ESTABLISHED -j ACCEPT
-</code></pre><h4>Allow h.323 (VOIP)</h4><pre><code>iptables -A INPUT -i eth0 -p tcp --dport 2000 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -o eth0 -p tcp --sport 2000 -m state --state ESTABLISHED -j ACCEPT
-</code></pre><h4>Allow ICMP</h4><pre><code>iptables -A OUTPUT -p icmp --icmp-type echo-request -j ACCEPT
-iptables -A INPUT -p icmp --icmp-type echo-reply -j ACCEPT
-</code></pre><h4>Allow DNS queries, etc</h4><pre><code>iptables -A OUTPUT -p udp -o eth0 --dport 53 -j ACCEPT
-iptables -A INPUT -p udp -i eth0 --sport 53 -j ACCEPT
-</code></pre><h4>Allow mail sending</h4><pre><code>iptables -A INPUT -i eth0 -p tcp --dport 25 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -o eth0 -p tcp --sport 25 -m state --state ESTABLISHED -j ACCEPT
-</code></pre><h4>Allowing SSH and HTTP and self sourced traffic</h4><pre><code>iptables -A INPUT -i eth0 -p tcp --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp --dport 80 -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -A OUTPUT -o eth0 -p tcp --sport 80 -m state --state ESTABLISHED -j ACCEPT
-iptables -A INPUT -m state --state NEW,ESTABLISHED -j ACCEPT
-iptables -P INPUT DROP
-iptables -P FORWARD DROP
-iptables -P OUTPUT ACCEPT
-</code></pre></p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/04/19/simple-iptables-uses/">Continue Reading</a></p>
             </div>
         </div>
     

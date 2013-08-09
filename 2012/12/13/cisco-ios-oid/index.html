@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="author" content="Chase Pettet">
+<meta name="description" content="notes and useful(?) things">
+<meta name="generator" content="mynt v0.2.2">
+
+<link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
+
+<link rel="alternate" href="/feed.xml" type="application/atom+xml">
+
+<link rel="stylesheet" href="/assets/css/screen.css" type="text/css">
+<link rel="stylesheet" href="/assets/css/pygments.css" type="text/css">
+
+
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-40840221-1']);
+        _gaq.push(['_trackPageview']);
+        
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+    
+    <title>cisco ios oid.md &ndash; devops type thoughts</title>
+</head>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
+<script type="text/javascript">
+
+function toggleDiv(divId) {
+   $("#"+divId).toggle();
+}
+</script>
+
+<style type="text/css">
+<!--
+#nav ul li a {
+    color:white;
+}
+
+#nav ul li a:hover {color: blue;}
+-->
+</style>
+
+<body>
+    <div id="container">
+        <div id="nav">
+            <ul>
+                <li><a href="/about/">About</a></li>
+                <li><a href="/">Blog</a></li>
+                <li><a href="/archives/">Archives</a></li>
+                <li><a href="/useful/">Useful</a></li>
+                <li><a href="/feed.xml">Feed</a></li>
+            </ul>
+            
+            
+        </div>
+        
+        <div id="header">
+            <h1><a href="/">devops type thoughts</a></h1>
+            
+        </div>
+        
+        <div id="content">
+            
+    <div class="item">
+        <div class="header">
+            <h1>cisco ios oid.md</h1>
+            <h2>Thursday, December 13, 2012</h2>
+        </div>
+        
+        <div class="body">
+            <p>Cisco IOS-XE OID space for monitoring</p>
+
+<p>Memory Walk OID</p>
+
+<p>.1.3.6.1.4.1.9.9.48.1.1.1</p>
+
+<p>This gives you your OID space.  For each memory bank<br>
+you can use these to get you usage:</p>
+<h1>OID keys for memory stats</h1>
+<p>&#39;mem_bank&#39;: &#39;1.3.6.1.4.1.9.9.48.1.1.1.2.<br>
+&#39;mem_used&#39;: &#39;1.3.6.1.4.1.9.9.48.1.1.1.5.<br>
+&#39;mem_free&#39;: &#39;1.3.6.1.4.1.9.9.48.1.1.1.6.</p>
+
+<p>CPU Walk OID<br>
+.1.3.6.1.4.1.9.9.109.1.1.1.1.2</p>
+
+<p>OID key for CPU usage<br>
+.1.3.6.1.4.1.9.9.109.1.1.1.1.8.</p>
+
+<p>Interface Walk OID&#39;s</p>
+
+<p>for 64 bit counter use: .1.3.6.1.2.1.31.1.1.1<br>
+for 32 bit counter use: .1.3.6.1.2.1.2.2</p>
+
+<p>32 bit counter interface oid&#39;s</p>
+<h1>32bit counter MIBs</h1>
+<p>&#39;ifname&#39;: &#39;1.3.6.1.2.1.2.2.1.2.<br>
+&#39;mtu&#39;: &#39;1.3.6.1.2.1.2.2.1.4.<br>
+&#39;ifspeed&#39;: &#39;1.3.6.1.2.1.2.2.1.5.<br>
+&#39;ifAdminStatus&#39;: &#39;1.3.6.1.2.1.2.2.1.7.<br>
+&#39;ifOperStatus&#39;: &#39;1.3.6.1.2.1.2.2.1.8.<br>
+&#39;ifInOctets&#39;: &#39;.1.3.6.1.2.1.31.1.1.1.6.<br>
+&#39;ifOutOctets&#39;: &#39;1.3.6.1.2.1.2.2.1.16.<br>
+&#39;physadd&#39;: &#39;1.3.6.1.2.1.2.2.1.6.</p>
+
+<p>64 bit counter interface oid&#39;s<br>
+&#39;ifname&#39;: &#39;1.3.6.1.2.1.31.1.1.1.1.<br>
+&#39;ifspeed&#39;: &#39;1.3.6.1.2.1.31.1.1.1.15.<br>
+&#39;ifoperstatus&#39;: &#39;1.3.6.1.2.1.31.1.1.1.17.<br>
+&#39;ifinoctets&#39;: &#39;1.3.6.1.2.1.31.1.1.1.6.<br>
+&#39;ifalias&#39;: &#39;1.3.6.1.2.1.31.1.1.1.18.<br>
+&#39;ifinmulticastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.2.<br>
+&#39;ifoutmulticastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.4.<br>
+&#39;ifinbroadcastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.3.<br>
+&#39;ifoutbroadcastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.5.<br>
+&#39;ifoutoctets&#39;: &#39;1.3.6.1.2.1.31.1.1.1.10.</p>
+
+        </div>
+    </div>
+
+        </div>
+        
+        <div id="footer">
+            <p>Copyright &copy; 2013 Chase Pettet &ndash; powered by <a href="http://mynt.mirroredwhite.com/">mynt</a></p>
+        </div>
+    </div>
+</body>
+</html>

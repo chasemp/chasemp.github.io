@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-07T19:04:15Z</updated>
+        <updated>2013-08-09T20:59:06Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,89 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>encryption mismatch</title>
+                <link rel="alternate" href="/2013/08/09/VPN-encryption-mismatch/" type="text/html" />
+                <id>/2013/08/09/VPN-encryption-mismatch/</id>
+                <updated>2013-08-09T20:59:00Z</updated>
+                
+                
+                <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
+&lt;p&gt;A site-to-site VPN between vshield and a Cisco ASA.&lt;/p&gt;
+&lt;h4&gt;The Go-To Example&lt;/h4&gt;
+&lt;p&gt;Everyone seems to reference:&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.datastore365.co.uk/news/configuring-a-vmware-vcloud-director-external-ipsec-site-to-site-vpn-connection-to-a-cisco-asa-firewall/&#34;&gt;vpn instructions&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Following this the tunnel is not establishing&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;debug crypto isakmp 127
+debug crypto ipsec 127
+term mon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;IPSEC isn&amp;#39;t establishing a security association properly&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Aug 07 15:05:51 [IKEv1 DEBUG]: Group = 192.168.1.1, IP = 192.168.1.1, processing IPSec SA payload
+Aug 07 15:05:51 [IKEv1]: Group = 192.168.1.1, IP = 192.168.1.1, All IPSec SA proposals found unacceptable!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Followed by the SA in progress being discarded&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Aug 07 15:05:51 [IKEv1]: Ignoring msg to mark SA with dsID 52281344 dead because SA deleted
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I know this isn&amp;#39;t an isakmp negotation issue as Phase 1 is completing&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Aug 07 15:05:50 [IKEv1 DEBUG]: IP = 192.168.1.1, IKE SA Proposal # 1, Transform # 0 \
+acceptable  Matches global IKE entry # 8
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The IPSEC proposals do not match in the tutorial.&lt;/p&gt;
+
+&lt;p&gt;For demonstrations sake fixing it on the ASA side looks like&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;crypto ipsec transform-set ESP-3DES-SHA esp-3des esp-sha-hmac 
+crypto map outside_map 10 set transform-set ESP-3DES-SHA
+un all
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This means the IPSEC tunnel will establish with 3DES as the encryption mechanism.  In &lt;br&gt;
+practice I will change both sides to use AES256.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;crypto ipsec transform-set ESP-AES-256-MD5-TRANS esp-aes-256 esp-md5-hmac
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.datastore365.co.uk/news/configuring-a-vmware-vcloud-director-external-ipsec-site-to-site-vpn-connection-to-a-cisco-asa-firewall/&#34;&gt;instructions&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a0080950890.shtml&#34;&gt;cisco asa vpn example&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/12_2/debug/command/reference/dbfippim.html&#34;&gt;debug info&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>submerging an asr 1002</title>
+                <link rel="alternate" href="/2013/08/08/submerging-an-asr-1002/" type="text/html" />
+                <id>/2013/08/08/submerging-an-asr-1002/</id>
+                <updated>2013-08-08T20:56:00Z</updated>
+                
+                <summary type="html">It turns out Cisco ASR routers are not water resistent.</summary>
+                <content type="html">&lt;p&gt;It turns out Cisco ASR routers are not water resistent.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+00:02:39.652: %ASR1000_PEM-3-PEMFAIL: \
+    The PEM in slot 0 is switched off or encountering a failure condition.
+00:02:40.075: %ASR1000_OIR-6-OFFLINECARD: Card (fp) offline in slot F0
+00:02:51.829: %ASR1000_PEM-3-FANFAIL: \
+    The fan in slot 0/1 is encountering a failure condition
+00:03:32.843: %ASR1000_PEM-6-FANOK: The fan in slot 0/1 is functioning properly
+00:03:40.852: %ASR1000_PEM-3-FANFAIL: \
+    The fan in slot 0/1 is encountering a failure condition
+00:03:45.993: GigabitEthernet0/0/3 taken out of port-channel1
+00:03:47.855: %ASR1000_PEM-6-FANOK: The fan in slot 0/1 is functioning properly
+00:03:50.857: %ASR1000_PEM-3-FANFAIL: \
+    The fan in slot 0/1 is encountering a failure condition
+00:03:51.855: %ASR1000_PEM-6-FANOK: The fan in slot 0/1 is functioning properly
+.00:09:34.530: %SSH-3-RSA_SIGN_FAIL: Signature connection failed, status 3
+.00:09:34.530: %SSH-3-RSA_SIGN_FAIL: Signature creation failed, status -1
+.00:10:58.692: %ASR1000_PEM-6-PEMOK: The PEM in slot 0 is functioning properly
+.00:11:00.370: %ASR1000_PEM-3-PEMFAIL: \
+    The PEM in slot 0 is switched off or encountering a failure condition.
+.00:11:00.957: %ASR1000_PEM-6-PEMOK: The PEM in slot 0 is functioning properly
+.00:11:02.971: %ASR1000_PEM-3-PEMFAIL: \
+    The PEM in slot 0 is switched off or encountering a failure condition.
+.00:11:03.474: %ASR1000_PEM-6-PEMOK: The PEM in slot 0 is functioning properly
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>debian rpaf fools mod_access</title>
@@ -3538,6 +3621,84 @@ do echo $d; done
 grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
 do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
 &lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>cisco ios oid.md</title>
+                <link rel="alternate" href="/2012/12/13/cisco-ios-oid/" type="text/html" />
+                <id>/2012/12/13/cisco-ios-oid/</id>
+                <updated>2012-12-13T19:45:00Z</updated>
+                
+                <summary type="html">Cisco IOS-XE OID space for monitoring</summary>
+                <content type="html">&lt;p&gt;Cisco IOS-XE OID space for monitoring&lt;/p&gt;
+
+&lt;p&gt;Memory Walk OID&lt;/p&gt;
+
+&lt;p&gt;.1.3.6.1.4.1.9.9.48.1.1.1&lt;/p&gt;
+
+&lt;p&gt;This gives you your OID space.  For each memory bank&lt;br&gt;
+you can use these to get you usage:&lt;/p&gt;
+&lt;h1&gt;OID keys for memory stats&lt;/h1&gt;
+&lt;p&gt;&amp;#39;mem_bank&amp;#39;: &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.2.&lt;br&gt;
+&amp;#39;mem_used&amp;#39;: &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.5.&lt;br&gt;
+&amp;#39;mem_free&amp;#39;: &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.6.&lt;/p&gt;
+
+&lt;p&gt;CPU Walk OID&lt;br&gt;
+.1.3.6.1.4.1.9.9.109.1.1.1.1.2&lt;/p&gt;
+
+&lt;p&gt;OID key for CPU usage&lt;br&gt;
+.1.3.6.1.4.1.9.9.109.1.1.1.1.8.&lt;/p&gt;
+
+&lt;p&gt;Interface Walk OID&amp;#39;s&lt;/p&gt;
+
+&lt;p&gt;for 64 bit counter use: .1.3.6.1.2.1.31.1.1.1&lt;br&gt;
+for 32 bit counter use: .1.3.6.1.2.1.2.2&lt;/p&gt;
+
+&lt;p&gt;32 bit counter interface oid&amp;#39;s&lt;/p&gt;
+&lt;h1&gt;32bit counter MIBs&lt;/h1&gt;
+&lt;p&gt;&amp;#39;ifname&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.2.&lt;br&gt;
+&amp;#39;mtu&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.4.&lt;br&gt;
+&amp;#39;ifspeed&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.5.&lt;br&gt;
+&amp;#39;ifAdminStatus&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.7.&lt;br&gt;
+&amp;#39;ifOperStatus&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.8.&lt;br&gt;
+&amp;#39;ifInOctets&amp;#39;: &amp;#39;.1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
+&amp;#39;ifOutOctets&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.16.&lt;br&gt;
+&amp;#39;physadd&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.6.&lt;/p&gt;
+
+&lt;p&gt;64 bit counter interface oid&amp;#39;s&lt;br&gt;
+&amp;#39;ifname&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.1.&lt;br&gt;
+&amp;#39;ifspeed&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.15.&lt;br&gt;
+&amp;#39;ifoperstatus&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.17.&lt;br&gt;
+&amp;#39;ifinoctets&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
+&amp;#39;ifalias&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.18.&lt;br&gt;
+&amp;#39;ifinmulticastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.2.&lt;br&gt;
+&amp;#39;ifoutmulticastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.4.&lt;br&gt;
+&amp;#39;ifinbroadcastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.3.&lt;br&gt;
+&amp;#39;ifoutbroadcastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.5.&lt;br&gt;
+&amp;#39;ifoutoctets&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.10.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>cisco asa oid</title>
+                <link rel="alternate" href="/2012/12/11/cisco-asa-oid/" type="text/html" />
+                <id>/2012/12/11/cisco-asa-oid/</id>
+                <updated>2012-12-11T19:38:00Z</updated>
+                
+                <summary type="html">Useful ASA OID&amp;#39;s to monitor stats ASA OS &amp;gt; 8.3</summary>
+                <content type="html">&lt;p&gt;Useful ASA OID&amp;#39;s to monitor stats ASA OS &amp;gt; 8.3&lt;/p&gt;
+
+&lt;p&gt;fivemincpu = &amp;#39;.1.3.6.1.4.1.9.9.109.1.1.1.1.5.1&amp;#39;&lt;br&gt;
+ikeactivetunnels = &amp;#39;.1.3.6.1.4.1.9.9.171.1.2.1.1.0&amp;#39;&lt;br&gt;
+ikedroppedpacketsin = &amp;#39;.1.3.6.1.4.1.9.9.171.1.2.1.5.0&amp;#39;&lt;br&gt;
+ikedroppedpacketsout = &amp;#39;.1.3.6.1.4.1.9.9.171.1.2.1.13.0&amp;#39;&lt;br&gt;
+iketrafficin = &amp;#39;1.3.6.1.4.1.9.9.171.1.2.1.3.0&amp;#39;&lt;br&gt;
+iketrafficout = &amp;#39;1.3.6.1.4.1.9.9.171.1.2.1.11.0&amp;#39;&lt;br&gt;
+ipsecactivetunnels = &amp;#39;.1.3.6.1.4.1.9.9.171.1.3.1.1.0&amp;#39;&lt;br&gt;
+memfree = &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.6.1&amp;#39;&lt;br&gt;
+memused = &amp;#39;.1.3.6.1.4.1.9.9.48.1.1.1.5.1&amp;#39;&lt;br&gt;
+rasessions = &amp;#39;1.3.6.1.4.1.9.9.392.1.3.1.0&amp;#39;&lt;/p&gt;
+</content>
             </entry>
         
             <entry>
