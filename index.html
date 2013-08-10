@@ -62,6 +62,17 @@ function toggleDiv(divId) {
             </ul>
             
             
+                <ul id="social">
+                    
+                    
+                    <li><a href="https://github.com/chasemp"><img src="/assets/images/social/github.png" width="16" height="16" alt="GitHub"></a></li>
+                    
+                    
+                    <li><a href="http://stackoverflow.com/users/chasemp"><img src="/assets/images/social/stack-overflow.png" width="16" height="16" alt="Stack Overflow"></a></li>
+                    
+                    
+                </ul>
+            
         </div>
         
         <div id="header">
@@ -75,51 +86,41 @@ function toggleDiv(divId) {
         
         <div class="item">
             <div class="header">
-                <h1><a href="/2013/08/09/VPN-encryption-mismatch/">encryption mismatch</a></h1>
+                <h1><a href="/2013/08/09/trust-me-i-am-engineer/">trust me i am engineer</a></h1>
+                <h2>Friday, August 09, 2013 <span>&raquo;</span> <a href="/tags/engineer/">engineer</a>, <a href="/tags/funny/">funny</a>, <a href="/tags/sysadmin/">sysadmin</a></h2>
+            </div>
+            
+            <div class="body">
+                <p>
+                       Genius.
+                   </p>
+            </div>
+
+            <div class="footer">
+                <p><a href="/2013/08/09/trust-me-i-am-engineer/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
+                <h1><a href="/2013/08/09/VPN-encryption-mismatch/">VPN encryption mismatch</a></h1>
                 <h2>Friday, August 09, 2013 <span>&raquo;</span> <a href="/tags/vdirector/">vdirector</a>, <a href="/tags/vpn/">vpn</a></h2>
             </div>
             
             <div class="body">
-                <p><h3>Preamble</h3>
-<p>A site-to-site VPN between vshield and a Cisco ASA.</p>
+                <p>
+                       
+                           <h3>Preamble</h3>
+<p>A site-to-site VPN between vCloud Director and a Cisco ASA.</p>
 <h4>The Go-To Example</h4>
 <p>Everyone seems to reference:</p>
 
-<p><a href="http://www.datastore365.co.uk/news/configuring-a-vmware-vcloud-director-external-ipsec-site-to-site-vpn-connection-to-a-cisco-asa-firewall/">vpn instructions</a></p>
-
-<p>Following this the tunnel is not establishing</p>
-<pre><code>debug crypto isakmp 127
-debug crypto ipsec 127
-term mon
-</code></pre>
-<p>IPSEC isn&#39;t establishing a security association properly</p>
-<pre><code>Aug 07 15:05:51 [IKEv1 DEBUG]: Group = 192.168.1.1, IP = 192.168.1.1, processing IPSec SA payload
-Aug 07 15:05:51 [IKEv1]: Group = 192.168.1.1, IP = 192.168.1.1, All IPSec SA proposals found unacceptable!
-</code></pre>
-<p>Followed by the SA in progress being discarded</p>
-<pre><code>Aug 07 15:05:51 [IKEv1]: Ignoring msg to mark SA with dsID 52281344 dead because SA deleted
-</code></pre>
-<p>I know this isn&#39;t an isakmp negotation issue as Phase 1 is completing</p>
-<pre><code>Aug 07 15:05:50 [IKEv1 DEBUG]: IP = 192.168.1.1, IKE SA Proposal # 1, Transform # 0 \
-acceptable  Matches global IKE entry # 8
-</code></pre>
-<p>The IPSEC proposals do not match in the tutorial.</p>
-
-<p>For demonstrations sake fixing it on the ASA side looks like</p>
-<pre><code>crypto ipsec transform-set ESP-3DES-SHA esp-3des esp-sha-hmac 
-crypto map outside_map 10 set transform-set ESP-3DES-SHA
-un all
-</code></pre>
-<p>This means the IPSEC tunnel will establish with 3DES as the encryption mechanism.  In <br>
-practice I will change both sides to use AES256.</p>
-<pre><code>crypto ipsec transform-set ESP-AES-256-MD5-TRANS esp-aes-256 esp-md5-hmac
-</code></pre><h4>Reference</h4>
-<p><a href="http://www.datastore365.co.uk/news/configuring-a-vmware-vcloud-director-external-ipsec-site-to-site-vpn-connection-to-a-cisco-asa-firewall/">instructions</a><br>
-<a href="http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a0080950890.shtml">cisco asa vpn example</a><br>
-<a href="http://www.cisco.com/en/US/docs/ios/12_2/debug/command/reference/dbfippim.html">debug info</a></p>
-</p>
+<
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/08/09/VPN-encryption-mismatch/">Continue Reading</a></p>
             </div>
@@ -133,9 +134,11 @@ practice I will change both sides to use AES256.</p>
             </div>
             
             <div class="body">
-                <p>It turns out Cisco ASR routers are not water resistent.</p>
+                <p>
+                       It turns out Cisco ASR routers are not water resistent.
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/08/08/submerging-an-asr-1002/">Continue Reading</a></p>
             </div>
@@ -149,98 +152,15 @@ practice I will change both sides to use AES256.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>If you have a reverse proxy in front of apache you need a way to<br>
-persist the original host IP for logging, etc.  <a href="http://stderr.net/apache/rpaf/">rpaf</a> does<br>
-this.  Essentially handles letting apache see the proxy provided<br>
-field of <a href="http://en.wikipedia.org/wiki/X-Forwarded-For">x-forward-for</a> so things are handled in a sane manner.</p>
-
-<p>Unfortunately this seems to have problems working with  <a href="http://httpd.apache.org/docs/2.0/mod/mod_access.html">mod_access</a>.</p>
-
-<p>Debian <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=697644">report</a><br>
-Debian <a href="http://bugs.debian.org/cgi-bin/bugreport.cgi?bug=653330">report</a><br>
-ubuntu <a href="https://bugs.launchpad.net/ubuntu/+source/libapache2-mod-rpaf/+bug/1029003">report</a><br>
-poundlist <a href="http://www.apsis.ch/pound/pound_list/archive/2007/2007-01/1169244573000/index_html?fullMode=1#1169947453000">report</a></p>
-<h4>Everyone needs to authenticate</h4>
-<p>Deny from all, but if it is a valid user then it will trigger Satisfy Any.</p>
-
-<pre><code>
-    Order deny,allow
-    Deny from all
-    AuthType Basic
-    AuthName "Authentication Required"
-    AuthUserFile "/etc/htpasswd/.htpasswd"
-    Satisfy Any
-    Require valid-user
-</code></pre>
-<h4>Everyone needs to authenticate except for internal hosts</h4>
-<p>Deny from all but Satisfy Any is triggered by a &#39;192.&#39; host or valid auth.</p>
-
-<pre><code>
-    Order deny,allow
-    Deny from all
-    Allow from 192
-    AuthType Basic
-    AuthName "Authentication Required"
-    AuthUserFile "/etc/htpasswd/.htpasswd"
-    Satisfy Any
-    Require valid-user
-</code></pre>
-<h4>Looking-At-X-Foward-For</h4><pre><code>ngrep port 80
-</code></pre>
-<pre><code>
-##
-T 192.168.0.101:53639 -> 192.168.1.27:80 [AP]
-  GET /favicon.ico HTTP/1.1..User-Agent: Mozilla/5.0 
-  (Macintosh; Intel Mac OS X 10_7_5) AppleWebKit/537.36 (KHT
-  ML, like Gecko) Chrome/28.0.1500.71 Safari/537.36..
-  X-Forwarded-For: 99.9.236.147..Accept: */*..SSLClientCertS
-  tatus: NoClientCert..Accept-Language: en-US,en;q=0.8..
-  Authorization: Basic cnVzaDpYcDlndzNsMSEl..SSLClientCip
-  her: SSL_RSA_WITH_RC4_128_SHA, version=TLSv1.1, bits=128..
-  Host: graphite.deviantart.net..SSLSessionID: 71C838
-  5EF2B8A9FC5705BF7EBC8C15B10627835642A1D7157DB996C1FBE96F5B..
-   X-Cluster-Client-Ip: 99.9.236.147..
-##
-</code></pre>
-
-<p>--&gt; <code>X-Forwarded-For: 99.9.236.147</code></p>
-
-<p>In Apache my host shows up as: 99.9.236.147.</p>
-<h4>Hmmmm....Access Granted</h4>
-<p>Apache&#39;s ACL system is still treating my requests as if they were sourced from 192.168.0.101.</p>
-
-<p>The configuration from &#39;Everyone needs to authenticate except for internal&#39; should allow<br>
-only internal hosts to bypass auth.  In this case it is allowing everyone because<br>
-Apache is not using the post-rpaf x-forward-for IP in its ACL lookup.  It is using the<br>
-IP of the reverse proxy.  This means everyone is allowed.</p>
-<h4>Workaround: Getting more specific with our allowances</h4>
-<p>Only allow specific internal ranges that do not include the reverse proxy referrer.  </p>
-
-<pre><code>
-    Order deny,allow
-    Deny from all
-    Allow from 192.168.1.
-    AuthType Basic
-    AuthName "Authentication Required"
-    AuthUserFile "/etc/htpasswd/.htpasswd"
-    Require valid-user
-    Satisfy Any
-</code></pre>
-
-<p>This is not a great fix as it allows for a future re-IP to cause chaos.</p>
-<h4>Possible Solution</h4>
-<p>Use <a href="https://github.com/ttkzw/mod_remoteip-httpd22">mode_remoteip</a></p>
-<h4>Reference</h4>
-<p><a href="http://httpd.apache.org/docs/2.0/mod/mod_access.html">mod_access docs</a><br>
-<a href="http://www.askapache.com/htaccess/apache-authentication-in-htaccess.html">ask apache doc</a><br>
-<a href="http://chrismorris.org/passing-ip-from-nginx-to-apache/">nginx x-forward-for</a><br>
-<a href="https://github.com/ttkzw/mod_remoteip-httpd22">mode_remoteip gh</a><br>
-<a href="http://us.generation-nt.com/answer/bug-697644-apache2-mod-rpaf-failure-work-authz-allow-deny-should-be-documented-help-210345472.html">use mod_remoteip</a><br>
-<a href="http://serverfault.com/questions/235648/apache-use-x-forwarded-for-for-allow">use setevn</a></p>
-</p>
+persist the original host IP for logging, etc.  <a href="htt
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/08/06/debian-rpaf-fools-mod_access/">Continue Reading</a></p>
             </div>
@@ -254,637 +174,15 @@ IP of the reverse proxy.  This means everyone is allowed.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>I have seen an all-in-one configure script for linux security mentioned several<br>
-times on <a href="http://reddit.com/r/linuxadmin">/r/linuxadmin</a> and I am giving it a<br>
-quick runthrough to explore.</p>
-<h4>Install</h4>
-<p>Linux wheezytester 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1 x86_64 GNU/Linux</p>
-<pre><code>wget http://configserver.com/free/csf.tgz
-tar zxfv csf.tgz
-cd csf/
-sh install.sh
-</code></pre>
-<pre><code>
-Configuring for OS
-
-Running csf generic installer
-
-Installing generic csf and lfd
-
-Check we're running as root
-
-Checking Perl modules...mode of `os.pl' changed from 0755 (rwxr-xr-x) to 0700 (rwx------)
-Configuration modified for Debian/Ubuntu/Gentoo settings /etc/csf/csf.conf
-ok
-
-mkdir: created directory `/etc/csf'
-mkdir: created directory `/var/lib/csf'
-mkdir: created directory `/usr/local/csf'
-mkdir: created directory `/var/lib/csf/Geo'
-mkdir: created directory `/var/lib/csf/ui'
-mkdir: created directory `/var/lib/csf/stats'
-mkdir: created directory `/var/lib/csf/lock'
-mkdir: created directory `/var/lib/csf/webmin'
-mkdir: created directory `/var/lib/csf/zone'
-mkdir: created directory `/usr/local/csf/bin'
-mkdir: created directory `/usr/local/csf/lib'
-mkdir: created directory `/usr/local/csf/tpl'
-`csf.generic.conf' -> `/etc/csf/csf.conf'
-`csf.allow' -> `/etc/csf/./csf.allow'
-`csf.deny' -> `/etc/csf/./csf.deny'
-`csf.redirect' -> `/etc/csf/./csf.redirect'
-`csf.resellers' -> `/etc/csf/./csf.resellers'
-`csf.dirwatch' -> `/etc/csf/./csf.dirwatch'
-`csf.logfiles' -> `/etc/csf/./csf.logfiles'
-`csf.logignore' -> `/etc/csf/./csf.logignore'
-`csf.blocklists' -> `/etc/csf/./csf.blocklists'
-`csf.ignore' -> `/etc/csf/./csf.ignore'
-`csf.generic.pignore' -> `/etc/csf/csf.pignore'
-`csf.rignore' -> `/etc/csf/./csf.rignore'
-`csf.fignore' -> `/etc/csf/./csf.fignore'
-`csf.signore' -> `/etc/csf/./csf.signore'
-`csf.suignore' -> `/etc/csf/./csf.suignore'
-`csf.uidignore' -> `/etc/csf/./csf.uidignore'
-`csf.mignore' -> `/etc/csf/./csf.mignore'
-`csf.sips' -> `/etc/csf/./csf.sips'
-`csf.dyndns' -> `/etc/csf/./csf.dyndns'
-`alert.txt' -> `/usr/local/csf/tpl/./alert.txt'
-`reselleralert.txt' -> `/usr/local/csf/tpl/./reselleralert.txt'
-`logalert.txt' -> `/usr/local/csf/tpl/./logalert.txt'
-`logfloodalert.txt' -> `/usr/local/csf/tpl/./logfloodalert.txt'
-`syslogalert.txt' -> `/usr/local/csf/tpl/./syslogalert.txt'
-`integrityalert.txt' -> `/usr/local/csf/tpl/./integrityalert.txt'
-`exploitalert.txt' -> `/usr/local/csf/tpl/./exploitalert.txt'
-`queuealert.txt' -> `/usr/local/csf/tpl/./queuealert.txt'
-`tracking.txt' -> `/usr/local/csf/tpl/./tracking.txt'
-`connectiontracking.txt' -> `/usr/local/csf/tpl/./connectiontracking.txt'
-`processtracking.txt' -> `/usr/local/csf/tpl/./processtracking.txt'
-`accounttracking.txt' -> `/usr/local/csf/tpl/./accounttracking.txt'
-`usertracking.txt' -> `/usr/local/csf/tpl/./usertracking.txt'
-`sshalert.txt' -> `/usr/local/csf/tpl/./sshalert.txt'
-`webminalert.txt' -> `/usr/local/csf/tpl/./webminalert.txt'
-`sualert.txt' -> `/usr/local/csf/tpl/./sualert.txt'
-`consolealert.txt' -> `/usr/local/csf/tpl/./consolealert.txt'
-`uialert.txt' -> `/usr/local/csf/tpl/./uialert.txt'
-`cpanelalert.txt' -> `/usr/local/csf/tpl/./cpanelalert.txt'
-`scriptalert.txt' -> `/usr/local/csf/tpl/./scriptalert.txt'
-`relayalert.txt' -> `/usr/local/csf/tpl/./relayalert.txt'
-`filealert.txt' -> `/usr/local/csf/tpl/./filealert.txt'
-`watchalert.txt' -> `/usr/local/csf/tpl/./watchalert.txt'
-`loadalert.txt' -> `/usr/local/csf/tpl/./loadalert.txt'
-`resalert.txt' -> `/usr/local/csf/tpl/./resalert.txt'
-`portscan.txt' -> `/usr/local/csf/tpl/./portscan.txt'
-`uidscan.txt' -> `/usr/local/csf/tpl/./uidscan.txt'
-`permblock.txt' -> `/usr/local/csf/tpl/./permblock.txt'
-`netblock.txt' -> `/usr/local/csf/tpl/./netblock.txt'
-`portknocking.txt' -> `/usr/local/csf/tpl/./portknocking.txt'
-`forkbombalert.txt' -> `/usr/local/csf/tpl/./forkbombalert.txt'
-`x-arf.txt' -> `/usr/local/csf/tpl/./x-arf.txt'
-`regex.custom.pm' -> `/usr/local/csf/bin/./regex.custom.pm'
-`pt_deleted_action.pl' -> `/usr/local/csf/bin/./pt_deleted_action.pl'
-`messenger' -> `/etc/csf/./messenger'
-`messenger/index.html' -> `/etc/csf/./messenger/index.html'
-`messenger/csf_small.png' -> `/etc/csf/./messenger/csf_small.png'
-`messenger/index.text' -> `/etc/csf/./messenger/index.text'
-`ui' -> `/etc/csf/./ui'
-`ui/server.key' -> `/etc/csf/./ui/server.key'
-`ui/images' -> `/etc/csf/./ui/images'
-`ui/images/deliver.png' -> `/etc/csf/./ui/images/deliver.png'
-`ui/images/plus.png' -> `/etc/csf/./ui/images/plus.png'
-`ui/images/minus.png' -> `/etc/csf/./ui/images/minus.png'
-`ui/images/ip.png' -> `/etc/csf/./ui/images/ip.png'
-`ui/images/LICENSE.txt' -> `/etc/csf/./ui/images/LICENSE.txt'
-`ui/images/cse_small.png' -> `/etc/csf/./ui/images/cse_small.png'
-`ui/images/icon.gif' -> `/etc/csf/./ui/images/icon.gif'
-`ui/images/viewdelivery.png' -> `/etc/csf/./ui/images/viewdelivery.png'
-`ui/images/cxs.png' -> `/etc/csf/./ui/images/cxs.png'
-`ui/images/delete.png' -> `/etc/csf/./ui/images/delete.png'
-`ui/images/cxs_small.png' -> `/etc/csf/./ui/images/cxs_small.png'
-`ui/images/csf_small.png' -> `/etc/csf/./ui/images/csf_small.png'
-`ui/images/cxs-loader.gif' -> `/etc/csf/./ui/images/cxs-loader.gif'
-`ui/images/perm.png' -> `/etc/csf/./ui/images/perm.png'
-`ui/ui.allow' -> `/etc/csf/./ui/ui.allow'
-`ui/ui.ban' -> `/etc/csf/./ui/ui.ban'
-`ui/server.crt' -> `/etc/csf/./ui/server.crt'
-`lfd.logrotate' -> `/etc/logrotate.d/lfd'
-`csfcron.sh' -> `/etc/cron.d/csfcron.sh'
-`csf.pl' -> `/usr/sbin/csf'
-`lfd.pl' -> `/usr/sbin/lfd'
-`/etc/csf/csf.pl' -> `/usr/sbin/csf'
-`/etc/csf/lfd.pl' -> `/usr/sbin/lfd'
-`/etc/csf/csfui.pl' -> `/usr/local/csf/bin/csfui.pl'
-`/etc/csf/csftest.pl' -> `/usr/local/csf/bin/csftest.pl'
-`/etc/csf/pt_deleted_action.pl' -> `/usr/local/csf/bin/pt_deleted_action.pl'
-`/etc/csf/remove_apf_bfd.sh' -> `/usr/local/csf/bin/remove_apf_bfd.sh'
-`/etc/csf/uninstall.sh' -> `/usr/local/csf/bin/uninstall.sh'
-`/etc/csf/regex.custom.pm' -> `/usr/local/csf/bin/regex.custom.pm'
-`/etc/csf/webmin' -> `/usr/local/csf/lib/webmin'
-`/etc/csf/alerts' -> `/usr/local/csf/tpl'
-`uninstall.generic.sh' -> `/usr/local/csf/bin/uninstall.sh'
-`csfui.pl' -> `/usr/local/csf/bin/csfui.pl'
-`csfuir.pl' -> `/usr/local/csf/bin/csfuir.pl'
-`cseui.pl' -> `/usr/local/csf/bin/cseui.pl'
-`csftest.pl' -> `/usr/local/csf/bin/csftest.pl'
-`regex.pm' -> `/usr/local/csf/bin/regex.pm'
-`servercheck.pm' -> `/usr/local/csf/bin/servercheck.pm'
-`remove_apf_bfd.sh' -> `/usr/local/csf/bin/remove_apf_bfd.sh'
-`readme.txt' -> `/etc/csf/readme.txt'
-`sanity.txt' -> `/usr/local/csf/lib/sanity.txt'
-`restricted.txt' -> `/usr/local/csf/lib/restricted.txt'
-`changelog.txt' -> `/etc/csf/changelog.txt'
-`install.txt' -> `/etc/csf/install.txt'
-`version.txt' -> `/etc/csf/version.txt'
-`license.txt' -> `/etc/csf/license.txt'
-`lfd.sh' -> `/etc/init.d/lfd'
-`csf.sh' -> `/etc/init.d/csf'
-`webmin' -> `/usr/local/csf/lib/webmin'
-`webmin/csf' -> `/usr/local/csf/lib/webmin/csf'
-`webmin/csf/module.info' -> `/usr/local/csf/lib/webmin/csf/module.info'
-`webmin/csf/images' -> `/usr/local/csf/lib/webmin/csf/images'
-`webmin/csf/images/plus.png' -> `/usr/local/csf/lib/webmin/csf/images/plus.png'
-`webmin/csf/images/minus.png' -> `/usr/local/csf/lib/webmin/csf/images/minus.png'
-`webmin/csf/images/ip.png' -> `/usr/local/csf/lib/webmin/csf/images/ip.png'
-`webmin/csf/images/LICENSE.txt' -> `/usr/local/csf/lib/webmin/csf/images/LICENSE.txt'
-`webmin/csf/images/icon.gif' -> `/usr/local/csf/lib/webmin/csf/images/icon.gif'
-`webmin/csf/images/delete.png' -> `/usr/local/csf/lib/webmin/csf/images/delete.png'
-`webmin/csf/images/csf_small.png' -> `/usr/local/csf/lib/webmin/csf/images/csf_small.png'
-`webmin/csf/images/perm.png' -> `/usr/local/csf/lib/webmin/csf/images/perm.png'
-`webmin/csf/index.cgi' -> `/usr/local/csf/lib/webmin/csf/index.cgi'
-`Net' -> `/usr/local/csf/lib/Net'
-`Net/CIDR' -> `/usr/local/csf/lib/Net/CIDR'
-`Net/CIDR/Lite.pm' -> `/usr/local/csf/lib/Net/CIDR/Lite.pm'
-`Geo' -> `/usr/local/csf/lib/Geo'
-`Geo/IP' -> `/usr/local/csf/lib/Geo/IP'
-`Geo/IP/Record.pod' -> `/usr/local/csf/lib/Geo/IP/Record.pod'
-`Geo/IP/Record.pm' -> `/usr/local/csf/lib/Geo/IP/Record.pm'
-`Geo/Mirror.pm' -> `/usr/local/csf/lib/Geo/Mirror.pm'
-`Geo/IP.pm' -> `/usr/local/csf/lib/Geo/IP.pm'
-`Crypt' -> `/usr/local/csf/lib/Crypt'
-`Crypt/Blowfish_PP.pm' -> `/usr/local/csf/lib/Crypt/Blowfish_PP.pm'
-`Crypt/CBC.pm' -> `/usr/local/csf/lib/Crypt/CBC.pm'
-`HTTP' -> `/usr/local/csf/lib/HTTP'
-`HTTP/Tiny.pm' -> `/usr/local/csf/lib/HTTP/Tiny.pm'
-`csf.div' -> `/usr/local/csf/lib/csf.div'
-`ui/images/deliver.png' -> `/etc/csf/ui/./images/deliver.png'
-`ui/images/plus.png' -> `/etc/csf/ui/./images/plus.png'
-`ui/images/minus.png' -> `/etc/csf/ui/./images/minus.png'
-`ui/images/ip.png' -> `/etc/csf/ui/./images/ip.png'
-`ui/images/LICENSE.txt' -> `/etc/csf/ui/./images/LICENSE.txt'
-`ui/images/cse_small.png' -> `/etc/csf/ui/./images/cse_small.png'
-`ui/images/icon.gif' -> `/etc/csf/ui/./images/icon.gif'
-`ui/images/viewdelivery.png' -> `/etc/csf/ui/./images/viewdelivery.png'
-`ui/images/cxs.png' -> `/etc/csf/ui/./images/cxs.png'
-`ui/images/delete.png' -> `/etc/csf/ui/./images/delete.png'
-`ui/images/cxs_small.png' -> `/etc/csf/ui/./images/cxs_small.png'
-`ui/images/csf_small.png' -> `/etc/csf/ui/./images/csf_small.png'
-`ui/images/cxs-loader.gif' -> `/etc/csf/ui/./images/cxs-loader.gif'
-`ui/images/perm.png' -> `/etc/csf/ui/./images/perm.png'
-`lfdcron.sh' -> `/etc/cron.d/lfdcron.sh'
-`csf.1.txt' -> `/usr/local/man/man1/csf.1'
-`csf.help' -> `/usr/local/csf/lib/csf.help'
-chmod: cannot access `/var/log/lfd.log*': No such file or directory
-mode of `/usr/local/csf/bin/cseui.pl' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/csftest.pl' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/csfui.pl' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/csfuir.pl' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/pt_deleted_action.pl' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/remove_apf_bfd.sh' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/uninstall.sh' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/regex.custom.pm' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/regex.pm' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/usr/local/csf/bin/servercheck.pm' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/etc/csf/webmin/csf/index.cgi' changed from 0600 (rw-------) to 0700 (rwx------)
-mode of `/etc/init.d/lfd' retained as 0755 (rwxr-xr-x)
-mode of `/etc/init.d/csf' retained as 0755 (rwxr-xr-x)
-mode of `/etc/cron.d/lfdcron.sh' changed from 0755 (rwxr-xr-x) to 0644 (rw-r--r--)
-mode of `/etc/cron.d/csfcron.sh' changed from 0755 (rwxr-xr-x) to 0644 (rw-r--r--)
-mode of `auto.generic.pl' changed from 0755 (rwxr-xr-x) to 0700 (rwx------)
-
-*** FASTSTART Enabled
-
-
-*** IPV6 Enabled
-
-
-*** IPV6_SPI set to 1
-
-
-TCP ports currently listening for incoming connections:
-22,111,60787
-
-UDP ports currently listening for incoming connections:
-68,111,904,39545,54776
-
-Note: The port details above are for information only, csf hasn't been auto-configured.
-
-Don't forget to:
-1. Configure the following options in the csf configuration to suite your server: TCP_*, UDP_*
-2. Restart csf and lfd
-3. Set TESTING to 0 once you're happy with the firewall, lfd will not run until you do so
-
-Adding current SSH session IP address to the csf whitelist in csf.allow:
-Adding 172.16.104.1 to csf.allow only while in TESTING mode (not iptables ACCEPT)
-*WARNING* TESTING mode is enabled - do not forget to disable it in the configuration
-update-rc.d: using dependency based boot sequencing
-update-rc.d: using dependency based boot sequencing
-update-rc.d: using dependency based boot sequencing
-update-rc.d: using dependency based boot sequencing
-`/etc/csf/csfwebmin.tgz' -> `/usr/local/csf/csfwebmin.tgz'
-
-Installation Completed
-</code></pre>
-<h4>Checking out default status</h4><pre><code>/etc/init.d/csf status
-</code></pre>
-<pre><code>
-Status of csf:Chain INPUT (policy ACCEPT 1622 packets, 145K bytes)
-num   pkts bytes target     prot opt in     out     source               destination         
-
-Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
-num   pkts bytes target     prot opt in     out     source               destination         
-
-Chain OUTPUT (policy ACCEPT 771 packets, 260K bytes)
-num   pkts bytes target     prot opt in     out     source               destination         
-
-Chain PREROUTING (policy ACCEPT 0 packets, 0 bytes)
-num   pkts bytes target     prot opt in     out     source               destination         
-
-Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
-num   pkts bytes target     prot opt in     out     source               destination         
-
-Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
-num   pkts bytes target     prot opt in     out     source               destination         
-
-Chain POSTROUTING (policy ACCEPT 0 packets, 0 bytes)
-num   pkts bytes target     prot opt in     out     source               destination         
-*WARNING* TESTING mode is enabled - do not forget to disable it in the configuration
-</code></pre>
-
-<p>Notice --- Testing Mode is the install default so it doesn&#39;t mess up your system.</p>
-
-<p>That is cool.</p>
-<h4>Configuring</h4>
-<p>This configuration file is verbose and long winded.  Which it has to be with all of<br>
-the features packed in.  Here is a partial configuration I created to play with.  I<br>
-have shortened the default descriptions to my own line notes.</p>
-
-<p>Configured Sections:</p>
-
-<p>Initial Settings<br>
-IPv4 Port Settings<br>
-IPv6 Port Settings<br>
-General Settings<br>
-SMTP Settings<br>
-Port Flood Settings<br>
-Logging Settings</p>
-
-<p>Unconfigured sections:</p>
-
-<p>Reporting Settings<br>
-Country Code Lists and Settings<br>
-Login Failure Blocking and Alerts<br>
-Directory Watching &amp; Integrity <br>
-Distributed Attacks<br>
-Login Tracking<br>
-Connection Tracking<br>
-Process Tracking<br>
-Port Scan Tracking<br>
-User ID Tracking<br>
-Account Tracking<br>
-Integrated User Interface<br>
-Messenger service<br>
-lfd Clustering<br>
-Port Knocking<br>
-Log Scanner<br>
-Statistics Settings<br>
-OS Specific Settings</p>
-<pre><code>nano /etc/csf/csf.conf
-</code></pre>
-<pre><code>
-#for real
-TESTING = "0"
-TESTING_INTERVAL = "5"
-# 2 = Disabled UI
-RESTRICT_UI = "2"
-# You should check for new version announcements at http://blog.configserver.com
-AUTO_UPDATES = "0"
-# Allow incoming TCP ports
-TCP_IN = "2280"
-# Allow outgoing TCP ports
-TCP_OUT = "20,21,22,25,53,80,110,113,443"
-# Allow incoming UDP ports
-UDP_IN = "53"
-# Allow outgoing UDP ports
-# To allow outgoing traceroute add 33434:33523 to this list 
-UDP_OUT = "20,21,53,113,123"
-# Allow incoming PING
-ICMP_IN = "1"
-# Set the per IP address incoming ICMP packet rate
-# To disable rate limiting set to "0"
-ICMP_IN_RATE = "5/s"
-# Allow outgoing PING
-ICMP_OUT = "1"
-ICMP_OUT_RATE = "0"
-#no ipv6
-IPV6 = "0"
-#do all nics but lo
-ETH_DEVICE = ""
-ETH6_DEVICE = ""
-#no skips
-ETH_DEVICE_SKIP = ""
-USE_CONNTRACK = "1"
-#verify syslog
-SYSLOG_CHECK = "1"
-IGNORE_ALLOW = "0"
-DNS_STRICT = "0"
-DNS_STRICT_NS = "0"
-#set according to box resources
-DENY_IP_LIMIT = "500"
-DENY_TEMP_IP_LIMIT = "250"
-# Enable login failure detection daemon (lfd)
-LF_DAEMON = "1"
-LF_CSF = "1"
-# This option uses IPTABLES_SAVE, IPTABLES_RESTORE and IP6TABLES_SAVE
-FASTSTART = "1"
-LFDSTART = "0"
-VERBOSE = "1"
-# This will drop packets that iptables has deemed INVALID
-PACKET_FILTER = "1"
-LF_LOOKUPS = "0"
-SMTP_BLOCK = "0"
-SMTP_ALLOWLOCAL = "1"
-SMTP_PORTS = "25,465,587"
-SMTP_ALLOWUSER = ""
-SMTP_ALLOWGROUP = "mail,mailman"
-#this is dealers choice
-#if tripped you see latency
-SYNFLOOD = "1"
-SYNFLOOD_RATE = "10000/s"
-SYNFLOOD_BURST = "1500"
-CONNLIMIT = ""
-PORTFLOOD = ""
-UDPFLOOD = "0"
-UDPFLOOD_LIMIT = "100/s"
-UDPFLOOD_BURST = "500"
-#add yourself
-UDPFLOOD_ALLOWUSER = "named"
-SYSLOG = "0"
-# Drop target for iptables rules. This can be set to either DROP ot REJECT.
-DROP = "DROP"
-DROP_LOGGING = "1"
-# Enable logging of dropped incoming connections from blocked IP addresses
-DROP_IP_LOGGING = "0"
-DROP_OUT_LOGGING = "0"
-DROP_ONLYRES = "0"
-DROP_NOLOG = "67,68,111,113,135:139,445,500,513,520"
-DROP_PF_LOGGING = "0"
-CONNLIMIT_LOGGING = "0"
-UDPFLOOD_LOGGING = "1"
-LOGFLOOD_ALERT = "1"
-WATCH_MODE = "0"
-#Reporting section and on down left as default
-</code></pre>
-<h4>Resetting Configuration</h4>
-<p>If you try to restart the service you see</p>
-<pre><code>/etc/init.d/csf restart
-WARNING: This script should ONLY be used by the init process. To restart csf use the CLI command &#39;csf -r&#39;
-</code></pre>
-<p>So</p>
-<pre><code>csf -r
-</code></pre>
-<p>Loads and reloads iptables configuration from main config file.</p>
-<h4>What do we end up with</h4>
-<p>IPTables Configuration Generated</p>
-
-<pre><code>
-Chain INPUT (policy DROP)
-target     prot opt source               destination         
-ACCEPT     tcp  --  172.16.104.2         0.0.0.0/0            tcp dpt:53
-ACCEPT     udp  --  172.16.104.2         0.0.0.0/0            udp dpt:53
-ACCEPT     tcp  --  172.16.104.2         0.0.0.0/0            tcp spt:53
-ACCEPT     udp  --  172.16.104.2         0.0.0.0/0            udp spt:53
-LOCALINPUT  all  --  0.0.0.0/0            0.0.0.0/0           
-ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
-SYNFLOOD   tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x17/0x02
-INVALID    tcp  --  0.0.0.0/0            0.0.0.0/0           
-ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:2280
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW udp dpt:53
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 8 limit: avg 5/sec burst 5
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 0 limit: avg 5/sec burst 5
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 11
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 3
-LOGDROPIN  all  --  0.0.0.0/0            0.0.0.0/0           
-
-Chain FORWARD (policy DROP)
-target     prot opt source               destination         
-
-Chain OUTPUT (policy DROP)
-target     prot opt source               destination         
-ACCEPT     tcp  --  0.0.0.0/0            172.16.104.2         tcp dpt:53
-ACCEPT     udp  --  0.0.0.0/0            172.16.104.2         udp dpt:53
-ACCEPT     tcp  --  0.0.0.0/0            172.16.104.2         tcp spt:53
-ACCEPT     udp  --  0.0.0.0/0            172.16.104.2         udp spt:53
-LOCALOUTPUT  all  --  0.0.0.0/0            0.0.0.0/0           
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:53
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:53
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            tcp spt:53
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            udp spt:53
-ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0           
-INVALID    tcp  --  0.0.0.0/0            0.0.0.0/0           
-ACCEPT     all  --  0.0.0.0/0            0.0.0.0/0            ctstate RELATED,ESTABLISHED
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:20
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:21
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:22
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:25
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:53
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:80
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:110
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:113
-ACCEPT     tcp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW tcp dpt:443
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW udp dpt:20
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW udp dpt:21
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW udp dpt:53
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW udp dpt:113
-ACCEPT     udp  --  0.0.0.0/0            0.0.0.0/0            ctstate NEW udp dpt:123
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 0
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 8
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 11
-ACCEPT     icmp --  0.0.0.0/0            0.0.0.0/0            icmptype 3
-LOGDROPOUT  all  --  0.0.0.0/0            0.0.0.0/0           
-
-Chain ALLOWIN (1 references)
-target     prot opt source               destination         
-ACCEPT     all  --  172.16.104.1         0.0.0.0/0           
-
-Chain ALLOWOUT (1 references)
-target     prot opt source               destination         
-ACCEPT     all  --  0.0.0.0/0            172.16.104.1        
-
-Chain DENYIN (1 references)
-target     prot opt source               destination         
-
-Chain DENYOUT (1 references)
-target     prot opt source               destination         
-
-Chain INVALID (2 references)
-target     prot opt source               destination         
-INVDROP    all  --  0.0.0.0/0            0.0.0.0/0            ctstate INVALID
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x3F/0x00
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x3F/0x3F
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x03/0x03
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x06/0x06
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x05/0x05
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x11/0x01
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x18/0x08
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags: 0x30/0x20
-INVDROP    tcp  --  0.0.0.0/0            0.0.0.0/0            tcpflags:! 0x17/0x02 ctstate NEW
-
-Chain INVDROP (10 references)
-target     prot opt source               destination         
-DROP       all  --  0.0.0.0/0            0.0.0.0/0           
-
-Chain LOCALINPUT (1 references)
-target     prot opt source               destination         
-ALLOWIN    all  --  0.0.0.0/0            0.0.0.0/0           
-DENYIN     all  --  0.0.0.0/0            0.0.0.0/0           
-
-Chain LOCALOUTPUT (1 references)
-target     prot opt source               destination         
-ALLOWOUT   all  --  0.0.0.0/0            0.0.0.0/0           
-DENYOUT    all  --  0.0.0.0/0            0.0.0.0/0           
-
-Chain LOGDROPIN (1 references)
-target     prot opt source               destination         
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:67
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:67
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:68
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:68
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:111
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:111
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:113
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:113
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpts:135:139
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpts:135:139
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:445
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:445
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:500
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:500
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:513
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:513
-DROP       tcp  --  0.0.0.0/0            0.0.0.0/0            tcp dpt:520
-DROP       udp  --  0.0.0.0/0            0.0.0.0/0            udp dpt:520
-LOG        tcp  --  0.0.0.0/0            0.0.0.0/0            limit: avg 30/min \
-                  burst 5 LOG flags 0 level 4 prefix "Firewall: *TCP_IN Blocked* "
-LOG        udp  --  0.0.0.0/0            0.0.0.0/0            limit: avg 30/min \
-                  burst 5 LOG flags 0 level 4 prefix "Firewall: *UDP_IN Blocked* "
-LOG        icmp --  0.0.0.0/0            0.0.0.0/0            limit: avg 30/min \
-                  burst 5 LOG flags 0 level 4 prefix "Firewall: *ICMP_IN Blocked* "
-DROP       all  --  0.0.0.0/0            0.0.0.0/0           
-
-Chain LOGDROPOUT (1 references)
-target     prot opt source               destination         
-LOG        tcp  --  0.0.0.0/0            0.0.0.0/0            \
-                  tcpflags: 0x17/0x02 limit: avg 30/min burst 5 LOG flags 8 level \
-                  4 prefix "Firewall: *TCP_OUT Blocked* "
-LOG        udp  --  0.0.0.0/0            0.0.0.0/0            \
-                  limit: avg 30/min burst 5 LOG flags 8 level 4 prefix \
-                  "Firewall: *UDP_OUT Blocked* "
-LOG        icmp --  0.0.0.0/0            0.0.0.0/0            \
-                  limit: avg 30/min burst 5 LOG flags 8 level 4 prefix \
-                  "Firewall: *ICMP_OUT Blocked* "
-DROP       all  --  0.0.0.0/0            0.0.0.0/0           
-
-Chain SYNFLOOD (1 references)
-target     prot opt source               destination         
-RETURN     all  --  0.0.0.0/0            0.0.0.0/0            limit: avg 10000/sec burst 1500
-LOG        all  --  0.0.0.0/0            0.0.0.0/0            limit: avg 30/min burst \
-                   5 LOG flags 0 level 4 prefix "Firewall: *SYNFLOOD Blocked* "
-DROP       all  --  0.0.0.0/0            0.0.0.0/0           
-</code></pre>
-
-<p>Scan of the server</p>
-<pre><code>nmap -A 172.16.104.131
-</code></pre>
-<pre><code>
-Starting Nmap 6.25 ( http://nmap.org ) at 2013-08-05 15:48 CDT
-Nmap scan report for 172.16.104.131
-Host is up (0.0011s latency).
-Not shown: 998 closed ports
-PORT    STATE SERVICE VERSION
-22/tcp  open  ssh     OpenSSH 6.0p1 Debian 4 (protocol 2.0)
-| ssh-hostkey: 1024 70:6f:5e:ff:20:46:59:89:e2:3c:b2:02:83:f2:5a:d9 (DSA)
-| 2048 dc:01:80:6e:3f:d3:e4:31:de:06:ec:81:b3:5d:96:d7 (RSA)
-|_256 87:8f:c4:30:5c:51:f5:26:78:bc:46:7f:ce:f2:11:f9 (ECDSA)
-111/tcp open  rpcbind 2-4 (RPC #100000)
-| rpcinfo: 
-|   program version   port/proto  service
-|   100000  2,3,4        111/tcp  rpcbind
-|   100000  2,3,4        111/udp  rpcbind
-|   100024  1          44942/tcp  status
-|_  100024  1          54275/udp  status
-Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
-
-Service detection performed. Please report any incorrect results at http://nmap.org/submit/ .
-Nmap done: 1 IP address (1 host up) scanned in 8.21 seconds
-</code></pre>
-
-<p>Firewall denials logged</p>
-<pre><code>Aug  5 15:48:13 wheezytester kernel: [ 7378.577396] \
-Firewall: *UDP_OUT Blocked* IN= OUT=eth0 SRC=172.16.104.131 DST=172.16.104.254 \
-LEN=328 TOS=0x00 PREC=0x00 TTL=64 ID=0 DF PROTO=UDP SPT=68 DPT=67 LEN=308 UID=0 GID=0 
-</code></pre>
-<p>Syslog analyzer</p>
-<pre><code>Aug  5 15:48:20 wheezytester lfd[2394]: SYSLOG check [zRX2uBS2T5C3gm33v9BCJDVK5]
-</code></pre><h4>Removal</h4>
-<p>Uninstalling csf and lfd...</p>
-
-<pre><code>
-Flushing chain `INPUT'
-
-<redacted for brevity>
-
-removed directory: `/var/lib/csf'
-
-...Done
-</code></pre>
-<h4>Thoughts</h4>
-<p>The CSF pack if pretty powerfull and I have a general idea of the usage experience.  I have<br>
-not tested this with Webmin or cPanel or any other wrapper.  I wouldn&#39;t use them if I had<br>
-the choice anyways.  I think this exists in a weird space as anyone who does operations <br>
-probably would feel limited by it, and anyone who has no experience in linux<br>
-administration would do well to side step it and learn the underlying tools directly.  I<br>
-appreciate what they have going here and I can tell a lot of thought went into it.<br>
-However, if I  were talking to myself as I was starting out with a personal Debian server<br>
-I would still not recommend going this route.  </p>
-
-<p>Instead I might recommend:</p>
-
-<ol>
-<li>disable root account remote access</li>
-<li>lock SSH down to key based auth</li>
-<li>whitelist your IP</li>
-<li>basic ip tables <a href="http://chasemp.github.io/2013/04/19/simple-iptables-uses/">setup</a></li>
-<li>avoid running sendmail, instead try <a href="http://untroubled.org/nullmailer/">nullmailer</a></li>
-<li>avoid running BIND </li>
-<li>use <a href="http://www.fail2ban.org/wiki/index.php/Main_Page">fail2ban</a></li>
-<li>Don&#39;t worry about portscanning, it&#39;s inevitable</li>
-<li>Try something like <a href="https://www.cloudflare.com/">CloudFlare&#39;s</a> free service</li>
-<li>Use Puppet and Git for deploying even small setups</li>
-<li>Backup up stuff outside of your server</li>
-<li>Use static site generators if feasible: <a href="http://jekyllrb.com/">jekyll</a> or <a href="https://github.com/Anomareh/mynt">mynt</a></li>
-</ol>
-
-<p>This is the basic approach that I prefer, but kudos to the CSF guys for putting<br>
-something out there to help people.  I can see using this in a lab to quickly reconfigure<br>
-a dummy host for attacking or tutorials.</p>
-<h4>Reference</h4>
-<p><a href="http://configserver.com/cp/csf.html">CSF</a><br>
-<a href="http://forum.configserver.com/">CSF Forum</a><br>
-<a href="http://www.reddit.com/r/linuxadmin">/r/linuxadmin</a></p>
-</p>
+times on <a href="http://reddit.com/r/linuxad
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/08/05/configserver-firewall-and-config-script/">Continue Reading</a></p>
             </div>
@@ -898,108 +196,14 @@ a dummy host for attacking or tutorials.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
-<p><a href="http://www.python.org/dev/peps/pep-0008/">PEP8</a> is the &#39;official&#39; style guide for Python.  The idea being if the Python<br>
-community can rally around a set of standards it makes the overall quality of<br>
-code in the community better.  At least that&#39;s my idea.</p>
-
-<p>The guide has now been updated.  Here are some things I found notable.</p>
-<h4>Style Guide Exclusions</h4>
-<p>Then:</p>
-<pre><code>-Two good reasons to break a particular rule:
-
--1. When applying the rule would make the code less readable, even for
--   someone who is used to reading code that follows the rules.
-</code></pre>
-<p>Now:</p>
-<pre><code>+In particular: do not break backwards compatibility just to comply with
-+this PEP!
-
-+Some other good reasons to ignore a particular guideline:
-+
-+1. When applying the guideline would make the code less readable, even
-+   for someone who is used to reading code that follows this PEP.
-
-+3. Because the code in question predates the introduction of the
-+   guideline and there is no other reason to be modifying that code.
-+
-+4. When the code needs to remain compatible with older versions of
-+   Python that don&#39;t support the feature recommended by the style guide.
-</code></pre><h4>Line Characters</h4>
-<p>Then:</p>
-<pre><code>-Limit all lines to a maximum of 79 characters.
-</code></pre>
-<p>Now:</p>
-<pre><code>+Aim to limit all lines to a maximum of 79 characters, but up to 99
-+characters is acceptable when it improves readability.
-
-+For flowing long blocks of text with fewer structural restrictions
-+(docstrings or comments), limiting the line length to 72 characters
-+is recommended.
-</code></pre><h4>UTF-8 Is The Future</h4>
-<p>Then:</p>
-
-<pre><code>
-   -Code in the core Python distribution should always use the ASCII or
-   -Latin-1 encoding (a.k.a. ISO-8859-1).  For Python 3.0 and beyond,
-   -UTF-8 is preferred over Latin-1, see PEP 3120.
-</code></pre>
-
-<p>Now:</p>
-
-<pre><code>
-   +Code in the core Python distribution should always use UTF-8 (or ASCII
-   +in Python 2).
-
-   +  Note that in Python 3, ``unicode`` and ``basestring`` no longer exist
-   +  (there is only ``str``) and a bytes object is no longer a kind of
-   +  string (it is a sequence of integers instead)
-</code></pre>
-<h4>Relative vs. Absolute Imports</h4>
-<p>Then:</p>
-
-<pre><code>
-   - Relative imports for intra-package imports are highly discouraged.
-   -  Always use the absolute package path for all imports.  Even now that
-   -  PEP 328 is fully implemented in Python 2.5, its style of explicit
-   -  relative imports is actively discouraged; absolute imports are more
-   -  portable and usually more readable.
-</code></pre>
-
-<p>Now:</p>
-
-<pre><code>
-   + Absolute imports are recommended, as they are usually more readable
-   +  and tend to be better behaved (or at least give better error
-   +  messages) if the import system is incorrectly configured (such as
-   +  when a directory inside a package ends up on ``sys.path``)::
-   +
-   +    import mypkg.sibling
-   +    from mypkg import sibling
-   +    from mypkg.sibling import example
-   +
-   +  However, explicit relative imports are an acceptable alternative to
-   +  absolute imports, especially when dealing with complex package layouts
-   +  where using absolute imports would be unecessarily verbose::
-   +
-   +    from . import sibling
-   +    from .sibling import example
-</code></pre>
-<h4>Other Lessons Learned</h4>
-<ul>
-<li>Use &#39;def&#39; and not named lambda&#39;s</li>
-<li>Backwards compability is only expected for public interfaces</li>
-<li>Use &#39;&#39;.Join() over concatenation with performance and portablity in mind</li>
-<li>Use &#39;with&#39; statements with local resources.  try/finally is still ok.</li>
-<li>Don&#39;t break old code just to apply the style guide on principle.</li>
-<li>Python3.x does not allow mixing tabs and spaces</li>
-</ul>
-<h4>References</h4>
-<p><a href="http://hg.python.org/peps/rev/fb24c80e9afb">PEP8 Revision</a><br>
-<a href="http://hg.python.org/peps/file/fb24c80e9afb/pep-0008.txt">PEP8 Full</a></p>
-</p>
+                <p>
+                       
+                           <h4>Preamble</h4>
+<p><a href="http://www.python.org/dev/peps/pep-0008/">PEP8</a> is the &#39;official&#39; style guide for Python.  The idea being if 
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/08/01/PEP8-Guide-Updates/">Continue Reading</a></p>
             </div>
@@ -1013,23 +217,15 @@ code in the community better.  At least that&#39;s my idea.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>OSX &lt;10.6 caches DNS.  Which is very helpful unless you move servers between<br>
-VLAN&#39;s a lot.  Then you have to clear your cache often.</p>
-<h4>details on the mDNSResponder</h4><pre><code>man mDNSResponder
-</code></pre>
-<pre><code>
-     mDNSResponder (also known as mdnsd on some systems) is a daemon invoked at boot time to
-     implement Multicast DNS and DNS Service Discovery. On Mac OS X 10.6 (Snow Leopard),
-     mDNSResponder is also the system-wide Unicast DNS Resolver.
-</code></pre>
-<h4>Clear Cache</h4><pre><code>sudo killall -HUP mDNSResponder
-</code></pre><h4>Alias</h4><pre><code>alias cdns=&#39;sudo killall -HUP mDNSResponder&#39;
-</code></pre><h4>Reference</h4>
-<p><a href="http://support.apple.com/kb/ht5343">apple KB</a></p>
-</p>
+VLAN&#39;s a lot.  Then you have to clear you
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/29/OSX-DNS-Cache-Clearing/">Continue Reading</a></p>
             </div>
@@ -1043,234 +239,15 @@ VLAN&#39;s a lot.  Then you have to clear your cache often.</p>
             </div>
             
             <div class="body">
-                <p><h3>Preamble</h3>
+                <p>
+                       
+                           <h3>Preamble</h3>
 <p>Python&#39;s <a href="https://phrac.deviantart.net/D3628">import</a> system is one of the things that I<br>
-enjoy about the language. Exploring it is time well spent.  This is somewhat of a practical<br>
-walk through.  The import system goes pretty deep. There are finders and loaders and all <br>
-kinds of awesome details I&#39;m not getting into.  This is not exhaustive but hopefully is<br>
-useful enough to be worthwhile.</p>
-<h4>The Terrain</h4>
-<p>I am using the interactive <a href="http://docs.python.org/2/tutorial/interpreter.html">interpreter</a> and making basic modules are demonstrated.</p>
-
-<pre><code>
-import sys
-sys.version
-'2.7.1 (r271:86832, Aug  5 2011, 03:30:24) \n[GCC 4.2.1]'
-</code></pre>
-<h3>Easter Eggs</h3>
-<pre><code>
->>> from __future__ import braces
-  File "<stdin>", line 1
-SyntaxError: not a chance
->>> 
-</code></pre>
-
-<pre><code>
->>> import this
-The Zen of Python, by Tim Peters
-
-Beautiful is better than ugly.
-Explicit is better than implicit.
-Simple is better than complex.
-Complex is better than complicated.
-Flat is better than nested.
-Sparse is better than dense.
-Readability counts.
-Special cases aren't special enough to break the rules.
-Although practicality beats purity.
-Errors should never pass silently.
-Unless explicitly silenced.
-In the face of ambiguity, refuse the temptation to guess.
-There should be one-- and preferably only one --obvious way to do it.
-Although that way may not be obvious at first unless you're Dutch.
-Now is better than never.
-Although never is often better than *right* now.
-If the implementation is hard to explain, it's a bad idea.
-If the implementation is easy to explain, it may be a good idea.
-Namespaces are one honking great idea -- let's do more of those!
-</code></pre>
-
-<pre><code>
->>> import antigravity
-</code></pre>
-
-<p>You can see it <a href="http://xkcd.com/353/">here</a> but here is the code:</p>
-
-<pre><code>
-import webbrowser
-webbrowser.open("http://xkcd.com/353/")
-</code></pre>
-
-<pre><code>
->>> import __hello__
-Hello world...
-</code></pre>
-<h3>Importing a module</h3>
-<p>&#39;import&#39; is a python keyword.</p>
-
-<pre><code>
->>> import keyword
->>> keyword.iskeyword('import')
-True
->>> 
-</code></pre>
-
-<p>When you say:</p>
-<pre><code>import urllib
-</code></pre>
-<p>Python does:</p>
-
-<p>sys.modules: looks for a cached module</p>
-
-<p>sys meta_path and name lookup magic here</p>
-<pre><code>Quote:
-
-&lt;pre&gt;&lt;code&gt;
-This allows meta hooks to override sys.path processing,
-frozen modules, or even built-in modules
-&lt;/code&gt;&lt;/pre&gt;
-</code></pre>
-<p>sys.path: Looks for module by name</p>
-
-<p>--&gt; <a href="http://docs.python.org/dev/reference/import.html#loaders">Loads</a> the module or raises an <a href="http://docs.python.org/dev/library/exceptions.html#ImportError">ImportError</a></p>
-
-<pre><code>
-The importlib implementation avoids using the return value directly.
-Instead, it gets the module object by looking the module name up in sys.modules.
-The indirect effect of this is that an imported module may replace itself in sys.modules.
-This is implementation-specific behavior that is not guaranteed to work in other Python implementations.
-</code></pre>
-
-<pre><code>
->>> if 'urllib' in sys.modules:
-...    print 'yes!'
-... 
-yes!
->>>
-</code></pre>
-
-<p>&#39;urllib&#39; is now part of the namespace of my program and references the stdlib module.</p>
-<h4>Where did I find the module using sys.path?</h4>
-<pre><code>
->>> print urllib.__file__
-/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib.pyc
-</code></pre>
-<h3>Import and Namespace</h3><h4>Top level imports are global variables</h4>
-<p>Before importing os:</p>
-
-<pre><code>
->>> print globals()
-{'__builtins__': <module '__builtin__' (built-in)>, '__name__': '__main__', '__file__': 'test.py', '__doc__': None, '__package__': None}
-</code></pre>
-
-<p>After importing os:</p>
-
-<pre><code>
->>> import os
->>> print globals()
-
-{'__builtins__': <module '__builtin__' (built-in)>, '__file__': 'test.py', '__package__': None, '__name__': '__main__', 'os': <module 'os' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/os.pyc'>, '__doc__': None}
-</code></pre>
-<h4>imports inside a function are local</h4>
-<p>json does not show up in my global dict even though I have imported it. Because<br>
-it is contained in the local namespace of my foo() function.</p>
-
-<pre><code>
->>> def foo():
-...     import json
-... 
->>> foo()
->>> print globals()
-
-{'__builtins__': <module '__builtin__' (built-in)>, '__name__': '__main__', 'foo': <function foo at 0x106b0f9b0>, '__doc__': None, '__package__': None}
-
-</code></pre>
-
-<p>Here json is shown in the local dictionary within foo(), but does not show up in globals.</p>
-
-<pre><code>
->>> def foo():
-...     import json
-...     print locals()
-... 
->>> foo()
-{'json': <module 'json' from '/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/json/__init__.pyc'>}
->>> print globals()
-{'__builtins__': <module '__builtin__' (built-in)>, '__name__': '__main__', 'foo': <function foo at 0x10a5fd9b0>, '__doc__': None, '__package__': None}
->>> 
-</code></pre>
-<h3>modules are objects</h3>
-<p>Exploring via <a href="http://docs.python.org/2/library/functions.html#dir">dir</a> and <a href="http://docs.python.org/2/library/functions.html#type">type</a></p>
-
-<pre><code>
->>> import re
->>> dir(re)
-['DEBUG', 'DOTALL', 'I', 'IGNORECASE', 'L', 'LOCALE', 'M', 'MULTILINE', 'S', 'Scanner', 
-'T', 'TEMPLATE', 'U', 'UNICODE', 'VERBOSE', 'X', '_MAXCACHE', '__all__', '__builtins__', 
-'__doc__', '__file__', '__name__', '__package__', '__version__', '_alphanum', '_cache',
-'_cache_repl', '_compile', '_compile_repl', '_expand', '_pattern_type', '_pickle', '_subx',
-'compile', 'copy_reg', 'error', 'escape', 'findall', 'finditer', 'match', 'purge', 'search',
-'split', 'sre_compile', 'sre_parse', 'sub', 'subn', 'sys', 'template']
->>> 
->>> type(re)
-<type 'module'>
-</code></pre>
-
-<p>You can access their attributes.</p>
-
-<pre><code>
->>> import re
->>> print re.__doc__
-Support for regular expressions (RE).
-
-This module provides regular expression matching operations similar to
-those found in Perl.  It supports both 8-bit and Unicode strings; both
-the pattern and the strings being processed can contain null bytes and
-characters outside the US ASCII range.
-
-Regular expressions can contain both special and ordinary characters.
-Most ordinary characters, like "A", "a", or "0", are the simplest
-regular expressions; they simply match themselves.  You can
-concatenate ordinary characters, so last matches the string 'last'.
-
---- excluded for brevity ---
-</code></pre>
-<h3><strong>future</strong> allows use of future features</h3><h4><a href="http://docs.python.org/2/reference/simple_stmts.html#future-statements"><strong>future</strong></a> is not at its heart a module import</h4>
-<pre><code>
-A future statement is a directive to the compiler that a particular module
-should be compiled using syntax or semantics that will be available in a
-specified future release of Python. The future statement is intended to ease
-migration to future versions of Python that introduce incompatible changes to
-the language. It allows use of the new features on a per-module basis before
-the release in which the feature becomes standard.
-</code></pre>
-
-<ul>
-<li>future statements need to be at the top of the file</li>
-<li>future statements change how your module is parsed</li>
-</ul>
-
-<p>That&#39;s why this namespace import seems funky.  It&#39;s not a standard import&#39;</p>
-
-<pre><code>
->>> from __future__ import print_function
-#is still 'print' and not 'print_function' call
-print('wtf')
-</code></pre>
-<h4>Reference</h4>
-<p><a href="http://ericsnowcurrently.blogspot.com/p/python-imports.html">imports one</a><br>
-<a href="http://utcc.utoronto.ca/%7Ecks/space/blog/python/ImportTricks">imports two</a><br>
-<a href="http://docs.python.org/2/library/imp.html">imp docs</a><br>
-<a href="http://pymotw.com/2/imp/">imp module motw</a><br>
-<a href="http://www.slideshare.net/audreyr/python-tricks-that-you-cant-live-without">python-tricks-that-you-cant-live-without</a><br>
-<a href="http://blog.dowski.com/2008/07/31/customizing-the-python-import-system/">customizing-the-python-import-system</a><br>
-<a href="http://docs.python.org/2/library/__future__.html">future statements</a><br>
-<a href="http://docs.python.org/2/reference/simple_stmts.html#future-statements">future statements summary</a><br>
-<a href="http://stackoverflow.com/questions/7075082/what-is-future-in-python-used-for-and-how-when-to-use-it-and-how-it-works">so future staments</a><br>
-<a href="http://www.python.org/dev/peps/pep-0420/">PEP 420 -- Implicit Namespace Packages</a></p>
-</p>
+enjoy about the langu
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/26/getting-to-know-python-import/">Continue Reading</a></p>
             </div>
@@ -1284,9 +261,11 @@ print('wtf')
             </div>
             
             <div class="body">
-                <p><object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object></p>
+                <p>
+                       <object width="480" height="385"><param name="movie" value="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1"></param><param name="allowFullScreen" value="true"></param><param name="allowscriptaccess" value="always"></param><embed src="http://www.youtube.com/v/HU92ryHp_Fg&amp;hl=en_US&amp;fs=1" type="application/x-shockwave-flash" allowscriptaccess="always" allowfullscreen="true" width="480" height="385"></embed></object>
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/26/happy-sysadmin-day/">Continue Reading</a></p>
             </div>
@@ -1300,9 +279,11 @@ print('wtf')
             </div>
             
             <div class="body">
-                <p><img src="/assets/images/edge/edgeshow.png" alt="edge" title="edge promo"></p>
+                <p>
+                       <img src="/assets/images/edge/edgeshow.png" alt="edge" title="edge promo">
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/25/ubuntu-edge/">Continue Reading</a></p>
             </div>
@@ -1316,12 +297,13 @@ print('wtf')
             </div>
             
             <div class="body">
-                <p><h4>remove all addresses</h4><pre><code>ip addr flush dev eth0
-</code></pre><h4>Reference</h4>
-<p><a href="http://www.linuxfoundation.org/collaborate/workgroups/networking/iproute2">iproute2 docs</a></p>
-</p>
+                <p>
+                       
+                           <h4>remove all addresses</h4>
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/25/iproute2-usage/">Continue Reading</a></p>
             </div>
@@ -1335,70 +317,16 @@ print('wtf')
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>If the parent directory for logging is world writable and<br>
 not owned by root logrotate needs to know what user should<br>
-be used to rotate.</p>
-<h4>Log Dir</h4>
-<pre><code>
-me@vm#ls -al /var/log/myapp/
-total 1728
-drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .
-</code></pre>
-<h4>My logrotate:</h4>
-<pre><code>
-/var/log/myapp/*.log {
-
-    weekly
-    rotate 4
-    compress
-
-    delaycompress
-    missingok
-    create 644 appuser appuser
-}
-</code></pre>
-<h4>Manual logrotate</h4><pre><code>/usr/sbin/logrotate --verbose /etc/logrotate.conf
-</code></pre><h4>Looks Like</h4>
-<pre><code>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
-empty log files are rotated, old logs are removed
-considering log /var/log/myapp/default.log
-
-error: skipping "/var/log/myapp/default.log" because parent directory has insecure permissions
-(It's world writable or writable by group which is not "root") Set "su" directive in 
-config file to tell logrotate which user/group should be used for rotation
-</code></pre>
-<h4>Telling logrotate to do the &#39;right thing&#39;</h4>
-<pre><code>
-/var/log/myapp/*.log {
-    su appuser appuser #<--NEW
-    weekly
-    rotate 4
-    compress
-
-    delaycompress
-    missingok
-    create 644 appuser appuser
-}
-</code></pre>
-<h4>Manually running logrotate post fix</h4>
-<pre><code>
-rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
-empty log files are rotated, old logs are removed
-switching euid to 108 and egid to 108
-considering log /var/log/myapp/default.log
-  log needs rotating
-</code></pre>
-<h4>Other solution</h4>
-<p>Depending on why you need the above permissions on your log directory.  This<br>
-may not be the way to go.  But if you can less permissive is always better.</p>
-<pre><code>chmod 0640 /var/log/myapp/
-</code></pre><h4>Reference</h4>
-<p><a href="http://linux.die.net/man/8/logrotate">logrotate man</a></p>
-</p>
+be u
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/24/su-directive-logrotate/">Continue Reading</a></p>
             </div>
@@ -1412,9 +340,11 @@ may not be the way to go.  But if you can less permissive is always better.</p>
             </div>
             
             <div class="body">
-                <p>I got this email today:</p>
+                <p>
+                       I got this email today:
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/22/ubuntuforums.org-hacked-bummer/">Continue Reading</a></p>
             </div>
@@ -1428,72 +358,15 @@ may not be the way to go.  But if you can less permissive is always better.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Debian Wheezy is on mcollective 2.0.  There are several agents that require<br>
-at least 2.2.  You can download from the official PuppetLabs repository version <br>
-but for Wheezy there are several bugs.  </p>
-<h4>Dowloading official Package</h4>
-<p>Do this:</p>
-
-<p><a href="http://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html">http://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html</a></p>
-<pre><code>wget http://apt-enterprise.puppetlabs.com/puppetlabs-enterprise-release-extras_1.0-2_all.deb
-sudo dpkg -i puppetlabs-enterprise-release-extras_1.0-2_all.deb
-sudo apt-get update
-aptitude install mcollective
-</code></pre>
-<p>You will notice it doesn&#39;t work.  Suck.  Ok let&#39;s build our own.</p>
-<h4>Bug #1 <a href="http://projects.puppetlabs.com/issues/16572">fails to run on debian/ubuntu with ruby 1.9</a></h4>
-<p>The system default for ruby is 1.9.  Mcollective has ruby 1.8 paths hardcoded in several places, but<br>
-the main binary uses the environment settings.  This mismatch causes issues.</p>
-<h4>Bug demonstration</h4>
-<p>/etc/init.d/mcollective restart</p>
-
-<pre><code>
-/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- mcollective (LoadError)
-        from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
-    from /usr/sbin/mcollectived:3:in `<main>'
-</code></pre>
-<h4>mcollective puts files under ruby 1.8</h4><pre><code>dpkg -L mcollective-common
-</code></pre>
-<pre><code>
-/usr/lib/ruby/1.8/mcollective
-/usr/lib/ruby/1.8/mcollective/logger
-/usr/lib/ruby/1.8/mcollective/logger/syslog_logger.rb
-/usr/lib/ruby/1.8/mcollective/logger/base.rb
-/usr/lib/ruby/1.8/mcollective/logger/console_logger.rb
-/usr/lib/ruby/1.8/mcollective/logger/file_logger.rb
-</code></pre>
-<h4>But Wheezy uses 1.9</h4><pre><code>ruby 1.9.3p194 (2012-04-20 revision 35410) [x86_64-linux]
-</code></pre><h4>Simple Fix</h4>
-<p>vi bin/mcollectived</p>
-
-<p>This:</p>
-<pre><code>#!/usr/bin/env ruby 
-</code></pre>
-<p>Becomes:</p>
-<pre><code>#!/usr/bin/ruby1.8
-</code></pre><h4>Bug 2: <a href="http://projects.puppetlabs.com/issues/17804">ubuntu/debian mcollective missing package dependencies</a></h4>
-<p>Depencies are not complete for Debian.</p>
-<h4>Looks Like</h4><pre><code>/usr/lib/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:36:in
-`gem_original_require&#39;: no such file to load - -- stomp
-</code></pre><h4>Simple Fix</h4><pre><code>sudo apt-get install ruby-stomp
-</code></pre><h4>Stomp Connector Not Included</h4>
-<p>This is not my code, it is from somewhere in the mcollective world.  Including here<br>
-for completeness.</p>
-
-<p>mcollective/connectors/stomp.rb</p>
-
-<p><a href="https://raw.github.com/chasemp/bin/master/mcollective/stomp.rb">stomp.rb</a></p>
-<h4>Reference</h4>
-<p><a href="http://askubuntu.com/questions/15211/saving-deb-files-from-repositories-to-a-custom-location-for-installing-offline">download debs</a><br>
-<a href="http://projects.puppetlabs.com/issues/17804">puppet bug</a><br>
-<a href="https://groups.google.com/forum/#!topic/mcollective-users/5o8QT_myk0M">google groups info</a><br>
-<a href="http://serverfault.com/questions/386646/mcollective-cannot-load-the-stomp-library">sf mc info</a><br>
-<a href="https://github.com/puppetlabs/marionette-collective/tree/master/spec">mc on gh</a><br>
-<a href="https://groups.google.com/forum/#!msg/puppet-users/oYLo9VuZtTk/OCwyAWz-xc4J">google groups info two</a></p>
-</p>
+at least 2.2.  You can download from the official
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/16/mcollective-bugs-debian-wheezy/">Continue Reading</a></p>
             </div>
@@ -1507,54 +380,17 @@ for completeness.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Some Rake files have built in logic to make a debian binary. </p>
 <h4>Mcollective</h4>
 <p>A good example:</p>
-<pre><code>git clone https://github.com/puppetlabs/marionette-collective
-cd marionette-collective/
-</code></pre><h4>Getting Packages</h4><pre><code>aptitude install rake \
-build-essential 
-rubygem \
-pdebuild-cross \
-devscripts \
-fakeroot \
-dpatch
-</code></pre><h4>Making Debian Package</h4>
-<p>rake deb</p>
-<h4>Looks Like</h4>
-<pre><code>
-rm -r build
-rm -r doc
-Parsing sources...
 
-<omitted>
-
-dpkg-deb: building package `mcollective' in `../mcollective_2.3.2-1_all.deb'.
-dh_gencontrol -pmcollective-client  
-dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
-dh_md5sums -pmcollective-client 
-dh_builddeb -pmcollective-client 
-dpkg-deb: building package `mcollective-client' in `../mcollective-client_2.3.2-1_all.deb'.
-dh_gencontrol -pmcollective-common  
-dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
-dh_md5sums -pmcollective-common 
-dh_builddeb -pmcollective-common 
-dpkg-deb: building package `mcollective-common' in `../mcollective-common_2.3.2-1_all.deb'.
-dh_gencontrol -pmcollective-doc  
-dpkg-gencontrol: warning: File::FcntlLock not available; using flock which is not NFS-safe
-dh_md5sums -pmcollective-doc 
-dh_builddeb -pmcollective-doc 
-dpkg-deb: building package `mcollective-doc' in `../mcollective-doc_2.3.2-1_all.deb'.
- dpkg-genchanges  >../mcollective_2.3.2-1_amd64.changes
-dpkg-genchanges: including full source code in upload
- dpkg-source -i --after-build mcollective-2.3.2
-dpkg-buildpackage: full upload (original source is included)
-</code></pre>
-<h4>Normal install</h4><pre><code>dpkg -i mcollective_2.3.2-1_all.deb
-</code></pre></p>
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/12/making-debs-with-rake/">Continue Reading</a></p>
             </div>
@@ -1568,33 +404,20 @@ dpkg-buildpackage: full upload (original source is included)
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>mcollective-isms.  </p>
 <h4>Find all hosts</h4>
 <p>Create an shortcut</p>
 
 <p>/usr/local/bin/mc-find-hosts</p>
 
-<pre><code>
-#!/bin/bash
-if [ "$1" == "" ]; then
-    /usr/bin/mco find --wc mcollective
-else
-    /usr/bin/mco find $@
 
-</code></pre>
-<pre><code>mc-find-hosts
-</code></pre><h4>Find host by name matching</h4><pre><code>mc-find-hosts --with-id /foo/
-</code></pre><h4>Find hosts by puppet class</h4><pre><code>/usr/sbin/mc-find-hosts --with-class &lt;class_name&gt; | sort
-</code></pre><h4>Query service status by class</h4><pre><code>mco service --with-class /apache/ apache2 status
-</code></pre><h4>Getting stats about the service itself</h4><pre><code>mco rpc rpcutil daemon_stats
-</code></pre><h4>Restarting a service</h4><pre><code>mco service --with-identity &lt;host&gt; &lt;service&gt; restart
-</code></pre><h4>Find agents directory</h4><pre><code>sudo find / -name rpcutil.ddl -exec dirname {} \;
-</code></pre><h4>Query a fact</h4><pre><code>mco facts &lt;fact_name&gt;
-</code></pre><h4>Query Puppet Status and get JSON in return</h4><pre><code>mco rpc puppet status -j
-</code></pre></p>
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/10/memcollective-tricks/">Continue Reading</a></p>
             </div>
@@ -1608,11 +431,13 @@ else
             </div>
             
             <div class="body">
-                <p>The first and second results for &#39;linux emoji font&#39; are from<br>
+                <p>
+                       The first and second results for &#39;linux emoji font&#39; are from<br>
 the same person, and in total opposition.  I don&#39;t know this<br>
-person at all; I just found the rankings humorous.</p>
+person at all; I just found the rankings humorous.
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/07/08/when-search-tells-the-story/">Continue Reading</a></p>
             </div>
@@ -1626,64 +451,17 @@ person at all; I just found the rankings humorous.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Getting puppetmaster 3.0 on Debian (still squeeze)</p>
 
 <p>I am trying to test and I keep seeing:</p>
-<pre><code>Syntax error at &#39;(&#39;; expected &#39;)&#39; at /repo/modules/apache/manifests/module.pp:34 on node test
-</code></pre>
-<p>I have seen this before and I know it is a result of manifests written for &gt;3.0, at least for this</p>
 
-<p>specific issue.  That error is rather generic in general.</p>
-<h4>Can I use backports?</h4><pre><code>aptitude update
-aptitude -t squeeze-backports install puppetmaster
-
---&gt; puppet: Depends: puppet-common (= 2.6.2-5+squeeze6) but 2.6.2-5+squeeze8 is to be installed.
-</code></pre>
-<p>No, backports is still pretty old.</p>
-<h4>Using the Official Repo</h4>
-<p>Luckily, PuppetEnterprises publishes a deb for adding their repo.  Similar to what rpmforge does for any<br>
-CentOS folks.</p>
-<pre><code>wget http://apt.puppetlabs.com/puppetlabs-release-sqeeze.deb
-</code></pre>
-<p>--&gt; 2013-06-27 16:11:21 (159 MB/s) - “puppetlabs-release-squeeze.deb” saved [3440/3440]</p>
-<pre><code>dpkg -i puppetlabs-release-squeeze.deb 
-cat /etc/apt/sources.list.d/puppetlabs.list
-</code></pre>
-<pre><code>
-# Puppetlabs products
-deb http://apt.puppetlabs.com squeeze main
-deb-src http://apt.puppetlabs.com squeeze main
-
-# Puppetlabs dependencies
-deb http://apt.puppetlabs.com squeeze dependencies
-deb-src http://apt.puppetlabs.com squeeze dependencies
-
-# Puppetlabs devel (uncomment to activate)
-# deb http://apt.puppetlabs.com squeeze devel
-# deb-src http://apt.puppetlabs.com squeeze devel
-</code></pre>
-<pre><code>sudo aptitude update
-apt-cache show puppetmaster
-
---&gt; Package: puppetmaster
---&gt; Version: 2.6.2-5+squeeze6
-
-
-aptitude install puppetmaster
-
---&gt; Package: puppetmaster
---&gt; ...
---&gt; Version: 3.2.2-1puppetlabs1
-</code></pre>
-<p>Reference:<br>
-<a href="http://unix.stackexchange.com/questions/39261/how-to-see-package-version-without-install">view available packages</a><br>
-<a href="http://docs.puppetlabs.com/guides/puppetlabs####%20package####%20repositories.html">puppet repo</a><br>
-<a href="http://packages.debian.org/search?keywords=puppetmaster&amp;searchon=names&amp;section=all&amp;suite=squeeze-backports">backports search</a><br>
-<a href="http://backports.debian.org/Instructions/">backports howto</a></p>
-</p>
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/06/27/puppetmaster3-on-debian/">Continue Reading</a></p>
             </div>
@@ -1697,184 +475,16 @@ aptitude install puppetmaster
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Throwing some load at your setup and seeing how it reacts.</p>
 
-<p>There is a difference between problem solving, and solving problems <em>at scale</em>.</p>
-<h4>Get some tools</h4>
-<p>On your user host:</p>
-<pre><code>aptitude install httping seige apache2 bc
-</code></pre>
-<p>On your webserver:</p>
-<pre><code>aptitude install htop
-</code></pre>
-<p>Seige is a lowkey load test tool, httping is nice for measuring response times in a <br>
-consistent way while load testing, and apache is because we want the apache benchmark<br>
-tool or &#39;ab&#39;.</p>
-<pre><code>root@&lt;lhost&gt;:~# which ab
-/usr/bin/ab
-</code></pre><h4>Launching a test with seige: 3 concurrent users with 3 connections</h4><pre><code>~# siege -b -c 3 -r 3 &lt;webserver&gt;:80
-</code></pre>
-<pre><code>
-** SIEGE 2.70
-** Preparing 3 concurrent users for battle.
-The server is now under siege...
-HTTP/1.1 200   0.01 secs:     146 bytes ==> /
-HTTP/1.1 200   0.01 secs:     146 bytes ==> /
-HTTP/1.1 200   0.01 secs:     146 bytes ==> /
-HTTP/1.1 200   0.00 secs:     146 bytes ==> /
-HTTP/1.1 200   0.00 secs:     146 bytes ==> /
-HTTP/1.1 200   0.00 secs:     146 bytes ==> /
-HTTP/1.1 200   0.00 secs:     146 bytes ==> /
-HTTP/1.1 200   0.00 secs:     146 bytes ==> /
-HTTP/1.1 200   0.00 secs:     146 bytes ==> /
-done.
-Transactions:                  9 hits
-Availability:             100.00 %
-Elapsed time:               0.01 secs
-Data transferred:           0.00 MB
-Response time:              0.00 secs
-Transaction rate:         900.00 trans/sec
-Throughput:             0.13 MB/sec
-Concurrency:                3.00
-Successful transactions:           9
-Failed transactions:               0
-Longest transaction:            0.01
-Shortest transaction:           0.00
-</code></pre>
-
-<p>This is not a great indicator of performance under load.</p>
-
-<p>When I raise it to 3000 users at 10 requests I start seeing:</p>
-<pre><code>descriptor table full sock.c:108: Too many open files
-</code></pre>
-<p>So I raise the descriptor limit.</p>
-<pre><code>cat /proc/sys/fs/file-max
-1645928
-</code></pre>
-<p>You can see your limits using:</p>
-<pre><code>ulimit -Sn
-ulimit -Hn
-</code></pre>
-<p>Now I see too much of:</p>
-<pre><code>socket: connection timed out
-[error] socket: unable to connect sock.c:222: Operation already in progress
-</code></pre>
-<p>So I&#39;m not too happy with seige.  For some tests it seems ok.  For large test pools it hasn&#39;t <br>
-won me over.  Then again the launching host isn&#39;t that great so maybe it&#39;s on my side.</p>
-
-<p>A good compromise I found was:</p>
-<pre><code>siege -b -c 1000 -r 3 &lt;webserver&gt;:80
-</code></pre><h4>Trying ab...</h4>
-<p>A thousand concurrent threads with a thousand requests.</p>
-<pre><code>ab -n 1000 -c 1000 http://&lt;webserver&gt;/
-</code></pre>
-<pre><code>
-This is ApacheBench, Version 2.3 <$Revision: 655654 $>
-Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
-Licensed to The Apache Software Foundation, http://www.apache.org/
-
-Benchmarking <webserver> (be patient)
-Completed 100 requests
-Completed 200 requests
-Completed 300 requests
-Completed 400 requests
-Completed 500 requests
-Completed 600 requests
-Completed 700 requests
-Completed 800 requests
-Completed 900 requests
-Completed 1000 requests
-Finished 1000 requests
-
-
-Server Software:        Apache/2.2.16
-Server Hostname:        <webserver>
-Server Port:            80
-
-Document Path:          /
-Document Length:        177 bytes
-
-Concurrency Level:      1000
-Time taken for tests:   0.656 seconds
-Complete requests:      1000
-Failed requests:        0
-Write errors:           0
-Total transferred:      453000 bytes
-HTML transferred:       177000 bytes
-Requests per second:    1523.82 [#/sec] (mean)
-Time per request:       656.246 [ms] (mean)
-Time per request:       0.656 [ms] (mean, across all concurrent requests)
-Transfer rate:          674.11 [Kbytes/sec] received
-
-Connection Times (ms)
-              min  mean[+/-sd] median   max
-Connect:       11   15   2.9     15      21
-Processing:     6  158 209.8     32     631
-Waiting:        5  158 209.9     32     631
-Total:         20  174 210.7     53     646
-
-Percentage of the requests served within a certain time (ms)
-  50%     53
-  66%    234
-  75%    237
-  80%    238
-  90%    642
-  95%    645
-  98%    646
-  99%    646
- 100%    646 (longest request)
-</code></pre>
-
-<p>ab gives great data, and can generate a lot of load with minimal impact on<br>
-the launching system.</p>
-
-<p>I eventually settled on:</p>
-<pre><code>ab -k -n 2000000 -c 50 http://&lt;webserver&gt;/
-</code></pre>
-<p>Use http-keepalive (for consistency with production) at 2 million requests making 50<br>
-simultaneously.  These numbers were hitting a load of 8+ on my test server.  Anything <br>
-averaging over 3.5 in production would be flagged to look at, but load testing is all<br>
-about pushing limits.  </p>
-
-<p>Getting macro numbers from ab.  Run your tests a lot and look at overall numbers.</p>
-<pre><code>for i in {1..3}; do ab -n 1000 -c 1000 http://&lt;webserver&gt;/ &gt;&gt; test.txt; done
-</code></pre>
-<p>What is the average response time for request in the 95th percentile?</p>
-<pre><code>grep 95% test.txt | awk &#39;{total = total + $2}END{print total}&#39; 
-
-4556 #&lt;-- total number
-</code></pre>
-<p>I know I made 3 passes so my average 95th percentile response is:</p>
-<pre><code>echo &#34;4556 / 3&#34; | bc
-
-1518 (ms)
-</code></pre>
-<p>This number is of limited value but adding your 95% through 100% and figuring out what<br>
-your response times are for 95th perctile and above can be useful.</p>
-
-<p>Something like:</p>
-<pre><code>grep -A 3 95% test.txt | awk &#39;{total = total + $2}END{print total}&#39;
-</code></pre><h4>httping</h4>
-<p>I like using httping in the background or on another host as a consistent measure of my<br>
-response times.</p>
-<pre><code>httping -c 10 &lt;webserver&gt; 
-</code></pre>
-<p>This makes 10 requests that look like:</p>
-<pre><code>connected to &lt;webserver&gt;:80, seq=0 time=0.97 ms 
-</code></pre>
-<p>I like to flood the host with requests:</p>
-<pre><code>httping &lt;webserver&gt;  -f
-</code></pre><h4>Reference</h4>
-<p><a href="http://linuxaria.com/article/put-your-site-under-siege?lang=en">using seige</a><br>
-<a href="http://www.cyberciti.biz/faq/linux-increase-the-maximum-number-of-open-files/">increase file desc</a><br>
-<a href="http://www.serverwatch.com/tutorials/article.php/3936526/Load-Testing-and-Benchmarking-With-Siege.htm">using seige 2</a><br>
-<a href="http://httpd.apache.org/docs/2.2/programs/ab.html">using ab</a><br>
-<a href="http://www.joedog.org/siege-home/">seige home</a><br>
-<a href="http://linux.die.net/man/1/siege">seige man</a></p>
-</p>
+<p>There is a difference between problem solving, and solving pro
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/06/25/simple-site-loadtesting/">Continue Reading</a></p>
             </div>
@@ -1888,9 +498,11 @@ response times.</p>
             </div>
             
             <div class="body">
-                <p><img src="/assets/images/carna.gif" alt="carna" title="botnet map"></p>
+                <p>
+                       <img src="/assets/images/carna.gif" alt="carna" title="botnet map">
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/06/17/carna-internet-map/">Continue Reading</a></p>
             </div>
@@ -1904,155 +516,16 @@ response times.</p>
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Basic graphite install.</p>
 <h4>Installs</h4>
-<pre><code>
-aptitude update
-apt-get install -y python2.6 \
-                   python-pip \
-                   python-cairo \
-                   python-django \
-                   python-django-tagging \
-                   libapache2-mod-wsgi \
-                   python-twisted \
-                   python-memcache \
-                   python-pysqlite2 \
-                   python-simplejson \
-                   apache2 \
-                   libapache2-mod-wsgi
-</code></pre>
 
-<pre><code>
-pip install whisper
-pip install carbon
-pip install graphite-web
-</code></pre>
-
-<pre><code>
-wget https://raw.github.com/tmm1/graphite/master/examples/example-graphite-vhost.conf \
-     -O /etc/apache2/sites-available/graphite
-nano /etc/apache2/sites-available/graphite
-</code></pre>
-<h4>Example:</h4>
-<pre><code>
-WSGISocketPrefix /var/run/apache2/wsgi
-
-ServerName <your_server_url>
-DocumentRoot "/opt/graphite/webapp"
-
-#Allow our external dashboards, etc queries
-Header set Access-Control-Allow-Origin "*"
-Header set Access-Control-Allow-Methods "GET, OPTIONS"
-Header set Access-Control-Allow-Headers "origin, authorization, accept"
-
-# I've found that an equal number of processes & threads tends
-# to show the best performance for Graphite (ymmv).
-WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
-WSGIProcessGroup graphite
-WSGIApplicationGroup %{GLOBAL}
-WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
-
-WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi 
-
-#require radius for any access
-<Location />
-    AuthType Basic
-    AuthName "Graphite auth"
-    #SETUP YOUR AUTH HERE
-</Location>
-
-Alias /content/ /opt/graphite/webapp/content/
-<Location "/content/">
-    SetHandler None
-</Location>
-
-# XXX In order for the django admin site media to work you
-# must change @DJANGO_ROOT@ to be the path to your django
-# installation, which is probably something like:
-# /usr/lib/python2.6/site-packages/django
-Alias /media/ "@DJANGO_ROOT@/contrib/admin/media/"
-<Location "/media/">
-    SetHandler None
-</Location>
-
-# The graphite.wsgi file has to be accessible by apache. It won't
-# be visible to clients because of the DocumentRoot though.
-<Directory /opt/graphite/conf/>
-    Order deny,allow
-    Allow from all
-</Directory>
-</code></pre>
-
-<pre><code>
-cd /opt/graphite/conf/
-cp graphite.wsgi.example graphite.wsgi
-cp carbon.conf.example carbon.conf
-cp storage-schemas.conf.example storage-schemas.conf
-</code></pre>
-<h4>Setup django db</h4><pre><code>cd /opt/graphite/webapp/graphite
-python manage.py syncdb
-</code></pre><h4>Looks Like</h4>
-<pre><code>
-Could not import graphite.local_settings, using defaults!
-Could not import graphite.local_settings, using defaults!
-Creating table account_profile
-Creating table account_variable
-Creating table account_view
-Creating table account_window
-Creating table account_mygraph
-Creating table dashboard_dashboard_owners
-Creating table dashboard_dashboard
-Creating table events_event
-Creating table auth_permission
-Creating table auth_group_permissions
-Creating table auth_group
-Creating table auth_user_user_permissions
-Creating table auth_user_groups
-Creating table auth_user
-Creating table auth_message
-Creating table django_session
-Creating table django_admin_log
-Creating table django_content_type
-Creating table tagging_tag
-Creating table tagging_taggeditem
-
-You just installed Django's auth system, which means you don't have any superusers defined.
-Would you like to create one now? (yes/no): yes
-Username (Leave blank to use 'root'): 
-E-mail address: 
-Error: That e-mail address is invalid.
-E-mail address: root@localhost.com
-Password: 
-Password (again): 
-Superuser created successfully.
-Installing index for account.Variable model
-Installing index for account.View model
-Installing index for account.Window model
-Installing index for account.MyGraph model
-Installing index for dashboard.Dashboard_owners model
-Installing index for auth.Permission model
-Installing index for auth.Group_permissions model
-Installing index for auth.User_user_permissions model
-Installing index for auth.User_groups model
-Installing index for auth.Message model
-Installing index for admin.LogEntry model
-Installing index for tagging.TaggedItem model
-No fixtures found.
-</code></pre>
-<h4>Enable site in Apache</h4><pre><code>a2dissite default
-a2ensite graphite
-sudo chmod -R a+w /opt/graphite/storage
-</code></pre><h4>Start things</h4>
-<p>/opt/graphite/bin/carbon-cache.py start<br>
-/etc/init.d/apache2 restart</p>
-<h4>Notes</h4>
-<p>Logs are located here: /opt/graphite/storage/log/webapp/</p>
-<h4>Reference</h4>
-<p><a href="http://greenlegos.wordpress.com/2012/09/09/graphite-installation/">graphite install doc</a></p>
-</p>
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/06/15/debian-graphite-install/">Continue Reading</a></p>
             </div>
@@ -2066,219 +539,15 @@ sudo chmod -R a+w /opt/graphite/storage
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Testing your code as you go.  Writing &#39;production&#39; code is really as much a set practices as it<br>
-is a  specific coding ability.  Everyone breaks things.  When something breaks<br>
-we will all fix it.  The trick is to always know when something breaks.</p>
-
-<p>How I currently see the world:</p>
-
-<ul>
-<li> Write code</li>
-<li> Run unit tests</li>
-</ul>
-
-<p>It continues on ...</p>
-
-<ul>
-<li> Run integration tests</li>
-<li> Run QA/Functionality testing</li>
-<li> Test at scale</li>
-<li> Test monitoring</li>
-<li> Test Security</li>
-</ul>
-
-<p>There are a lot of ways to break down this basic idea.  Some much better than this.  But I<br>
-feel like if you can visualize these 6 you are going in the right direction.</p>
-<h4>Write Code</h4><pre><code>def what():
-    return &#39;123&#39;
-
-if __name__ == &#39;__main__&#39;:
-    print what()
-</code></pre>
-<p>This is my big application.  When I run it I see.</p>
-
-<pre><code>
-   123
-</code></pre>
-<h4>Unit Testing - Testing Small Things</h4>
-<p>My idea of unittesting is if every function and class takes care of itself the entire<br>
-codebase is better off.</p>
-
-<p>Doctest is a way to write small tests into the docstring.  Some people do not consider this<br>
-to be valid unittesting.  I think it&#39;s a good start.</p>
-<pre><code>def what():
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; what()
-    &#39;123&#39;
-    &#34;&#34;&#34;
-    return &#39;123&#39;
-
-if __name__ == &#39;__main__&#39;:
-    what()
-</code></pre>
-<p>&#39;python -m doctest t.py&#39; returns nothing.</p>
-<h4>But:</h4><pre><code>&#39;python -m doctest t.py  -v&#39; returns useful output:
-
-
-Trying:
-    what()
-Expecting:
-    &#39;123&#39;
-ok
-1 items had no tests:
-    t
-1items passed all tests:
-   1 tests in t.what
-1 tests in 2 items.
-1 passed and 0 failed.
-Test passed.
-</code></pre>
-<p>Everything passed.  In the most basic sense the code in the doctstring returned expected results.</p>
-
-<p>What if my function code changes and the doctest becomes invalid?</p>
-
-<p>Change it to:</p>
-<pre><code>def what():
-    &#34;&#34;&#34;
-    &gt;&gt;&gt; what()
-    &#39;1234&#39;
-    &#34;&#34;&#34;
-    return &#39;123&#39;
-</code></pre>
-<p>Now we see:</p>
-
-<pre><code>
-<me>:~$ python -m doctest t.py -v
-Trying:
-    what()
-Expecting:
-    '1234'
-**********************************************************************
-File "t.py", line 3, in t.what
-Failed example:
-    what()
-Expected:
-    '1234'
-Got:
-    '123'
-1 items had no tests:
-    t
-**********************************************************************
-1 items had failures:
-   1 of   1 in t.what
-1 tests in 2 items.
-0 passed and 1 failed.
-***Test Failed*** 1 failures.
-<me>:~$ 
-</code></pre>
-<h4>You can run this as a pre-commit hook and you will never break this function without knowing.</h4><pre><code>mkdir repo
-cd repo
-git init
-nano pre-commit
-</code></pre>
-<p>Contents:</p>
-<pre><code>#!/bin/bash
-python -m doctest *
-
-cd .git/hooks/
-ln -s ../../pre-commit pre-commit
-cd ../..
-git add -A
-git commit -m &#39;test&#39;
-</code></pre>
-<p>We see our failure message:</p>
-
-<pre><code>
-**********************************************************************
-File "t.py", line 5, in t.what
-Failed example:
-    what()
-Expected:
-    '1234'
-Got:
-    '123'
-**********************************************************************
-1 items had failures:
-   1 of   1 in t.what
-***Test Failed*** 1 failures.
-</code></pre>
-
-<p>We can fix it and make good.</p>
-<h4>One step up from &#39;-m doctest&#39;</h4>
-<p>I like to use nose to run my tests.  It can handle tests written in multiple styles<br>
-and most code review tools integrate with it.</p>
-<pre><code>aptitude install python-nose
-
-nano pre-commit
-</code></pre>
-<p>Contents:</p>
-<pre><code>#!/bin/bash
-nosetests --all-modules --traverse-namespace --with-doctest --exe
-</code></pre>
-<p>This output is more readable as your tests grow:</p>
-
-<pre><code>
-<me>:~/no$ git commit -m 'nose'
-F
-======================================================================
-FAIL: Doctest: t.what
-----------------------------------------------------------------------
-Traceback (most recent call last):
-  File "/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/doctest.py", line 2166, in runTest
-    raise self.failureException(self.format_failure(new.getvalue()))
-AssertionError: Failed doctest test for t.what
-  File "/Users/<me>/no/t.py", line 3, in what
-
-----------------------------------------------------------------------
-File "/Users/<me>/no/t.py", line 5, in t.what
-Failed example:
-    what()
-Expected:
-    '1234'
-Got:
-    '123'
-
-
-----------------------------------------------------------------------
-Ran 1 test in 0.006s
-
-FAILED (failures=1)
-</code></pre>
-<h4>Separating your test from your function</h4>
-<p>Ok up until now we have been validating our docstring and that is valuable.  But<br>
-it is also cluttered and can be unwieldy.  Writing a basic test function.  I also<br>
-added &#39;-v&#39; to the nosetest hook.</p>
-
-<p>This function should literally start with &#39;test&#39;</p>
-
-<pre><code>
-def test_what():
-    assert what() == '123'
-
-def what():
-    return '123'
-
-if __name__ == '__main__':
-    print what()
-</code></pre>
-<h4>Looks like</h4>
-<pre><code>
-t.test_what ... ok
-
-----------------------------------------------------------------------
-Ran 1 test in 0.002s
-
-OK
-</code></pre>
-
-<p>Thus the groundlevel for self testing code.</p>
-<h4>Reference</h4>
-<p><a href="http://git-scm.com/book/en/Customizing-Git-Git-Hooks">git hooks doc</a><br>
-<a href="https://nose.readthedocs.org/en/latest/">nosetest</a></p>
-</p>
+is a  specific coding
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/06/07/unit-test-beginnings/">Continue Reading</a></p>
             </div>
@@ -2292,68 +561,15 @@ OK
             </div>
             
             <div class="body">
-                <p><h3>Preamble</h3>
+                <p>
+                       
+                           <h3>Preamble</h3>
 <p>Basic DDOS detection and defense on IOS FW</p>
-<h4>Aliases</h4><pre><code>alias exec fstats show policy-firewall stats global
-alias exec zstats show policy-firewall stats zone
-</code></pre><h4>IOS Zone Based FW Config</h4>
-<p>Per Zone</p>
-<pre><code>conf t
-parameter-map type inspect-zone ddos-detection
- !this is per _your_ hosts not source hosts
- tcp syn-flood rate per-destination &lt;global_syn_flood_rate_limit_per_host&gt;&gt;
- alert on
- threat-detection basic-threat
- !these alert limits should be changed to something reasonable for your environment
- threat-detection rate syn-attack average-time-frame 600 average-threshold 100 burst-threshold 100
- threat-detection rate inspect-drop average-time-frame 600 average-threshold 100 burst-threshold 100
- threat-detection rate fw-drop average-time-frame 600 average-threshold 100 burst-threshold 100
-
- !apply pmap to a zone
- zone security ZONE_INTERNET
-  protection ddos-detection
-</code></pre>
-<p>Global</p>
-<pre><code>parameter-map type inspect global
- !if you want a global sessions threshold
- session total 3000000
- !syn flood limit before going to syn cookies globally
- per-box tcp syn-flood limit 10000
- alert on
- !aging out sessions aggressively to help prevent table blocking
- per-box aggressive-aging high percent 85 low percent 65
- per-box max-incomplete 100000 aggressive-aging high percent 85 low percent 60
-</code></pre><h4>Show Zone Stats</h4><pre><code>asr01#zstats
-Zone: ZONE_INTERNET
-Parameter-map: ddos-detection
-TCP SYN packet conform limit: 0
-TCP SYN packet exceed limit: 0
-Threat Detection Statistics:
-                        Average(eps)    Current(eps)    Threats Total Events
-10-min SYN attack:      0               0               0               0
-10-min FW inspect:      0               0               0               0
-10-min FW policy:       0               0               0               0
-</code></pre><h4>Show Global Stats</h4><pre><code>Global (Per-Box) statistics
-Total Session Aggressive Aging Period Off, Event Count: 0
-
-         Half Open  
-Protocol Session Cnt     Exceed
--------- -----------     ------
-All      0               0
-UDP      0               0
-ICMP     0               0
-TCP      0               0
-</code></pre><h4>Logging Shows</h4><pre><code>6052: Jun 6 01:41:28.864: %IOSXE-4-PLATFORM: F0:
-cpp_cp: QFP:00 Thread:007 TS:00000106170032787836
-%THREAT_DEFENSE-4-TD_ERM_AVERAGE_THREAT:
-Event Rate Monitoring: Average threat identified.
-Interface [&lt;your_interface&gt;], event type [firewall inspection drops],
-average [101] configured threshold [100]
-TCP Syn Flood Half Open Count: 1, Exceed: 0
-Half Open Aggressive Aging Period Off, Event Count: 0
-</code></pre></p>
+<h4>Aliases</h4>
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/06/05/cisco-ios-ddos-detection/">Continue Reading</a></p>
             </div>
@@ -2367,32 +583,15 @@ Half Open Aggressive Aging Period Off, Event Count: 0
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort<br>
-is running as as service inline or at least continually.  Sometimes things happen<br>
-outside of Snort&#39;s purview or you are testing what Snort picks ups.</p>
-<h4>Install tools</h4><pre><code>aptitude install snort snort-rules
-</code></pre><h4>Capture your traffic</h4><pre><code>sudo tcpdump -w test
-</code></pre><h4>Generate snort report</h4><pre><code>snort -r test -c /etc/snort/snort.conf -l .
-</code></pre><h4>View Alerts</h4><pre><code>less alert 
-
-[**] [1:485:4] ICMP Destination Unreachable Communication Administratively Prohibited [**]
-[Classification: Misc activity] [Priority: 3] 
-05/19-01:23:00.201765 74.76.148.114 -&gt; &lt;my_ext_ip&gt;
-ICMP TTL:241 TOS:0x0 ID:32480 IpLen:20 DgmLen:56
-Type:3  Code:13  DESTINATION UNREACHABLE: ADMINISTRATIVELY PROHIBITED,
-PACKET FILTERED
-** ORIGINAL DATAGRAM DUMP:
-&lt;my_ext_ip&gt;:80 -&gt; 74.76.148.114:25657
-TCP TTL:47 TOS:0x0 ID:22893 IpLen:20 DgmLen:44
-Seq: 0x654B5258
-** END OF DUMP
-</code></pre>
-<p>You can edit your snort.conf for what kinds of signatures to look for.  ICMP can be a good indicator<br>
-of shenanigans but is also very noisy.</p>
-</p>
+is running as as service inline or at least 
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/06/03/using-snort-on-pcap/">Continue Reading</a></p>
             </div>
@@ -2406,61 +605,15 @@ of shenanigans but is also very noisy.</p>
             </div>
             
             <div class="body">
-                <p><h3>Preamble</h3>
+                <p>
+                       
+                           <h3>Preamble</h3>
 <p>I have a bash script that is being called multiple times instead of once.<br>
-I need to track down where it is being called from.</p>
-
-<p>Boiler plate that is nice for troubleshooting</p>
-<h4>Snippet</h4>
-<pre><code>
-function trouble {
-    echo "--------------------"
-    date
-    echo "whoami: $(whoami)"
-    echo "userid: $(id -u)"
-    echo "My pid is $$"
-    echo "working dir: $(pwd)"
-    echo "Called as: $0"
-    echo "Arguments: $@"
-    echo "user_pstree_begin"
-    pstree $(whoami) -l
-    echo "user_pstree_end"
-    echo "pid_pstree_begin"
-    pstree -np $$
-    echo "pid_pstree_end"
-    echo "--------------------"
-}
-
-set -x
-epochtime=$(date +%s)
-file="/tmp/debug-$epochtime.log"
-logger "Creating: $file"
-trouble > $file
-</code></pre>
-<h4>Looks like</h4>
-<pre><code>
-<me>@<host>:~# cat /tmp/debug-1369940847.log 
---------------------
-Thu May 30 12:07:27 PDT 2013
-whoami: <me>
-userid: 0
-My pid is 19891
-ps_tree_begin
-test.sh(19891)---pstree(19896)
-ps_tree_end
-working dir: /home/<me>
-Called as: ./test.sh
-Arguments: 
---------------------
-<me>@<host>:~# 
-
-</code></pre>
-<h4>Syslog shows:</h4><pre><code>&lt;host&gt; &lt;me&gt;: Creating: /tmp/debug-1369940847.log
-</code></pre>
-<p>This is especially helpful for cron jobs or background scripts.</p>
-</p>
+I need to track down where it is being called from.
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/05/30/bash-boiler-plate-troubleshooting/">Continue Reading</a></p>
             </div>
@@ -2474,128 +627,17 @@ Arguments:
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Launching a SYN flood.</p>
 
 <p>Everyone know DDOS attacks happen and of these SYN floods may be the simplest to organize for<br>
-attackers.  As a defender you don&#39;t want the first time you see this kind of traffic to<br>
-be when you are under attack.</p>
-<h4>Launching a SYN attack against yourself.</h4>
-<ol>
-<li>You can learn some tools of the trade</li>
-<li>You can test the weakness of your services</li>
-<li>You can mitigate those weaknesses</li>
-</ol>
-<h4>Picking a tool</h4>
-<p>A tool that is simple to use: <a href="https://github.com/merces/t50">https://github.com/merces/t50</a></p>
-<pre><code>git clone https://github.com/merces/t50.git
-cd t50/
-make
-./t50 --help
-</code></pre>
-<p>Now you have a compiled attack tool and the help is pretty large.  </p>
-<h4>Launching a SYN Flood</h4><pre><code>./t50 &lt;DEST_IP&gt; --flood -S --turbo
-</code></pre><h4>Looks like</h4>
-<p>Start:</p>
-<pre><code>entering in flood mode...
-activating turbo...
-hit CTRL+C to break.
-</code></pre>
-<p>Finish:    </p>
-<pre><code>T50 5.4.1 successfully launched on May 28th 2013 13:09:24
-</code></pre><h4>n the destination host:</h4>
-<ul>
-<li>Traffic:</li>
-</ul>
 
-<pre><code>
-    tx eth0: 1168 b/s rx eth0: 528 b/s
-    tx eth0: 1056 b/s rx eth0: 9160 b/s
-    tx eth0: 8616 b/s rx eth0: 528 b/s
-    tx eth0: 4944 b/s rx eth0: 528 b/s
-
-        *syn flood starts**
-
-    tx eth0: 10 Mb/s rx eth0: 12 Mb/s
-    tx eth0: 36 Mb/s rx eth0: 43 Mb/s
-    tx eth0: 38 Mb/s rx eth0: 46 Mb/s
-    tx eth0: 39 Mb/s rx eth0: 47 Mb/s
-    tx eth0: 39 Mb/s rx eth0: 47 Mb/s
-</code></pre>
-
-<ul>
-<li>Logging (NOTE: SYN Cookies are enabled)</li>
-</ul>
-
-<pre><code>
-    possible SYN flooding on port 5666. Sending cookies.
-    possible SYN flooding on port 5666. Sending cookies.
-</code></pre>
-
-<ul>
-<li>Connection Table</li>
-</ul>
-
-<pre><code>
-    while true; do netstat -n -p TCP tcp | grep  SYN_RECV | wc -l >> /tmp/syn.log; sleep 2; done
-
-    0
-    5
-    6
-    3
-    2
-    ...
-    **syn flood**
-    ...
-    142
-    140
-    144
-    143
-    142
-    142
-    143
-    142
-    141
-    141
-    140
-    137
-    138
-    140
-    142
-    142
-    142
-    145
-    144
-</code></pre>
-
-<p>Effect:</p>
-
-<ul>
-<li>Massive lag in responsiveness for CLI commands</li>
-<li>Simple web server with (python -m SimpleHTTPServer) crashed</li>
-<li>Top shows ksoftirqd/0 pegging CPU</li>
-</ul>
-
-<p>Guidance on size of flood:</p>
-<pre><code>./t50 &lt;target&gt; --threshold 10000 -S #4Mbps
-./t50 &lt;target&gt; --threshold 20000 -S #8Mbps
-./t50 &lt;target&gt; --threshold 40000 -S #16Mbps
-
-#more or less consisten 4Mbps flood
-for i in {1..100}; do ./t50 &lt;target&gt; --threshold 10000 -S; sleep 3; done
-</code></pre><h4>Reference:</h4>
-<p><a href="http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html">dealing with syn flood blog post</a><br>
-<a href="http://www.sans.org/security-resources/idfaq/syn_flood.php">sans on syn flood</a><br>
-<a href="http://www.cs.wm.edu/%7Ehnw/paper/attack.pdf">syn flood attack paper</a><br>
-<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">sf syn flood info</a><br>
-<a href="http://pc-freak.net/blog/how-to-check-if-your-linux-webserver-is-under-a-dos-attack/">am I under ddos?</a><br>
-<a href="https://github.com/merces/t50">t50 gh</a><br>
-<a href="http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded">fulldisclosure info</a><br>
-<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">cisco on syn floods</a><br>
-<a href="http://h4xors.wordpress.com/tag/t50/">t50 info</a></p>
-</p>
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/05/29/launching-a-syn-flood-test/">Continue Reading</a></p>
             </div>
@@ -2609,37 +651,15 @@ for i in {1..100}; do ./t50 &lt;target&gt; --threshold 10000 -S; sleep 3; done
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices<br>
-your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates<br>
-the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some<br>
-nice &quot;fail back to my previous config&quot; logic that Cisco hasn&#39;t figured out yet.  Yes, this will<br>
-obviously cause an outage, but in a true &#39;lights out&#39; remote scenario this may be the best<br>
-you can do.</p>
-<h4>Walk through:</h4>
-<p><strong><em>It&#39;s 2 AM and I&#39;m up for maintenace</em></strong></p>
-<pre><code>myrtr#reload in 30
-System configuration has been modified. Save? [yes/no]: no
-Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &lt;me&gt; on vty0 (&lt;vty_ip&gt;)
-Reload reason: Reload Command
-Proceed with reload? [confirm]
-myrtr#
-</code></pre>
-<p>*** Making changes *** </p>
-
-<p>*** How long until a reset? ***</p>
-<pre><code>myrtr#show reload
-Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &lt;me&gt; on vty0 (&lt;vty_ip&gt;)
-Reload reason: Reload Command
-</code></pre>
-<p>*** test everything is good -- ok clear scheduled reload ***</p>
-<pre><code>myrtr#reload cancel
-***
-*** --- SHUTDOWN ABORTED ---
-***
-</code></pre></p>
+your best bet is to schedule a rel
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/05/29/cisco-lights-out-failsafe/">Continue Reading</a></p>
             </div>
@@ -2653,43 +673,15 @@ Reload reason: Reload Command
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>When you&#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like<br>
-syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known<br>
-defenses is syn cookies.</p>
-<h4>Who doesn&#39;t like cookies?</h4><pre><code>SYN cookies are particular choices of initial TCP sequence numbers by TCP servers.
-</code></pre><h4>Linux</h4><pre><code>root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
-0
-
-root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
-1
-</code></pre>
-<p>Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of <br>
-enabling does not persist through a reboot.</p>
-<h4>Cisco IOS Zone Based FW</h4>
-<p>Global:</p>
-<pre><code>parameter-map type inspect global
-    tcp syn-flood limit 20000
-</code></pre>
-<p>Zone:</p>
-<pre><code>parameter-map type inspect-zone ddos-detection
-   tcp syn-flood rate per-destination 20000
-</code></pre>
-<p>NOTES:</p>
-
-<p>SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.</p>
-<h4>Reference:</h4>
-<p><a href="http://cr.yp.to/syncookies.html">syncookies readme</a><br>
-<a href="http://www.faqs.org/docs/securing/chap5sec56.html">linux syncookies enable</a><br>
-<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/sec_data_zbf/configuration/xe-3s/asr1000/conf-fw-tcp-syn-cookie.html">cisco doc one</a><br>
-<a href="http://etherealmind.com/tcp-syn-cookies-ddos-defence/">syn cookies blog post</a><br>
-<a href="http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html">cisco on syn floods</a><br>
-<a href="http://ckdake.com/content/2007/disadvantages-of-tcp-syn-cookies.html">downside of syn cookies</a><br>
-<a href="http://serverfault.com/questions/353411/syn-cookies-on-internal-machines">sf syn cookies one</a><br>
-<a href="http://serverfault.com/questions/294209/possible-syn-flooding-in-log-despite-low-number-of-syn-recv-connections">sf syn cookies two</a></p>
-</p>
+syn floods have bee
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/05/23/syn-cookies/">Continue Reading</a></p>
             </div>
@@ -2703,36 +695,15 @@ enabling does not persist through a reboot.</p>
             </div>
             
             <div class="body">
-                <p><h4>Vuln</h4>
+                <p>
+                       
+                           <h4>Vuln</h4>
 <p>Weak ciphers are detected as a level 4 vuln for most scanners.<br><br>
-If you have to deal with PCI you know all level 4 and 5 vulns must be resolved.</p>
-<h4>Resolution</h4>
-<p>/etc/postfix/main.cf</p>
-<pre><code># TLS parameters
-smtpd_use_tls=yes
-smtpd_tls_mandatory_ciphers = high
-smtpd_tls_mandatory_exclude_ciphers = aNULL, MD5, DES
-smtpd_tls_security_level = encrypt
-#Ensure TLSv1
-# Preferred form with Postfix ≥ 2.5:
-smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
-</code></pre><h4>Notes</h4>
-<p>Pre and post scans confirm all is well but...</p>
-
-<p>Postfix is strange when it comes to SSL, and </p>
-<pre><code>smtpd_tls_security_level = encrypt
-</code></pre>
-<p>implies</p>
-<pre><code>ssl_only_use_tls = true.
-</code></pre>
-<p>So if you have need for non-tls capable clients use caution.</p>
-
-<p>Reference:<br>
-<a href="https://community.qualys.com/docs/DOC-1141">QID 38140</a><br>
-<a href="http://www.postfix.org/TLS_README.html#server_enable">postfix server enable</a></p>
-</p>
+If you have to deal with PCI you know all level 4 and 5 vulns 
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/05/21/postfix-ssl-weak-ciphers/">Continue Reading</a></p>
             </div>
@@ -2746,61 +717,17 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
             </div>
             
             <div class="body">
-                <p><h4>Preamble</h4>
+                <p>
+                       
+                           <h4>Preamble</h4>
 <p>Graphite events allow you to overlay vertical bars on graphs for correlation of events<br>
-and trending data.  I know the <a href="http://codeascraft.com/2010/12/08/track-every-release/" title="etsy events">etsy</a><br>
-guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That<br>
-is a nice and reliable way to do it, but if you are looking for more flexbility using the <br>
-native (&#39;experimental&#39;) events feature may be useful.</p>
-<h4>Posting an event:</h4><pre><code>#!/bin/bash
-curl -X POST http://graphite/events/ -d &#39;{&#34;what&#34;: &#34;did_stuff&#34;, &#34;tags&#34; : &#34;fun,times&#34;}&#39;
-</code></pre><h4>Retrieving events:</h4><pre><code>curl -X GET http://graphite/events/
-
-curl -X GET http://graphite/events/?tags=fun
-</code></pre><h4>Show me only stuff starting at an epoch time:</h4><pre><code>curl -X GET http://graphite/events/?from=1368778407
-</code></pre><h4>Getting lines on graphs</h4>
-<p>Now you have an event that shows up on http://graphite/events and is retrievable by curl.</p>
-<h4>Place it over your graph:</h4><pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;))
-</code></pre>
-<p>You can also go two tags deep which is similar in logic to a SQL join.  So the previous example<br>
-retrieves all &#39;fun&#39; tagged events.  Now we want to get &#39;fun&#39; and correlate with &#39;times&#39;.</p>
-<pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;, &#39;times&#39;))
-</code></pre>
-<p>This returns all &#39;fun&#39; tagged events that also have &#39;times&#39; tags.</p>
-<h4>Where this is useful in real world:</h4><pre><code>#all syncs
-https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;))
-
-#Now code syncs from a specific user:
-https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;, &#39;user&#39;))
-</code></pre>
-<p>Reference:<br>
-<a href="http://graphite.readthedocs.org/en/1.0/functions.html">graphite docs</a><br>
-<a href="https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142">garphite events</a></p>
-</p>
+and trending data.  I know the <a href
+                       
+                   </p>
             </div>
-            
+
             <div class="footer">
                 <p><a href="/2013/05/17/using-graphite-events/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/05/16/ops-guy-says-timemachine/">ops guy says timemachine</a></h1>
-                <h2>Thursday, May 16, 2013 <span>&raquo;</span> <a href="/tags/says/">says</a></h2>
-            </div>
-            
-            <div class="body">
-                <p>OPS: &quot;When does it need to be done?&quot;<br>
-PM: &quot;Next week at the latest.&quot;<br>
-OPS: &quot;OK, we spend from now to next week working on a time machine.  If we<br>
-had a time machine it would <em>already</em> be done.&quot;<br>
-PM: &quot;How so?&quot;</p>
-            </div>
-            
-            <div class="footer">
-                <p><a href="/2013/05/16/ops-guy-says-timemachine/">Continue Reading</a></p>
             </div>
         </div>
     
@@ -2808,7 +735,7 @@ PM: &quot;How so?&quot;</p>
     
     
         <div class="pagination">
-            <p><a href="/archives/">Read Older Posts</a></p>
+            <p><a href="/archives/">Read Posts From Archive</a></p>
         </div>
     
 

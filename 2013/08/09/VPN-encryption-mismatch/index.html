@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>encryption mismatch &ndash; devops type thoughts</title>
+    <title>VPN encryption mismatch &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -62,6 +62,17 @@ function toggleDiv(divId) {
             </ul>
             
             
+                <ul id="social">
+                    
+                    
+                    <li><a href="https://github.com/chasemp"><img src="/assets/images/social/github.png" width="16" height="16" alt="GitHub"></a></li>
+                    
+                    
+                    <li><a href="http://stackoverflow.com/users/chasemp"><img src="/assets/images/social/stack-overflow.png" width="16" height="16" alt="Stack Overflow"></a></li>
+                    
+                    
+                </ul>
+            
         </div>
         
         <div id="header">
@@ -73,19 +84,19 @@ function toggleDiv(divId) {
             
     <div class="item">
         <div class="header">
-            <h1>encryption mismatch</h1>
+            <h1>VPN encryption mismatch</h1>
             <h2>Friday, August 09, 2013 <span>&raquo;</span> <a href="/tags/vdirector/">vdirector</a>, <a href="/tags/vpn/">vpn</a></h2>
         </div>
         
         <div class="body">
             <h3>Preamble</h3>
-<p>A site-to-site VPN between vshield and a Cisco ASA.</p>
+<p>A site-to-site VPN between vCloud Director and a Cisco ASA.</p>
 <h4>The Go-To Example</h4>
 <p>Everyone seems to reference:</p>
 
 <p><a href="http://www.datastore365.co.uk/news/configuring-a-vmware-vcloud-director-external-ipsec-site-to-site-vpn-connection-to-a-cisco-asa-firewall/">vpn instructions</a></p>
 
-<p>Following this the tunnel is not establishing</p>
+<p>Following this the tunnel is not establishing so I need to debug</p>
 <pre><code>debug crypto isakmp 127
 debug crypto ipsec 127
 term mon
