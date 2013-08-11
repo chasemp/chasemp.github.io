@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-10T05:32:45Z</updated>
+        <updated>2013-08-11T16:14:04Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,189 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>using a golang library</title>
+                <link rel="alternate" href="/2013/08/11/using-a-golang-library/" type="text/html" />
+                <id>/2013/08/11/using-a-golang-library/</id>
+                <updated>2013-08-11T16:14:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://golang.org/&#34;&gt;Go&lt;/a&gt; is rather strict and has a &amp;#39;one right way&amp;#39; methodology.  I&lt;br&gt;
+am going to demonstrate using a Golang tool that mimicks tcpdump.&lt;/p&gt;
+&lt;h4&gt;Installing&lt;/h4&gt;
+&lt;p&gt;aptitude install golang libpcap0.8-dev &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+The following NEW packages will be installed:
+  golang golang-doc{a} golang-go{a} golang-src{a} 
+0 packages upgraded, 4 newly installed, 0 to remove and 0 not upgraded.
+Need to get 24.8 MB of archives. After unpacking 88.9 MB will be used.
+Do you want to continue? [Y/n/?] Y
+Get: 1 http://ftp.us.debian.org/debian/ wheezy/main golang-src amd64 2:1.0.2-1.1 [2,989 kB]
+Get: 2 http://ftp.us.debian.org/debian/ wheezy/main golang-go amd64 2:1.0.2-1.1 [17.3 MB]
+Get: 3 http://ftp.us.debian.org/debian/ wheezy/main golang-doc all 2:1.0.2-1.1 [4,523 kB]                    
+Get: 4 http://ftp.us.debian.org/debian/ wheezy/main golang all 2:1.0.2-1.1 [24.9 kB]                         
+Fetched 24.8 MB in 38s (651 kB/s)                                                                            
+Preconfiguring packages ...
+Selecting previously unselected package golang-src.
+(Reading database ... 35651 files and directories currently installed.)
+Unpacking golang-src (from .../golang-src_2%3a1.0.2-1.1_amd64.deb) ...
+Selecting previously unselected package golang-go.
+Unpacking golang-go (from .../golang-go_2%3a1.0.2-1.1_amd64.deb) ...
+Selecting previously unselected package golang-doc.
+Unpacking golang-doc (from .../golang-doc_2%3a1.0.2-1.1_all.deb) ...
+Selecting previously unselected package golang.
+Unpacking golang (from .../golang_2%3a1.0.2-1.1_all.deb) ...
+Processing triggers for man-db ...
+Setting up golang-src (2:1.0.2-1.1) ...
+Setting up golang-go (2:1.0.2-1.1) ...
+Setting up golang-doc (2:1.0.2-1.1) ...
+Setting up golang (2:1.0.2-1.1) ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Setting up our environment&lt;/h4&gt;
+&lt;p&gt;We need to setup our environment so Go knows where to find our library for building.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;#can be anywhere the convention is $HOME
+mkdir -p $HOME/go/src
+#Goland looks for env GOPATH
+export GOPATH=$HOME/go
+#including &amp;#39;go install&amp;#39; binaries in our normal $PATH
+export PATH=$PATH:$GOPATH/bin
+
+
+cd ~/go/src/
+git clone https://github.com/akrennmair/gopcap.git
+cd gopcap/
+#compile
+go build
+#place in our bin directory
+go install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;The ~/go/pkg directory is created with the gopcap lib&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/go# tree
+.
+├── pkg
+│   └── linux_amd64
+│       └── gopcap.a
+└── src
+    └── gopcap
+        ├── decode.go
+        ├── decode_test.go
+        ├── io.go
+        ├── LICENSE
+        ├── pcap.go
+        ├── README.mkd
+        └── tools
+            ├── benchmark
+            │   └── benchmark.go
+            ├── pass
+            │   └── pass.go
+            ├── pcaptest
+            │   └── pcaptest.go
+            └── tcpdump
+                └── tcpdump.go
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Build tcpdump written in Go&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;cd ~/go/src/gopcap/tools/tcpdump
+go build
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now there is a binary in our directory&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;me@vm:~/go/src/gopcap/tools/tcpdump# ls
+tcpdump  tcpdump.go
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;We can run it like any program&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/go/src/gopcap/tools/tcpdump# ./tcpdump 
+2013-08-10 03:43:37.399656 -0500 CDT 2013-08-10 03:43:37.399656 -0500 CDT TCP 172.16.104.1:54048 &gt; 172.16.104.131:22 [ack psh] SEQ=3090816858 ACK=2666230607 LEN=100
+2013-08-10 03:43:37.400096 -0500 CDT 2013-08-10 03:43:37.400096 -0500 CDT TCP 172.16.104.131:22 &gt; 172.16.104.1:54048 [ack psh] SEQ=2666230607 ACK=3090816906 LEN=260
+2013-08-10 03:43:37.400268 -0500 CDT 2013-08-10 03:43:37.400268 -0500 CDT TCP 172.16.104.1:54048 &gt; 172.16.104.131:22 [ack] SEQ=3090816906 ACK=2666230815 LEN=52
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Place this in our Go path&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@vm:~/go/src/gopcap/tools/tcpdump# go install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now our Go path tree looks like&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/go/src/gopcap/tools/tcpdump# tree ~/go/
+/me/go/
+├── bin
+│   └── tcpdump
+├── pkg
+│   └── linux_amd64
+│       └── gopcap.a
+└── src
+    └── gopcap
+        ├── decode.go
+        ├── decode_test.go
+        ├── io.go
+        ├── LICENSE
+        ├── pcap.go
+        ├── README.mkd
+        └── tools
+            ├── benchmark
+            │   └── benchmark.go
+            ├── pass
+            │   └── pass.go
+            ├── pcaptest
+            │   └── pcaptest.go
+            └── tcpdump
+                ├── hexify.py
+                ├── tcpdump
+                └── tcpdump.go
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Go and Paths&lt;/h4&gt;
+&lt;p&gt;So tcpdump is obviously already a *nix tool.  Right now if I issue the command I am&lt;br&gt;
+getting the Go version.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;which tcpdump
+/root/go/bin/tcpdump
+
+&amp;gt;file ~/go/bin/tcpdump 
+/root/go/bin/tcpdump: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), \
+dynamically linked (uses shared libs), not stripped
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Useful&lt;/h4&gt;
+&lt;p&gt;Clean up our build&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;go clean
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Clean up our build and remove installed binaries&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;go clean -i 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Build verbosely&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;go build -x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+WORK=/tmp/go-build730443136
+mkdir -p $WORK/gopcap/tools/tcpdump/_obj/
+cd /root/go/src/gopcap/tools/tcpdump
+/usr/lib/go/pkg/tool/linux_amd64/6g -o $WORK/gopcap/tools/tcpdump/_obj/_go_.6 -p gopcap/tools/tcpdump -D _/root/go/src/gopcap/tools/tcpdump -I $WORK -I /root/go/pkg/linux_amd64 ./godump.go
+/usr/lib/go/pkg/tool/linux_amd64/pack grc $WORK/gopcap/tools/tcpdump.a $WORK/gopcap/tools/tcpdump/_obj/_go_.6
+cd .
+/usr/lib/go/pkg/tool/linux_amd64/6l -o $WORK/gopcap/tools/tcpdump/_obj/a.out -L $WORK -L /root/go/pkg/linux_amd64 $WORK/gopcap/tools/tcpdump.a
+cp $WORK/gopcap/tools/tcpdump/_obj/a.out tcpdump
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Install verbosely&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;go install -x
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+WORK=/tmp/go-build061121702
+mkdir -p $WORK/gopcap/tools/tcpdump/_obj/
+cd /root/go/src/gopcap/tools/tcpdump
+/usr/lib/go/pkg/tool/linux_amd64/6g -o $WORK/gopcap/tools/tcpdump/_obj/_go_.6 -p gopcap/tools/tcpdump -D _/root/go/src/gopcap/tools/tcpdump -I $WORK -I /root/go/pkg/linux_amd64 ./godump.go
+/usr/lib/go/pkg/tool/linux_amd64/pack grc $WORK/gopcap/tools/tcpdump.a $WORK/gopcap/tools/tcpdump/_obj/_go_.6
+cd .
+/usr/lib/go/pkg/tool/linux_amd64/6l -o $WORK/gopcap/tools/tcpdump/_obj/a.out -L $WORK -L /root/go/pkg/linux_amd64 $WORK/gopcap/tools/tcpdump.a
+mkdir -p /root/go/bin/
+cp $WORK/gopcap/tools/tcpdump/_obj/a.out /root/go/bin/tcpdump
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://golang.org/doc/install&#34;&gt;go lang install&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://golang.org/doc/code.html&#34;&gt;howto begin&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/akrennmair/gopcap&#34;&gt;golang pcap&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>trust me i am engineer</title>
