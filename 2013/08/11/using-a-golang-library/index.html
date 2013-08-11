@@ -92,9 +92,8 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p><a href="http://golang.org/">Go</a> is rather strict and has a &#39;one right way&#39; methodology.  I<br>
 am going to demonstrate using a Golang tool that mimicks tcpdump.</p>
-<h4>Installing</h4>
-<p>aptitude install golang libpcap0.8-dev </p>
-
+<h4>Installing</h4><pre><code>aptitude install golang libpcap0.8-dev 
+</code></pre>
 <pre><code>
 The following NEW packages will be installed:
   golang golang-doc{a} golang-go{a} golang-src{a} 
@@ -168,7 +167,9 @@ me@vm:~/go# tree
 
 </code></pre>
 <h4>Build tcpdump written in Go</h4><pre><code>cd ~/go/src/gopcap/tools/tcpdump
-go build
+</code></pre>
+<p>-&gt; Change the &quot;github.com/akrennmair/gopcap&quot; to &#39;gopcp&#39; as we are using our local lib.</p>
+<pre><code>go build
 </code></pre>
 <p>Now there is a binary in our directory</p>
 <pre><code>me@vm:~/go/src/gopcap/tools/tcpdump# ls
@@ -178,9 +179,12 @@ tcpdump  tcpdump.go
 
 <pre><code>
 me@vm:~/go/src/gopcap/tools/tcpdump# ./tcpdump 
-2013-08-10 03:43:37.399656 -0500 CDT 2013-08-10 03:43:37.399656 -0500 CDT TCP 172.16.104.1:54048 > 172.16.104.131:22 [ack psh] SEQ=3090816858 ACK=2666230607 LEN=100
-2013-08-10 03:43:37.400096 -0500 CDT 2013-08-10 03:43:37.400096 -0500 CDT TCP 172.16.104.131:22 > 172.16.104.1:54048 [ack psh] SEQ=2666230607 ACK=3090816906 LEN=260
-2013-08-10 03:43:37.400268 -0500 CDT 2013-08-10 03:43:37.400268 -0500 CDT TCP 172.16.104.1:54048 > 172.16.104.131:22 [ack] SEQ=3090816906 ACK=2666230815 LEN=52
+2013-08-10 03:43:37.399656 -0500 CDT 2013-08-10 03:43:37.399656 -0500 \
+CDT TCP 172.16.104.1:54048 > 172.16.104.131:22 [ack psh] SEQ=3090816858 ACK=2666230607 LEN=100
+2013-08-10 03:43:37.400096 -0500 CDT 2013-08-10 03:43:37.400096 -0500 \
+CDT TCP 172.16.104.131:22 > 172.16.104.1:54048 [ack psh] SEQ=2666230607 ACK=3090816906 LEN=260
+2013-08-10 03:43:37.400268 -0500 CDT 2013-08-10 03:43:37.400268 -0500 \
+CDT TCP 172.16.104.1:54048 > 172.16.104.131:22 [ack] SEQ=3090816906 ACK=2666230815 LEN=52
 </code></pre>
 <h4>Place this in our Go path</h4><pre><code>me@vm:~/go/src/gopcap/tools/tcpdump# go install
 </code></pre>
@@ -237,10 +241,15 @@ dynamically linked (uses shared libs), not stripped
 WORK=/tmp/go-build730443136
 mkdir -p $WORK/gopcap/tools/tcpdump/_obj/
 cd /root/go/src/gopcap/tools/tcpdump
-/usr/lib/go/pkg/tool/linux_amd64/6g -o $WORK/gopcap/tools/tcpdump/_obj/_go_.6 -p gopcap/tools/tcpdump -D _/root/go/src/gopcap/tools/tcpdump -I $WORK -I /root/go/pkg/linux_amd64 ./godump.go
-/usr/lib/go/pkg/tool/linux_amd64/pack grc $WORK/gopcap/tools/tcpdump.a $WORK/gopcap/tools/tcpdump/_obj/_go_.6
+/usr/lib/go/pkg/tool/linux_amd64/6g -o $WORK/gopcap/tools/tcpdump/_obj/_go_.6 \
+    -p gopcap/tools/tcpdump -D _/root/go/src/gopcap/tools/tcpdump -I $WORK \
+    -I /root/go/pkg/linux_amd64 ./godump.go
+
+/usr/lib/go/pkg/tool/linux_amd64/pack grc $WORK/gopcap/tools/tcpdump.a \
+    $WORK/gopcap/tools/tcpdump/_obj/_go_.6
 cd .
-/usr/lib/go/pkg/tool/linux_amd64/6l -o $WORK/gopcap/tools/tcpdump/_obj/a.out -L $WORK -L /root/go/pkg/linux_amd64 $WORK/gopcap/tools/tcpdump.a
+/usr/lib/go/pkg/tool/linux_amd64/6l -o $WORK/gopcap/tools/tcpdump/_obj/a.out \
+    -L $WORK -L /root/go/pkg/linux_amd64 $WORK/gopcap/tools/tcpdump.a
 cp $WORK/gopcap/tools/tcpdump/_obj/a.out tcpdump
 </code></pre>
 
@@ -251,10 +260,17 @@ cp $WORK/gopcap/tools/tcpdump/_obj/a.out tcpdump
 WORK=/tmp/go-build061121702
 mkdir -p $WORK/gopcap/tools/tcpdump/_obj/
 cd /root/go/src/gopcap/tools/tcpdump
-/usr/lib/go/pkg/tool/linux_amd64/6g -o $WORK/gopcap/tools/tcpdump/_obj/_go_.6 -p gopcap/tools/tcpdump -D _/root/go/src/gopcap/tools/tcpdump -I $WORK -I /root/go/pkg/linux_amd64 ./godump.go
-/usr/lib/go/pkg/tool/linux_amd64/pack grc $WORK/gopcap/tools/tcpdump.a $WORK/gopcap/tools/tcpdump/_obj/_go_.6
+/usr/lib/go/pkg/tool/linux_amd64/6g -o $WORK/gopcap/tools/tcpdump/_obj/_go_.6 \
+    -p gopcap/tools/tcpdump -D _/root/go/src/gopcap/tools/tcpdump -I $WORK \
+    -I /root/go/pkg/linux_amd64 ./godump.go
+
+/usr/lib/go/pkg/tool/linux_amd64/pack grc $WORK/gopcap/tools/tcpdump.a \
+    $WORK/gopcap/tools/tcpdump/_obj/_go_.6
 cd .
-/usr/lib/go/pkg/tool/linux_amd64/6l -o $WORK/gopcap/tools/tcpdump/_obj/a.out -L $WORK -L /root/go/pkg/linux_amd64 $WORK/gopcap/tools/tcpdump.a
+
+/usr/lib/go/pkg/tool/linux_amd64/6l -o $WORK/gopcap/tools/tcpdump/_obj/a.out \
+    -L $WORK -L /root/go/pkg/linux_amd64 $WORK/gopcap/tools/tcpdump.a
+
 mkdir -p /root/go/bin/
 cp $WORK/gopcap/tools/tcpdump/_obj/a.out /root/go/bin/tcpdump
 </code></pre>
