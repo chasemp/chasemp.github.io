@@ -90,10 +90,10 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>One of the things I do often is download projects from github.  Pypi is nice and so is pip, but<br>
-I like to have one reference for packages on a host.  If at all possible I prefer to make <br>
-binaries.  It is nice for reporting, and because we run our own internal repostories it affords<br>
-us certain advantages.</p>
+<p>One of the things I do often is download projects from github.  Pypi (py-pee-eye) is nice and <br>
+so is pip, but I like to have one reference for packages on a host.  If at all possible I<br>
+prefer to make binaries.  It is nice for reporting, and because we run our own internal<br>
+repostories it affords us certain advantages for reporting and dependency handling.</p>
 <h4>Install a few packages:</h4><pre><code>aptitude install build-essential python-dev python-setuptools python-stdeb python-support
 </code></pre><h4>Download a project: <a href="https://github.com/xb95/nagios-api.git">https://github.com/xb95/nagios-api.git</a></h4><pre><code>git clone https://github.com/xb95/nagios-api.git
 cd cd nagios-api/
@@ -103,6 +103,7 @@ cd cd nagios-api/
 <p>But we can also do...</p>
 <pre><code>sudo python setup.py --command-packages=stdeb.command bdist_deb
 
+&lt;pre&gt;&lt;code&gt;
 running bdist_deb
 running sdist_dsc
 working around Debian #548392, changing XS-Python-Version: to &#39;current&#39;
@@ -115,15 +116,18 @@ dpkg-genchanges -b &gt;../nagios-api_1.2.1-1_amd64.changes
 dpkg-genchanges: binary-only upload - not including any source code
 dpkg-source --after-build nagios-api-1.2.1
 dpkg-buildpackage: binary only upload (no source included)
+&lt;/code&gt;&lt;/pre&gt;
 </code></pre>
 <p>That was all it took to create a fully installable binary package:</p>
 <pre><code>dpkg -i deb_dist/python-nagios-api_1.2.1-1_all.deb 
 
+&lt;pre&gt;&lt;code&gt;
 Selecting previously deselected package python-nagios-api.
 (Reading database ... 38260 files and directories currently installed.)
 Unpacking python-nagios-api (from .../python-nagios-api_1.2.1-1_all.deb) ...
 Setting up python-nagios-api (1.2.1-1) ...
 Processing triggers for python-support ...
+&lt;/code&gt;&lt;/pre&gt;
 </code></pre><h4>Notes</h4>
 <p>Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always<br>
 this can be overcome, but if necessary then you can use:</p>

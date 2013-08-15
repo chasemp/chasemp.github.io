@@ -101,11 +101,9 @@ itself having foreknowledge.</p>
 </code></pre><h4>Config files</h4>
 <p>Pick one:</p>
 
-<ul>
-<li> ./proxychains.conf</li>
-<li> $(HOME)/.proxychains/proxychains.conf</li>
-<li>/etc/proxychains.conf</li>
-</ul>
+<p>1  ./proxychains.conf<br>
+2  $(HOME)/.proxychains/proxychains.conf<br>
+3 /etc/proxychains.conf</p>
 <h4>/etc/proxychains.conf the global option</h4>
 <pre><code>
 strict_chain
@@ -143,10 +141,11 @@ Connected to google.com.
 Escape character is '^]'.
 </code></pre>
 <h4>Excluding traffic from your proxy</h4>
-<p>In theory you set the localnet option in your configuration file<br>
-but this doesn&#39;t work me with proxychains under debian.</p>
+<p>In theory you can set the localnet option in your configuration file to<br>
+exclude the local LAN by default from proxy behavior.  This has not worked<br>
+for  me with proxychains under Debian 6.0</p>
 
-<p>Just in case you are interested though: <a href="https://github.com/haad/proxychains/issues/6#issuecomment-4041824">localnet docs</a></p>
+<p>In case you are interested though: <a href="https://github.com/haad/proxychains/issues/6#issuecomment-4041824">localnet docs</a></p>
 <h4>Reference</h4>
 <p><a href="http://benizi.com/postfix-proxychains">article one</a><br>
 <a href="http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/">article two</a><br>

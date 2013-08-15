@@ -92,12 +92,12 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>Getting JSON from a flat file in a shell script</p>
 
-<p>JSON is become a defacto serialization standard.  Getting at the info in Bash in nice.</p>
+<p>JSON is become a defacto serialization standard.  Getting at the info in Bash is nice.</p>
 <h4>Say you have a file with a json serialized dict from python</h4>
-<p>file: /var/myfile</p>
+<p>file: <pre><code>/var/myfile</code></pre></p>
 
-<p>json contents: {&#39;this&#39;: &#39;you&#39;}</p>
-<h4>Create a script that needs access to this data</h4><pre><code>#!/bin/bash
+<p>json contents: <pre><code>{&#39;this&#39;: &#39;you&#39;}</code></pre></p>
+<h4>Create a script that can access this data</h4><pre><code>#!/bin/bash
 set -e
 FILE=&#39;/var/file&#39;
 if [[ ! -a $FILE ]]; then
@@ -105,9 +105,9 @@ if [[ ! -a $FILE ]]; then
 fi
 dict_value=`python -c &#39;import json, os; d=json.loads(open(&#34;/var/file&#34;).read()); print d[&#34;this&#34;]&#39;`
 echo $dict_value
-</code></pre><h4>Run it as a command</h4>
-<p>output: you</p>
-
+</code></pre><h4>Run it as a command</h4><pre><code>#./script.sh
+you
+</code></pre>
 <p>There really doesn&#39;t seem to be a better way to parse json from bash, but this isn&#39;t too bad.</p>
 
         </div>

@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-15T02:57:24Z</updated>
+        <updated>2013-08-15T18:45:45Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -4337,21 +4337,19 @@ do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
                 <title>cisco ios oid.md</title>
                 <link rel="alternate" href="/2012/12/13/cisco-ios-oid/" type="text/html" />
                 <id>/2012/12/13/cisco-ios-oid/</id>
-                <updated>2012-12-13T19:45:00Z</updated>
+                <updated>2012-12-13T18:37:00Z</updated>
                 
-                <summary type="html">Cisco IOS-XE OID space for monitoring</summary>
-                <content type="html">&lt;p&gt;Cisco IOS-XE OID space for monitoring&lt;/p&gt;
-
+                
+                <content type="html">&lt;h4&gt;Cisco IOS-XE OID&amp;#39;s for monitoring&lt;/h4&gt;
 &lt;p&gt;Memory Walk OID&lt;/p&gt;
 
 &lt;p&gt;.1.3.6.1.4.1.9.9.48.1.1.1&lt;/p&gt;
 
-&lt;p&gt;This gives you your OID space.  For each memory bank&lt;br&gt;
-you can use these to get you usage:&lt;/p&gt;
+&lt;p&gt;This should provide your memory bank OID space.&lt;/p&gt;
 &lt;h1&gt;OID keys for memory stats&lt;/h1&gt;
-&lt;p&gt;&amp;#39;mem_bank&amp;#39;: &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.2.&lt;br&gt;
-&amp;#39;mem_used&amp;#39;: &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.5.&lt;br&gt;
-&amp;#39;mem_free&amp;#39;: &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.6.&lt;/p&gt;
+&lt;p&gt;mem_bank = 1.3.6.1.4.1.9.9.48.1.1.1.2.&lt;br&gt;
+mem_used = 1.3.6.1.4.1.9.9.48.1.1.1.5.&lt;br&gt;
+mem_free = 1.3.6.1.4.1.9.9.48.1.1.1.6.&lt;/p&gt;
 
 &lt;p&gt;CPU Walk OID&lt;br&gt;
 .1.3.6.1.4.1.9.9.109.1.1.1.1.2&lt;/p&gt;
@@ -4366,26 +4364,66 @@ for 32 bit counter use: .1.3.6.1.2.1.2.2&lt;/p&gt;
 
 &lt;p&gt;32 bit counter interface oid&amp;#39;s&lt;/p&gt;
 &lt;h1&gt;32bit counter MIBs&lt;/h1&gt;
-&lt;p&gt;&amp;#39;ifname&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.2.&lt;br&gt;
-&amp;#39;mtu&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.4.&lt;br&gt;
-&amp;#39;ifspeed&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.5.&lt;br&gt;
-&amp;#39;ifAdminStatus&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.7.&lt;br&gt;
-&amp;#39;ifOperStatus&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.8.&lt;br&gt;
-&amp;#39;ifInOctets&amp;#39;: &amp;#39;.1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
-&amp;#39;ifOutOctets&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.16.&lt;br&gt;
-&amp;#39;physadd&amp;#39;: &amp;#39;1.3.6.1.2.1.2.2.1.6.&lt;/p&gt;
+&lt;p&gt;ifname = 1.3.6.1.2.1.2.2.1.2.&lt;br&gt;
+mtu = 1.3.6.1.2.1.2.2.1.4.&lt;br&gt;
+ifspeed = 1.3.6.1.2.1.2.2.1.5.&lt;br&gt;
+ifAdminStatus = 1.3.6.1.2.1.2.2.1.7.&lt;br&gt;
+ifOperStatus = 1.3.6.1.2.1.2.2.1.8.&lt;br&gt;
+ifInOctets = .1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
+ifOutOctets = 1.3.6.1.2.1.2.2.1.16.&lt;br&gt;
+physadd = 1.3.6.1.2.1.2.2.1.6.&lt;/p&gt;
 
 &lt;p&gt;64 bit counter interface oid&amp;#39;s&lt;br&gt;
-&amp;#39;ifname&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.1.&lt;br&gt;
-&amp;#39;ifspeed&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.15.&lt;br&gt;
-&amp;#39;ifoperstatus&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.17.&lt;br&gt;
-&amp;#39;ifinoctets&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
-&amp;#39;ifalias&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.18.&lt;br&gt;
-&amp;#39;ifinmulticastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.2.&lt;br&gt;
-&amp;#39;ifoutmulticastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.4.&lt;br&gt;
-&amp;#39;ifinbroadcastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.3.&lt;br&gt;
-&amp;#39;ifoutbroadcastpkts&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.5.&lt;br&gt;
-&amp;#39;ifoutoctets&amp;#39;: &amp;#39;1.3.6.1.2.1.31.1.1.1.10.&lt;/p&gt;
+ifname = 1.3.6.1.2.1.31.1.1.1.1.&lt;br&gt;
+ifspeed = 1.3.6.1.2.1.31.1.1.1.15.&lt;br&gt;
+ifoperstatus = 1.3.6.1.2.1.31.1.1.1.17.&lt;br&gt;
+ifinoctets = 1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
+ifalias = 1.3.6.1.2.1.31.1.1.1.18.&lt;br&gt;
+ifinmulticastpkts = 1.3.6.1.2.1.31.1.1.1.2.&lt;br&gt;
+ifoutmulticastpkts = 1.3.6.1.2.1.31.1.1.1.4.&lt;br&gt;
+ifinbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.3.&lt;br&gt;
+ifoutbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.5.&lt;br&gt;
+ifoutoctets = 1.3.6.1.2.1.31.1.1.1.10.&lt;/p&gt;
+&lt;h4&gt;Using The Above OID Successfully&lt;/h4&gt;
+&lt;p&gt;So take the memory walk oid.  Want to discover what memory banks we can monitor.&lt;/p&gt;
+
+&lt;p&gt;snmpwalk -v 2c -c community yourhostip .1.3.6.1.4.1.9.9.48.1.1.1&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.1 = STRING: &amp;quot;Processor&amp;quot;&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &amp;quot;lsmpi_io&amp;quot;&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.3.1 = INTEGER: 0&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.3.14 = INTEGER: 0&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.4.1 = INTEGER: 1&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.4.14 = INTEGER: 1&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.1 = Gauge32: 643028280&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.1 = Gauge32: 1097647748&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.7.1 = Gauge32: 1097325320&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.7.14 = Gauge32: 968&lt;/p&gt;
+
+&lt;p&gt;Above we can see two distinct memory banks.  One with OID&amp;#39;s ending in &amp;#39;14 and one with&lt;br&gt;
+OID&amp;#39;s ending in &amp;#39;1&amp;#39;.&lt;/p&gt;
+&lt;h4&gt;Getting our stats for the &amp;#39;lsmpi_io&amp;#39; mem bank, or &amp;#39;14&amp;#39;&lt;/h4&gt;
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2..14&lt;br&gt;
+1.3.6.1.4.1.9.9.48.1.1.1.2..14: Unknown Object Identifier (Sub-id not found: ciscoMgmt -&amp;gt; .14)&lt;/p&gt;
+
+&lt;p&gt;snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2.14&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &amp;quot;lsmpi_io&amp;quot;&lt;/p&gt;
+
+&lt;p&gt;snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.5.14&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116&lt;/p&gt;
+
+&lt;p&gt;snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.6.14&lt;br&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972&lt;br&gt;
+&lt;/code&gt;&lt;pre&gt;&lt;/p&gt;
+&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;p&gt;This is the way to walk and drill down into any SNMP data set.  Using&lt;br&gt;
+MIB&amp;#39;s is much easier but if you know what the OID&amp;#39;s correspond to not&lt;br&gt;
+necessary.&lt;/p&gt;
+
+&lt;p&gt;If you are using this to walk the interface index and get statistics it&lt;br&gt;
+is important to be aware of &lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a0080134eec.shtml&#34;&gt;ifindex persist&lt;/a&gt;.&lt;/p&gt;
 </content>
             </entry>
         
@@ -4393,21 +4431,21 @@ for 32 bit counter use: .1.3.6.1.2.1.2.2&lt;/p&gt;
                 <title>cisco asa oid</title>
                 <link rel="alternate" href="/2012/12/11/cisco-asa-oid/" type="text/html" />
                 <id>/2012/12/11/cisco-asa-oid/</id>
-                <updated>2012-12-11T19:38:00Z</updated>
+                <updated>2012-12-11T18:36:00Z</updated>
                 
                 <summary type="html">Useful ASA OID&amp;#39;s to monitor stats ASA OS &amp;gt; 8.3</summary>
                 <content type="html">&lt;p&gt;Useful ASA OID&amp;#39;s to monitor stats ASA OS &amp;gt; 8.3&lt;/p&gt;
 
-&lt;p&gt;fivemincpu = &amp;#39;.1.3.6.1.4.1.9.9.109.1.1.1.1.5.1&amp;#39;&lt;br&gt;
-ikeactivetunnels = &amp;#39;.1.3.6.1.4.1.9.9.171.1.2.1.1.0&amp;#39;&lt;br&gt;
-ikedroppedpacketsin = &amp;#39;.1.3.6.1.4.1.9.9.171.1.2.1.5.0&amp;#39;&lt;br&gt;
-ikedroppedpacketsout = &amp;#39;.1.3.6.1.4.1.9.9.171.1.2.1.13.0&amp;#39;&lt;br&gt;
-iketrafficin = &amp;#39;1.3.6.1.4.1.9.9.171.1.2.1.3.0&amp;#39;&lt;br&gt;
-iketrafficout = &amp;#39;1.3.6.1.4.1.9.9.171.1.2.1.11.0&amp;#39;&lt;br&gt;
-ipsecactivetunnels = &amp;#39;.1.3.6.1.4.1.9.9.171.1.3.1.1.0&amp;#39;&lt;br&gt;
-memfree = &amp;#39;1.3.6.1.4.1.9.9.48.1.1.1.6.1&amp;#39;&lt;br&gt;
-memused = &amp;#39;.1.3.6.1.4.1.9.9.48.1.1.1.5.1&amp;#39;&lt;br&gt;
-rasessions = &amp;#39;1.3.6.1.4.1.9.9.392.1.3.1.0&amp;#39;&lt;/p&gt;
+&lt;p&gt;fivemincpu = .1.3.6.1.4.1.9.9.109.1.1.1.1.5.1&lt;br&gt;
+ikeactivetunnels = .1.3.6.1.4.1.9.9.171.1.2.1.1.0&lt;br&gt;
+ikedroppedpacketsin = .1.3.6.1.4.1.9.9.171.1.2.1.5.0&lt;br&gt;
+ikedroppedpacketsout = .1.3.6.1.4.1.9.9.171.1.2.1.13.0&lt;br&gt;
+iketrafficin = 1.3.6.1.4.1.9.9.171.1.2.1.3.0&lt;br&gt;
+iketrafficout = 1.3.6.1.4.1.9.9.171.1.2.1.11.0&lt;br&gt;
+ipsecactivetunnels = .1.3.6.1.4.1.9.9.171.1.3.1.1.0&lt;br&gt;
+memfree = 1.3.6.1.4.1.9.9.48.1.1.1.6.1&lt;br&gt;
+memused = .1.3.6.1.4.1.9.9.48.1.1.1.5.1&lt;br&gt;
+rasessions = 1.3.6.1.4.1.9.9.392.1.3.1.0&lt;/p&gt;
 </content>
             </entry>
         
@@ -5231,11 +5269,11 @@ IP lab01.da.49155 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  39 RRQ &#34;initrd.gz&#
                 <title>ssh go forth and do my will</title>
                 <link rel="alternate" href="/2012/08/21/ssh-go-forth-and-do-my-will/" type="text/html" />
                 <id>/2012/08/21/ssh-go-forth-and-do-my-will/</id>
-                <updated>2012-08-21T18:41:00Z</updated>
+                <updated>2012-08-21T18:45:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Commands run via SSH&lt;/p&gt;
+&lt;p&gt;Commands run via SSH silently as a background process.&lt;/p&gt;
 
 &lt;p&gt;Occassionally, I need to run a command on a remote host and I don&amp;#39;t have time to wait for&lt;br&gt;
 the output.  If success or failure isn&amp;#39;t a big deal I sometimes use the following method.&lt;/p&gt;
@@ -5270,7 +5308,7 @@ test.txt
                 <title>puppet core dump control</title>
                 <link rel="alternate" href="/2012/08/17/puppet-core-dump-control/" type="text/html" />
                 <id>/2012/08/17/puppet-core-dump-control/</id>
-                <updated>2012-08-17T18:41:00Z</updated>
+                <updated>2012-08-17T18:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;If you have crashes you can enable core dumps via Puppet&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;file { &amp;#39;/var/core&amp;#39;:
@@ -5292,7 +5330,7 @@ sysctl { &amp;#39;kernel.core_pattern&amp;#39;: value =&amp;gt; &amp;#39;/var/co
                 <title>last puppet update</title>
                 <link rel="alternate" href="/2012/08/16/last-puppet-update/" type="text/html" />
                 <id>/2012/08/16/last-puppet-update/</id>
-                <updated>2012-08-16T00:58:00Z</updated>
+                <updated>2012-08-16T18:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;When was this host last updated via puppet?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
@@ -5323,7 +5361,7 @@ fi
 seconds: 1345
 minutes: 22
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;hours and days are only printed if present.&lt;/p&gt;
+&lt;p&gt;Hours and days are only printed if present.&lt;/p&gt;
 </content>
             </entry>
         
@@ -5331,14 +5369,14 @@ minutes: 22
                 <title>simple deb from github python</title>
                 <link rel="alternate" href="/2012/08/08/simple-deb-from-github-python/" type="text/html" />
                 <id>/2012/08/08/simple-deb-from-github-python/</id>
-                <updated>2012-08-08T00:29:00Z</updated>
+                <updated>2012-08-08T18:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;One of the things I do often is download projects from github.  Pypi is nice and so is pip, but&lt;br&gt;
-I like to have one reference for packages on a host.  If at all possible I prefer to make &lt;br&gt;
-binaries.  It is nice for reporting, and because we run our own internal repostories it affords&lt;br&gt;
-us certain advantages.&lt;/p&gt;
+&lt;p&gt;One of the things I do often is download projects from github.  Pypi (py-pee-eye) is nice and &lt;br&gt;
+so is pip, but I like to have one reference for packages on a host.  If at all possible I&lt;br&gt;
+prefer to make binaries.  It is nice for reporting, and because we run our own internal&lt;br&gt;
+repostories it affords us certain advantages for reporting and dependency handling.&lt;/p&gt;
 &lt;h4&gt;Install a few packages:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install build-essential python-dev python-setuptools python-stdeb python-support
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Download a project: &lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;https://github.com/xb95/nagios-api.git&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;git clone https://github.com/xb95/nagios-api.git
 cd cd nagios-api/
@@ -5348,6 +5386,7 @@ cd cd nagios-api/
 &lt;p&gt;But we can also do...&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;sudo python setup.py --command-packages=stdeb.command bdist_deb
 
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;
 running bdist_deb
 running sdist_dsc
 working around Debian #548392, changing XS-Python-Version: to &amp;#39;current&amp;#39;
@@ -5360,15 +5399,18 @@ dpkg-genchanges -b &amp;gt;../nagios-api_1.2.1-1_amd64.changes
 dpkg-genchanges: binary-only upload - not including any source code
 dpkg-source --after-build nagios-api-1.2.1
 dpkg-buildpackage: binary only upload (no source included)
+&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;That was all it took to create a fully installable binary package:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;dpkg -i deb_dist/python-nagios-api_1.2.1-1_all.deb 
 
+&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;
 Selecting previously deselected package python-nagios-api.
 (Reading database ... 38260 files and directories currently installed.)
 Unpacking python-nagios-api (from .../python-nagios-api_1.2.1-1_all.deb) ...
 Setting up python-nagios-api (1.2.1-1) ...
 Processing triggers for python-support ...
+&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
 &lt;p&gt;Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always&lt;br&gt;
 this can be overcome, but if necessary then you can use:&lt;/p&gt;
@@ -5384,7 +5426,7 @@ this can be overcome, but if necessary then you can use:&lt;/p&gt;
                 <title>extract data with regex python</title>
                 <link rel="alternate" href="/2012/08/02/extract-data-with-regex-python/" type="text/html" />
                 <id>/2012/08/02/extract-data-with-regex-python/</id>
-                <updated>2012-08-02T18:40:00Z</updated>
+                <updated>2012-08-02T18:43:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5419,11 +5461,11 @@ turles two three
                 <title>basic json rest api client</title>
                 <link rel="alternate" href="/2012/07/24/basic-json-rest-api-client/" type="text/html" />
                 <id>/2012/07/24/basic-json-rest-api-client/</id>
-                <updated>2012-07-24T18:40:00Z</updated>
+                <updated>2012-07-24T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Basic client example for using something like &lt;a href=&#34;https://github.com/xb95/nagios-api&#34;&gt;https://github.com/xb95/nagios-api&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A basic client example for using something like the &lt;a href=&#34;https://github.com/xb95/nagios-api&#34;&gt;nagios api&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;JSON REST API&amp;#39;s are increasingly common and useful.&lt;/p&gt;
 &lt;h4&gt;Creating a generic client library&lt;/h4&gt;
@@ -5466,7 +5508,7 @@ print r.state()
                 <title>modular message of day (debian style)</title>
                 <link rel="alternate" href="/2012/07/21/modular-message-of-day-debian-style/" type="text/html" />
                 <id>/2012/07/21/modular-message-of-day-debian-style/</id>
-                <updated>2012-07-21T18:40:00Z</updated>
+                <updated>2012-07-21T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5495,7 +5537,7 @@ rush@&amp;lt;box&amp;gt;:~$
                 <title>json api post with curl</title>
                 <link rel="alternate" href="/2012/07/18/json-api-post-with-curl/" type="text/html" />
                 <id>/2012/07/18/json-api-post-with-curl/</id>
-                <updated>2012-07-18T18:10:00Z</updated>
+                <updated>2012-07-18T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Using curl to test a json rest api&lt;/h4&gt;
@@ -5511,7 +5553,7 @@ curl -H &#34;Content-Type: application/json&#34; \
                 <title>cisco octets to mbps</title>
                 <link rel="alternate" href="/2012/07/12/cisco-octets-to-mbps/" type="text/html" />
                 <id>/2012/07/12/cisco-octets-to-mbps/</id>
-                <updated>2012-07-12T18:40:00Z</updated>
+                <updated>2012-07-12T18:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Counters&lt;/h4&gt;
@@ -5557,18 +5599,18 @@ curl -H &#34;Content-Type: application/json&#34; \
                 <title>reading json from bash with python</title>
                 <link rel="alternate" href="/2012/05/09/reading-json-from-bash-with-python/" type="text/html" />
                 <id>/2012/05/09/reading-json-from-bash-with-python/</id>
-                <updated>2012-05-09T18:39:00Z</updated>
+                <updated>2012-05-09T18:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Getting JSON from a flat file in a shell script&lt;/p&gt;
 
-&lt;p&gt;JSON is become a defacto serialization standard.  Getting at the info in Bash in nice.&lt;/p&gt;
+&lt;p&gt;JSON is become a defacto serialization standard.  Getting at the info in Bash is nice.&lt;/p&gt;
 &lt;h4&gt;Say you have a file with a json serialized dict from python&lt;/h4&gt;
-&lt;p&gt;file: /var/myfile&lt;/p&gt;
+&lt;p&gt;file: &lt;pre&gt;&lt;code&gt;/var/myfile&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
 
-&lt;p&gt;json contents: {&amp;#39;this&amp;#39;: &amp;#39;you&amp;#39;}&lt;/p&gt;
-&lt;h4&gt;Create a script that needs access to this data&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
+&lt;p&gt;json contents: &lt;pre&gt;&lt;code&gt;{&amp;#39;this&amp;#39;: &amp;#39;you&amp;#39;}&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+&lt;h4&gt;Create a script that can access this data&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
 set -e
 FILE=&amp;#39;/var/file&amp;#39;
 if [[ ! -a $FILE ]]; then
@@ -5576,47 +5618,10 @@ if [[ ! -a $FILE ]]; then
 fi
 dict_value=`python -c &amp;#39;import json, os; d=json.loads(open(&amp;#34;/var/file&amp;#34;).read()); print d[&amp;#34;this&amp;#34;]&amp;#39;`
 echo $dict_value
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Run it as a command&lt;/h4&gt;
-&lt;p&gt;output: you&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Run it as a command&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#./script.sh
+you
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;There really doesn&amp;#39;t seem to be a better way to parse json from bash, but this isn&amp;#39;t too bad.&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
-                <title>internet notoriety one</title>
-                <link rel="alternate" href="/2012/02/06/internet-famous-one/" type="text/html" />
-                <id>/2012/02/06/internet-famous-one/</id>
-                <updated>2012-02-06T18:39:00Z</updated>
-                
-                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
-and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
-for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
-on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
-it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
-with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
-the lastname Gates.</summary>
-                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
-and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
-for my boss that become something of urban legend.  One of my coworkers posted in &lt;br&gt;
-on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
-it got picked up by someone who blogs regularly at Microsoft.  Then it was associated&lt;br&gt;
-with another urban legend story at MS about someone dinging the car of someone with&lt;br&gt;
-the lastname Gates.&lt;/p&gt;
-
-&lt;p&gt;The original post:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/assets/images/ione/i1first.png&#34; alt=&#34;the post&#34; title=&#34;blog post&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;The traceback:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&#34;/assets/images/ione/ione-back2.png&#34; alt=&#34;backtrace&#34; title=&#34;backtrace&#34;&gt;&lt;/p&gt;
-
-&lt;p&gt;I find the whole thing funny.  It is part of my history now.  Someday I may&lt;br&gt;
-own up my second &amp;#39;Internet Famous&amp;#39; moment.&lt;/p&gt;
-&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;caffeine coder&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&#34;&gt;msdn traceback&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -5624,7 +5629,7 @@ own up my second &amp;#39;Internet Famous&amp;#39; moment.&lt;/p&gt;
                 <title>proxychains</title>
                 <link rel="alternate" href="/2012/02/06/proxychains/" type="text/html" />
                 <id>/2012/02/06/proxychains/</id>
-                <updated>2012-02-06T18:39:00Z</updated>
+                <updated>2012-02-06T18:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5639,11 +5644,9 @@ itself having foreknowledge.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Config files&lt;/h4&gt;
 &lt;p&gt;Pick one:&lt;/p&gt;
 
-&lt;ul&gt;
-&lt;li&gt; ./proxychains.conf&lt;/li&gt;
-&lt;li&gt; $(HOME)/.proxychains/proxychains.conf&lt;/li&gt;
-&lt;li&gt;/etc/proxychains.conf&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;1  ./proxychains.conf&lt;br&gt;
+2  $(HOME)/.proxychains/proxychains.conf&lt;br&gt;
+3 /etc/proxychains.conf&lt;/p&gt;
 &lt;h4&gt;/etc/proxychains.conf the global option&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
 strict_chain
@@ -5681,10 +5684,11 @@ Connected to google.com.
 Escape character is &#39;^]&#39;.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Excluding traffic from your proxy&lt;/h4&gt;
-&lt;p&gt;In theory you set the localnet option in your configuration file&lt;br&gt;
-but this doesn&amp;#39;t work me with proxychains under debian.&lt;/p&gt;
+&lt;p&gt;In theory you can set the localnet option in your configuration file to&lt;br&gt;
+exclude the local LAN by default from proxy behavior.  This has not worked&lt;br&gt;
+for  me with proxychains under Debian 6.0&lt;/p&gt;
 
-&lt;p&gt;Just in case you are interested though: &lt;a href=&#34;https://github.com/haad/proxychains/issues/6#issuecomment-4041824&#34;&gt;localnet docs&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;In case you are interested though: &lt;a href=&#34;https://github.com/haad/proxychains/issues/6#issuecomment-4041824&#34;&gt;localnet docs&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://benizi.com/postfix-proxychains&#34;&gt;article one&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/&#34;&gt;article two&lt;/a&gt;&lt;br&gt;
@@ -5697,7 +5701,7 @@ but this doesn&amp;#39;t work me with proxychains under debian.&lt;/p&gt;
                 <title>previous blog long gone -- new beginnings</title>
                 <link rel="alternate" href="/2012/02/06/starting-over/" type="text/html" />
                 <id>/2012/02/06/starting-over/</id>
-                <updated>2012-02-06T17:23:00Z</updated>
+                <updated>2012-02-06T18:40:00Z</updated>
                 
                 <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
 start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
@@ -5707,6 +5711,43 @@ to express my thoughts more clearly than before!</summary>
 start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
 and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
 to express my thoughts more clearly than before!&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>internet notoriety</title>
+                <link rel="alternate" href="/2012/02/06/internet-famous-one/" type="text/html" />
+                <id>/2012/02/06/internet-famous-one/</id>
+                <updated>2012-02-06T18:39:00Z</updated>
+                
+                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
+and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
+for my boss that has become something of urban legend.  One of my coworkers posted it&lt;br&gt;
+on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
+it got picked up by someone who blogs regularly at Microsoft.  It was associated&lt;br&gt;
+with another urban legend story at MS about a new employee  dinging the car of someone with&lt;br&gt;
+the lastname Gates.</summary>
+                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
+and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
+for my boss that has become something of urban legend.  One of my coworkers posted it&lt;br&gt;
+on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
+it got picked up by someone who blogs regularly at Microsoft.  It was associated&lt;br&gt;
+with another urban legend story at MS about a new employee  dinging the car of someone with&lt;br&gt;
+the lastname Gates.&lt;/p&gt;
+
+&lt;p&gt;The original post:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/ione/i1first.png&#34; alt=&#34;the post&#34; title=&#34;blog post&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;The traceback:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/ione/ione-back2.png&#34; alt=&#34;backtrace&#34; title=&#34;backtrace&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;I find the whole thing funny.  It is part of my history now.  Someday I may&lt;br&gt;
+own up my second &amp;#39;Internet Notorious&amp;#39; moment.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;caffeine coder&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&#34;&gt;msdn traceback&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         

@@ -89,18 +89,16 @@ function toggleDiv(divId) {
         </div>
         
         <div class="body">
-            <p>Cisco IOS-XE OID space for monitoring</p>
-
+            <h4>Cisco IOS-XE OID&#39;s for monitoring</h4>
 <p>Memory Walk OID</p>
 
 <p>.1.3.6.1.4.1.9.9.48.1.1.1</p>
 
-<p>This gives you your OID space.  For each memory bank<br>
-you can use these to get you usage:</p>
+<p>This should provide your memory bank OID space.</p>
 <h1>OID keys for memory stats</h1>
-<p>&#39;mem_bank&#39;: &#39;1.3.6.1.4.1.9.9.48.1.1.1.2.<br>
-&#39;mem_used&#39;: &#39;1.3.6.1.4.1.9.9.48.1.1.1.5.<br>
-&#39;mem_free&#39;: &#39;1.3.6.1.4.1.9.9.48.1.1.1.6.</p>
+<p>mem_bank = 1.3.6.1.4.1.9.9.48.1.1.1.2.<br>
+mem_used = 1.3.6.1.4.1.9.9.48.1.1.1.5.<br>
+mem_free = 1.3.6.1.4.1.9.9.48.1.1.1.6.</p>
 
 <p>CPU Walk OID<br>
 .1.3.6.1.4.1.9.9.109.1.1.1.1.2</p>
@@ -115,26 +113,66 @@ for 32 bit counter use: .1.3.6.1.2.1.2.2</p>
 
 <p>32 bit counter interface oid&#39;s</p>
 <h1>32bit counter MIBs</h1>
-<p>&#39;ifname&#39;: &#39;1.3.6.1.2.1.2.2.1.2.<br>
-&#39;mtu&#39;: &#39;1.3.6.1.2.1.2.2.1.4.<br>
-&#39;ifspeed&#39;: &#39;1.3.6.1.2.1.2.2.1.5.<br>
-&#39;ifAdminStatus&#39;: &#39;1.3.6.1.2.1.2.2.1.7.<br>
-&#39;ifOperStatus&#39;: &#39;1.3.6.1.2.1.2.2.1.8.<br>
-&#39;ifInOctets&#39;: &#39;.1.3.6.1.2.1.31.1.1.1.6.<br>
-&#39;ifOutOctets&#39;: &#39;1.3.6.1.2.1.2.2.1.16.<br>
-&#39;physadd&#39;: &#39;1.3.6.1.2.1.2.2.1.6.</p>
+<p>ifname = 1.3.6.1.2.1.2.2.1.2.<br>
+mtu = 1.3.6.1.2.1.2.2.1.4.<br>
+ifspeed = 1.3.6.1.2.1.2.2.1.5.<br>
+ifAdminStatus = 1.3.6.1.2.1.2.2.1.7.<br>
+ifOperStatus = 1.3.6.1.2.1.2.2.1.8.<br>
+ifInOctets = .1.3.6.1.2.1.31.1.1.1.6.<br>
+ifOutOctets = 1.3.6.1.2.1.2.2.1.16.<br>
+physadd = 1.3.6.1.2.1.2.2.1.6.</p>
 
 <p>64 bit counter interface oid&#39;s<br>
-&#39;ifname&#39;: &#39;1.3.6.1.2.1.31.1.1.1.1.<br>
-&#39;ifspeed&#39;: &#39;1.3.6.1.2.1.31.1.1.1.15.<br>
-&#39;ifoperstatus&#39;: &#39;1.3.6.1.2.1.31.1.1.1.17.<br>
-&#39;ifinoctets&#39;: &#39;1.3.6.1.2.1.31.1.1.1.6.<br>
-&#39;ifalias&#39;: &#39;1.3.6.1.2.1.31.1.1.1.18.<br>
-&#39;ifinmulticastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.2.<br>
-&#39;ifoutmulticastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.4.<br>
-&#39;ifinbroadcastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.3.<br>
-&#39;ifoutbroadcastpkts&#39;: &#39;1.3.6.1.2.1.31.1.1.1.5.<br>
-&#39;ifoutoctets&#39;: &#39;1.3.6.1.2.1.31.1.1.1.10.</p>
+ifname = 1.3.6.1.2.1.31.1.1.1.1.<br>
+ifspeed = 1.3.6.1.2.1.31.1.1.1.15.<br>
+ifoperstatus = 1.3.6.1.2.1.31.1.1.1.17.<br>
+ifinoctets = 1.3.6.1.2.1.31.1.1.1.6.<br>
+ifalias = 1.3.6.1.2.1.31.1.1.1.18.<br>
+ifinmulticastpkts = 1.3.6.1.2.1.31.1.1.1.2.<br>
+ifoutmulticastpkts = 1.3.6.1.2.1.31.1.1.1.4.<br>
+ifinbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.3.<br>
+ifoutbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.5.<br>
+ifoutoctets = 1.3.6.1.2.1.31.1.1.1.10.</p>
+<h4>Using The Above OID Successfully</h4>
+<p>So take the memory walk oid.  Want to discover what memory banks we can monitor.</p>
+
+<p>snmpwalk -v 2c -c community yourhostip .1.3.6.1.4.1.9.9.48.1.1.1<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.1 = STRING: &quot;Processor&quot;<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &quot;lsmpi_io&quot;<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.3.1 = INTEGER: 0<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.3.14 = INTEGER: 0<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.4.1 = INTEGER: 1<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.4.14 = INTEGER: 1<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.1 = Gauge32: 643028280<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.1 = Gauge32: 1097647748<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.7.1 = Gauge32: 1097325320<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.7.14 = Gauge32: 968</p>
+
+<p>Above we can see two distinct memory banks.  One with OID&#39;s ending in &#39;14 and one with<br>
+OID&#39;s ending in &#39;1&#39;.</p>
+<h4>Getting our stats for the &#39;lsmpi_io&#39; mem bank, or &#39;14&#39;</h4>
+<p><pre><code><br>
+snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2..14<br>
+1.3.6.1.4.1.9.9.48.1.1.1.2..14: Unknown Object Identifier (Sub-id not found: ciscoMgmt -&gt; .14)</p>
+
+<p>snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2.14<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &quot;lsmpi_io&quot;</p>
+
+<p>snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.5.14<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116</p>
+
+<p>snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.6.14<br>
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972<br>
+</code><pre></p>
+<h4>Notes</h4>
+<p>This is the way to walk and drill down into any SNMP data set.  Using<br>
+MIB&#39;s is much easier but if you know what the OID&#39;s correspond to not<br>
+necessary.</p>
+
+<p>If you are using this to walk the interface index and get statistics it<br>
+is important to be aware of <a href="http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a0080134eec.shtml">ifindex persist</a>.</p>
 
         </div>
     </div>
