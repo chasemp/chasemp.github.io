@@ -90,11 +90,11 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Updating only relevant Puppet configurations sections</p>
+<p>Updating only relevant Puppet configuration sections</p>
 
 <p>As a puppet installation grows the list of used modules can get large.  Especially,<br>
-if you are pulling from <a href="https://forge.puppetlabs.com/">https://forge.puppetlabs.com/</a>.  Testing in its final stages<br>
-is usually done via puppet to ensure repeatability.  The test runs get  longer and longer.</p>
+if you are pulling from <a href="https://forge.puppetlabs.com/">puppetlabs</a>.  Testing in its final stages<br>
+is usually done via puppet to ensure repeatability.  The test runs get longer and longer.</p>
 <h4>A full catalog run with no expected changes</h4>
 <p><pre><code><br>
 sudo /usr/bin/puppet agent --test --logdest syslog<br>
@@ -107,7 +107,7 @@ Info: Applying configuration version &#39;1371116293&#39;<br>
 Finished catalog run in 16.35 seconds<br>
 </pre></code></p>
 
-<p>If you need to rerun this every time you are tweaking a config file 16 seconds can be a long time.</p>
+<p>If you need to rerun this every time you tweak a config file 16 seconds can be a long time.</p>
 
 <p>If you are only updating a module called &#39;dhcp&#39; you can do:</p>
 

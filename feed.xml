@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-15T18:45:45Z</updated>
+        <updated>2013-08-15T19:34:05Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -3544,11 +3544,11 @@ to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
                 <title>beginning bgp configuration</title>
                 <link rel="alternate" href="/2013/04/16/beginning-bgp-configuration/" type="text/html" />
                 <id>/2013/04/16/beginning-bgp-configuration/</id>
-                <updated>2013-04-16T03:20:00Z</updated>
+                <updated>2013-04-16T19:32:00Z</updated>
                 
                 
                 <content type="html">&lt;h5&gt;Preamble&lt;/h5&gt;
-&lt;p&gt;Getting going with BGP&lt;/p&gt;
+&lt;p&gt;Getting started with BGP&lt;/p&gt;
 &lt;h4&gt;Configuring Basic BGP (full table)&lt;/h4&gt;
 &lt;p&gt;This configuration is Cisco based but JunOS isn&amp;#39;t too far of a stretch in my experience.&lt;/p&gt;
 
@@ -3851,7 +3851,7 @@ natinfo
                 <title>puppet disables itself if disk fills up</title>
                 <link rel="alternate" href="/2013/03/31/puppet-disables-itself-if-disk-fills-up/" type="text/html" />
                 <id>/2013/03/31/puppet-disables-itself-if-disk-fills-up/</id>
-                <updated>2013-03-31T01:11:00Z</updated>
+                <updated>2013-03-31T19:31:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3874,17 +3874,18 @@ Skipping run of Puppet configuration client; administratively disabled
                 <title>basic redis python pubsub</title>
                 <link rel="alternate" href="/2013/03/26/basic-redis-python-pubsub/" type="text/html" />
                 <id>/2013/03/26/basic-redis-python-pubsub/</id>
-                <updated>2013-03-26T01:11:00Z</updated>
+                <updated>2013-03-26T19:31:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;I am serializing a dict as JSON and publishing it.  The subscriber will&lt;br&gt;
 receive and print.  It is not necessary to use JSON as redis has awesome&lt;br&gt;
-datatype compatibility with python: &lt;a href=&#34;http://redis.io/topics/data-types&#34;&gt;http://redis.io/topics/data-types&lt;/a&gt;.&lt;/p&gt;
+datatype compatibility with python: &lt;a href=&#34;http://redis.io/topics/data-types&#34;&gt;type ref&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Using pubsub to distribute messages.  Often the &amp;#39;right way&amp;#39;.&lt;/p&gt;
-&lt;h4&gt;This is using python-redis from the debian repos:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;http://packages.debian.org/wheezy/python-redis
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Publishing an event:&lt;/h4&gt;
+&lt;p&gt;Using pubsub to distribute messages is often the &amp;#39;right way&amp;#39;.&lt;/p&gt;
+
+&lt;p&gt;This is using &lt;a href=&#34;http://packages.debian.org/wheezy/python-redis&#34;&gt;python-redis&lt;/a&gt; from the debian repos.&lt;/p&gt;
+&lt;h4&gt;Publishing an event:&lt;/h4&gt;
 &lt;p&gt;This is just an example.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
@@ -3954,12 +3955,12 @@ except redis.exceptions.ConnectionError as e:
                 <title>query puppetdb facts from cli</title>
                 <link rel="alternate" href="/2013/03/15/query-puppetdb-facts-from-cli/" type="text/html" />
                 <id>/2013/03/15/query-puppetdb-facts-from-cli/</id>
-                <updated>2013-03-15T01:11:00Z</updated>
+                <updated>2013-03-15T19:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;A need to get host facts when they are not up.  PuppetDB has cached them, and&lt;br&gt;
-I like the CLI.&lt;/p&gt;
+&lt;p&gt;A need to get host facts when the host itself is not available.  PuppetDB&lt;br&gt;
+has cached them, and I like the CLI.&lt;/p&gt;
 &lt;h4&gt;This doesn&amp;#39;t work like you think it does&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet facts find &amp;lt;myhost.com&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This always returns the facts for the &lt;em&gt;puppetmaster&lt;/em&gt; itself.&lt;/p&gt;
@@ -3979,13 +3980,14 @@ I like the CLI.&lt;/p&gt;
                 <title>puppet file resources in masterless mode</title>
                 <link rel="alternate" href="/2013/03/06/puppet-file-resources-in-masterless-mode/" type="text/html" />
                 <id>/2013/03/06/puppet-file-resources-in-masterless-mode/</id>
-                <updated>2013-03-06T01:11:00Z</updated>
+                <updated>2013-03-06T19:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Accessing file stores via puppet manifests in the real world.&lt;/p&gt;
 
-&lt;p&gt;If you use Puppet to distribute file resources and you also test things locally it can be a pain.&lt;/p&gt;
+&lt;p&gt;If you use Puppet to distribute file resources and you also test&lt;br&gt;
+configuration changes locally it can be a pain.&lt;/p&gt;
 &lt;h4&gt;Define a file resource for Puppet:&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;fileserver.conf:&lt;/em&gt;&lt;/p&gt;
 
@@ -4037,7 +4039,7 @@ failing because of this falsly accussed dependency now can be debugged.&lt;/p&gt
                 <title>Finding your metrics.</title>
                 <link rel="alternate" href="/2013/03/01/graphite-all-metrics/" type="text/html" />
                 <id>/2013/03/01/graphite-all-metrics/</id>
-                <updated>2013-03-01T17:24:00Z</updated>
+                <updated>2013-03-01T19:29:00Z</updated>
                 
                 <summary type="html">This will return a &amp;#39;list&amp;#39; of all of your metrics:</summary>
                 <content type="html">&lt;p&gt;This will return a &amp;#39;list&amp;#39; of all of your metrics:&lt;/p&gt;
@@ -4052,7 +4054,7 @@ failing because of this falsly accussed dependency now can be debugged.&lt;/p&gt
                 <title>allowing env magic via sudo</title>
                 <link rel="alternate" href="/2013/02/25/allowing-env-magic-via-sudo/" type="text/html" />
                 <id>/2013/02/25/allowing-env-magic-via-sudo/</id>
-                <updated>2013-02-25T01:11:00Z</updated>
+                <updated>2013-02-25T19:29:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4093,7 +4095,7 @@ Defaults env_keep += &amp;#34;LD_PRELOAD&amp;#34;
                 <title>making trivial debian packages</title>
                 <link rel="alternate" href="/2013/02/19/making-trivial-debian-packages/" type="text/html" />
                 <id>/2013/02/19/making-trivial-debian-packages/</id>
-                <updated>2013-02-19T01:09:00Z</updated>
+                <updated>2013-02-19T19:28:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4229,10 +4231,10 @@ All right, you win.
             </entry>
         
             <entry>
-                <title>simple nat outbound asa</title>
+                <title>simple nat outbound cisco asa</title>
                 <link rel="alternate" href="/2013/01/23/simple-nat-outbound-asa/" type="text/html" />
                 <id>/2013/01/23/simple-nat-outbound-asa/</id>
-                <updated>2013-01-23T01:08:00Z</updated>
+                <updated>2013-01-23T19:28:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4282,11 +4284,11 @@ nat (Inside,Outside) source dynamic NAT-CLIENTS interface
                 <title>cli password generation</title>
                 <link rel="alternate" href="/2013/01/15/cli-password-generation/" type="text/html" />
                 <id>/2013/01/15/cli-password-generation/</id>
-                <updated>2013-01-15T01:08:00Z</updated>
+                <updated>2013-01-15T19:27:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I have seen usage of &lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;http://www.pctools.com/guides/password/&lt;/a&gt; and similar sites.  This &lt;br&gt;
+&lt;p&gt;I notice people using online password generators such as &lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;pctools&lt;/a&gt; and similar sites.  This &lt;br&gt;
 is less than ideal.  APG is my generator of choice.&lt;/p&gt;
 &lt;h4&gt;Six twelve character choices&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# apg -m 12
 recEbrArkyan
@@ -4337,7 +4339,7 @@ do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
                 <title>cisco ios oid.md</title>
                 <link rel="alternate" href="/2012/12/13/cisco-ios-oid/" type="text/html" />
                 <id>/2012/12/13/cisco-ios-oid/</id>
-                <updated>2012-12-13T18:37:00Z</updated>
+                <updated>2012-12-13T19:27:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Cisco IOS-XE OID&amp;#39;s for monitoring&lt;/h4&gt;
@@ -4431,10 +4433,10 @@ is important to be aware of &lt;a href=&#34;http://www.cisco.com/en/US/tech/tk64
                 <title>cisco asa oid</title>
                 <link rel="alternate" href="/2012/12/11/cisco-asa-oid/" type="text/html" />
                 <id>/2012/12/11/cisco-asa-oid/</id>
-                <updated>2012-12-11T18:36:00Z</updated>
+                <updated>2012-12-11T19:26:00Z</updated>
                 
-                <summary type="html">Useful ASA OID&amp;#39;s to monitor stats ASA OS &amp;gt; 8.3</summary>
-                <content type="html">&lt;p&gt;Useful ASA OID&amp;#39;s to monitor stats ASA OS &amp;gt; 8.3&lt;/p&gt;
+                <summary type="html">Useful ASA OID&amp;#39;s to monitor stats on Cisco ASA OS =&amp;lt; 8.3</summary>
+                <content type="html">&lt;p&gt;Useful ASA OID&amp;#39;s to monitor stats on Cisco ASA OS =&amp;lt; 8.3&lt;/p&gt;
 
 &lt;p&gt;fivemincpu = .1.3.6.1.4.1.9.9.109.1.1.1.1.5.1&lt;br&gt;
 ikeactivetunnels = .1.3.6.1.4.1.9.9.171.1.2.1.1.0&lt;br&gt;
@@ -4453,7 +4455,7 @@ rasessions = 1.3.6.1.4.1.9.9.392.1.3.1.0&lt;/p&gt;
                 <title>bash then and now</title>
                 <link rel="alternate" href="/2012/12/03/bash-then-and-now/" type="text/html" />
                 <id>/2012/12/03/bash-then-and-now/</id>
-                <updated>2012-12-03T01:07:00Z</updated>
+                <updated>2012-12-03T19:26:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4465,7 +4467,7 @@ Bash behavior that are small but overtime I think make me more productive.&lt;/p
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;now:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;cd
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Erasing contents of a file&lt;/h4&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Erasing the contents of a file&lt;/h4&gt;
 &lt;p&gt;then:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;cat /dev/null &amp;gt; file
 &lt;/code&gt;&lt;/pre&gt;
@@ -4584,7 +4586,7 @@ mkdir /one/two/three
                 <title>convert mp3 for asterisk</title>
                 <link rel="alternate" href="/2012/11/24/convert-mp3-for-asterisk/" type="text/html" />
                 <id>/2012/11/24/convert-mp3-for-asterisk/</id>
-                <updated>2012-11-24T01:05:00Z</updated>
+                <updated>2012-11-24T19:26:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;I want to use mp3&amp;#39;s for hold music, and for fun.
@@ -4603,10 +4605,10 @@ exten =&amp;gt; 2112,2,MusicOnHold(rush)
             </entry>
         
             <entry>
-                <title>IOS history size</title>
+                <title>cisco ios-xe history size</title>
                 <link rel="alternate" href="/2012/11/21/cisco-ios-history-size/" type="text/html" />
                 <id>/2012/11/21/cisco-ios-history-size/</id>
-                <updated>2012-11-21T01:05:00Z</updated>
+                <updated>2012-11-21T19:25:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4634,15 +4636,15 @@ line vty 5 15
                 <title>puppet tagged runs</title>
                 <link rel="alternate" href="/2012/11/08/puppet-tagged-runs/" type="text/html" />
                 <id>/2012/11/08/puppet-tagged-runs/</id>
-                <updated>2012-11-08T01:05:00Z</updated>
+                <updated>2012-11-08T19:25:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Updating only relevant Puppet configurations sections&lt;/p&gt;
+&lt;p&gt;Updating only relevant Puppet configuration sections&lt;/p&gt;
 
 &lt;p&gt;As a puppet installation grows the list of used modules can get large.  Especially,&lt;br&gt;
-if you are pulling from &lt;a href=&#34;https://forge.puppetlabs.com/&#34;&gt;https://forge.puppetlabs.com/&lt;/a&gt;.  Testing in its final stages&lt;br&gt;
-is usually done via puppet to ensure repeatability.  The test runs get  longer and longer.&lt;/p&gt;
+if you are pulling from &lt;a href=&#34;https://forge.puppetlabs.com/&#34;&gt;puppetlabs&lt;/a&gt;.  Testing in its final stages&lt;br&gt;
+is usually done via puppet to ensure repeatability.  The test runs get longer and longer.&lt;/p&gt;
 &lt;h4&gt;A full catalog run with no expected changes&lt;/h4&gt;
 &lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
 sudo /usr/bin/puppet agent --test --logdest syslog&lt;br&gt;
@@ -4655,7 +4657,7 @@ Info: Applying configuration version &amp;#39;1371116293&amp;#39;&lt;br&gt;
 Finished catalog run in 16.35 seconds&lt;br&gt;
 &lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
 
-&lt;p&gt;If you need to rerun this every time you are tweaking a config file 16 seconds can be a long time.&lt;/p&gt;
+&lt;p&gt;If you need to rerun this every time you tweak a config file 16 seconds can be a long time.&lt;/p&gt;
 
 &lt;p&gt;If you are only updating a module called &amp;#39;dhcp&amp;#39; you can do:&lt;/p&gt;
 
@@ -4708,7 +4710,7 @@ Finished catalog run in 12.39 seconds&lt;br&gt;
                 <title>mysql full partition</title>
                 <link rel="alternate" href="/2012/11/02/mysql-full-partition/" type="text/html" />
                 <id>/2012/11/02/mysql-full-partition/</id>
-                <updated>2012-11-02T18:44:00Z</updated>
+                <updated>2012-11-02T19:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4805,7 +4807,7 @@ Starting MySQL (Percona Server) database server: mysqld already running.
                 <title>mib basics</title>
                 <link rel="alternate" href="/2012/10/29/mib-basics/" type="text/html" />
                 <id>/2012/10/29/mib-basics/</id>
-                <updated>2012-10-29T18:44:00Z</updated>
+                <updated>2012-10-29T19:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4879,7 +4881,7 @@ DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.9
                 <title>email log alerts</title>
                 <link rel="alternate" href="/2012/10/23/email-log-alerts/" type="text/html" />
                 <id>/2012/10/23/email-log-alerts/</id>
-                <updated>2012-10-23T18:42:00Z</updated>
+                <updated>2012-10-23T19:24:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4922,7 +4924,7 @@ log2mail.
                 <title>iptables flush all rules</title>
                 <link rel="alternate" href="/2012/10/15/iptables-flush-all-rules/" type="text/html" />
                 <id>/2012/10/15/iptables-flush-all-rules/</id>
-                <updated>2012-10-15T18:42:00Z</updated>
+                <updated>2012-10-15T19:24:00Z</updated>
                 
                 <summary type="html">Handy for testing.  Flush iptables.</summary>
                 <content type="html">&lt;p&gt;Handy for testing.  Flush iptables.&lt;/p&gt;
@@ -4937,14 +4939,27 @@ iptables -P INPUT ACCEPT
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT
 iptables -L -n -v
-&lt;/code&gt;&lt;/pre&gt;</content>
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Dumps empty list when finished&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+Chain INPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain FORWARD (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination         
+
+Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
+ pkts bytes target     prot opt in     out     source               destination 
+&lt;/code&gt;&lt;/pre&gt;
+</content>
             </entry>
         
             <entry>
                 <title>adding a logfile to splunk</title>
                 <link rel="alternate" href="/2012/10/02/adding-a-logfile-to-splunk/" type="text/html" />
                 <id>/2012/10/02/adding-a-logfile-to-splunk/</id>
-                <updated>2012-10-02T18:42:00Z</updated>
+                <updated>2012-10-02T19:22:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Getting standard logfiles into Splunk&lt;/h4&gt;
@@ -4963,7 +4978,7 @@ sourcetype = &amp;lt;SOURCE_TYPE_NAME&amp;gt;
                 <title>nix lights out failsafe</title>
                 <link rel="alternate" href="/2012/09/30/nix-lights-out-failsafe/" type="text/html" />
                 <id>/2012/09/30/nix-lights-out-failsafe/</id>
-                <updated>2012-09-30T18:42:00Z</updated>
+                <updated>2012-09-30T19:22:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5002,21 +5017,20 @@ Broadcast message from root@vm (Wed Jul 10 14:03:02 2013):
 
 The system is going DOWN for reboot in 10 minutes!
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;&lt;em&gt;do my fw maint&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;do my fw maint&lt;/strong&gt;&lt;/p&gt;
 &lt;h4&gt;Canceling&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# fg
 nohup rsched 10
 
 &amp;lt;cntrl+c&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
-&lt;p&gt;redirect bg process with &amp;amp;&amp;gt; /tmp/reboot&lt;/p&gt;
-</content>
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;redirect bg process with &amp;amp;&amp;gt; /tmp/reboot
+&lt;/code&gt;&lt;/pre&gt;</content>
             </entry>
         
             <entry>
                 <title>watching linux filesystem events</title>
                 <link rel="alternate" href="/2012/09/18/watching-linux-filesystem-events/" type="text/html" />
                 <id>/2012/09/18/watching-linux-filesystem-events/</id>
-                <updated>2012-09-18T18:42:00Z</updated>
+                <updated>2012-09-18T19:21:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5061,14 +5075,14 @@ done
                 <title>monitor interface usage</title>
                 <link rel="alternate" href="/2012/09/13/monitor-interface-usage/" type="text/html" />
                 <id>/2012/09/13/monitor-interface-usage/</id>
-                <updated>2012-09-13T18:42:00Z</updated>
+                <updated>2012-09-13T19:21:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;I like to use utilities like iftop, but sometimes simple is better.  I found a small&lt;br&gt;
 example of this but I believe I have improved the conversions.&lt;/p&gt;
 &lt;h4&gt;Example found&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.madmadmod.com/sysadmin/54-how-to-get-the-current-network-bandwidth-usage-on-linux.html&#34;&gt;http://www.madmadmod.com/sysadmin/54-how-to-get-the-current-network-bandwidth-usage-on-linux.html&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.madmadmod.com/sysadmin/54-how-to-get-the-current-network-bandwidth-usage-on-linux.html&#34;&gt;madmadmod script&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;My version&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
 #!/bin/bash
@@ -5134,23 +5148,23 @@ done
                 <title>puppet cert signing</title>
                 <link rel="alternate" href="/2012/09/03/puppet-cert-signing/" type="text/html" />
                 <id>/2012/09/03/puppet-cert-signing/</id>
-                <updated>2012-09-03T18:42:00Z</updated>
+                <updated>2012-09-03T19:21:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Setting up a new host with Puppet.  This assumes you have a Puppet Master already going.  One&lt;br&gt;
 nice thing to do is have a cname that forwards the &amp;#39;puppet&amp;#39; name to your Puppet Master so that&lt;br&gt;
 hosts find it easily as the default.&lt;/p&gt;
-&lt;h4&gt;Did a host have this name previously?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert -l -all | g foo.com
+&lt;h4&gt;Did a host have this name previously?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@pmaster:~# puppet cert -l -all | g foo.com
 + &amp;#34;foo.com&amp;#34;           (SHA1) &amp;lt;hash&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Remove old serverside cert&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert --clean foo.com 
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Remove old serverside cert&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@pmaster:~# puppet cert --clean foo.com 
 Revoked certificate with serial 596
 Removing file Puppet::SSL::Certificate foo.com at &amp;#39;/var/lib/puppet/ssl/ca/signed/foo.com.pem&amp;#39;
 Removing file Puppet::SSL::Certificate foo.com at &amp;#39;/var/lib/puppet/ssl/certs/foo.com.pem&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Request new cert on the client&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet agent --test
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Verify the request is now pending server side&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert -l
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Verify the request is now pending server side&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@pmaster:~# puppet cert -l
 &amp;#34;blah.com&amp;#34;           (SHA256) &amp;lt;hash&amp;gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Sign your cert&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;me&amp;gt;@&amp;lt;pmaster&amp;gt;:~# puppet cert -s blah.com
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Sign your cert&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@pmaster:~# puppet cert -s blah.com
 Signed certificate request for blah.com
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Run Puppet client side:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet agent --test
 &lt;/code&gt;&lt;/pre&gt;
@@ -5597,9 +5611,9 @@ curl -H &#34;Content-Type: application/json&#34; \
         
             <entry>
                 <title>reading json from bash with python</title>
-                <link rel="alternate" href="/2012/05/09/reading-json-from-bash-with-python/" type="text/html" />
-                <id>/2012/05/09/reading-json-from-bash-with-python/</id>
-                <updated>2012-05-09T18:41:00Z</updated>
+                <link rel="alternate" href="/2012/05/28/reading-json-from-bash-with-python/" type="text/html" />
+                <id>/2012/05/28/reading-json-from-bash-with-python/</id>
+                <updated>2012-05-28T18:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5627,9 +5641,9 @@ you
         
             <entry>
                 <title>proxychains</title>
-                <link rel="alternate" href="/2012/02/06/proxychains/" type="text/html" />
-                <id>/2012/02/06/proxychains/</id>
-                <updated>2012-02-06T18:40:00Z</updated>
+                <link rel="alternate" href="/2012/02/18/proxychains/" type="text/html" />
+                <id>/2012/02/18/proxychains/</id>
+                <updated>2012-02-18T18:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5698,27 +5712,10 @@ for  me with proxychains under Debian 6.0&lt;/p&gt;
             </entry>
         
             <entry>
-                <title>previous blog long gone -- new beginnings</title>
-                <link rel="alternate" href="/2012/02/06/starting-over/" type="text/html" />
-                <id>/2012/02/06/starting-over/</id>
-                <updated>2012-02-06T18:40:00Z</updated>
-                
-                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!</summary>
-                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>internet notoriety</title>
-                <link rel="alternate" href="/2012/02/06/internet-famous-one/" type="text/html" />
-                <id>/2012/02/06/internet-famous-one/</id>
-                <updated>2012-02-06T18:39:00Z</updated>
+                <link rel="alternate" href="/2012/02/07/internet-famous-one/" type="text/html" />
+                <id>/2012/02/07/internet-famous-one/</id>
+                <updated>2012-02-07T18:39:00Z</updated>
                 
                 <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
 and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
@@ -5748,6 +5745,23 @@ own up my second &amp;#39;Internet Notorious&amp;#39; moment.&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;caffeine coder&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&#34;&gt;msdn traceback&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>previous blog long gone -- new beginnings</title>
+                <link rel="alternate" href="/2012/02/06/starting-over/" type="text/html" />
+                <id>/2012/02/06/starting-over/</id>
+                <updated>2012-02-06T18:40:00Z</updated>
+                
+                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!</summary>
+                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
+start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
+and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
+to express my thoughts more clearly than before!&lt;/p&gt;
 </content>
             </entry>
         

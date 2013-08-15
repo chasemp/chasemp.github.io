@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>proxychains &ndash; devops type thoughts</title>
+    <title>reading json from bash with python &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -84,73 +84,31 @@ function toggleDiv(divId) {
             
     <div class="item">
         <div class="header">
-            <h1>proxychains</h1>
-            <h2>Monday, February 06, 2012 <span>&raquo;</span> <a href="/tags/proxychains/">proxychains</a></h2>
+            <h1>reading json from bash with python</h1>
+            <h2>Monday, May 28, 2012 <span>&raquo;</span> <a href="/tags/bash/">bash</a>, <a href="/tags/json/">json</a>, <a href="/tags/python/">python</a></h2>
         </div>
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Some commands do not support a proxy (RE: telnet).  Other<br>
-times it is just easier to do a one-off instance rather<br>
-than mess with environment settings.  A lot of people use<br>
-this with Tor.</p>
-<h4>ProxyChains</h4>
-<p>Allows you to send traffic through a proxy without the command<br>
-itself having foreknowledge.</p>
-<pre><code>aptitude install proxychains
-</code></pre><h4>Config files</h4>
-<p>Pick one:</p>
+<p>Getting JSON from a flat file in a shell script</p>
 
-<p>1  ./proxychains.conf<br>
-2  $(HOME)/.proxychains/proxychains.conf<br>
-3 /etc/proxychains.conf</p>
-<h4>/etc/proxychains.conf the global option</h4>
-<pre><code>
-strict_chain
-quiet_mode
-tcp_read_time_out 15000
-tcp_connect_time_out 8000
-[ProxyList]
-#replace this with your proxy
-http    192.168.1.1 8080
-</code></pre>
-<h4>telnet Before Proxychains (behind a proxy)</h4>
-<pre><code>
-me@vm:~/pkg$ telnet google.com 80
-Trying 2404:6800:4005:806::1006...
-Trying 173.194.127.196...
-Trying 173.194.127.193...
-Trying 173.194.127.200...
-Trying 173.194.127.201...
-Trying 173.194.127.198...
-Trying 173.194.127.199...
-Trying 173.194.127.195...
-Trying 173.194.127.192...
-Trying 173.194.127.206...
-Trying 173.194.127.194...
-Trying 173.194.127.197...
-telnet: Unable to connect to remote host: Network is unreachable
-</code></pre>
-<h4>telnet after ProxyChains (behind a proxy)</h4>
-<pre><code>
-me@vm:~/pkg$ proxychains telnet google.com 80
-ProxyChains-3.1 (http://proxychains.sf.net)
-Trying 2404:6800:4005:806::1006...
-Trying 173.194.127.196...
-Connected to google.com.
-Escape character is '^]'.
-</code></pre>
-<h4>Excluding traffic from your proxy</h4>
-<p>In theory you can set the localnet option in your configuration file to<br>
-exclude the local LAN by default from proxy behavior.  This has not worked<br>
-for  me with proxychains under Debian 6.0</p>
+<p>JSON is become a defacto serialization standard.  Getting at the info in Bash is nice.</p>
+<h4>Say you have a file with a json serialized dict from python</h4>
+<p>file: <pre><code>/var/myfile</code></pre></p>
 
-<p>In case you are interested though: <a href="https://github.com/haad/proxychains/issues/6#issuecomment-4041824">localnet docs</a></p>
-<h4>Reference</h4>
-<p><a href="http://benizi.com/postfix-proxychains">article one</a><br>
-<a href="http://www.jameslovecomputers.com/how-to-install-configure-and-use-proxychains/">article two</a><br>
-<a href="http://proxychains.sourceforge.net/howto.html">official howto</a><br>
-<a href="https://github.com/haad/proxychains">github</a></p>
+<p>json contents: <pre><code>{&#39;this&#39;: &#39;you&#39;}</code></pre></p>
+<h4>Create a script that can access this data</h4><pre><code>#!/bin/bash
+set -e
+FILE=&#39;/var/file&#39;
+if [[ ! -a $FILE ]]; then
+    exit 0
+fi
+dict_value=`python -c &#39;import json, os; d=json.loads(open(&#34;/var/file&#34;).read()); print d[&#34;this&#34;]&#39;`
+echo $dict_value
+</code></pre><h4>Run it as a command</h4><pre><code>#./script.sh
+you
+</code></pre>
+<p>There really doesn&#39;t seem to be a better way to parse json from bash, but this isn&#39;t too bad.</p>
 
         </div>
     </div>

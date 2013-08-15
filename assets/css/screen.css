@@ -379,7 +379,7 @@ small a {
   font-weight: normal;
   text-shadow: none;
   text-transform: none;
-  color: #8c8c8c;
+  color: white;
 }
 
 div.item + div.item div.header h1 {
@@ -401,11 +401,13 @@ div.item div.header h2 {
   color: white;
 }
 div.item div.header h2 a {
-  color: #4d4d4d;
+  color: #white;
 }
+
 div.item div.header h2 a:hover {
   text-decoration: underline;
 }
+
 div.item div.header h2 span {
   position: relative;
   top: -2px;
@@ -420,6 +422,7 @@ div.pagination {
   margin-top: 25px;
   border-top: 1px dotted #d9d9d9;
 }
+
 div.pagination p {
   font-size: 12px;
   font-style: italic;
@@ -428,7 +431,7 @@ div.pagination p {
   text-transform: uppercase;
 }
 div.pagination a {
-  color: #4d4d4d;
+  color: white;
 }
 
 dl.archives > dt a {
