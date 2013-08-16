@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-16T01:31:04Z</updated>
+        <updated>2013-08-16T19:39:36Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,281 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>site loadtesting wrk</title>
+                <link rel="alternate" href="/2013/08/16/site-loadtesting-wrk/" type="text/html" />
+                <id>/2013/08/16/site-loadtesting-wrk/</id>
+                <updated>2013-08-16T19:38:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Although tools like &lt;a href=&#34;http://httpd.apache.org/docs/2.2/programs/ab.html&#34;&gt;ab&lt;/a&gt; and &lt;a href=&#34;http://www.joedog.org/siege-home/&#34;&gt;siege&lt;/a&gt; are common place wrk seems really interesting.&lt;/p&gt;
+&lt;h4&gt;Installing&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;git clone https://github.com/wg/wrk.git
+aptitude update
+aptitude install -y build-essential libssl-dev
+cd wrk
+
+make
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/wrk.o src/wrk.c
+src/wrk.c: In function ‘format_request’:
+src/wrk.c:478:9: warning: implicit declaration of function ‘strncasecmp’ [-Wimplicit-function-declaration]
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/net.o src/net.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/ssl.o src/ssl.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/aprintf.o src/aprintf.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/stats.o src/stats.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/units.o src/units.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/ae.o src/ae.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/zmalloc.o src/zmalloc.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/http_parser.o src/http_parser.c
+cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/tinymt64.o src/tinymt64.c
+cc  -o wrk obj/wrk.o obj/net.o obj/ssl.o obj/aprintf.o obj/stats.o obj/units.o obj/ae.o obj/zmalloc.o obj/http_parser.o obj/tinymt64.o -lpthread -lm -lcrypto -lssl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Source host specfications&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;cpuspecs&#39;);&#34;&gt;Show CPU Specs&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&#34;cpuspecs&#34; style=&#34;display:none;&#34;&gt;
+&lt;pre&gt;&lt;code&gt;
+processor       : 0
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 15
+model name      : Intel(R) Xeon(R) CPU            5130  @ 2.00GHz
+stepping        : 6
+microcode       : 0xc6
+cpu MHz         : 2000.020
+cache size      : 4096 KB
+physical id     : 0
+siblings        : 2
+core id         : 0
+cpu cores       : 2
+apicid          : 0
+initial apicid  : 0
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 10
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx tm2 ssse3 cx16 xtpr pdcm dca lahf_lm dtherm tpr_shadow
+bogomips        : 4000.04
+clflush size    : 64
+cache_alignment : 64
+address sizes   : 36 bits physical, 48 bits virtual
+power management:
+
+processor       : 1
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 15
+model name      : Intel(R) Xeon(R) CPU            5130  @ 2.00GHz
+stepping        : 6
+microcode       : 0xc6
+cpu MHz         : 2000.020
+cache size      : 4096 KB
+physical id     : 3
+siblings        : 2
+core id         : 0
+cpu cores       : 2
+apicid          : 6
+initial apicid  : 6
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 10
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx tm2 ssse3 cx16 xtpr pdcm dca lahf_lm dtherm tpr_shadow
+bogomips        : 4000.48
+clflush size    : 64
+cache_alignment : 64
+address sizes   : 36 bits physical, 48 bits virtual
+power management:
+
+processor       : 2
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 15
+model name      : Intel(R) Xeon(R) CPU            5130  @ 2.00GHz
+stepping        : 6
+microcode       : 0xc6
+cpu MHz         : 2000.020
+cache size      : 4096 KB
+physical id     : 0
+siblings        : 2
+core id         : 1
+cpu cores       : 2
+apicid          : 1
+initial apicid  : 1
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 10
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx tm2 ssse3 cx16 xtpr pdcm dca lahf_lm dtherm tpr_shadow
+bogomips        : 4000.48
+clflush size    : 64
+cache_alignment : 64
+address sizes   : 36 bits physical, 48 bits virtual
+power management:
+
+processor       : 3
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 15
+model name      : Intel(R) Xeon(R) CPU            5130  @ 2.00GHz
+stepping        : 6
+microcode       : 0xc6
+cpu MHz         : 2000.020
+cache size      : 4096 KB
+physical id     : 3
+siblings        : 2
+core id         : 1
+cpu cores       : 2
+apicid          : 7
+initial apicid  : 7
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 10
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush dts acpi mmx fxsr sse sse2 ss ht tm pbe syscall nx lm constant_tsc arch_perfmon pebs bts rep_good nopl aperfmperf pni dtes64 monitor ds_cpl vmx tm2 ssse3 cx16 xtpr pdcm dca lahf_lm dtherm tpr_shadow
+bogomips        : 4000.46
+clflush size    : 64
+cache_alignment : 64
+address sizes   : 36 bits physical, 48 bits virtual
+power management:
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;memspecs&#39;);&#34;&gt;Show Mem Specs&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&#34;memspecs&#34; style=&#34;display:none;&#34;&gt;
+&lt;pre&gt;&lt;code&gt;
+MemTotal:       16473572 kB
+MemFree:        16194832 kB
+Buffers:             652 kB
+Cached:            74176 kB
+SwapCached:            0 kB
+Active:           143896 kB
+Inactive:          46656 kB
+Active(anon):     115776 kB
+Inactive(anon):      144 kB
+Active(file):      28120 kB
+Inactive(file):    46512 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Dirty:                16 kB
+Writeback:             0 kB
+AnonPages:        115752 kB
+Mapped:            12160 kB
+Shmem:               196 kB
+Slab:              31552 kB
+SReclaimable:      20640 kB
+SUnreclaim:        10912 kB
+KernelStack:         720 kB
+PageTables:         2460 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:     8236784 kB
+Committed_AS:     188232 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:       49480 kB
+VmallocChunk:   34359686268 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+DirectMap4k:       50560 kB
+DirectMap2M:    16726016 kB
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+
+&lt;p&gt;This server has a 1 Gig Intel NIC.&lt;/p&gt;
+&lt;h4&gt;wrk usage&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+Usage: wrk &lt;options&gt; &lt;url&gt;                            
+  Options:                                            
+    -c, --connections &lt;N&gt;  Connections to keep open   
+    -d, --duration    &lt;T&gt;  Duration of test           
+    -t, --threads     &lt;N&gt;  Number of threads to use   
+                                                      
+    -H, --header      &lt;H&gt;  Add header to request      
+    -M, --method      &lt;M&gt;  HTTP method                
+        --body        &lt;B&gt;  Request body               
+        --latency          Print latency statistics   
+        --timeout     &lt;T&gt;  Socket/request timeout     
+    -v, --version          Print version details      
+                                                      
+  Numeric arguments may include a SI unit (1k, 1M, 1G)
+  Time arguments may include a time unit (2s, 2m, 2h)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;WRK test: 1&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@box:~/wrk# ./wrk -c 100 -d 60 -t 30 http://webdos
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/assets/images/wrk/wrk1load.png&#34; alt=&#34;diagram&#34; title=&#34;wrk1load&#34;&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+Running 1m test @ http://webdos
+  30 threads and 100 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.09s     6.81s   25.97s    86.54%
+    Req/Sec   328.61    826.17     8.22k    87.67%
+  560450 requests in 1.01m, 245.83MB read
+  Socket errors: connect 0, read 8, write 0, timeout 821
+Requests/sec:   9263.04
+Transfer/sec:      4.06MB
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Minimal load all around.  Less than 1.0 in top.  Htop shows 20% CPU and &lt;br&gt;
+a small memory footprint.&lt;/p&gt;
+&lt;h4&gt;WRK test: 2&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@box:~/wrk# ./wrk -c 1000 -d 60 -t 300 http://webdos
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/assets/images/wrk/wrk2cpu.png&#34; alt=&#34;diagram&#34; title=&#34;wrk2cpu&#34;&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+Running 1m test @ http://webdos
+  300 threads and 1000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     9.63s     5.14s   25.99s    84.13%
+    Req/Sec    51.22    292.17     7.44k    95.93%
+  538639 requests in 1.00m, 236.26MB read
+  Socket errors: connect 0, read 808, write 0, timeout 23144
+Requests/sec:   8974.12
+Transfer/sec:      3.94MB
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Load kicks up to 1.5-ish, and CPU hovers around 40-45%.  Memory&lt;br&gt;
+footprint stills manageable.&lt;/p&gt;
+&lt;h4&gt;WRK test: 3&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@box:~/wrk# ./wrk -c 10000 -d 60 -t 1000 http://webdos
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;/assets/images/wrk/wrk3cpu.png&#34; alt=&#34;diagram&#34; title=&#34;wrk3cpu&#34;&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+Running 1m test @ http://webdos
+  1000 threads and 10000 connections
+  Thread Stats   Avg      Stdev     Max   +/- Stdev
+    Latency     5.75s     6.79s   26.48s    76.56%
+    Req/Sec   113.72    490.76     9.44k    94.07%
+  561991 requests in 1.00m, 246.50MB read
+  Socket errors: connect 0, read 10046, write 0, timeout 285789
+Requests/sec:   9363.01
+Transfer/sec:      4.11MB
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;CPU is finally taking a hit.  Now using 70% of available resources most&lt;br&gt;
+of the time, but wrk seems to be distributing load well.  Memory is now showing&lt;br&gt;
+some definite usage, but still a CPU intensive operation.&lt;/p&gt;
+&lt;h4&gt;WRK Test: 4&lt;/h4&gt;
+&lt;p&gt;This is going well beyond our means to see what happens.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;./wrk -c 100000 -d 60 -t 10000 http://webdos
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;...aaaaaaand the box completely died.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/wg/wrk&#34;&gt;wrk on gh&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>graphite test clients</title>
@@ -150,7 +425,7 @@ s.close()
                 <title>anatomy of a fw vpn issue</title>
                 <link rel="alternate" href="/2013/08/14/anatomy-of-a-fw-issue/" type="text/html" />
                 <id>/2013/08/14/anatomy-of-a-fw-issue/</id>
-                <updated>2013-08-14T02:56:00Z</updated>
+                <updated>2013-08-14T19:39:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2475,7 +2750,7 @@ aptitude install puppetmaster
                 <title>simple site loadtesting</title>
                 <link rel="alternate" href="/2013/06/25/simple-site-loadtesting/" type="text/html" />
                 <id>/2013/06/25/simple-site-loadtesting/</id>
-                <updated>2013-06-25T03:26:00Z</updated>
+                <updated>2013-06-25T19:14:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
