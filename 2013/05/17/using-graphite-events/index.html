@@ -97,7 +97,23 @@ is a nice and reliable way to do it, but if you are looking for more flexbility 
 native (&#39;experimental&#39;) events feature may be useful.</p>
 <h4>Posting an event:</h4><pre><code>#!/bin/bash
 curl -X POST http://graphite/events/ -d &#39;{&#34;what&#34;: &#34;did_stuff&#34;, &#34;tags&#34; : &#34;fun,times&#34;}&#39;
-</code></pre><h4>Retrieving events:</h4><pre><code>curl -X GET http://graphite/events/
+</code></pre>
+<p>OR</p>
+
+<pre><code>
+#!/usr/bin/env python
+import json
+import urllib2
+
+one = {'what': 'did_stuff', 'tags' : 'fun,times'}
+req = urllib2.Request('http://graphite.da/events/',
+                      data=json.dumps(one),
+                      headers={'Content-type': 'text/plain'})
+r = urllib2.urlopen(req)
+
+print r.read()
+</code></pre>
+<h4>Retrieving events:</h4><pre><code>curl -X GET http://graphite/events/
 
 curl -X GET http://graphite/events/?tags=fun
 </code></pre><h4>Show me only stuff starting at an epoch time:</h4><pre><code>curl -X GET http://graphite/events/?from=1368778407

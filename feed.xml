@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-15T19:34:05Z</updated>
+        <updated>2013-08-16T01:18:48Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,137 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>graphite test clients</title>
+                <link rel="alternate" href="/2013/08/15/graphite-test-clients/" type="text/html" />
+                <id>/2013/08/15/graphite-test-clients/</id>
+                <updated>2013-08-15T01:00:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;send test data to graphite carbon listener&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+#!/usr/bin/env python
+import socket
+import time
+from random import randint
+
+CARBON_SERVER = &#39;127.0.0.1&#39;
+CARBON_PORT = 8000
+
+def send(m):
+    sock = socket.socket()
+    sock.connect((CARBON_SERVER, CARBON_PORT))
+    sock.sendall(m)
+    sock.close()
+
+while 1:
+    print &#39;send&#39;, time.time()
+    send(&#39;test.yup:1|s&#39;)
+    time.sleep(10)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;send test data to graphite carbon listener pickled&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+!/usr/bin/env python
+import pickle
+import time
+import struct
+import socket
+
+list = [(&#39;chase&#39;, (time.time(), 1)), (&#39;chase2&#39;, (time.time(), 1))]
+
+print list
+payload = pickle.dumps(list)
+header = struct.pack(&#34;!L&#34;, len(payload))
+message = header + payload
+
+def main():
+        s = socket.socket()
+        s.connect((&#39;10.1.107.27&#39;, 2003))
+        s.sendall(message)
+        s.close()
+main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Simple python statsd client library&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+#!/usr/bin/env python
+
+usage = &#34;&#34;&#34;
+     Takes two arguments: &lt;statsd ip&gt; &lt;statsd port&gt;
+        &#34;&#34;&#34;
+
+import socket
+import time
+import json
+import sys
+
+class StatsdClient(object):
+
+        def __init__(self, ip, port):
+            self.ip = ip
+            self.port = int(port)
+
+        def _send(self, msg):
+            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+            s.connect((self.ip, self.port))
+            try:
+                s.sendall(msg)
+            #try w/ only finally seems to eat exceptions.
+            finally:
+                s.close()
+            return
+
+        def set(self, gauge, value):
+            self._publish(gauge, value, &#39;s&#39;)
+
+        def timer(self, gauge, value):
+            self._publish(gauge, value, &#39;t&#39;)
+
+        def gauge(self, gauge, value):
+            self._publish(gauge, value, &#39;g&#39;)
+
+        def increment(self, gauge, value):
+            self._publish(gauge, value, &#39;c&#39;)
+
+        def decrement(self, gauge, value):
+            self._publish(gauge, &#39;-&#39; + value, &#39;c&#39;)
+
+        def _publish(self, metric, value, type):
+            #valid: metric:value|type
+            statstring = metric +  &#39;:&#39; + str(value) + &#39;|&#39; + type
+            return self._send(statstring)
+
+
+def main():
+    if len(sys.argv) &lt; 3:
+        print usage
+        sys.exit(1)
+
+    statengine = StatsdClient(sys.argv[1], sys.argv[2])
+    statengine.gauge(&#34;blah&#34;, 1)
+    statengine.set(&#34;hi&#34;, 1)
+
+main()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Testing statsd with invalid data&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+import socket
+# addressing information of target
+IPADDR = &#39;127.0.0.1&#39;
+PORTNUM = 9000
+
+s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
+s.connect((IPADDR, PORTNUM))
+s.send(&#34;goodcount:1|c|@0.5&#34;)
+s.send(&#34;goodcount:1|c|@1&#34;)
+s.send(&#34;badcount1:2|c|@&#34;)
+s.send(&#34;badcount2:3|c|what&#34;)
+s.send(&#34;notype:5|&#34;)
+s.send(&#34;no|:5g&#34;)
+s.close()
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>anatomy of a fw vpn issue</title>
@@ -494,7 +625,7 @@ wasn&amp;#39;t looking for it initially.&lt;/li&gt;
                 <title>python snippets</title>
                 <link rel="alternate" href="/2013/08/13/python-snippets/" type="text/html" />
                 <id>/2013/08/13/python-snippets/</id>
-                <updated>2013-08-13T02:47:00Z</updated>
+                <updated>2013-08-13T20:13:00Z</updated>
                 
                 <summary type="html">I recently found these two snippets to be useful.</summary>
                 <content type="html">&lt;p&gt;I recently found these two snippets to be useful.&lt;/p&gt;
@@ -510,6 +641,18 @@ pydoc.pager(&amp;#39;string&amp;#39;)&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;http://docs.python.org/2/library/pydoc.html&#34;&gt;docs&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.onlamp.com/pub/a/python/2001/04/18/pydoc.html&#34;&gt;oreilly info&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Basic use of multiprocessing pool.map&lt;/h4&gt;
+&lt;p&gt;from multiprocessing import Pool&lt;/p&gt;
+
+&lt;p&gt;def f(x):&lt;br&gt;
+    return x*x&lt;/p&gt;
+
+&lt;p&gt;def main():&lt;br&gt;
+    pool = Pool(processes=4)              # start 4 worker processes&lt;br&gt;
+    print pool.map(f, range(10))&lt;/p&gt;
+
+&lt;p&gt;if &lt;strong&gt;name&lt;/strong&gt; == &amp;#39;&lt;strong&gt;main&lt;/strong&gt;&amp;#39;:&lt;br&gt;
+    main()&lt;/p&gt;
 </content>
             </entry>
         
@@ -911,7 +1054,7 @@ IP of the reverse proxy.  This means everyone is allowed.&lt;/p&gt;
                 <title>configserver firewall and config script</title>
                 <link rel="alternate" href="/2013/08/05/configserver-firewall-and-config-script/" type="text/html" />
                 <id>/2013/08/05/configserver-firewall-and-config-script/</id>
-                <updated>2013-08-05T03:30:00Z</updated>
+                <updated>2013-08-05T01:17:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -925,6 +1068,9 @@ tar zxfv csf.tgz
 cd csf/
 sh install.sh
 &lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show Install Output&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&#34;hideme&#34; style=&#34;display:none;&#34;&gt;
 &lt;pre&gt;&lt;code&gt;
 Configuring for OS
 
@@ -1154,6 +1300,7 @@ update-rc.d: using dependency based boot sequencing
 
 Installation Completed
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h4&gt;Checking out default status&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;/etc/init.d/csf status
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -1190,34 +1337,34 @@ have shortened the default descriptions to my own line notes.&lt;/p&gt;
 
 &lt;p&gt;Configured Sections:&lt;/p&gt;
 
-&lt;p&gt;Initial Settings&lt;br&gt;
-IPv4 Port Settings&lt;br&gt;
-IPv6 Port Settings&lt;br&gt;
-General Settings&lt;br&gt;
-SMTP Settings&lt;br&gt;
-Port Flood Settings&lt;br&gt;
-Logging Settings&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Initial Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;IPv4 Port Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;IPv6 Port Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;General Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;SMTP Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Port Flood Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Logging Settings&lt;/em&gt;&lt;/p&gt;
 
 &lt;p&gt;Unconfigured sections:&lt;/p&gt;
 
-&lt;p&gt;Reporting Settings&lt;br&gt;
-Country Code Lists and Settings&lt;br&gt;
-Login Failure Blocking and Alerts&lt;br&gt;
-Directory Watching &amp;amp; Integrity &lt;br&gt;
-Distributed Attacks&lt;br&gt;
-Login Tracking&lt;br&gt;
-Connection Tracking&lt;br&gt;
-Process Tracking&lt;br&gt;
-Port Scan Tracking&lt;br&gt;
-User ID Tracking&lt;br&gt;
-Account Tracking&lt;br&gt;
-Integrated User Interface&lt;br&gt;
-Messenger service&lt;br&gt;
-lfd Clustering&lt;br&gt;
-Port Knocking&lt;br&gt;
-Log Scanner&lt;br&gt;
-Statistics Settings&lt;br&gt;
-OS Specific Settings&lt;/p&gt;
+&lt;p&gt;&lt;em&gt;Reporting Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Country Code Lists and Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Login Failure Blocking and Alerts&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Directory Watching &amp;amp; Integrity&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Distributed Attacks&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Login Tracking&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Connection Tracking&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Process Tracking&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Port Scan Tracking&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;User ID Tracking&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Account Tracking&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Integrated User Interface&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Messenger service&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;lfd Clustering&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Port Knocking&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Log Scanner&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;Statistics Settings&lt;/em&gt;&lt;br&gt;
+&lt;em&gt;OS Specific Settings&lt;/em&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;nano /etc/csf/csf.conf
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -1315,7 +1462,11 @@ WARNING: This script should ONLY be used by the init process. To restart csf use
 &lt;p&gt;Loads and reloads iptables configuration from main config file.&lt;/p&gt;
 &lt;h4&gt;What do we end up with&lt;/h4&gt;
 &lt;p&gt;IPTables Configuration Generated&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;iptables -L -n
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;iptablesoutput&#39;);&#34;&gt;Show IPtables Output&lt;/a&gt;&lt;/p&gt;
 
+&lt;div id=&#34;iptablesoutput&#34; style=&#34;display:none;&#34;&gt;
 &lt;pre&gt;&lt;code&gt;
 Chain INPUT (policy DROP)
 target     prot opt source               destination         
@@ -1462,6 +1613,7 @@ LOG        all  --  0.0.0.0/0            0.0.0.0/0            limit: avg 30/min 
                    5 LOG flags 0 level 4 prefix &#34;Firewall: *SYNFLOOD Blocked* &#34;
 DROP       all  --  0.0.0.0/0            0.0.0.0/0           
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 
 &lt;p&gt;Scan of the server&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;nmap -A 172.16.104.131
@@ -2525,7 +2677,7 @@ response times.&lt;/p&gt;
                 <title>debian graphite install</title>
                 <link rel="alternate" href="/2013/06/15/debian-graphite-install/" type="text/html" />
                 <id>/2013/06/15/debian-graphite-install/</id>
-                <updated>2013-06-15T03:24:00Z</updated>
+                <updated>2013-06-15T01:11:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2617,6 +2769,9 @@ cp storage-schemas.conf.example storage-schemas.conf
 &lt;h4&gt;Setup django db&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;cd /opt/graphite/webapp/graphite
 python manage.py syncdb
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Looks Like&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show Output&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&#34;hideme&#34; style=&#34;display:none;&#34;&gt;
 &lt;pre&gt;&lt;code&gt;
 Could not import graphite.local_settings, using defaults!
 Could not import graphite.local_settings, using defaults!
@@ -2664,6 +2819,7 @@ Installing index for admin.LogEntry model
 Installing index for tagging.TaggedItem model
 No fixtures found.
 &lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
 &lt;h4&gt;Enable site in Apache&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;a2dissite default
 a2ensite graphite
 sudo chmod -R a+w /opt/graphite/storage
@@ -3313,7 +3469,7 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
                 <title>using graphite events</title>
                 <link rel="alternate" href="/2013/05/17/using-graphite-events/" type="text/html" />
                 <id>/2013/05/17/using-graphite-events/</id>
-                <updated>2013-05-17T03:20:00Z</updated>
+                <updated>2013-05-17T00:59:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3324,7 +3480,23 @@ is a nice and reliable way to do it, but if you are looking for more flexbility 
 native (&amp;#39;experimental&amp;#39;) events feature may be useful.&lt;/p&gt;
 &lt;h4&gt;Posting an event:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
 curl -X POST http://graphite/events/ -d &amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;did_stuff&amp;#34;, &amp;#34;tags&amp;#34; : &amp;#34;fun,times&amp;#34;}&amp;#39;
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Retrieving events:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -X GET http://graphite/events/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;OR&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#!/usr/bin/env python
+import json
+import urllib2
+
+one = {&#39;what&#39;: &#39;did_stuff&#39;, &#39;tags&#39; : &#39;fun,times&#39;}
+req = urllib2.Request(&#39;http://graphite.da/events/&#39;,
+                      data=json.dumps(one),
+                      headers={&#39;Content-type&#39;: &#39;text/plain&#39;})
+r = urllib2.urlopen(req)
+
+print r.read()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Retrieving events:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -X GET http://graphite/events/
 
 curl -X GET http://graphite/events/?tags=fun
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Show me only stuff starting at an epoch time:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -X GET http://graphite/events/?from=1368778407
@@ -3428,7 +3600,7 @@ iptables -P OUTPUT ACCEPT
                 <title>beginning bgp</title>
                 <link rel="alternate" href="/2013/04/18/beginning-bgp/" type="text/html" />
                 <id>/2013/04/18/beginning-bgp/</id>
-                <updated>2013-04-18T03:20:00Z</updated>
+                <updated>2013-04-18T01:09:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3544,7 +3716,7 @@ to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
                 <title>beginning bgp configuration</title>
                 <link rel="alternate" href="/2013/04/16/beginning-bgp-configuration/" type="text/html" />
                 <id>/2013/04/16/beginning-bgp-configuration/</id>
-                <updated>2013-04-16T19:32:00Z</updated>
+                <updated>2013-04-16T01:07:00Z</updated>
                 
                 
                 <content type="html">&lt;h5&gt;Preamble&lt;/h5&gt;
@@ -3630,6 +3802,9 @@ RTRME####clear ip bgp *&lt;br&gt;
 &lt;h4&gt;Things we know about our neighbor&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;What is their status?&lt;/em&gt;&lt;/p&gt;
 
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;sh ip bgp neighbors&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&#34;hideme&#34; style=&#34;display:none;&#34;&gt;
 &lt;pre&gt;&lt;code&gt;
 RTRME####sh ip bgp neighbors &lt;OUR_PROVIDER_IP&gt;
 BGP neighbor is &lt;OUR_PROVIDER_IP&gt;,  remote AS &lt;PROVIDER_ASN&gt;, external link
@@ -3735,7 +3910,7 @@ Datagrams (max data segment is 1424 bytes):
 Rcvd: 5643 (out of order: 0), with data: 5627, total data bytes: 7995637
 Sent: 5645 (retransmit: 0 fastretransmit: 0),with data: 5, total data bytes: 182
 &lt;/code&gt;&lt;/pre&gt;
-      
+&lt;/div&gt;
 
 &lt;p&gt;&lt;em&gt;What are we advertising to them?&lt;/em&gt;&lt;/p&gt;
 
@@ -3789,7 +3964,7 @@ command.  Destroy is like pulling the plug.&lt;/p&gt;
                 <title>IOS granular permissions</title>
                 <link rel="alternate" href="/2013/04/03/ios-granular-permissions/" type="text/html" />
                 <id>/2013/04/03/ios-granular-permissions/</id>
-                <updated>2013-04-03T01:12:00Z</updated>
+                <updated>2013-04-03T00:59:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4336,96 +4511,90 @@ do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
             </entry>
         
             <entry>
-                <title>cisco ios oid.md</title>
-                <link rel="alternate" href="/2012/12/13/cisco-ios-oid/" type="text/html" />
-                <id>/2012/12/13/cisco-ios-oid/</id>
-                <updated>2012-12-13T19:27:00Z</updated>
+                <title>cisco ios xe monitoring oid collection</title>
+                <link rel="alternate" href="/2012/12/13/cisco-ios-xe-monitoring-oid-collection/" type="text/html" />
+                <id>/2012/12/13/cisco-ios-xe-monitoring-oid-collection/</id>
+                <updated>2012-12-13T00:59:00Z</updated>
                 
                 
-                <content type="html">&lt;h4&gt;Cisco IOS-XE OID&amp;#39;s for monitoring&lt;/h4&gt;
-&lt;p&gt;Memory Walk OID&lt;/p&gt;
-
-&lt;p&gt;.1.3.6.1.4.1.9.9.48.1.1.1&lt;/p&gt;
-
+                <content type="html">&lt;h3&gt;Cisco IOS-XE OID&amp;#39;s for monitoring&lt;/h3&gt;&lt;h4&gt;Memory Walk OID&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;.1.3.6.1.4.1.9.9.48.1.1.1
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This should provide your memory bank OID space.&lt;/p&gt;
-&lt;h1&gt;OID keys for memory stats&lt;/h1&gt;
-&lt;p&gt;mem_bank = 1.3.6.1.4.1.9.9.48.1.1.1.2.&lt;br&gt;
-mem_used = 1.3.6.1.4.1.9.9.48.1.1.1.5.&lt;br&gt;
-mem_free = 1.3.6.1.4.1.9.9.48.1.1.1.6.&lt;/p&gt;
-
-&lt;p&gt;CPU Walk OID&lt;br&gt;
-.1.3.6.1.4.1.9.9.109.1.1.1.1.2&lt;/p&gt;
-
-&lt;p&gt;OID key for CPU usage&lt;br&gt;
-.1.3.6.1.4.1.9.9.109.1.1.1.1.8.&lt;/p&gt;
-
-&lt;p&gt;Interface Walk OID&amp;#39;s&lt;/p&gt;
-
-&lt;p&gt;for 64 bit counter use: .1.3.6.1.2.1.31.1.1.1&lt;br&gt;
-for 32 bit counter use: .1.3.6.1.2.1.2.2&lt;/p&gt;
-
+&lt;h4&gt;OID keys for memory stats&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mem_bank = 1.3.6.1.4.1.9.9.48.1.1.1.2.
+mem_used = 1.3.6.1.4.1.9.9.48.1.1.1.5.
+mem_free = 1.3.6.1.4.1.9.9.48.1.1.1.6.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;CPU Walk OID&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;.1.3.6.1.4.1.9.9.109.1.1.1.1.2
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;OID key for CPU usage&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;.1.3.6.1.4.1.9.9.109.1.1.1.1.8.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Interface Walk OID&amp;#39;s&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;64 bit counter use: .1.3.6.1.2.1.31.1.1.1
+32 bit counter use: .1.3.6.1.2.1.2.2
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;32 bit counter interface oid&amp;#39;s&lt;/p&gt;
-&lt;h1&gt;32bit counter MIBs&lt;/h1&gt;
-&lt;p&gt;ifname = 1.3.6.1.2.1.2.2.1.2.&lt;br&gt;
-mtu = 1.3.6.1.2.1.2.2.1.4.&lt;br&gt;
-ifspeed = 1.3.6.1.2.1.2.2.1.5.&lt;br&gt;
-ifAdminStatus = 1.3.6.1.2.1.2.2.1.7.&lt;br&gt;
-ifOperStatus = 1.3.6.1.2.1.2.2.1.8.&lt;br&gt;
-ifInOctets = .1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
-ifOutOctets = 1.3.6.1.2.1.2.2.1.16.&lt;br&gt;
-physadd = 1.3.6.1.2.1.2.2.1.6.&lt;/p&gt;
-
-&lt;p&gt;64 bit counter interface oid&amp;#39;s&lt;br&gt;
-ifname = 1.3.6.1.2.1.31.1.1.1.1.&lt;br&gt;
-ifspeed = 1.3.6.1.2.1.31.1.1.1.15.&lt;br&gt;
-ifoperstatus = 1.3.6.1.2.1.31.1.1.1.17.&lt;br&gt;
-ifinoctets = 1.3.6.1.2.1.31.1.1.1.6.&lt;br&gt;
-ifalias = 1.3.6.1.2.1.31.1.1.1.18.&lt;br&gt;
-ifinmulticastpkts = 1.3.6.1.2.1.31.1.1.1.2.&lt;br&gt;
-ifoutmulticastpkts = 1.3.6.1.2.1.31.1.1.1.4.&lt;br&gt;
-ifinbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.3.&lt;br&gt;
-ifoutbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.5.&lt;br&gt;
-ifoutoctets = 1.3.6.1.2.1.31.1.1.1.10.&lt;/p&gt;
+&lt;h4&gt;32bit counter MIBs&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+ifname = 1.3.6.1.2.1.2.2.1.2.
+mtu = 1.3.6.1.2.1.2.2.1.4.
+ifspeed = 1.3.6.1.2.1.2.2.1.5.
+ifAdminStatus = 1.3.6.1.2.1.2.2.1.7.
+ifOperStatus = 1.3.6.1.2.1.2.2.1.8.
+ifInOctets = .1.3.6.1.2.1.31.1.1.1.6.
+ifOutOctets = 1.3.6.1.2.1.2.2.1.16.
+physadd = 1.3.6.1.2.1.2.2.1.6.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;64 bit counter interface oid&amp;#39;s&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+ifname = 1.3.6.1.2.1.31.1.1.1.1.
+ifspeed = 1.3.6.1.2.1.31.1.1.1.15.
+ifoperstatus = 1.3.6.1.2.1.31.1.1.1.17.
+ifinoctets = 1.3.6.1.2.1.31.1.1.1.6.
+ifalias = 1.3.6.1.2.1.31.1.1.1.18.
+ifinmulticastpkts = 1.3.6.1.2.1.31.1.1.1.2.
+ifoutmulticastpkts = 1.3.6.1.2.1.31.1.1.1.4.
+ifinbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.3.
+ifoutbroadcastpkts = 1.3.6.1.2.1.31.1.1.1.5.
+ifoutoctets = 1.3.6.1.2.1.31.1.1.1.10.
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Using The Above OID Successfully&lt;/h4&gt;
 &lt;p&gt;So take the memory walk oid.  Want to discover what memory banks we can monitor.&lt;/p&gt;
-
-&lt;p&gt;snmpwalk -v 2c -c community yourhostip .1.3.6.1.4.1.9.9.48.1.1.1&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.2.1 = STRING: &amp;quot;Processor&amp;quot;&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &amp;quot;lsmpi_io&amp;quot;&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.3.1 = INTEGER: 0&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.3.14 = INTEGER: 0&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.4.1 = INTEGER: 1&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.4.14 = INTEGER: 1&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.5.1 = Gauge32: 643028280&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.6.1 = Gauge32: 1097647748&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.7.1 = Gauge32: 1097325320&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.7.14 = Gauge32: 968&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;snmpwalk -v 2c -c community yourhostip .1.3.6.1.4.1.9.9.48.1.1.1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.1 = STRING: &#34;Processor&#34;
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &#34;lsmpi_io&#34;
+CISCO-SMI::ciscoMgmt.48.1.1.1.3.1 = INTEGER: 0
+CISCO-SMI::ciscoMgmt.48.1.1.1.3.14 = INTEGER: 0
+CISCO-SMI::ciscoMgmt.48.1.1.1.4.1 = INTEGER: 1
+CISCO-SMI::ciscoMgmt.48.1.1.1.4.14 = INTEGER: 1
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.1 = Gauge32: 643028280
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.1 = Gauge32: 1097647748
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972
+CISCO-SMI::ciscoMgmt.48.1.1.1.7.1 = Gauge32: 1097325320
+CISCO-SMI::ciscoMgmt.48.1.1.1.7.14 = Gauge32: 968
+&lt;/code&gt;&lt;/pre&gt; 
 
 &lt;p&gt;Above we can see two distinct memory banks.  One with OID&amp;#39;s ending in &amp;#39;14 and one with&lt;br&gt;
 OID&amp;#39;s ending in &amp;#39;1&amp;#39;.&lt;/p&gt;
 &lt;h4&gt;Getting our stats for the &amp;#39;lsmpi_io&amp;#39; mem bank, or &amp;#39;14&amp;#39;&lt;/h4&gt;
-&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
-snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2..14&lt;br&gt;
-1.3.6.1.4.1.9.9.48.1.1.1.2..14: Unknown Object Identifier (Sub-id not found: ciscoMgmt -&amp;gt; .14)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2..14
+1.3.6.1.4.1.9.9.48.1.1.1.2..14: Unknown Object Identifier (Sub-id not found: ciscoMgmt -&gt; .14)
 
-&lt;p&gt;snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2.14&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &amp;quot;lsmpi_io&amp;quot;&lt;/p&gt;
+snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.2.14
+CISCO-SMI::ciscoMgmt.48.1.1.1.2.14 = STRING: &#34;lsmpi_io&#34;
 
-&lt;p&gt;snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.5.14&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116&lt;/p&gt;
+snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.5.14
+CISCO-SMI::ciscoMgmt.48.1.1.1.5.14 = Gauge32: 6294116
 
-&lt;p&gt;snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.6.14&lt;br&gt;
-CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972&lt;br&gt;
-&lt;/code&gt;&lt;pre&gt;&lt;/p&gt;
+snmpget -v 2c -c community yourhostip 1.3.6.1.4.1.9.9.48.1.1.1.6.14
+CISCO-SMI::ciscoMgmt.48.1.1.1.6.14 = Gauge32: 972
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Notes&lt;/h4&gt;
 &lt;p&gt;This is the way to walk and drill down into any SNMP data set.  Using&lt;br&gt;
 MIB&amp;#39;s is much easier but if you know what the OID&amp;#39;s correspond to not&lt;br&gt;
 necessary.&lt;/p&gt;
 
 &lt;p&gt;If you are using this to walk the interface index and get statistics it&lt;br&gt;
-is important to be aware of &lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a0080134eec.shtml&#34;&gt;ifindex persist&lt;/a&gt;.&lt;/p&gt;
+is important to be aware of &lt;a href=&#34;http://www.cisco.com/en/US/tech/tk648/tk362/technologies_tech_note09186a0080134eec.shtml&#34;&gt;ifindex persist&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         

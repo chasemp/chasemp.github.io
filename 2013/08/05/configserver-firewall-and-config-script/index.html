@@ -100,6 +100,9 @@ tar zxfv csf.tgz
 cd csf/
 sh install.sh
 </code></pre>
+<p><a href="javascript:toggleDiv('hideme');">Show Install Output</a></p>
+
+<div id="hideme" style="display:none;">
 <pre><code>
 Configuring for OS
 
@@ -329,6 +332,7 @@ update-rc.d: using dependency based boot sequencing
 
 Installation Completed
 </code></pre>
+</div>
 <h4>Checking out default status</h4><pre><code>/etc/init.d/csf status
 </code></pre>
 <pre><code>
@@ -365,34 +369,34 @@ have shortened the default descriptions to my own line notes.</p>
 
 <p>Configured Sections:</p>
 
-<p>Initial Settings<br>
-IPv4 Port Settings<br>
-IPv6 Port Settings<br>
-General Settings<br>
-SMTP Settings<br>
-Port Flood Settings<br>
-Logging Settings</p>
+<p><em>Initial Settings</em><br>
+<em>IPv4 Port Settings</em><br>
+<em>IPv6 Port Settings</em><br>
+<em>General Settings</em><br>
+<em>SMTP Settings</em><br>
+<em>Port Flood Settings</em><br>
+<em>Logging Settings</em></p>
 
 <p>Unconfigured sections:</p>
 
-<p>Reporting Settings<br>
-Country Code Lists and Settings<br>
-Login Failure Blocking and Alerts<br>
-Directory Watching &amp; Integrity <br>
-Distributed Attacks<br>
-Login Tracking<br>
-Connection Tracking<br>
-Process Tracking<br>
-Port Scan Tracking<br>
-User ID Tracking<br>
-Account Tracking<br>
-Integrated User Interface<br>
-Messenger service<br>
-lfd Clustering<br>
-Port Knocking<br>
-Log Scanner<br>
-Statistics Settings<br>
-OS Specific Settings</p>
+<p><em>Reporting Settings</em><br>
+<em>Country Code Lists and Settings</em><br>
+<em>Login Failure Blocking and Alerts</em><br>
+<em>Directory Watching &amp; Integrity</em><br>
+<em>Distributed Attacks</em><br>
+<em>Login Tracking</em><br>
+<em>Connection Tracking</em><br>
+<em>Process Tracking</em><br>
+<em>Port Scan Tracking</em><br>
+<em>User ID Tracking</em><br>
+<em>Account Tracking</em><br>
+<em>Integrated User Interface</em><br>
+<em>Messenger service</em><br>
+<em>lfd Clustering</em><br>
+<em>Port Knocking</em><br>
+<em>Log Scanner</em><br>
+<em>Statistics Settings</em><br>
+<em>OS Specific Settings</em></p>
 <pre><code>nano /etc/csf/csf.conf
 </code></pre>
 <pre><code>
@@ -490,7 +494,11 @@ WARNING: This script should ONLY be used by the init process. To restart csf use
 <p>Loads and reloads iptables configuration from main config file.</p>
 <h4>What do we end up with</h4>
 <p>IPTables Configuration Generated</p>
+<pre><code>iptables -L -n
+</code></pre>
+<p><a href="javascript:toggleDiv('iptablesoutput');">Show IPtables Output</a></p>
 
+<div id="iptablesoutput" style="display:none;">
 <pre><code>
 Chain INPUT (policy DROP)
 target     prot opt source               destination         
@@ -637,6 +645,7 @@ LOG        all  --  0.0.0.0/0            0.0.0.0/0            limit: avg 30/min 
                    5 LOG flags 0 level 4 prefix "Firewall: *SYNFLOOD Blocked* "
 DROP       all  --  0.0.0.0/0            0.0.0.0/0           
 </code></pre>
+</div>
 
 <p>Scan of the server</p>
 <pre><code>nmap -A 172.16.104.131

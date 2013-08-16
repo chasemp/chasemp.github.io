@@ -178,6 +178,9 @@ cp storage-schemas.conf.example storage-schemas.conf
 <h4>Setup django db</h4><pre><code>cd /opt/graphite/webapp/graphite
 python manage.py syncdb
 </code></pre><h4>Looks Like</h4>
+<p><a href="javascript:toggleDiv('hideme');">Show Output</a></p>
+
+<div id="hideme" style="display:none;">
 <pre><code>
 Could not import graphite.local_settings, using defaults!
 Could not import graphite.local_settings, using defaults!
@@ -225,6 +228,7 @@ Installing index for admin.LogEntry model
 Installing index for tagging.TaggedItem model
 No fixtures found.
 </code></pre>
+</div>
 <h4>Enable site in Apache</h4><pre><code>a2dissite default
 a2ensite graphite
 sudo chmod -R a+w /opt/graphite/storage

@@ -172,6 +172,9 @@ RTRME####clear ip bgp *<br>
 <h4>Things we know about our neighbor</h4>
 <p><em>What is their status?</em></p>
 
+<p><a href="javascript:toggleDiv('hideme');">sh ip bgp neighbors</a></p>
+
+<div id="hideme" style="display:none;">
 <pre><code>
 RTRME####sh ip bgp neighbors <OUR_PROVIDER_IP>
 BGP neighbor is <OUR_PROVIDER_IP>,  remote AS <PROVIDER_ASN>, external link
@@ -277,7 +280,7 @@ Datagrams (max data segment is 1424 bytes):
 Rcvd: 5643 (out of order: 0), with data: 5627, total data bytes: 7995637
 Sent: 5645 (retransmit: 0 fastretransmit: 0),with data: 5, total data bytes: 182
 </code></pre>
-      
+</div>
 
 <p><em>What are we advertising to them?</em></p>
 
