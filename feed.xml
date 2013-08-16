@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-16T01:18:48Z</updated>
+        <updated>2013-08-16T01:31:04Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -625,34 +625,34 @@ wasn&amp;#39;t looking for it initially.&lt;/li&gt;
                 <title>python snippets</title>
                 <link rel="alternate" href="/2013/08/13/python-snippets/" type="text/html" />
                 <id>/2013/08/13/python-snippets/</id>
-                <updated>2013-08-13T20:13:00Z</updated>
+                <updated>2013-08-13T01:19:00Z</updated>
                 
-                <summary type="html">I recently found these two snippets to be useful.</summary>
-                <content type="html">&lt;p&gt;I recently found these two snippets to be useful.&lt;/p&gt;
-&lt;h4&gt;Invoke garbage collection manually&lt;/h4&gt;
-&lt;p&gt;import gc&lt;br&gt;
-gc.collect()&lt;/p&gt;
-
+                <summary type="html">I recently found these snippets to be useful.</summary>
+                <content type="html">&lt;p&gt;I recently found these snippets to be useful.&lt;/p&gt;
+&lt;h4&gt;Invoke garbage collection manually&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;import gc
+gc.collect()
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href=&#34;http://effbot.org/pyfaq/how-does-python-manage-memory.htm&#34;&gt;How does python manage memory?&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://pymotw.com/2/gc/&#34;&gt;MOTW&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;Less style output from python&lt;/h4&gt;
-&lt;p&gt;import pydoc&lt;br&gt;
-pydoc.pager(&amp;#39;string&amp;#39;)&lt;/p&gt;
-
+&lt;h4&gt;Less style output from python&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;import pydoc
+pydoc.pager(&amp;#39;string&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&lt;a href=&#34;http://docs.python.org/2/library/pydoc.html&#34;&gt;docs&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.onlamp.com/pub/a/python/2001/04/18/pydoc.html&#34;&gt;oreilly info&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Basic use of multiprocessing pool.map&lt;/h4&gt;
-&lt;p&gt;from multiprocessing import Pool&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+from multiprocessing import Pool
 
-&lt;p&gt;def f(x):&lt;br&gt;
-    return x*x&lt;/p&gt;
+def f(x):
+    return x*x
 
-&lt;p&gt;def main():&lt;br&gt;
-    pool = Pool(processes=4)              # start 4 worker processes&lt;br&gt;
-    print pool.map(f, range(10))&lt;/p&gt;
+def main():
+    pool = Pool(processes=4)              # start 4 worker processes
+    print pool.map(f, range(10))
 
-&lt;p&gt;if &lt;strong&gt;name&lt;/strong&gt; == &amp;#39;&lt;strong&gt;main&lt;/strong&gt;&amp;#39;:&lt;br&gt;
-    main()&lt;/p&gt;
+if __name__ == &#39;__main__&#39;:
+    main()
+&lt;/code&gt;&lt;/pre&gt;
 </content>
             </entry>
         

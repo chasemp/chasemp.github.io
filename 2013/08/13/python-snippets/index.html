@@ -89,31 +89,31 @@ function toggleDiv(divId) {
         </div>
         
         <div class="body">
-            <p>I recently found these two snippets to be useful.</p>
-<h4>Invoke garbage collection manually</h4>
-<p>import gc<br>
-gc.collect()</p>
-
+            <p>I recently found these snippets to be useful.</p>
+<h4>Invoke garbage collection manually</h4><pre><code>import gc
+gc.collect()
+</code></pre>
 <p><a href="http://effbot.org/pyfaq/how-does-python-manage-memory.htm">How does python manage memory?</a><br>
 <a href="http://pymotw.com/2/gc/">MOTW</a></p>
-<h4>Less style output from python</h4>
-<p>import pydoc<br>
-pydoc.pager(&#39;string&#39;)</p>
-
+<h4>Less style output from python</h4><pre><code>import pydoc
+pydoc.pager(&#39;string&#39;)
+</code></pre>
 <p><a href="http://docs.python.org/2/library/pydoc.html">docs</a><br>
 <a href="http://www.onlamp.com/pub/a/python/2001/04/18/pydoc.html">oreilly info</a></p>
 <h4>Basic use of multiprocessing pool.map</h4>
-<p>from multiprocessing import Pool</p>
+<pre><code>
+from multiprocessing import Pool
 
-<p>def f(x):<br>
-    return x*x</p>
+def f(x):
+    return x*x
 
-<p>def main():<br>
-    pool = Pool(processes=4)              # start 4 worker processes<br>
-    print pool.map(f, range(10))</p>
+def main():
+    pool = Pool(processes=4)              # start 4 worker processes
+    print pool.map(f, range(10))
 
-<p>if <strong>name</strong> == &#39;<strong>main</strong>&#39;:<br>
-    main()</p>
+if __name__ == '__main__':
+    main()
+</code></pre>
 
         </div>
     </div>
