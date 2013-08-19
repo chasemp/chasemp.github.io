@@ -95,6 +95,8 @@ and trending data.  I know the <a href="http://codeascraft.com/2010/12/08/track-
 guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That<br>
 is a nice and reliable way to do it, but if you are looking for more flexbility using the <br>
 native (&#39;experimental&#39;) events feature may be useful.</p>
+
+<p><img src="/assets/images/events.png" alt="diagram" title="events"></p>
 <h4>Posting an event:</h4><pre><code>#!/bin/bash
 curl -X POST http://graphite/events/ -d &#39;{&#34;what&#34;: &#34;did_stuff&#34;, &#34;tags&#34; : &#34;fun,times&#34;}&#39;
 </code></pre>

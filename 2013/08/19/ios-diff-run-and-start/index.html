@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>Tag  &rsaquo; asa &ndash; devops type thoughts</title>
+    <title>ios diff run and start &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -82,41 +82,31 @@ function toggleDiv(divId) {
         
         <div id="content">
             
-    <h2>Tag &rsaquo; asa</h2>
-    
-        <dl class="archives">
-            <dt><a href="/archives/2013/">2013</a></dt>
-            <dd>
-                <dl>
-                    
-                        
-                            <dt>Aug 14</dt>
-                            <dd><a href="/2013/08/14/anatomy-of-a-fw-issue/">anatomy of a fw vpn issue</a><small>Tagged <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/fw/">fw</a></small></dd>
-                        
-                    
-                        
-                            <dt>Jan 23</dt>
-                            <dd><a href="/2013/01/23/simple-nat-outbound-asa/">simple nat outbound cisco asa</a><small>Tagged <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/nat/">nat</a></small></dd>
-                        
-                    
-                </dl>
-            </dd>
-        </dl>
-    
-        <dl class="archives">
-            <dt><a href="/archives/2012/">2012</a></dt>
-            <dd>
-                <dl>
-                    
-                        
-                            <dt>Mar 19</dt>
-                            <dd><a href="/2012/03/19/asa-vpn-user-admin/">asa vpn user admin</a><small>Tagged <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/vpn/">vpn</a></small></dd>
-                        
-                    
-                </dl>
-            </dd>
-        </dl>
-    
+    <div class="item">
+        <div class="header">
+            <h1>ios diff run and start</h1>
+            <h2>Monday, August 19, 2013 <span>&raquo;</span> <a href="/tags/cisco/">cisco</a>, <a href="/tags/ios/">ios</a></h2>
+        </div>
+        
+        <div class="body">
+            <p>archive is incredibly useful for IOS and IOS-XE.  One of the things<br>
+I have always wanted since starting into the Cisco world is a way<br>
+to diff the start and running configuration.</p>
+
+<p>Now I have it.</p>
+<pre><code>show archive config diff
+</code></pre>
+<pre><code>
++router bgp 100
++network 10.0.0.0 255.0.0.0
+int gi0/0/0
++shutdown
+</code></pre>
+<h4>Reference</h4>
+<p><a href="https://learningnetwork.cisco.com/thread/38330">cisco forums</a></p>
+
+        </div>
+    </div>
 
         </div>
         

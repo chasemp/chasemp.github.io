@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-16T19:39:36Z</updated>
+        <updated>2013-08-19T23:41:16Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,33 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>ios diff run and start</title>
+                <link rel="alternate" href="/2013/08/19/ios-diff-run-and-start/" type="text/html" />
+                <id>/2013/08/19/ios-diff-run-and-start/</id>
+                <updated>2013-08-19T23:40:00Z</updated>
+                
+                <summary type="html">archive is incredibly useful for IOS and IOS-XE.  One of the things&lt;br&gt;
+I have always wanted since starting into the Cisco world is a way&lt;br&gt;
+to diff the start and running configuration.</summary>
+                <content type="html">&lt;p&gt;archive is incredibly useful for IOS and IOS-XE.  One of the things&lt;br&gt;
+I have always wanted since starting into the Cisco world is a way&lt;br&gt;
+to diff the start and running configuration.&lt;/p&gt;
+
+&lt;p&gt;Now I have it.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;show archive config diff
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
++router bgp 100
++network 10.0.0.0 255.0.0.0
+int gi0/0/0
++shutdown
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://learningnetwork.cisco.com/thread/38330&#34;&gt;cisco forums&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>site loadtesting wrk</title>
@@ -3493,6 +3520,57 @@ Arguments:
             </entry>
         
             <entry>
+                <title>cisco lights out failsafe</title>
+                <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
+                <id>/2013/05/29/cisco-lights-out-failsafe/</id>
+                <updated>2013-05-29T21:13:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices&lt;br&gt;
+your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates&lt;br&gt;
+the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some&lt;br&gt;
+nice &amp;quot;fail back to my previous config&amp;quot;, and Cisco now in some cases provides the archive&lt;br&gt;
+rollback feature.  Which is awesome.  But it may not be available or if for any reason the&lt;br&gt;
+more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will&lt;br&gt;
+obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best&lt;br&gt;
+you can do.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt; &lt;/p&gt;
+
+&lt;p&gt;Updated preamble to reference rollback option.&lt;/p&gt;
+
+&lt;p&gt;So...if it suits your needs use &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;archive&lt;/a&gt; &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Walk through:&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;It&amp;#39;s 2 AM and I&amp;#39;m up for maintenace&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload in 30
+System configuration has been modified. Save? [yes/no]: no
+Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+Proceed with reload? [confirm]
+myrtr#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** Making changes *** &lt;/p&gt;
+
+&lt;p&gt;*** How long until a reset? ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#show reload
+Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** test everything is good -- ok clear scheduled reload ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload cancel
+***
+*** --- SHUTDOWN ABORTED ---
+***
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/fundamentals/configuration/guide/cf_config-rollback.html&#34;&gt;replace and rollback&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/config-mgmt/configuration/xe-3s/asr1000/cm-config-rollback.html&#34;&gt;ios-xe replace and rollback&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.techrepublic.com/blog/data-center/use-the-cisco-ios-archive-command-to-archive-your-routers-configuration/&#34;&gt;archive intro&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback example&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
                 <title>launching a syn flood test</title>
                 <link rel="alternate" href="/2013/05/29/launching-a-syn-flood-test/" type="text/html" />
                 <id>/2013/05/29/launching-a-syn-flood-test/</id>
@@ -3622,44 +3700,6 @@ for i in {1..100}; do ./t50 &amp;lt;target&amp;gt; --threshold 10000 -S; sleep 3
             </entry>
         
             <entry>
-                <title>cisco lights out failsafe</title>
-                <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
-                <id>/2013/05/29/cisco-lights-out-failsafe/</id>
-                <updated>2013-05-29T03:22:00Z</updated>
-                
-                
-                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices&lt;br&gt;
-your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates&lt;br&gt;
-the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some&lt;br&gt;
-nice &amp;quot;fail back to my previous config&amp;quot; logic that Cisco hasn&amp;#39;t figured out yet.  Yes, this will&lt;br&gt;
-obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best&lt;br&gt;
-you can do.&lt;/p&gt;
-&lt;h4&gt;Walk through:&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;It&amp;#39;s 2 AM and I&amp;#39;m up for maintenace&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#reload in 30
-System configuration has been modified. Save? [yes/no]: no
-Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
-Reload reason: Reload Command
-Proceed with reload? [confirm]
-myrtr#
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;*** Making changes *** &lt;/p&gt;
-
-&lt;p&gt;*** How long until a reset? ***&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#show reload
-Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
-Reload reason: Reload Command
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;*** test everything is good -- ok clear scheduled reload ***&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#reload cancel
-***
-*** --- SHUTDOWN ABORTED ---
-***
-&lt;/code&gt;&lt;/pre&gt;</content>
-            </entry>
-        
-            <entry>
                 <title>syn cookies</title>
                 <link rel="alternate" href="/2013/05/23/syn-cookies/" type="text/html" />
                 <id>/2013/05/23/syn-cookies/</id>
@@ -3744,7 +3784,7 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
                 <title>using graphite events</title>
                 <link rel="alternate" href="/2013/05/17/using-graphite-events/" type="text/html" />
                 <id>/2013/05/17/using-graphite-events/</id>
-                <updated>2013-05-17T00:59:00Z</updated>
+                <updated>2013-05-17T19:47:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3753,6 +3793,8 @@ and trending data.  I know the &lt;a href=&#34;http://codeascraft.com/2010/12/08
 guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That&lt;br&gt;
 is a nice and reliable way to do it, but if you are looking for more flexbility using the &lt;br&gt;
 native (&amp;#39;experimental&amp;#39;) events feature may be useful.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/events.png&#34; alt=&#34;diagram&#34; title=&#34;events&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Posting an event:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
 curl -X POST http://graphite/events/ -d &amp;#39;{&amp;#34;what&amp;#34;: &amp;#34;did_stuff&amp;#34;, &amp;#34;tags&amp;#34; : &amp;#34;fun,times&amp;#34;}&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;
@@ -6080,6 +6122,86 @@ echo $dict_value
 you
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;There really doesn&amp;#39;t seem to be a better way to parse json from bash, but this isn&amp;#39;t too bad.&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>asa vpn user admin</title>
+                <link rel="alternate" href="/2012/03/19/asa-vpn-user-admin/" type="text/html" />
+                <id>/2012/03/19/asa-vpn-user-admin/</id>
+                <updated>2012-03-19T22:55:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;The ASA does VPN quite well.  I use some form of &lt;a href=&#34;http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a00808efbd2.shtml&#34;&gt;this&lt;/a&gt; setup&lt;br&gt;
+involving a self-signed CA on the ASA and the anyconnect client.  I also like to use the&lt;br&gt;
+downloadable ACL feature with Cisco ACS or Freeradius.  If you get this going you need&lt;br&gt;
+to administer users.  This is a brief showing of that.&lt;/p&gt;
+&lt;h4&gt;Summary&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;asa# show vpn-sessiondb summary
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+---------------------------------------------------------------------------
+VPN Session Summary                                                        
+---------------------------------------------------------------------------
+                               Active : Cumulative : Peak Concur : Inactive
+                             ----------------------------------------------
+AnyConnect Client            :      6 :       1193 :          28 :       18
+  SSL/TLS/DTLS               :      6 :       1193 :          28 :       18
+Clientless VPN               :      1 :          1 :           1
+  Browser                    :      1 :          1 :           1
+IKEv1 IPsec/L2TP IPsec       :      0 :        977 :           4
+---------------------------------------------------------------------------
+Total Active and Inactive    :     25             Total Cumulative :   2171
+Device Total VPN Capacity    :    250
+Device Load                  :    10%
+---------------------------------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Add/allow/remove&lt;/h4&gt;
+&lt;p&gt;Available user commands.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;asa# crypto ca server user-db ?
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+  add        Add a user to the user enrollment database
+  allow      Allow enrollment for a user already in the user database
+  email-otp  Send One Time Password to the user via e-mail
+  remove     Remove a user from the user enrollment database
+  show-otp   Show One Time Password
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Adding a user.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;asa# crypto ca server user-db add testuser
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+asa# crypto ca server user-db show-otp user testuser 
+Username: testuser
+OTP: 12345678910
+Enrollment Allowed Until: 09:27:46 PDT Thu Aug 22 2013
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Removing a user.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;asa# crypto ca server user-db remove testuser
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Are you sure you want to remove this user? [yes/no]: yes
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;User Connection Details&lt;/h4&gt;
+&lt;p&gt;Getting details on current sessions.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;asa# show vpn-sessiondb anyconnect
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Username     : me                               Index        : 2252
+Assigned IP  : 10.x.x.x                         Public IP    : 1.1.1.1
+Protocol     : AnyConnect-Parent SSL-Tunnel &lt;-- tunnel protocol
+License      : AnyConnect Essentials
+Encryption   : RC4 RC4                Hashing      : SHA1 SHA1
+Bytes Tx     : 131357                 Bytes Rx     : 90010
+Group Policy : &lt;GP applied&gt;           Tunnel Group : &lt;tun grp used&gt;
+Login Time   : 09:25:40 PDT Mon Aug 19 2013
+Duration     : 0h:06m:44s
+Inactivity   : 0h:00m:00s
+NAC Result   : Unknown
+VLAN Mapping : N/A                    VLAN         : none
+&lt;/code&gt;&lt;/pre&gt;
 </content>
             </entry>
         
