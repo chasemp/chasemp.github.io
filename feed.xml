@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-20T16:07:19Z</updated>
+        <updated>2013-08-21T19:14:04Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,129 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>packaging R modules for debian</title>
+                <link rel="alternate" href="/2013/08/21/packaging-R-modules-for-debian/" type="text/html" />
+                <id>/2013/08/21/packaging-R-modules-for-debian/</id>
+                <updated>2013-08-21T05:57:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;R is a well known statistics language and ecosystem.  Some of the more common&lt;br&gt;
+extensions to it are available in the Debian repo&amp;#39;s but not all.&lt;/p&gt;
+&lt;h4&gt;Install on a test VM&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install -y r-base fakeroot dpkg-deb build-essential
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This will result in a lot of dependency packages so site back for a bit.&lt;/p&gt;
+&lt;h4&gt;Getting your module&lt;/h4&gt;
+&lt;p&gt;R has something akin to CPAN or PyPI that we can use to grab our module&lt;/p&gt;
+
+&lt;p&gt;Drop into R shell&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;me@vm:~# R
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+R version 2.15.1 (2012-06-22) -- &#34;Roasted Marshmallows&#34;
+Copyright (C) 2012 The R Foundation for Statistical Computing
+ISBN 3-900051-07-0
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type &#39;license()&#39; or &#39;licence()&#39; for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type &#39;contributors()&#39; for more information and
+&#39;citation()&#39; on how to cite R or R packages in publications.
+
+Type &#39;demo()&#39; for some demos, &#39;help()&#39; for on-line help, or
+&#39;help.start()&#39; for an HTML browser interface to help.
+Type &#39;q()&#39; to quit R.
+
+&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This will download and compile the rsvgdevice module&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;&amp;gt;utils::install.packages(c(&amp;#39;RSvgDevice&amp;#39;));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Installing package(s) into ‘/usr/local/lib/R/site-library’
+(as ‘lib’ is unspecified)
+trying URL &#39;http://rweb.quant.ku.edu/cran/src/contrib/RSvgDevice_0.6.4.3.tar.gz&#39;
+Content type &#39;application/x-gzip&#39; length 8710 bytes
+opened URL
+==================================================
+downloaded 8710 bytes
+
+* installing *source* package ‘RSvgDevice’ ...
+** package ‘RSvgDevice’ successfully unpacked and MD5 sums checked
+** libs
+gcc -std=gnu99 -I/usr/share/R/include -DNDEBUG      -fpic  -O2 -pipe -g  -c devSVG.c -o devSVG.o
+gcc -std=gnu99 -shared -o RSvgDevice.so devSVG.o -L/usr/lib/R/lib -lR
+installing to /usr/local/lib/R/site-library/RSvgDevice/libs
+** R
+** preparing package for lazy loading
+** help
+*** installing help indices
+** building package indices
+** testing if installed package can be loaded
+
+* DONE (RSvgDevice)
+
+The downloaded source packages are in
+    ‘/tmp/RtmpTMUZS0/downloaded_packages’
+&gt; quit()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Your library is in /usr/local/lib/R/site-library/&lt;/p&gt;
+&lt;h4&gt;Prepping your package&lt;/h4&gt;
+&lt;p&gt;We are going to make a package named r-spec-rsvgdevice&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;mkdir -p r-spec-rsvgdevice/src/usr/local/lib/R/site-library/
+cd r-spec-rsvgdevice
+mkdir -p ./src/DEBIAN/
+cp -R /src/usr/local/lib/R/site-library/RSvgDevice ./src/usr/local/lib/R/site-library/
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Making your control file&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;vim ./src/DEBIAN/CONTROL
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Package: r-spec-rsvgdevice
+Priority: optional
+Section: misc
+Maintainer: You you@you.com
+Architecture: all
+Version: 0.6.4.3
+Homepage: http://cran.r-project.org/web/packages/RSvgDevice/index.html
+Description: svgdevice
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Building your package&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+mkdir r-spec-rsvgdevice_0.6.4.3_all
+cp -R src/* r-spec-rsvgdevice_0.6.4.3_all
+fakeroot dpkg-deb -b r-spec-rsvgdevice_0.6.4.3_all
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;dpkg-deb: building package `r-spec-rsvgdevice&amp;#39; in `r-spec-rsvgdevice_0.6.4.3_all.deb&amp;#39;.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Installing&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;dpkg -i r-spec-rsvgdevice_0.6.4.3_all.deb 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Selecting previously unselected package r-spec-rsvgdevice.
+(Reading database ... 52624 files and directories currently installed.)
+Unpacking r-spec-rsvgdevice (from r-spec-rsvgdevice_0.6.4.3_all.deb) ...
+Setting up r-spec-rsvgdevice (0.6.4.3) ...
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Verifying Installation&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+#R
+R&gt;
+&gt; library()
+
+Packages in library ‘/usr/local/lib/R/site-library’:
+
+RSvgDevice              An R SVG graphics device.
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>ios diff run and start</title>
