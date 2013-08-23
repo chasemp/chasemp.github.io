@@ -413,6 +413,7 @@ div.item div.header h2 span {
   top: -2px;
 }
 div.item div.footer {
+  color: white;
   font-size: 12px;
   font-weight: bold;
   text-transform: uppercase;
@@ -467,7 +468,7 @@ dl.archives small a{
 #footer {
   margin: 40px 0px 15px 0px;
   font-size: 12px;
-  color: #737373;
+  color: white;
   text-transform: uppercase;
 }
 

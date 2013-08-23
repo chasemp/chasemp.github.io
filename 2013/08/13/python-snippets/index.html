@@ -102,17 +102,47 @@ pydoc.pager(&#39;string&#39;)
 <a href="http://www.onlamp.com/pub/a/python/2001/04/18/pydoc.html">oreilly info</a></p>
 <h4>Basic use of multiprocessing pool.map</h4>
 <pre><code>
+import time
 from multiprocessing import Pool
 
 def f(x):
-    return x*x
+    print time.time()
+    time.sleep(1)
+    print time.time()
 
 def main():
-    pool = Pool(processes=4)              # start 4 worker processes
+    #four simultaneious workers
+    pool = Pool(processes=4)
     print pool.map(f, range(10))
 
 if __name__ == '__main__':
     main()
+</code></pre>
+
+<p>Demonstrates 4 concurrent subprocesses happening, each with their own GIL</p>
+
+<pre><code>
+377232079.27
+1377232079.27
+1377232079.27
+1377232079.27
+1377232080.27
+1377232080.27
+1377232080.27
+1377232080.27
+1377232080.27
+1377232080.27
+1377232080.27
+1377232080.27
+1377232081.27
+1377232081.27
+1377232081.28
+1377232081.28
+1377232081.28
+1377232081.28
+1377232082.28
+1377232082.28
+[None, None, None, None, None, None, None, None, None, None]
 </code></pre>
 
         </div>
