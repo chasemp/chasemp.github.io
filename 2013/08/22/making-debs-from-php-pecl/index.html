@@ -96,17 +96,28 @@ function toggleDiv(divId) {
                 debhelper \
                 buildpackage
 </code></pre><h4>Example 1</h4>
-<p>git clone <a href="https://github.com/php-test-helpers/php-test-helpers.git">https://github.com/php-test-helpers/php-test-helpers.git</a><br>
-cd php-test-helpers/<br>
-phpize<br>
-./configure<br>
-make<br>
-make test<br>
-make install</p>
+<pre><code>
+git clone https://github.com/php-test-helpers/php-test-helpers.git
+cd php-test-helpers/
+phpize
+./configure
+make
+make test
+make install
+</code></pre>
 <h4>Example 2</h4>
-<p>pecl download phpunit/test_helpers<br>
-dh-make-pecl --maintainer &quot;Your Name <a href="mailto:me@example.com">me@example.com</a>&quot; --arch amd64 test_helpers-1.1.0.tgz <br>
-cd php-test-helpers-1.1.0/ &amp;&amp; ./debian/rules binary</p>
+<pre><code>
+pecl download phpunit/test_helpers
+dh-make-pecl --maintainer "Your Name <me@example.com>" --arch amd64 test_helpers-1.1.0.tgz 
+cd php-test-helpers-1.1.0/ && ./debian/rules binary
+</code></pre>
+<h4>Reference</h4>
+<p><a href="http://www.mabishu.com/blog/2011/03/20/how-to-easily-create-debian-packages-for-php-extensions/">pecl howto</a><br>
+<a href="http://www.dotdeb.org/2008/09/25/how-to-package-php-extensions-by-yourself/">php extension howto</a><br>
+<a href="http://manpages.ubuntu.com/manpages/lucid/man1/dh-make-pear.1.html">dh-make-pear</a><br>
+<a href="http://manpages.ubuntu.com/manpages/raring/man1/debpear.1.html">debpear man</a><br>
+<a href="http://pear.phpunit.de/">pear channel</a><br>
+<a href="https://github.com/php-test-helpers/php-test-helpers">test-helpers gh</a></p>
 
         </div>
     </div>

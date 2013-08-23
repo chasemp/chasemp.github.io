@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-23T02:58:45Z</updated>
+        <updated>2013-08-23T03:15:08Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>making debs from php pecl</title>
                 <link rel="alternate" href="/2013/08/22/making-debs-from-php-pecl/" type="text/html" />
                 <id>/2013/08/22/making-debs-from-php-pecl/</id>
-                <updated>2013-08-22T02:40:00Z</updated>
+                <updated>2013-08-22T03:05:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Installing Packages&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;apt-get install dh-make-php \
@@ -29,17 +29,28 @@
                 debhelper \
                 buildpackage
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Example 1&lt;/h4&gt;
-&lt;p&gt;git clone &lt;a href=&#34;https://github.com/php-test-helpers/php-test-helpers.git&#34;&gt;https://github.com/php-test-helpers/php-test-helpers.git&lt;/a&gt;&lt;br&gt;
-cd php-test-helpers/&lt;br&gt;
-phpize&lt;br&gt;
-./configure&lt;br&gt;
-make&lt;br&gt;
-make test&lt;br&gt;
-make install&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+git clone https://github.com/php-test-helpers/php-test-helpers.git
+cd php-test-helpers/
+phpize
+./configure
+make
+make test
+make install
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Example 2&lt;/h4&gt;
-&lt;p&gt;pecl download phpunit/test_helpers&lt;br&gt;
-dh-make-pecl --maintainer &amp;quot;Your Name &lt;a href=&#34;mailto:me@example.com&#34;&gt;me@example.com&lt;/a&gt;&amp;quot; --arch amd64 test_helpers-1.1.0.tgz &lt;br&gt;
-cd php-test-helpers-1.1.0/ &amp;amp;&amp;amp; ./debian/rules binary&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+pecl download phpunit/test_helpers
+dh-make-pecl --maintainer &#34;Your Name &lt;me@example.com&gt;&#34; --arch amd64 test_helpers-1.1.0.tgz 
+cd php-test-helpers-1.1.0/ &amp;&amp; ./debian/rules binary
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.mabishu.com/blog/2011/03/20/how-to-easily-create-debian-packages-for-php-extensions/&#34;&gt;pecl howto&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.dotdeb.org/2008/09/25/how-to-package-php-extensions-by-yourself/&#34;&gt;php extension howto&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://manpages.ubuntu.com/manpages/lucid/man1/dh-make-pear.1.html&#34;&gt;dh-make-pear&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://manpages.ubuntu.com/manpages/raring/man1/debpear.1.html&#34;&gt;debpear man&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://pear.phpunit.de/&#34;&gt;pear channel&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/php-test-helpers/php-test-helpers&#34;&gt;test-helpers gh&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -170,7 +181,7 @@ RSvgDevice              An R SVG graphics device.
                 <title>asa hairpinning</title>
                 <link rel="alternate" href="/2013/08/21/asa-hairpinning/" type="text/html" />
                 <id>/2013/08/21/asa-hairpinning/</id>
-                <updated>2013-08-21T02:58:00Z</updated>
+                <updated>2013-08-21T03:01:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -199,159 +210,165 @@ nat (Outside,Outside) source static NETWORK_OBJ_10.0.16.0/24 \
 &lt;p&gt;Showing the traffic flow.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;FW1(config)# packet-tracer input outside tcp 10.0.16.70 http 10.10.0.4 http
 &lt;/code&gt;&lt;/pre&gt;
-&lt;pre&gt;&lt;code&gt;
-Phase: 1
-Type: ACCESS-LIST
-Subtype: log
-Result: ALLOW
-Config:
-access-group Outside_access_in in interface Outside
-access-list Outside_access_in extended permit tcp any any eq www 
-Additional Information:
- Forward Flow based lookup yields rule:
- in  id=0xacdc0680, priority=13, domain=permit, deny=false
-    hits=626508, user_data=0xa90df480, cs_id=0x0, use_real_addr, flags=0x0, protocol=6
-    src ip/id=0.0.0.0, mask=0.0.0.0, port=0
-    dst ip/id=0.0.0.0, mask=0.0.0.0, port=80, dscp=0x0
-    input_ifc=Outside, output_ifc=any
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show packet-tracer&lt;/a&gt;&lt;br&gt;
+&lt;div id=&#34;hideme&#34; style=&#34;display:none;&#34;&gt;&lt;br&gt;
+&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+Phase: 1&lt;br&gt;
+Type: ACCESS-LIST&lt;br&gt;
+Subtype: log&lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+access-group Outside_access_in in interface Outside&lt;br&gt;
+access-list Outside_access_in extended permit tcp any any eq www &lt;br&gt;
+Additional Information:&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xacdc0680, priority=13, domain=permit, deny=false&lt;br&gt;
+    hits=626508, user_data=0xa90df480, cs_id=0x0, use_real_addr, flags=0x0, protocol=6&lt;br&gt;
+    src ip/id=0.0.0.0, mask=0.0.0.0, port=0&lt;br&gt;
+    dst ip/id=0.0.0.0, mask=0.0.0.0, port=80, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=any&lt;/p&gt;
 
-Phase: 2
-Type: IP-OPTIONS
-Subtype: 
-Result: ALLOW
-Config:
-Additional Information:
- Forward Flow based lookup yields rule:
- in  id=0xacc20be8, priority=0, domain=inspect-ip-options, deny=true
-    hits=7983735, user_data=0x0, cs_id=0x0, reverse, flags=0x0, protocol=0
-        src ip/id=0.0.0.0, mask=0.0.0.0, port=0
-    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0
-    input_ifc=Outside, output_ifc=any
+&lt;p&gt;Phase: 2&lt;br&gt;
+Type: IP-OPTIONS&lt;br&gt;
+Subtype: &lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xacc20be8, priority=0, domain=inspect-ip-options, deny=true&lt;br&gt;
+    hits=7983735, user_data=0x0, cs_id=0x0, reverse, flags=0x0, protocol=0&lt;br&gt;
+        src ip/id=0.0.0.0, mask=0.0.0.0, port=0&lt;br&gt;
+    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=any&lt;/p&gt;
 
-Phase: 3
-Type: CP-PUNT
-Subtype: 
-Result: ALLOW
-Config:
-Additional Information:
- Forward Flow based lookup yields rule:
- in  id=0xad356ee0, priority=89, domain=punt, deny=true
-    hits=89, user_data=0xac768378, cs_id=0x0, flags=0x0, protocol=0
-    src ip/id=10.0.16.70, mask=255.255.255.255, port=0
-    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0
-    input_ifc=Outside, output_ifc=any
+&lt;p&gt;Phase: 3&lt;br&gt;
+Type: CP-PUNT&lt;br&gt;
+Subtype: &lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xad356ee0, priority=89, domain=punt, deny=true&lt;br&gt;
+    hits=89, user_data=0xac768378, cs_id=0x0, flags=0x0, protocol=0&lt;br&gt;
+    src ip/id=10.0.16.70, mask=255.255.255.255, port=0&lt;br&gt;
+    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=any&lt;/p&gt;
 
-Phase: 4
-Type: ACCESS-LIST
-Subtype: vpn-user
-Result: ALLOW
-Config:
-Additional Information:
- Forward Flow based lookup yields rule:
- in  id=0xadb9fea8, priority=13, domain=vpn-user, deny=false
-    hits=22, user_data=0xa90dd600, filter_id=0xa(RACL-ADMIN), protocol=0
-    src ip=0.0.0.0, mask=0.0.0.0, port=0
-    dst ip=0.0.0.0, mask=0.0.0.0, port=0
+&lt;p&gt;Phase: 4&lt;br&gt;
+Type: ACCESS-LIST&lt;br&gt;
+Subtype: vpn-user&lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xadb9fea8, priority=13, domain=vpn-user, deny=false&lt;br&gt;
+    hits=22, user_data=0xa90dd600, filter_id=0xa(RACL-ADMIN), protocol=0&lt;br&gt;
+    src ip=0.0.0.0, mask=0.0.0.0, port=0&lt;br&gt;
+    dst ip=0.0.0.0, mask=0.0.0.0, port=0&lt;/p&gt;
 
-Phase: 5
-Type: VPN
-Subtype: ipsec-tunnel-flow
-Result: ALLOW
-Config:
-Additional Information:
- Forward Flow based lookup yields rule:
- in  id=0xadba0308, priority=69, domain=ipsec-tunnel-flow, deny=false
-    hits=89, user_data=0xd93c504, cs_id=0x0, reverse, flags=0x0, protocol=0
-    src ip/id=10.0.16.70, mask=255.255.255.255, port=0
-    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0
-    input_ifc=Outside, output_ifc=any
+&lt;p&gt;Phase: 5&lt;br&gt;
+Type: VPN&lt;br&gt;
+Subtype: ipsec-tunnel-flow&lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xadba0308, priority=69, domain=ipsec-tunnel-flow, deny=false&lt;br&gt;
+    hits=89, user_data=0xd93c504, cs_id=0x0, reverse, flags=0x0, protocol=0&lt;br&gt;
+    src ip/id=10.0.16.70, mask=255.255.255.255, port=0&lt;br&gt;
+    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=any&lt;/p&gt;
 
-Phase: 6
-Type: FOVER
-Subtype: standby-update
-Result: ALLOW
-Config:
-Additional Information:
- Forward Flow based lookup yields rule:
- in  id=0xacd15e28, priority=20, domain=lu, deny=false
-    hits=2767281, user_data=0x0, cs_id=0x0, flags=0x0, protocol=6
-    src ip/id=0.0.0.0, mask=0.0.0.0, port=0
-    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0
-    input_ifc=Outside, output_ifc=any
+&lt;p&gt;Phase: 6&lt;br&gt;
+Type: FOVER&lt;br&gt;
+Subtype: standby-update&lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xacd15e28, priority=20, domain=lu, deny=false&lt;br&gt;
+    hits=2767281, user_data=0x0, cs_id=0x0, flags=0x0, protocol=6&lt;br&gt;
+    src ip/id=0.0.0.0, mask=0.0.0.0, port=0&lt;br&gt;
+    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=any&lt;/p&gt;
 
-Phase: 7
-Type: NAT
-Subtype: 
-Result: ALLOW
-Config:
-nat (Outside,Outside) source static NETWORK_OBJ_10.0.16.0/24 NETWORK_OBJ_10.0.16.0/24 destination static FW2_HOSTS_10.10.0.0_24 FW2_HOSTS_10.10.0.0_24
-Additional Information:
-Static translate 10.0.16.70/80 to 10.0.16.70/80
- Forward Flow based lookup yields rule:
- in  id=0xad3af9c0, priority=6, domain=nat, deny=false
-    hits=422, user_data=0xadc36ad0, cs_id=0x0, use_real_addr, flags=0x0, protocol=0
-    src ip/id=10.1.6.0, mask=255.255.255.0, port=0
-    dst ip/id=10.2.1.0, mask=255.255.255.0, port=0, dscp=0x0
-    input_ifc=Outside, output_ifc=Outside
+&lt;p&gt;Phase: 7&lt;br&gt;
+Type: NAT&lt;br&gt;
+Subtype: &lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+nat (Outside,Outside) source static NETWORK_OBJ_10.0.16.0/24 \&lt;br&gt;
+                                    NETWORK_OBJ_10.0.16.0/24 \&lt;br&gt;
+                                    destination static FW2_HOSTS_10.10.0.0_24 \&lt;br&gt;
+                                    FW2_HOSTS_10.10.0.0_24&lt;br&gt;
+Additional Information:&lt;br&gt;
+Static translate 10.0.16.70/80 to 10.0.16.70/80&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xad3af9c0, priority=6, domain=nat, deny=false&lt;br&gt;
+    hits=422, user_data=0xadc36ad0, cs_id=0x0, use_real_addr, flags=0x0, protocol=0&lt;br&gt;
+    src ip/id=10.1.6.0, mask=255.255.255.0, port=0&lt;br&gt;
+    dst ip/id=10.2.1.0, mask=255.255.255.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=Outside&lt;/p&gt;
 
-Phase: 8
-Type: VPN
-Subtype: encrypt
-Result: ALLOW
-Config:
-Additional Information:
- Forward Flow based lookup yields rule:
- out id=0xad379f08, priority=70, domain=encrypt, deny=false
-    hits=2, user_data=0xd94f6c4, cs_id=0xacdbae48, reverse, flags=0x0, protocol=0
-    src ip/id=10.1.0.0, mask=255.255.0.0, port=0
-    dst ip/id=10.2.1.0, mask=255.255.255.0, port=0, dscp=0x0
-    input_ifc=any, output_ifc=Outside
+&lt;p&gt;Phase: 8&lt;br&gt;
+Type: VPN&lt;br&gt;
+Subtype: encrypt&lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Forward Flow based lookup yields rule:&lt;br&gt;
+ out id=0xad379f08, priority=70, domain=encrypt, deny=false&lt;br&gt;
+    hits=2, user_data=0xd94f6c4, cs_id=0xacdbae48, reverse, flags=0x0, protocol=0&lt;br&gt;
+    src ip/id=10.1.0.0, mask=255.255.0.0, port=0&lt;br&gt;
+    dst ip/id=10.2.1.0, mask=255.255.255.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=any, output_ifc=Outside&lt;/p&gt;
 
-Phase: 9
-Type: VPN
-Subtype: ipsec-tunnel-flow
-Result: ALLOW
-Config:
-Additional Information:
- Reverse Flow based lookup yields rule:
- in  id=0xac882b98, priority=69, domain=ipsec-tunnel-flow, deny=false
-    hits=2, user_data=0xd950a5c, cs_id=0x0, reverse, flags=0x0, protocol=0
-    src ip/id=10.2.1.0, mask=255.255.255.0, port=0
-    dst ip/id=10.1.0.0, mask=255.255.0.0, port=0, dscp=0x0
-    input_ifc=Outside, output_ifc=any
+&lt;p&gt;Phase: 9&lt;br&gt;
+Type: VPN&lt;br&gt;
+Subtype: ipsec-tunnel-flow&lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Reverse Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xac882b98, priority=69, domain=ipsec-tunnel-flow, deny=false&lt;br&gt;
+    hits=2, user_data=0xd950a5c, cs_id=0x0, reverse, flags=0x0, protocol=0&lt;br&gt;
+    src ip/id=10.2.1.0, mask=255.255.255.0, port=0&lt;br&gt;
+    dst ip/id=10.1.0.0, mask=255.255.0.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=any&lt;/p&gt;
 
-Phase: 10     
-Type: IP-OPTIONS
-Subtype: 
-Result: ALLOW
-Config:
-Additional Information:
- Reverse Flow based lookup yields rule:
- in  id=0xacc20be8, priority=0, domain=inspect-ip-options, deny=true
-    hits=7983737, user_data=0x0, cs_id=0x0, reverse, flags=0x0, protocol=0
-    src ip/id=0.0.0.0, mask=0.0.0.0, port=0
-    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0
-    input_ifc=Outside, output_ifc=any
+&lt;p&gt;Phase: 10&lt;br&gt;&lt;br&gt;
+Type: IP-OPTIONS&lt;br&gt;
+Subtype: &lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Reverse Flow based lookup yields rule:&lt;br&gt;
+ in  id=0xacc20be8, priority=0, domain=inspect-ip-options, deny=true&lt;br&gt;
+    hits=7983737, user_data=0x0, cs_id=0x0, reverse, flags=0x0, protocol=0&lt;br&gt;
+    src ip/id=0.0.0.0, mask=0.0.0.0, port=0&lt;br&gt;
+    dst ip/id=0.0.0.0, mask=0.0.0.0, port=0, dscp=0x0&lt;br&gt;
+    input_ifc=Outside, output_ifc=any&lt;/p&gt;
 
-Phase: 11
-Type: VPN
-Subtype: encrypt
-Result: ALLOW
-Config:
-Additional Information:
- Reverse Flow based lookup yields rule:
- out id=0xae4af120, priority=70, domain=encrypt, deny=false
-    hits=88, user_data=0xd93b30c, cs_id=0x0, reverse, flags=0x0, protocol=0
-    src ip/id=0.0.0.0, mask=0.0.0.0, port=0
-    dst ip/id=10.0.16.70, mask=255.255.255.255, port=0, dscp=0x0
-        input_ifc=any, output_ifc=Outside
+&lt;p&gt;Phase: 11&lt;br&gt;
+Type: VPN&lt;br&gt;
+Subtype: encrypt&lt;br&gt;
+Result: ALLOW&lt;br&gt;
+Config:&lt;br&gt;
+Additional Information:&lt;br&gt;
+ Reverse Flow based lookup yields rule:&lt;br&gt;
+ out id=0xae4af120, priority=70, domain=encrypt, deny=false&lt;br&gt;
+    hits=88, user_data=0xd93b30c, cs_id=0x0, reverse, flags=0x0, protocol=0&lt;br&gt;
+    src ip/id=0.0.0.0, mask=0.0.0.0, port=0&lt;br&gt;
+    dst ip/id=10.0.16.70, mask=255.255.255.255, port=0, dscp=0x0&lt;br&gt;
+        input_ifc=any, output_ifc=Outside&lt;/p&gt;
 
-Result:
-input-interface: Outside
-input-status: up
-input-line-status: up
-Action: allow
-&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Result:&lt;br&gt;
+input-interface: Outside&lt;br&gt;
+input-status: up&lt;br&gt;
+input-line-status: up&lt;br&gt;
+Action: allow&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;br&gt;
+&lt;/div&gt;&lt;/p&gt;
 </content>
             </entry>
         
