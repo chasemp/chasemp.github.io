@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>Tag  &rsaquo; deb &ndash; devops type thoughts</title>
+    <title>making debs from php pecl &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -82,27 +82,34 @@ function toggleDiv(divId) {
         
         <div id="content">
             
-    <h2>Tag &rsaquo; deb</h2>
-    
-        <dl class="archives">
-            <dt><a href="/archives/2013/">2013</a></dt>
-            <dd>
-                <dl>
-                    
-                        
-                            <dt>Aug 22</dt>
-                            <dd><a href="/2013/08/22/making-debs-from-php-pecl/">making debs from php pecl</a><small>Tagged <span>&raquo;</span> <a href="/tags/deb/">deb</a>, <a href="/tags/debian/">debian</a>, <a href="/tags/linux/">linux</a>, <a href="/tags/pecl/">pecl</a>, <a href="/tags/php/">php</a></small></dd>
-                        
-                    
-                        
-                            <dt>Feb 19</dt>
-                            <dd><a href="/2013/02/19/making-trivial-debian-packages/">making trivial debian packages</a><small>Tagged <span>&raquo;</span> <a href="/tags/deb/">deb</a>, <a href="/tags/debian/">debian</a>, <a href="/tags/dpkg/">dpkg</a></small></dd>
-                        
-                    
-                </dl>
-            </dd>
-        </dl>
-    
+    <div class="item">
+        <div class="header">
+            <h1>making debs from php pecl</h1>
+            <h2>Thursday, August 22, 2013 <span>&raquo;</span> <a href="/tags/deb/">deb</a>, <a href="/tags/debian/">debian</a>, <a href="/tags/linux/">linux</a>, <a href="/tags/pecl/">pecl</a>, <a href="/tags/php/">php</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Installing Packages</h4><pre><code>apt-get install dh-make-php \
+                php5-dev \
+                build-essential \
+                libmagic-dev \
+                debhelper \
+                buildpackage
+</code></pre><h4>Example 1</h4>
+<p>git clone <a href="https://github.com/php-test-helpers/php-test-helpers.git">https://github.com/php-test-helpers/php-test-helpers.git</a><br>
+cd php-test-helpers/<br>
+phpize<br>
+./configure<br>
+make<br>
+make test<br>
+make install</p>
+<h4>Example 2</h4>
+<p>pecl download phpunit/test_helpers<br>
+dh-make-pecl --maintainer &quot;Your Name <a href="mailto:me@example.com">me@example.com</a>&quot; --arch amd64 test_helpers-1.1.0.tgz <br>
+cd php-test-helpers-1.1.0/ &amp;&amp; ./debian/rules binary</p>
+
+        </div>
+    </div>
 
         </div>
         
