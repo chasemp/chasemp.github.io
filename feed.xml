@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-08-23T20:32:14Z</updated>
+        <updated>2013-09-01T15:56:14Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,340 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>python urllib2 and https proxy</title>
+                <link rel="alternate" href="/2013/08/28/python-urllib2-and-https-proxy/" type="text/html" />
+                <id>/2013/08/28/python-urllib2-and-https-proxy/</id>
+                <updated>2013-08-28T20:54:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Since urllib2 openers are global I recently had some expected behavior&lt;br&gt;
+I would like to explore.&lt;/p&gt;
+&lt;h4&gt;urllib2, https, and proxies&lt;/h4&gt;
+&lt;p&gt;urllib2 does &lt;a href=&#34;http://docs.python.org/2/howto/urllib2.html#id8&#34;&gt;not&lt;/a&gt; support https proxy natively.  There&lt;br&gt;
+is a nice activestate &lt;a href=&#34;http://code.activestate.com/recipes/456195/&#34;&gt;recipe&lt;/a&gt; for handling it though.&lt;/p&gt;
+
+&lt;p&gt;There is one &lt;a href=&#34;http://sourceforge.net/p/pywebsvcs/bugs/296/&#34;&gt;bug&lt;/a&gt; I ran into.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Time TimeoutSocket fake socket doesn&amp;#39;t have a sendall method \
+ so you get the above error when using https.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I am saving this faile as sslhandler.py&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show sslhandler.py&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&#34;hideme&#34; style=&#34;display:none;&#34;&gt;
+&lt;pre&gt;&lt;code&gt;
+import urllib2
+import urllib
+import httplib
+import socket
+import ssl
+
+
+class ProxyHTTPConnection(httplib.HTTPConnection):
+
+    _ports = {&#39;http&#39;: 80, &#39;https&#39;: 443}
+
+    def request(self, method, url, body=None, headers={}):
+        #request is called before connect, so can interpret url and get
+        #real host/port to be used to make CONNECT request to proxy
+        proto, rest = urllib.splittype(url)
+
+        if proto is None:
+            raise ValueError(&#34;unknown URL type: %s&#34; % (url,))
+
+        #get host
+        host, rest = urllib.splithost(rest)
+        #try to get port
+        host, port = urllib.splitport(host)
+        #if port is not defined try to get from proto
+        if port is None:
+            try:
+                port = self._ports[proto]
+            except KeyError:
+                raise ValueError(&#34;unknown protocol for: %s&#34; % (url,))
+
+        self._real_host = host
+        self._real_port = port
+        httplib.HTTPConnection.request(self, method, url, body, headers)
+
+    def connect(self):
+        httplib.HTTPConnection.connect(self)
+        #send proxy CONNECT request
+        self.send(&#34;CONNECT %s:%d HTTP/1.0\r\n\r\n&#34; % (self._real_host, self._real_port))
+        #expect a HTTP/1.0 200 Connection established
+        response = self.response_class(self.sock, strict=self.strict, method=self._method)
+        (version, code, message) = response._read_status()
+        #probably here we can handle auth requests...
+        if code != 200:
+            #proxy returned and error, abort connection, and raise exception
+            self.close()
+            raise socket.error, &#34;Proxy connection failed: %d %s&#34; % (code, message.strip())
+        #eat up header block from proxy....
+        while True:
+            #should not use directly fp probablu
+            line = response.fp.readline()
+            if line == &#39;\r\n&#39;:
+                break
+
+
+class ProxyHTTPSConnection(ProxyHTTPConnection):
+
+    default_port = 443
+
+    def __init__(self, host, port=None, key_file=None, cert_file=None, strict=None, timeout=&#39;30&#39;):
+        ProxyHTTPConnection.__init__(self, host, port)
+        self.key_file = key_file
+        self.cert_file = cert_file
+
+    def connect(self):
+        ProxyHTTPConnection.connect(self)
+        #make the sock ssl-aware
+        self.sock = ssl.wrap_socket(self.sock, self.key_file, self.cert_file)
+
+
+class ConnectHTTPHandler(urllib2.HTTPHandler):
+
+    def do_open(self, http_class, req):
+        return urllib2.HTTPHandler.do_open(self, ProxyHTTPConnection, req)
+
+
+class ConnectHTTPSHandler(urllib2.HTTPSHandler):
+
+    def do_open(self, http_class, req):
+        return urllib2.HTTPSHandler.do_open(self, ProxyHTTPSConnection, req)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;Making normal non-proxy post&lt;/h4&gt;
+&lt;p&gt;This is a post with generic data as the payload&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+import json
+import urllib2
+import os 
+
+def post(url, trail, **kwargs):
+    #posting key with None values is not received well better to strip them
+    data = json.dumps(dict((k, v) for k, v in kwargs.iteritems() if v is not None))
+    req = urllib2.Request(url + trail, data, {&#39;Content-Type&#39;: &#39;application/json&#39;})
+    f = urllib2.urlopen(req)
+    response = f.read()
+    f.close()
+    return json.loads(response)
+
+if __name__ == &#39;__main__&#39;:
+    print post(&#39;http://localhost&#39;, &#39;/info&#39;, {&#39;data&#39;: &#39;value&#39;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is sufficient for making a post to a local REST API.&lt;/p&gt;
+
+&lt;p&gt;I am saving this file as &lt;strong&gt;basic.py&lt;/strong&gt;.&lt;/p&gt;
+&lt;h4&gt;Making requst through the proxy using our https opener&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+import urllib2
+from sslhandler import ConnectHTTPHandler, ConnectHTTPSHandler
+
+def request(url, trail):
+    opener = urllib2.build_opener(ConnectHTTPHandler, ConnectHTTPSHandler)
+    urllib2.install_opener(opener)
+    req = urllib2.Request(url=url + trail)
+    proxy = &#39;ourproxy.com:8000&#39;
+    req.set_proxy(proxy, &#39;https&#39;)
+    return urllib2.urlopen(req).read()
+
+if __name__ == &#39;__main__&#39;:
+    print request(&#39;https://remotehost&#39;, &#39;/info&#39;)
+&lt;/pre&gt;&lt;/code&gt;
+
+This uses our  urllib2 opener to connect through a proxy using the CONNECT method
+
+I am saving this file as __proxied.py__.
+
+#### Now let&#39;s say there is a job that calls both.
+
+We have three files:
+
+    sslhandler.py
+    basic.py
+    proxied.py
+
+We will make two scripts that call both of these and see what happens.
+
+##### First script...
+
+&lt;pre&gt;&lt;code&gt;
+from basic import post
+from proxied import request
+print post(&#39;http://localhost&#39;, &#39;/info&#39;, {&#39;data&#39;: &#39;value&#39;})
+print request(&#39;https://remotehost&#39;, &#39;/info&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;example output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#echoed
+{&#39;data&#39;: &#39;value&#39;}
+#string response
+hello!
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h5&gt;Second script...&lt;/h5&gt;
+&lt;pre&gt;&lt;code&gt;
+from basic import post
+from proxied import request
+print request(&#39;https://remotehost&#39;, &#39;/info&#39;)
+print post(&#39;http://localhost&#39;, &#39;/info&#39;, {&#39;data&#39;: &#39;value&#39;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;example output:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+hello!
+Traceback (most recent call last):
+  File &#34;sslhandler.py&#34;, line 93, in &lt;module&gt;
+    f = urllib2.urlopen(req)
+  File &#34;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py&#34;, \
+    line 126, in urlopen
+    return _opener.open(url, data, timeout)
+  File &#34;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py&#34;, \
+    line 394, in open
+    response = self._open(req, data)
+  File &#34;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py&#34;, \
+    line 412, in _open
+    &#39;_open&#39;, req)
+  File &#34;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py&#34;, \
+    line 372, in _call_chain
+    result = func(*args)
+  File &#34;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py&#34;, \
+    line 1207, in https_open
+    return self.do_open(httplib.HTTPSConnection, req)
+  File &#34;sslhandler.py&#34;, line 84, in do_open
+    return urllib2.HTTPSHandler.do_open(self, ProxyHTTPSConnection, req)
+  File &#34;/System/Library/Frameworks/Python.framework/Versions/2.7/lib/python2.7/urllib2.py&#34;, \
+    line 1174, in do_open
+    raise URLError(err)
+urllib2.URLError: &lt;urlopen error [Errno 61] Connection refused&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Our local call failed and the remote one succeeded when we reversed them.&lt;/p&gt;
+&lt;h4&gt;Why does urllib2 hate me?&lt;/h4&gt;
+&lt;p&gt;The basic idea here is when the basic post is the first directive everything is fine, &lt;br&gt;
+but if we make the proxy request first then both try to use the proxy.&lt;/p&gt;
+
+&lt;p&gt;This a product of the urllib2 &lt;a href=&#34;http://docs.python.org/2/library/urllib2.html#urllib2.install_opener&#34;&gt;opener&lt;/a&gt; being global.&lt;br&gt;
+Even though these are two libraries the way import handles arranging resources both are calling the same instance&lt;br&gt;
+of urllib2.&lt;/p&gt;
+
+&lt;p&gt;So I can&amp;#39;t install my proxy opener and call urllib2 without using it&lt;/p&gt;
+&lt;h4&gt;Solution 1&lt;/h4&gt;
+&lt;p&gt;We can build our opener and use it without &lt;strong&gt;installing&lt;/strong&gt; it.&lt;/p&gt;
+
+&lt;p&gt;We need to change &lt;strong&gt;proxied.py&lt;/strong&gt; &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+import urllib2
+from sslhandler import ConnectHTTPHandler, ConnectHTTPSHandler
+
+def request(url, trail):
+    proxyhandler = urllib2.build_opener(ConnectHTTPHandler, ConnectHTTPSHandler)
+    req = urllib2.Request(url=url + trail)
+    proxy = &#39;ourproxy.com:8000&#39;
+    req.set_proxy(proxy, &#39;https&#39;)
+    return proxyhandler.open(req).read()
+
+if __name__ == &#39;__main__&#39;:
+    print request(&#39;https://remotehost&#39;, &#39;/info&#39;)
+&lt;/pre&gt;&lt;/code&gt;
+
+Now we are not changing the state of the global urllib2 handler so all is well.
+
+&lt;pre&gt;&lt;code&gt;
+from basic import post
+from proxied import request
+print request(&#39;https://remotehost&#39;, &#39;/info&#39;)
+print post(&#39;http://localhost&#39;, &#39;/info&#39;, {&#39;data&#39;: &#39;value&#39;})
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Works:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#string response
+hello!
+#echoed
+{&#39;data&#39;: &#39;value&#39;}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Solution 2&lt;/h4&gt;
+&lt;p&gt;We can reset the state of urllib2 by reloading the module.  This is not the ideal&lt;br&gt;
+solution, and is certainly heavy handed but it is demonstrative.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+from sslhandler import ConnectHTTPHandler, ConnectHTTPSHandler
+
+def request(url, trail):
+    import urllib2
+    opener = urllib2.build_opener(ConnectHTTPHandler, ConnectHTTPSHandler)
+    urllib2.install_opener(opener)
+    req = urllib2.Request(url=url + trail)
+    proxy = &#39;ourproxy.com:8000&#39;
+    req.set_proxy(proxy, &#39;https&#39;)
+    urllib2 = reload(urllib2)
+    return urllib2.urlopen(req).read()
+
+if __name__ == &#39;__main__&#39;:
+    print request(&#39;https://remotehost&#39;, &#39;/info&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Works:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#string response
+hello!
+#echoed
+{&#39;data&#39;: &#39;value&#39;}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Solution 3&lt;/h4&gt;
+&lt;p&gt;use the &lt;a href=&#34;http://www.python-requests.org/en/latest/&#34;&gt;requests&lt;/a&gt; module.&lt;/p&gt;
+
+&lt;p&gt;Not a full example but you get the idea.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+https_proxy = &#34;10.10.1.11:1080&#34;
+
+proxies = { 
+              &#34;https&#34; : https_proxy, 
+            }
+
+r = requests.get(&#39;https://remotehost/info&#39;, proxies=proxies)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Conclusion&lt;/h4&gt;
+&lt;p&gt;I like the requests module.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://code.activestate.com/recipes/456195/&#34;&gt;SSl proxy&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/urllib2.html&#34;&gt;urllib2 docs&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>vmware fusion nix shared folders</title>
+                <link rel="alternate" href="/2013/08/28/vmware-fusion-nix-shared-folders/" type="text/html" />
+                <id>/2013/08/28/vmware-fusion-nix-shared-folders/</id>
+                <updated>2013-08-28T15:48:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Installing tools in your VM&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install open-vm-tools
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Setting up your Share in VMWare&lt;/h4&gt;
+&lt;p&gt;Go to your VM Settings page =&amp;gt; Sharing =&amp;gt; +(add new share) =&amp;gt; &amp;#39;shared&amp;#39;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/vmwareshared/vmwareshared.png&#34; alt=&#34;vmwareshared&#34;&gt;&lt;/p&gt;
+&lt;h4&gt;Mount your share&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;cd /mnt/
+mkdir ops
+sudo mount -t vmhgfs .host:/ops /mnt/ops
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;References&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.howtogeek.com/howto/ubuntu/how-to-share-folders-with-your-ubuntu-virtual-machine-guest/&#34;&gt;howto geek&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://askubuntu.com/questions/29284/how-do-i-mount-shared-folders-win7-host-in-ubuntu-guest-using-vmwaretools-v&#34;&gt;ask ubuntu&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>making debs from php pecl</title>
@@ -5214,6 +5548,43 @@ do echo $d; done
 grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
 do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
 &lt;/code&gt;&lt;/pre&gt;</content>
+            </entry>
+        
+            <entry>
+                <title>linux format code academy python bug</title>
+                <link rel="alternate" href="/2012/12/20/linux-format-code-academy-python-bug/" type="text/html" />
+                <id>/2012/12/20/linux-format-code-academy-python-bug/</id>
+                <updated>2012-12-20T15:54:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I noticed an interesting but simple bug in this issue of Code Academy from the Linux Format guys.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&#34;/assets/images/codeacademy/cacover.png&#34; alt=&#34;cover&#34;&gt;&lt;/p&gt;
+&lt;h4&gt;On page 20 regarding the &amp;#39;back to basics section&amp;#39;:&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;/assets/images/codeacademy/capage.png&#34; alt=&#34;cover&#34;&gt;&lt;/p&gt;
+&lt;h4&gt;text that is misinformation:&lt;/h4&gt;
+&lt;p&gt;&lt;img src=&#34;/assets/images/codeacademy/caexample.png&#34; alt=&#34;cover&#34;&gt;&lt;/p&gt;
+
+&lt;p&gt;&amp;quot;Since there is no operator that in Python that lets us switch the position of two elements...&amp;quot;&lt;/p&gt;
+&lt;h4&gt;Rebuttal&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+&gt;&gt;&gt; x = 1
+&gt;&gt;&gt; y = 2
+&gt;&gt;&gt; x
+1
+&gt;&gt;&gt; y
+2
+&gt;&gt;&gt; x, y = y, x
+&gt;&gt;&gt; x
+2
+&gt;&gt;&gt; y
+1
+&gt;&gt;&gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Not a big thing but very misleading especially if you are doing some practical sorting.&lt;/p&gt;
+</content>
             </entry>
         
             <entry>
