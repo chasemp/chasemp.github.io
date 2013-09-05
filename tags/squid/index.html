@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>virsh halting a host &ndash; devops type thoughts</title>
+    <title>Tag  &rsaquo; squid &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -82,36 +82,22 @@ function toggleDiv(divId) {
         
         <div id="content">
             
-    <div class="item">
-        <div class="header">
-            <h1>virsh halting a host</h1>
-            <h2>Wednesday, April 10, 2013 <span>&raquo;</span> <a href="/tags/kvm/">kvm</a>, <a href="/tags/virsh/">virsh</a></h2>
-        </div>
-        
-        <div class="body">
-            <h4>Preamble</h4>
-<p>KVM is great but I&#39;m aking a note so I remember because this command gives me pause every time.</p>
-<h4>Sometimes &#39;shutdown&#39; in the virtual shell for KVM fails.</h4><pre><code>virsh # shutdown myvm
-Domain myvm is being shutdown
-</code></pre><h4>But...</h4><pre><code>114 myvm            running
-</code></pre>
-<p>In order to shutdown this host I use the &#39;destroy&#39; command.  Destroy does not<br>
-remove any files or otherwise permanently change the host data.  Which for me, <br>
-is unintuitive.  It does remove it from the list of hosts shown with the &#39;list&#39;<br>
-command.  Destroy is like pulling the plug.</p>
-<pre><code>virsh #destroy myvm
-</code></pre>
-<p>The command that does what I would expect destroy to do is: &#39;undefine&#39;.</p>
-<h4>the &#39;Sometimes&#39;</h4>
-<p>When a new VM has no OS or doesn&#39;t make it past the bootloader it appears to be<br>
-non-responsive for the graceful shutdown command.</p>
-
-<p>Reference<br>
-<a href="http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html">fedora project virsh doc</a><br>
-<a href="http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/">cyberciti doc</a></p>
-
-        </div>
-    </div>
+    <h2>Tag &rsaquo; squid</h2>
+    
+        <dl class="archives">
+            <dt><a href="/archives/2013/">2013</a></dt>
+            <dd>
+                <dl>
+                    
+                        
+                            <dt>Sep 05</dt>
+                            <dd><a href="/2013/09/05/making-sense-of-squid-logs/">making sense of squid logs</a><small>Tagged <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/squid/">squid</a></small></dd>
+                        
+                    
+                </dl>
+            </dd>
+        </dl>
+    
 
         </div>
         

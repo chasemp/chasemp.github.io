@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>virsh halting a host &ndash; devops type thoughts</title>
+    <title>making sense of squid logs &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -84,31 +84,38 @@ function toggleDiv(divId) {
             
     <div class="item">
         <div class="header">
-            <h1>virsh halting a host</h1>
-            <h2>Wednesday, April 10, 2013 <span>&raquo;</span> <a href="/tags/kvm/">kvm</a>, <a href="/tags/virsh/">virsh</a></h2>
+            <h1>making sense of squid logs</h1>
+            <h2>Thursday, September 05, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/squid/">squid</a></h2>
         </div>
         
         <div class="body">
-            <h4>Preamble</h4>
-<p>KVM is great but I&#39;m aking a note so I remember because this command gives me pause every time.</p>
-<h4>Sometimes &#39;shutdown&#39; in the virtual shell for KVM fails.</h4><pre><code>virsh # shutdown myvm
-Domain myvm is being shutdown
-</code></pre><h4>But...</h4><pre><code>114 myvm            running
+            <p>Squid seems to always default to logging things using epoch time.  Which can<br>
+be a pain to decypher if you are in a hurry.</p>
+<pre><code>1378405786.009      0 127.0.0.1 TCP_DENIED/400 1342 GET NONE:// - NONE/- text/html
 </code></pre>
-<p>In order to shutdown this host I use the &#39;destroy&#39; command.  Destroy does not<br>
-remove any files or otherwise permanently change the host data.  Which for me, <br>
-is unintuitive.  It does remove it from the list of hosts shown with the &#39;list&#39;<br>
-command.  Destroy is like pulling the plug.</p>
-<pre><code>virsh #destroy myvm
-</code></pre>
-<p>The command that does what I would expect destroy to do is: &#39;undefine&#39;.</p>
-<h4>the &#39;Sometimes&#39;</h4>
-<p>When a new VM has no OS or doesn&#39;t make it past the bootloader it appears to be<br>
-non-responsive for the graceful shutdown command.</p>
+<p>You see: <strong>1378405786.009</strong><br>
+It means: <strong>GMT: Thu, 05 Sep 2013 18:29:46 GMT</strong></p>
 
-<p>Reference<br>
-<a href="http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html">fedora project virsh doc</a><br>
-<a href="http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/">cyberciti doc</a></p>
+<p>Years ago I wrote a <a href="https://raw.github.com/chasemp/archive/master/parse_squid.py">script</a> to handle this on-the-fly as I was looking for<br>
+information I needed to pass an audit.  In a pinch, on an unfamiliar server,<br>
+it works.  But it&#39;s not ideal.</p>
+
+<p>This configuration in /etc/squid/squid.conf makes timestamps natively sane:</p>
+<pre><code>logformat sanelogfrmt %tl.%03tu %6tr %&gt;a %Ss/%03Hs %&lt;st %rm %ru %un %Sh/%&lt;A %mt
+access_log /var/log/squid/access.log sanelogfrmt
+</code></pre>
+<p>Looks like:</p>
+<pre><code>05/Sep/2013:11:30:46 -0700      0 127.0.0.1 TCP_DENIED/400 1342 \
+GET NONE:// - NONE/- text/html
+</code></pre>
+<p>For a nice explaination of the fields in this log see the <a href="http://trafficserver.apache.org/docs/trunk/admin/working-log-files/log-formats.en.html">docs</a></p>
+
+<p>Some version of squid support the <strong>emulate_httpd_log on</strong> option as well.</p>
+
+<p><a href="http://wiki.squid-cache.org/Features/LogFormat">squid wiki</a><br>
+<a href="http://trafficserver.apache.org/docs/trunk/admin/working-log-files/log-formats.en.html">docs on format</a><br>
+<a href="http://devel.squid-cache.org/customlog/logformat.html">squid docs on log field options</a><br>
+<a href="http://answers.splunk.com/answers/13599/custom-squid-log-format">splunk doc</a></p>
 
         </div>
     </div>

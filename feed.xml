@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-01T15:56:27Z</updated>
+        <updated>2013-09-05T21:47:11Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -16,10 +16,48 @@
         
         
             <entry>
+                <title>making sense of squid logs</title>
+                <link rel="alternate" href="/2013/09/05/making-sense-of-squid-logs/" type="text/html" />
+                <id>/2013/09/05/making-sense-of-squid-logs/</id>
+                <updated>2013-09-05T21:47:00Z</updated>
+                
+                <summary type="html">Squid seems to always default to logging things using epoch time.  Which can&lt;br&gt;
+be a pain to decypher if you are in a hurry.</summary>
+                <content type="html">&lt;p&gt;Squid seems to always default to logging things using epoch time.  Which can&lt;br&gt;
+be a pain to decypher if you are in a hurry.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;1378405786.009      0 127.0.0.1 TCP_DENIED/400 1342 GET NONE:// - NONE/- text/html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;You see: &lt;strong&gt;1378405786.009&lt;/strong&gt;&lt;br&gt;
+It means: &lt;strong&gt;GMT: Thu, 05 Sep 2013 18:29:46 GMT&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Years ago I wrote a &lt;a href=&#34;https://raw.github.com/chasemp/archive/master/parse_squid.py&#34;&gt;script&lt;/a&gt; to handle this on-the-fly as I was looking for&lt;br&gt;
+information I needed to pass an audit.  In a pinch, on an unfamiliar server,&lt;br&gt;
+it works.  But it&amp;#39;s not ideal.&lt;/p&gt;
+
+&lt;p&gt;This configuration in /etc/squid/squid.conf makes timestamps natively sane:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;logformat sanelogfrmt %tl.%03tu %6tr %&amp;gt;a %Ss/%03Hs %&amp;lt;st %rm %ru %un %Sh/%&amp;lt;A %mt
+access_log /var/log/squid/access.log sanelogfrmt
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Looks like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;05/Sep/2013:11:30:46 -0700      0 127.0.0.1 TCP_DENIED/400 1342 \
+GET NONE:// - NONE/- text/html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;For a nice explaination of the fields in this log see the &lt;a href=&#34;http://trafficserver.apache.org/docs/trunk/admin/working-log-files/log-formats.en.html&#34;&gt;docs&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Some version of squid support the &lt;strong&gt;emulate_httpd_log on&lt;/strong&gt; option as well.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://wiki.squid-cache.org/Features/LogFormat&#34;&gt;squid wiki&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://trafficserver.apache.org/docs/trunk/admin/working-log-files/log-formats.en.html&#34;&gt;docs on format&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://devel.squid-cache.org/customlog/logformat.html&#34;&gt;squid docs on log field options&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://answers.splunk.com/answers/13599/custom-squid-log-format&#34;&gt;splunk doc&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
                 <title>python urllib2 and https proxy</title>
                 <link rel="alternate" href="/2013/08/28/python-urllib2-and-https-proxy/" type="text/html" />
                 <id>/2013/08/28/python-urllib2-and-https-proxy/</id>
-                <updated>2013-08-28T20:54:00Z</updated>
+                <updated>2013-08-28T15:58:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -33,7 +71,7 @@ is a nice activestate &lt;a href=&#34;http://code.activestate.com/recipes/456195
 &lt;pre&gt;&lt;code&gt;Time TimeoutSocket fake socket doesn&amp;#39;t have a sendall method \
  so you get the above error when using https.
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;I am saving this faile as sslhandler.py&lt;/p&gt;
+&lt;p&gt;I am saving this module as sslhandler.py&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show sslhandler.py&lt;/a&gt;&lt;/p&gt;
 
@@ -513,9 +551,9 @@ RSvgDevice              An R SVG graphics device.
         
             <entry>
                 <title>asa hairpinning</title>
-                <link rel="alternate" href="/2013/08/21/asa-hairpinning/" type="text/html" />
-                <id>/2013/08/21/asa-hairpinning/</id>
-                <updated>2013-08-21T03:01:00Z</updated>
+                <link rel="alternate" href="/2013/08/20/asa-hairpinning/" type="text/html" />
+                <id>/2013/08/20/asa-hairpinning/</id>
+                <updated>2013-08-20T03:01:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4977,7 +5015,7 @@ Total number of prefixes 1
                 <title>virsh halting a host</title>
                 <link rel="alternate" href="/2013/04/10/virsh-halting-a-host/" type="text/html" />
                 <id>/2013/04/10/virsh-halting-a-host/</id>
-                <updated>2013-04-10T01:12:00Z</updated>
+                <updated>2013-04-10T19:05:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4993,6 +5031,9 @@ command.  Destroy is like pulling the plug.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;virsh #destroy myvm
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The command that does what I would expect destroy to do is: &amp;#39;undefine&amp;#39;.&lt;/p&gt;
+&lt;h4&gt;the &amp;#39;Sometimes&amp;#39;&lt;/h4&gt;
+&lt;p&gt;When a new VM has no OS or doesn&amp;#39;t make it past the bootloader it appears to be&lt;br&gt;
+non-responsive for the graceful shutdown command.&lt;/p&gt;
 
 &lt;p&gt;Reference&lt;br&gt;
 &lt;a href=&#34;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&#34;&gt;fedora project virsh doc&lt;/a&gt;&lt;br&gt;
