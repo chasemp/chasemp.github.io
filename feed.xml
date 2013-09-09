@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-05T21:47:11Z</updated>
+        <updated>2013-09-09T23:03:36Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,106 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>profiling mysql queries</title>
+                <link rel="alternate" href="/2013/09/09/profiling-mysql-queries/" type="text/html" />
+                <id>/2013/09/09/profiling-mysql-queries/</id>
+                <updated>2013-09-09T23:03:00Z</updated>
+                
+                <summary type="html">MySQL has some native profiling and troubleshootings logs for queries.  Logging of &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/slow-query-log.html&#34;&gt;slow queries&lt;/a&gt; or even all &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.1/en/query-log.html&#34;&gt;queries&lt;/a&gt; done is possible, but can be a performance hit.  In some instances not having access to the application or permissions within SQL can also be a problem.</summary>
+                <content type="html">&lt;p&gt;MySQL has some native profiling and troubleshootings logs for queries.  Logging of &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/slow-query-log.html&#34;&gt;slow queries&lt;/a&gt; or even all &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.1/en/query-log.html&#34;&gt;queries&lt;/a&gt; done is possible, but can be a performance hit.  In some instances not having access to the application or permissions within SQL can also be a problem.&lt;/p&gt;
+
+&lt;p&gt;You can use the &lt;a href=&#34;http://www.percona.com/software/percona-toolkit&#34;&gt;Percona Tool Kit&lt;/a&gt; to profile the load on your MySQL server without asking MySQL to handle any extra load.&lt;/p&gt;
+
+&lt;p&gt;You can get some good information using mysqadmin such as a count by query type.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+root@vm:~# mysqladmin ext | grep -e &#39;Com_\(update\|select\|insert\)&#39;
+| Com_insert                               | 207         |
+| Com_insert_select                        | 0           |
+| Com_select                               | 12423       |
+| Com_update                               | 71          |
+| Com_update_multi                         | 0           |
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If you want more details without inteferring with MySQL Percona Tool Kit is a nice idea.&lt;/p&gt;
+&lt;h4&gt;Installing Percona Tool kit&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+wget http://www.percona.com/redir/downloads/percona-toolkit/LATEST/deb/percona-toolkit_2.2.4_all.deb
+aptitude install libdbd-mysql-perl libdbd-mysql-5.1-perl libterm-readkey-perl libio-socket-ssl-perl
+dpkg -i percona-toolkit_2.2.4_all.deb 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Make sure it has the tool we want&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;root@vm:~# which pt-query-digest
+/usr/bin/pt-query-digest
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Capture Query Traffic&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;tcpdump -s 65535 -x -nn -q -tttt -i any port 3306 &amp;gt; mysql.netdump.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Translating Network Dump into MySQL details&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;pt-query-digest --type tcpdump mysql.tcp.txt &amp;gt; dump.log
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Some useful details: ranking of queries by time spent, index ratio, break&lt;br&gt;
+down of query durations, and a breakout of individual queries.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show Example dump.log Analysis&lt;/a&gt;&lt;/p&gt;
+
+&lt;div id=&#34;hideme&#34; style=&#34;display:none;&#34;&gt;
+&lt;pre&gt;&lt;code&gt;
+# 600ms user time, 60ms system time, 26.84M rss, 85.55M vsz
+# Current date: Mon Sep  9 15:24:54 2013
+# Hostname: vm
+# Files: mysql.netdump.txt
+# Overall: 603 total, 112 unique, 15.68 QPS, 0.01x concurrency ___________
+# Time range: 2013-09-09 15:24:07.234666 to 15:24:45.693738
+# Attribute          total     min     max     avg     95%  stddev  median
+# ============     ======= ======= ======= ======= ======= ======= =======
+# Exec time          230ms       0     8ms   380us     1ms   794us   159us
+# Rows affecte         105       0       2    0.17    0.99    0.42       0
+# Query size       293.92k      14  59.65k  499.14  299.03   4.02k   84.10
+# Warning coun          17       0       2    0.03       0    0.17       0
+# Boolean:
+# No index use   1% yes,  98% no
+
+# Profile
+# Rank Query ID           Response time Calls R/Call V/M   Item
+# ==== ================== ============= ===== ====== ===== ===============
+#    1 0x5D51E5F01B88B79E  0.0368 16.0%    77 0.0005  0.00 ADMIN CONNECT
+#    2 0xAD033812F7A933C3  0.0224  9.8%     6 0.0037  0.00 INSERT STUFF1
+#    3 0x43777589CE6D9294  0.0135  5.9%     4 0.0034  0.00 SELECT YOUR_STUFF2
+#    4 0x1C67569E33078F1D  0.0108  4.7%     6 0.0018  0.00 INSERT YOUR_STUFF3
+
+# Query 1: 2.01 QPS, 0.00x concurrency, ID 0x5D51E5F01B88B79E at byte 985002
+# This item is included in the report because it matches --limit.
+# Scores: V/M = 0.00
+# Time range: 2013-09-09 15:24:07.234666 to 15:24:45.626723
+# Attribute    pct   total     min     max     avg     95%  stddev  median
+# ============ === ======= ======= ======= ======= ======= ======= =======
+# Count         12      77
+# Exec time     16    37ms    84us     8ms   477us     1ms   995us   260us
+# Rows affecte   0       0       0       0       0       0       0       0
+# Query size     0   2.26k      30      30      30      30       0      30
+# Warning coun   0       0       0       0       0       0       0       0
+# String:
+# Databases     (23/29%), mydb (12/15%)... 21 more
+# Hosts        127.0.0.1
+# Users        you (53/68%), me (15/19%), yourmom (9/11%)
+# Query_time distribution
+#   1us
+#  10us  ######
+# 100us  ################################################################
+#   1ms  ####
+#  10ms
+# 100ms
+#    1s
+#  10s+
+administrator command: Connect\G
+&lt;/code&gt;&lt;/pre&gt;
+&lt;/div&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.mysqlperformanceblog.com/2007/05/31/mysql-slow-query-log-in-the-table/&#34;&gt;slow log&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.mysqlperformanceblog.com/2008/11/07/poor-mans-query-logging/&#34;&gt;poor mans query log&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.percona.com/software/percona-toolkit&#34;&gt;took kit&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>making sense of squid logs</title>
