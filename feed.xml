@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-09T23:06:13Z</updated>
+        <updated>2013-09-13T21:17:29Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,245 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>selecting a subset for sampling</title>
+                <link rel="alternate" href="/2013/09/13/selecting-a-subset-for-sampling/" type="text/html" />
+                <id>/2013/09/13/selecting-a-subset-for-sampling/</id>
+                <updated>2013-09-13T21:14:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;In the devops world there are a lot of reasons to want good stats, but sometimes the load for collecting those stats on &lt;br&gt;
+every execution of a script or web page is too invasive.  &lt;a href=&#34;http://en.wikipedia.org/wiki/A/B_testing&#34;&gt;A/B testing&lt;/a&gt; is &lt;br&gt;
+another place where we want to select a certain portion of served pages and take appropriate action.  The straight forward &lt;br&gt;
+way to select a subset is a state based system.  For every page that executes you can add an id to a set in redis.  If you &lt;br&gt;
+are looking for 5% of pages then look to see if the item count is 20.  If you are number 20 you can flush the list and the &lt;br&gt;
+count starts over.  This is not meant for real world usage but that is the basic idea behind selecting a portion of pages &lt;br&gt;
+by keeping state between all executions.&lt;/p&gt;
+
+&lt;p&gt;If the state based system is too slow, clunky, unreliable or inelegant there has to be an alternative.&lt;/p&gt;
+&lt;h4&gt;Modulo Operation&lt;/h4&gt;
+&lt;p&gt;The &lt;a href=&#34;http://en.wikipedia.org/wiki/Modulo_operation&#34;&gt;modulo operation&lt;/a&gt; finds the remainder of one number &lt;br&gt;
+divided by another.&lt;/p&gt;
+
+&lt;p&gt;Example of Modulo operations:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+&gt;&gt;&gt; 1 % 1
+0
+&gt;&gt;&gt; 2 % 1
+0
+&gt;&gt;&gt; 5 % 2
+1
+&gt;&gt;&gt; 9 / 4
+2
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So you take all the numbers 1 - 100 the percentage of modulus operations with a remainder of 0 for the number 10 is &lt;br&gt;
+10%.&lt;/p&gt;
+&lt;h4&gt;Combining stateful tracking of executions and modulus&lt;/h4&gt;
+&lt;p&gt;If you want to you can combine these two ideas.  In order to sample 5% of executions you could track the execution order &lt;br&gt;
+of your scripts in redis (or somwhere) looking for a modulus operation remainder of 0 each time to identify an appropriate &lt;br&gt;
+sample page.  Exectuions 1 - 19 will not be sampled, but 20 will.  So will 40, 60, 80, and 100.  When script 101 queries &lt;br&gt;
+to see where in the order it is it will be told it is 1 and the cycle starts over.  This way each job would have a 5% &lt;br&gt;
+chance of being selected as a sample.&lt;/p&gt;
+
+&lt;p&gt;This is not any more advantages than the simply having every page know when it&amp;#39;s number 20.&lt;/p&gt;
+&lt;h4&gt;Using the law of averages to provide a quick sample determination&lt;/h4&gt;
+&lt;p&gt;Let&amp;#39;s say we have a simple query and we want 10% to send a stat to statsd.  The pseudo code might look like&lt;/p&gt;
+&lt;h1&gt;python-ish pseudo code&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;
+import random
+sample_interval = 20
+start_time = time.time()
+user_id = execute_mysql_query(&#39;select %s from users&#39; % username)
+total_time = time.time() - start_time
+print user_id
+if random.randint(0, 100) % sample_interal == 0:
+    submit_to_statsd(&#39;time.to.query.userid&#39;, total_time)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Over time this should submit a sample of 5% of all user_id queries to statsd.  The first 100 you may get 0, 5, or 8 but &lt;br&gt;
+with a larger sample you get around 5% and it is much cheaper than trying to have each execution determine where it is in &lt;br&gt;
+the pecking order for stats submission.&lt;/p&gt;
+&lt;h4&gt;Just how accurate is the law of averages here?&lt;/h4&gt;
+&lt;p&gt;Here is a snippet to figure out the percentage of matches in a spread for a particular modulus integer.  Ideally using the &lt;br&gt;
+operation &amp;#39;int % 10 == 0&amp;#39; will have a sample rate of 10 percent.  The user passes in the top end of the range, we cycle &lt;br&gt;
+through 10 times.  The number of matches in each pass is summed and then used to calculate in the average match percentage &lt;br&gt;
+across all tries.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+import sys
+import random
+try_match = []
+tries = 10
+#make 10 passes of user defined range
+while tries &gt; 0:
+    match = []
+    #how many times should I try to match my modulus op
+    for i in range(0, int(sys.argv[1])):
+        if random.randint(0, 100) % 10 == 0:
+            match.append(i)
+
+    #append the number of matches
+    try_match.append(len(match))
+    tries -= 1
+
+average_sampled = sum(try_match) / 10
+print average_sampled * 100 / int(sys.argv[1]) 
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks like (actual runs)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/php# python modulo.py 10
+10
+me@vm:~/php# python modulo.py 100
+11
+me@vm:~/php# python modulo.py 1000
+10
+me@vm:~/php# python modulo.py 10000
+10
+me@vm:~/php# python modulo.py 100000
+10
+me@vm:~/php# python modulo.py 1000000
+10
+me@vm:~/php# python modulo.py 10000000
+10
+me@vm:~/php# python modulo.py 100000000
+10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;This is almost too perfect but the idea is this the accuracy of percentage sampled gets better over the long run.  In &lt;br&gt;
+reality if you run this 10 times it won&amp;#39;t be 10% all of the time, but if you run it against 1000 it will be most of the &lt;br&gt;
+time.&lt;/p&gt;
+
+&lt;p&gt;Testing against a small range is wildly variable:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/php# python modulo.py 10
+10
+me@vm:~/php# python modulo.py 10
+10
+me@vm:~/php# python modulo.py 10
+10
+me@vm:~/php# python modulo.py 10
+10
+me@vm:~/php# python modulo.py 10
+0
+me@vm:~/php# python modulo.py 10
+0
+me@vm:~/php# python modulo.py 10
+10
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Testing against a large range is nicely consistent:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/php# python modulo.py 1000
+10
+me@vm:~/php# python modulo.py 1000
+11
+me@vm:~/php# python modulo.py 1000
+10
+me@vm:~/php# python modulo.py 1000
+11
+me@vm:~/php# python modulo.py 1000
+10
+me@vm:~/php# python modulo.py 1000
+10
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Using this to match 10% of PHP pages&lt;/h4&gt;
+&lt;p&gt;I am going to use the following code to test this principle for PHP.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+$sample_rate = 10;
+$total_tries = $argv[1];
+$matches = array();
+$nonmatches = array();
+echo &#34;$total_tries \n&#34;;
+foreach (range(1, $total_tries) as $number) {
+
+    $random_number = rand();
+
+    if ($random_number % $sample_rate === 0) {
+        $matches[] = $random_number;
+        // if this were a real page you would submit your stat here
+        // since it matches your sample rate
+    }
+    else {
+        $nonmatches[] = $random_number;
+    }
+}
+
+$matchcount = count($matches);
+$nonmatchcount = count($nonmatches);
+print &#34;matches: $matchcount\n&#34;;
+print &#34;nonmatches: $nonmatchcount\n&#34;;
+$dive = $matchcount * 100;
+$prc = $dive / $total_tries;
+echo &#34;$prc&#34; . &#34;\n&#34;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Looks Like&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:~/php# php modtest.php 10  
+10 
+matches: 0
+nonmatches: 10
+0
+
+me@vm:~/php# php modtest.php 100
+100 
+matches: 9
+nonmatches: 91
+9
+
+me@vm:~/php# php modtest.php 1000
+1000 
+matches: 104
+nonmatches: 896
+10.4
+
+me@vm:~/php# php modtest.php 10000
+10000 
+matches: 971
+nonmatches: 9029
+9.71
+
+me@vm:~/php# php modtest.php 100000
+100000 
+matches: 10114
+nonmatches: 89886
+10.114
+
+me@vm:~/php# php modtest.php 1000000
+1000000 
+matches: 99407
+nonmatches: 900593
+9.9407
+
+me@vm:~/php# php modtest.php 1000000 
+1000000 
+matches: 99716
+nonmatches: 900284
+9.9716
+
+me@vm:~/php# php modtest.php 10000000
+10000000 
+matches: 1001427
+nonmatches: 8998573
+10.01427
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/5555712/generate-a-random-number-in-python&#34;&gt;random numbers in python&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/random.html&#34;&gt;py random doc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Law_of_averages&#34;&gt;loa&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Modulus&#34;&gt;module wiki&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>profiling mysql queries</title>
