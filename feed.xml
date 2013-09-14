@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-13T21:17:29Z</updated>
+        <updated>2013-09-14T01:17:24Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>selecting a subset for sampling</title>
                 <link rel="alternate" href="/2013/09/13/selecting-a-subset-for-sampling/" type="text/html" />
                 <id>/2013/09/13/selecting-a-subset-for-sampling/</id>
-                <updated>2013-09-13T21:14:00Z</updated>
+                <updated>2013-09-13T21:18:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -250,7 +250,213 @@ nonmatches: 8998573
 &lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/5555712/generate-a-random-number-in-python&#34;&gt;random numbers in python&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://docs.python.org/2/library/random.html&#34;&gt;py random doc&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://en.wikipedia.org/wiki/Law_of_averages&#34;&gt;loa&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://en.wikipedia.org/wiki/Modulus&#34;&gt;module wiki&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;http://en.wikipedia.org/wiki/Modulus&#34;&gt;module wiki&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/chasemp/archive/tree/master/modtest&#34;&gt;on gh&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>graphite on centos6 lessons learned</title>
+                <link rel="alternate" href="/2013/09/12/graphite-on-centos6-lessons-learned/" type="text/html" />
+                <id>/2013/09/12/graphite-on-centos6-lessons-learned/</id>
+                <updated>2013-09-12T01:17:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Getting graphite going on CentOS 6&lt;/p&gt;
+&lt;h4&gt;Installing packages&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+yum update
+yum -y groupinstall &#39;Development Tools&#39;
+sudo yum install http://yum.puppetlabs.com/el/6/products/i386/puppetlabs-release-6-7.noarch.rpm
+sudo yum install  http://mirror-fpt-telecom.fpt.net/fedora/epel/6/i386/epel-release-6-8.noarch.rpm
+yum update
+yum install -y pycairo mod_python mod_wsgi Django python-ldap python-memcached \
+               python-sqlite2  bitmap bitmap-fonts python-devel python-crypto \
+               pyOpenSSL gcc python-zope-filesystem python-zope-interface \
+               git zlib-static git tree rsync git python-pip python-devel httpd \
+               django-tagging links htop
+yum install twisted
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;pip install whisper&lt;br&gt;
+pip install carbon&lt;br&gt;
+pip install graphite-web&lt;/p&gt;
+&lt;h4&gt;Check for missing dependencies&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@vm:~# python /tmp/pip-build-me/graphite-web/check-dependencies.py
+
+All necessary dependencies are met.
+All optional dependencies are met.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Fixup config files and permissions&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+chown -R apache:apache /opt/graphite/storage/
+cp /opt/graphite/webapp/graphite/local_settings.py.example \
+              /opt/graphite/webapp/graphite/local_settings.py
+cp /opt/graphite/conf/carbon.conf.example /opt/graphite/conf/carbon.conf
+cp /opt/graphite/conf/storage-schemas.conf.example /opt/graphite/conf/storage-schemas.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+python /opt/graphite/webapp/graphite/manage.py syncdb
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+cd /opt/graphite/conf/
+sudo cp graphite.wsgi.example graphite.wsgi
+sudo cp storage-schemas.conf.example storage-schemas.conf
+sudo cp carbon.conf.example carbon.conf
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+cd /opt/graphite/webapp/graphite
+sudo cp local_settings.py.example local_settings.py
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;make sure if you are using django 1.4 this portion of local_settings.py is uncommented&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+# The default is &#39;django.db.backends.sqlite3&#39; with file &#39;graphite.db&#39;
+# located in STORAGE_DIR
+#
+DATABASES = {
+    &#39;default&#39;: {
+        &#39;NAME&#39;: &#39;/opt/graphite/storage/graphite.db&#39;,
+        &#39;ENGINE&#39;: &#39;django.db.backends.sqlite3&#39;,
+        &#39;USER&#39;: &#39;&#39;,
+        &#39;PASSWORD&#39;: &#39;&#39;,
+        &#39;HOST&#39;: &#39;&#39;,
+        &#39;PORT&#39;: &#39;&#39;
+    }
+}
+#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Configuring HTTPD&lt;/h4&gt;
+&lt;p&gt;cat /etc/httpd/conf.d/wsgi.conf &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;WSGISocketPrefix /var/run/wsgi
+LoadModule wsgi_module modules/mod_wsgi.so
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;cat /etc/httpd/conf.d/graphite.conf&lt;br&gt;
+&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+ServerName &lt;your.com&gt;&lt;br&gt;
+Document &amp;quot;/opt/graphite/webapp&amp;quot;&lt;br&gt;
+WSGIDaemonProcess graphite processes=5 threads=5 display-name=&amp;#39;%{GROUP}&amp;#39; inactivity-timeout=120&lt;br&gt;
+WSGIProcessGroup graphite&lt;br&gt;
+WSGIApplicationGroup %{GLOBAL}&lt;br&gt;
+WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}&lt;br&gt;
+WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi &lt;br&gt;
+&lt;Location /&gt;&lt;br&gt;
+    AuthType None&lt;br&gt;
+    Require all granted&lt;br&gt;
+    Satisfy Any&lt;br&gt;
+&lt;/Location&gt;&lt;br&gt;
+Alias /content/ /opt/graphite/webapp/content/&lt;br&gt;
+&lt;Location &#34;/content/&#34;&gt;&lt;br&gt;
+    SetHandler None&lt;br&gt;
+&lt;/Location&gt;&lt;br&gt;
+Alias /media/ &amp;quot;@DJANGO_me@/contrib/admin/media/&amp;quot;&lt;br&gt;
+&lt;Location &#34;/media/&#34;&gt;&lt;br&gt;
+    SetHandler None&lt;br&gt;
+&lt;/Location&gt;&lt;br&gt;
+&lt;Directory /opt/graphite/conf/&gt;&lt;br&gt;
+    Order deny,allow&lt;br&gt;
+    Allow from all&lt;br&gt;
+&lt;/Directory&gt;&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+
+&lt;p&gt;rm -f /etc/httpd/conf.d/welcome.conf&lt;br&gt;
+chown -R apache:apache /opt/graphite/storage&lt;/p&gt;
+&lt;h4&gt;Carbon LSB init script&lt;/h4&gt;
+&lt;p&gt;n /etc/init.d/carbon&lt;br&gt;
+chmod +x  /etc/init.d/carbon&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#!/bin/bash -e
+
+#Define dependencies
+CARBON_BIN=/opt/graphite/bin/carbon-cache.py
+PGREP=/usr/bin/pgrep
+
+function verifyfile() {
+    local BIN=$1
+    test -x $BIN || { echo &#34;$BIN not installed&#34;;
+        if [ &#34;$1&#34; = &#34;stop&#34; ]; then exit 0;
+        else exit 5; fi; }
+}
+
+# Check for missing binaries
+verifyfile &#34;$CARBONB_BIN&#34;
+verifyfile &#34;$PGREP&#34;
+
+case &#34;$1&#34; in
+    start)
+        if [ &#34;$($PGREP -f $CARBON_BIN)&#34; ]
+        then
+            echo &#34;already running&#34;;
+            exit 0
+        fi
+
+        $CARBON_BIN start
+        $0 status
+        ;;
+    stop)
+
+        function exterminate() {
+            local PROC=$1
+            pid=$(pgrep -f $PROC)
+            if [ !&#34;$pid&#34; ]
+            then
+                kill -9 $pid;
+                sleep 1;
+            fi
+        }
+
+        exterminate &#34;$CARBON_BIN&#34;
+        $0 status
+        ;;
+    restart)
+        $0 stop
+        sleep 1
+        $0 start
+        ;;
+    status)
+
+        if [ &#34;$($PGREP -f $CARBON_BIN)&#34; ]
+        then
+            echo &#34;running&#34;;
+        else
+            echo &#34;not running&#34;;
+        fi
+        ;;
+    *)
+        $0 status
+        ;;
+esac
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Starting things&lt;/h4&gt;
+&lt;p&gt;/etc/init.d/carbon restart&lt;br&gt;
+/etc/init.d/httpd restart&lt;/p&gt;
+&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;If you try to start httpd and you see lots of errors, especially this error:&lt;/p&gt;
+
+&lt;p&gt;[Thu Sep 12 12:45:52 2013] [error] IntegrityError: column user_id is not unique&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;You need to update your local_settings.py as noted above.  And anytime you edit local_settings.py you need to rerun your &lt;br&gt;
+db sync.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python /opt/graphite/webapp/graphite/manage.py syncdb
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;You can list all grouped installs via yum&lt;/p&gt;
+
+&lt;p&gt;yum grouplist&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Twisted seems to throw this error a lot, it is a python path issue and is a pain to track down and fix.&lt;/p&gt;
+
+&lt;p&gt;exceptions.ImportError: cannot import name _PY3&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://graphite.wikidot.com/getting-your-data-into-graphite&#34;&gt;getting stuff into graphite&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/9850581/django-error-when-installing-graphite-settings-data%0Abases-is-improperly-configu&#34;&gt;django fixup&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.rampmeupscotty.com/blog/2012/08/07/installing-graphite-on-centos-6-dot-2/&#34;&gt;centos 6 walk through&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
