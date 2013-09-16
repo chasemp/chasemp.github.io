@@ -105,35 +105,42 @@ yum install -y pycairo mod_python mod_wsgi Django python-ldap python-memcached \
                django-tagging links htop
 yum install twisted
 </code></pre>
-
-<p>pip install whisper<br>
-pip install carbon<br>
-pip install graphite-web</p>
-<h4>Check for missing dependencies</h4><pre><code>me@vm:~# python /tmp/pip-build-me/graphite-web/check-dependencies.py
+<pre><code>pip install whisper
+pip install carbon
+pip install graphite-web
+</code></pre><h4>Check for missing dependencies</h4><pre><code>me@vm:~# python /tmp/pip-build-me/graphite-web/check-dependencies.py
 
 All necessary dependencies are met.
 All optional dependencies are met.
 </code></pre><h4>Fixup config files and permissions</h4>
+<p>Fixing permissions since pip doesn&#39;t have distro specific knowledge to set this up.</p>
+
 <pre><code>
 chown -R apache:apache /opt/graphite/storage/
+</code></pre>
+
+<p>Setting up configurations from example defaults.</p>
+
+<pre><code>
 cp /opt/graphite/webapp/graphite/local_settings.py.example \
               /opt/graphite/webapp/graphite/local_settings.py
 cp /opt/graphite/conf/carbon.conf.example /opt/graphite/conf/carbon.conf
 cp /opt/graphite/conf/storage-schemas.conf.example /opt/graphite/conf/storage-schemas.conf
 </code></pre>
 
+<p>Run database setup</p>
+
 <pre><code>
 python /opt/graphite/webapp/graphite/manage.py syncdb
 </code></pre>
+
+<p>Setup more configurations from defaults</p>
 
 <pre><code>
 cd /opt/graphite/conf/
 sudo cp graphite.wsgi.example graphite.wsgi
 sudo cp storage-schemas.conf.example storage-schemas.conf
 sudo cp carbon.conf.example carbon.conf
-</code></pre>
-
-<pre><code>
 cd /opt/graphite/webapp/graphite
 sudo cp local_settings.py.example local_settings.py
 </code></pre>
@@ -154,46 +161,48 @@ DATABASES = {
         'PORT': ''
     }
 }
-#
 </code></pre>
 <h4>Configuring HTTPD</h4>
 <p>cat /etc/httpd/conf.d/wsgi.conf </p>
 <pre><code>WSGISocketPrefix /var/run/wsgi
 LoadModule wsgi_module modules/mod_wsgi.so
 </code></pre>
-<p>cat /etc/httpd/conf.d/graphite.conf<br>
-<pre><code><br>
-ServerName <your.com><br>
-Document &quot;/opt/graphite/webapp&quot;<br>
-WSGIDaemonProcess graphite processes=5 threads=5 display-name=&#39;%{GROUP}&#39; inactivity-timeout=120<br>
-WSGIProcessGroup graphite<br>
-WSGIApplicationGroup %{GLOBAL}<br>
-WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}<br>
-WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi <br>
-<Location /><br>
-    AuthType None<br>
-    Require all granted<br>
-    Satisfy Any<br>
-</Location><br>
-Alias /content/ /opt/graphite/webapp/content/<br>
-<Location "/content/"><br>
-    SetHandler None<br>
-</Location><br>
-Alias /media/ &quot;@DJANGO_me@/contrib/admin/media/&quot;<br>
-<Location "/media/"><br>
-    SetHandler None<br>
-</Location><br>
-<Directory /opt/graphite/conf/><br>
-    Order deny,allow<br>
-    Allow from all<br>
-</Directory><br>
-</code></pre></p>
+<p>cat /etc/httpd/conf.d/graphite.conf</p>
 
-<p>rm -f /etc/httpd/conf.d/welcome.conf<br>
-chown -R apache:apache /opt/graphite/storage</p>
-<h4>Carbon LSB init script</h4>
-<p>n /etc/init.d/carbon<br>
-chmod +x  /etc/init.d/carbon</p>
+<pre><code>
+ServerName your.com
+Document "/opt/graphite/webapp"
+WSGIDaemonProcess graphite processes=5 threads=5 display-name='%{GROUP}' inactivity-timeout=120
+WSGIProcessGroup graphite
+WSGIApplicationGroup %{GLOBAL}
+WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
+WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi 
+_<_Location /_>_
+    AuthType None
+    Require all granted
+    Satisfy Any
+_<_/Location_>_
+Alias /content/ /opt/graphite/webapp/content/
+_<_Location "/content/"_>_
+    SetHandler None
+_<_/Location_>_
+Alias /media/ "@DJANGO_me@/contrib/admin/media/"
+_<_Location "/media/"_>_
+    SetHandler None
+_<_/Location_>_
+_<_Directory /opt/graphite/conf/_>_
+    Order deny,allow
+    Allow from all
+_<_/Directory_>_
+</code></pre>
+
+<p>Remove welcome default</p>
+<pre><code>rm -f /etc/httpd/conf.d/welcome.conf
+chown -R apache:apache /opt/graphite/storage
+</code></pre><h4>Carbon LSB init script</h4><pre><code>n /etc/init.d/carbon
+chmod +x  /etc/init.d/carbon
+</code></pre>
+<p>contents:</p>
 
 <pre><code>
 #!/bin/bash -e
@@ -263,7 +272,9 @@ esac
 /etc/init.d/httpd restart</p>
 <h4>Notes</h4>
 <ol>
-<li><p>If you try to start httpd and you see lots of errors, especially this error:</p>
+<li><p>django errors</p>
+
+<p>If you try to start httpd and you see lots of errors, especially this error:</p>
 
 <p>[Thu Sep 12 12:45:52 2013] [error] IntegrityError: column user_id is not unique</p></li>
 </ol>

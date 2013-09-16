@@ -90,9 +90,8 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Setting up a new host with Puppet.  This assumes you have a Puppet Master already going.  One<br>
-nice thing to do is have a cname that forwards the &#39;puppet&#39; name to your Puppet Master so that<br>
-hosts find it easily as the default.</p>
+<p>Setting up a new host with Puppet.  This assumes you have a Puppet Master already going.  One nice thing to do is <br>
+have a cname that forwards the &#39;puppet&#39; name to your Puppet Master so that hosts find it easily as the default.</p>
 <h4>Did a host have this name previously?</h4><pre><code>me@pmaster:~# puppet cert -l -all | g foo.com
 + &#34;foo.com&#34;           (SHA1) &lt;hash&gt;
 </code></pre><h4>Remove old serverside cert</h4><pre><code>me@pmaster:~# puppet cert --clean foo.com 

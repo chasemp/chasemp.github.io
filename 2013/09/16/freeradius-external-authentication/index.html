@@ -113,7 +113,11 @@ considered invalid.</p>
 
 <pre><code>
 DEFAULT  Auth-Type = Accept
-         Exec-Program-Wait = "/usr/local/bin/fradiusauth.py %{User-Name} '%{User-Password}' %{Calling-Station-Id} %{NAS-IP-Address} %{Framed-Protocol}",
+         Exec-Program-Wait = "/usr/local/bin/fradiusauth.py %{User-Name} \
+                                                           '%{User-Password}' \
+                                                            %{Calling-Station-Id} \
+                                                            %{NAS-IP-Address} \
+                                                            %{Framed-Protocol}",
          Fall-Through = Yes
 
 <yourusername>

@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-16T21:11:30Z</updated>
+        <updated>2013-09-16T23:15:29Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>freeradius external authentication</title>
                 <link rel="alternate" href="/2013/09/16/freeradius-external-authentication/" type="text/html" />
                 <id>/2013/09/16/freeradius-external-authentication/</id>
-                <updated>2013-09-16T21:11:00Z</updated>
+                <updated>2013-09-16T23:12:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Installing Freeradius&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install freeradius
@@ -46,7 +46,11 @@ considered invalid.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 DEFAULT  Auth-Type = Accept
-         Exec-Program-Wait = &#34;/usr/local/bin/fradiusauth.py %{User-Name} &#39;%{User-Password}&#39; %{Calling-Station-Id} %{NAS-IP-Address} %{Framed-Protocol}&#34;,
+         Exec-Program-Wait = &#34;/usr/local/bin/fradiusauth.py %{User-Name} \
+                                                           &#39;%{User-Password}&#39; \
+                                                            %{Calling-Station-Id} \
+                                                            %{NAS-IP-Address} \
+                                                            %{Framed-Protocol}&#34;,
          Fall-Through = Yes
 
 &lt;yourusername&gt;
@@ -330,7 +334,7 @@ nonmatches: 8998573
                 <title>graphite on centos6 lessons learned</title>
                 <link rel="alternate" href="/2013/09/12/graphite-on-centos6-lessons-learned/" type="text/html" />
                 <id>/2013/09/12/graphite-on-centos6-lessons-learned/</id>
-                <updated>2013-09-12T01:22:00Z</updated>
+                <updated>2013-09-12T21:23:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -349,35 +353,42 @@ yum install -y pycairo mod_python mod_wsgi Django python-ldap python-memcached \
                django-tagging links htop
 yum install twisted
 &lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;pip install whisper&lt;br&gt;
-pip install carbon&lt;br&gt;
-pip install graphite-web&lt;/p&gt;
-&lt;h4&gt;Check for missing dependencies&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@vm:~# python /tmp/pip-build-me/graphite-web/check-dependencies.py
+&lt;pre&gt;&lt;code&gt;pip install whisper
+pip install carbon
+pip install graphite-web
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Check for missing dependencies&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@vm:~# python /tmp/pip-build-me/graphite-web/check-dependencies.py
 
 All necessary dependencies are met.
 All optional dependencies are met.
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Fixup config files and permissions&lt;/h4&gt;
+&lt;p&gt;Fixing permissions since pip doesn&amp;#39;t have distro specific knowledge to set this up.&lt;/p&gt;
+
 &lt;pre&gt;&lt;code&gt;
 chown -R apache:apache /opt/graphite/storage/
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Setting up configurations from example defaults.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
 cp /opt/graphite/webapp/graphite/local_settings.py.example \
               /opt/graphite/webapp/graphite/local_settings.py
 cp /opt/graphite/conf/carbon.conf.example /opt/graphite/conf/carbon.conf
 cp /opt/graphite/conf/storage-schemas.conf.example /opt/graphite/conf/storage-schemas.conf
 &lt;/code&gt;&lt;/pre&gt;
 
+&lt;p&gt;Run database setup&lt;/p&gt;
+
 &lt;pre&gt;&lt;code&gt;
 python /opt/graphite/webapp/graphite/manage.py syncdb
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Setup more configurations from defaults&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 cd /opt/graphite/conf/
 sudo cp graphite.wsgi.example graphite.wsgi
 sudo cp storage-schemas.conf.example storage-schemas.conf
 sudo cp carbon.conf.example carbon.conf
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;pre&gt;&lt;code&gt;
 cd /opt/graphite/webapp/graphite
 sudo cp local_settings.py.example local_settings.py
 &lt;/code&gt;&lt;/pre&gt;
@@ -398,46 +409,48 @@ DATABASES = {
         &#39;PORT&#39;: &#39;&#39;
     }
 }
-#
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Configuring HTTPD&lt;/h4&gt;
 &lt;p&gt;cat /etc/httpd/conf.d/wsgi.conf &lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;WSGISocketPrefix /var/run/wsgi
 LoadModule wsgi_module modules/mod_wsgi.so
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;cat /etc/httpd/conf.d/graphite.conf&lt;br&gt;
-&lt;pre&gt;&lt;code&gt;&lt;br&gt;
-ServerName &lt;your.com&gt;&lt;br&gt;
-Document &amp;quot;/opt/graphite/webapp&amp;quot;&lt;br&gt;
-WSGIDaemonProcess graphite processes=5 threads=5 display-name=&amp;#39;%{GROUP}&amp;#39; inactivity-timeout=120&lt;br&gt;
-WSGIProcessGroup graphite&lt;br&gt;
-WSGIApplicationGroup %{GLOBAL}&lt;br&gt;
-WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}&lt;br&gt;
-WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi &lt;br&gt;
-&lt;Location /&gt;&lt;br&gt;
-    AuthType None&lt;br&gt;
-    Require all granted&lt;br&gt;
-    Satisfy Any&lt;br&gt;
-&lt;/Location&gt;&lt;br&gt;
-Alias /content/ /opt/graphite/webapp/content/&lt;br&gt;
-&lt;Location &#34;/content/&#34;&gt;&lt;br&gt;
-    SetHandler None&lt;br&gt;
-&lt;/Location&gt;&lt;br&gt;
-Alias /media/ &amp;quot;@DJANGO_me@/contrib/admin/media/&amp;quot;&lt;br&gt;
-&lt;Location &#34;/media/&#34;&gt;&lt;br&gt;
-    SetHandler None&lt;br&gt;
-&lt;/Location&gt;&lt;br&gt;
-&lt;Directory /opt/graphite/conf/&gt;&lt;br&gt;
-    Order deny,allow&lt;br&gt;
-    Allow from all&lt;br&gt;
-&lt;/Directory&gt;&lt;br&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+&lt;p&gt;cat /etc/httpd/conf.d/graphite.conf&lt;/p&gt;
 
-&lt;p&gt;rm -f /etc/httpd/conf.d/welcome.conf&lt;br&gt;
-chown -R apache:apache /opt/graphite/storage&lt;/p&gt;
-&lt;h4&gt;Carbon LSB init script&lt;/h4&gt;
-&lt;p&gt;n /etc/init.d/carbon&lt;br&gt;
-chmod +x  /etc/init.d/carbon&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;
+ServerName your.com
+Document &#34;/opt/graphite/webapp&#34;
+WSGIDaemonProcess graphite processes=5 threads=5 display-name=&#39;%{GROUP}&#39; inactivity-timeout=120
+WSGIProcessGroup graphite
+WSGIApplicationGroup %{GLOBAL}
+WSGIImportScript /opt/graphite/conf/graphite.wsgi process-group=graphite application-group=%{GLOBAL}
+WSGIScriptAlias / /opt/graphite/conf/graphite.wsgi 
+_&lt;_Location /_&gt;_
+    AuthType None
+    Require all granted
+    Satisfy Any
+_&lt;_/Location_&gt;_
+Alias /content/ /opt/graphite/webapp/content/
+_&lt;_Location &#34;/content/&#34;_&gt;_
+    SetHandler None
+_&lt;_/Location_&gt;_
+Alias /media/ &#34;@DJANGO_me@/contrib/admin/media/&#34;
+_&lt;_Location &#34;/media/&#34;_&gt;_
+    SetHandler None
+_&lt;_/Location_&gt;_
+_&lt;_Directory /opt/graphite/conf/_&gt;_
+    Order deny,allow
+    Allow from all
+_&lt;_/Directory_&gt;_
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Remove welcome default&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;rm -f /etc/httpd/conf.d/welcome.conf
+chown -R apache:apache /opt/graphite/storage
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Carbon LSB init script&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;n /etc/init.d/carbon
+chmod +x  /etc/init.d/carbon
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;contents:&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 #!/bin/bash -e
@@ -507,7 +520,9 @@ esac
 /etc/init.d/httpd restart&lt;/p&gt;
 &lt;h4&gt;Notes&lt;/h4&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;If you try to start httpd and you see lots of errors, especially this error:&lt;/p&gt;
+&lt;li&gt;&lt;p&gt;django errors&lt;/p&gt;
+
+&lt;p&gt;If you try to start httpd and you see lots of errors, especially this error:&lt;/p&gt;
 
 &lt;p&gt;[Thu Sep 12 12:45:52 2013] [error] IntegrityError: column user_id is not unique&lt;/p&gt;&lt;/li&gt;
 &lt;/ol&gt;
@@ -6785,7 +6800,7 @@ DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.9
                 <title>email log alerts</title>
                 <link rel="alternate" href="/2012/10/23/email-log-alerts/" type="text/html" />
                 <id>/2012/10/23/email-log-alerts/</id>
-                <updated>2012-10-23T19:24:00Z</updated>
+                <updated>2012-10-23T23:15:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -6828,7 +6843,7 @@ log2mail.
                 <title>iptables flush all rules</title>
                 <link rel="alternate" href="/2012/10/15/iptables-flush-all-rules/" type="text/html" />
                 <id>/2012/10/15/iptables-flush-all-rules/</id>
-                <updated>2012-10-15T19:24:00Z</updated>
+                <updated>2012-10-15T23:15:00Z</updated>
                 
                 <summary type="html">Handy for testing.  Flush iptables.</summary>
                 <content type="html">&lt;p&gt;Handy for testing.  Flush iptables.&lt;/p&gt;
@@ -6863,7 +6878,7 @@ Chain OUTPUT (policy ACCEPT 0 packets, 0 bytes)
                 <title>adding a logfile to splunk</title>
                 <link rel="alternate" href="/2012/10/02/adding-a-logfile-to-splunk/" type="text/html" />
                 <id>/2012/10/02/adding-a-logfile-to-splunk/</id>
-                <updated>2012-10-02T19:22:00Z</updated>
+                <updated>2012-10-02T23:15:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Getting standard logfiles into Splunk&lt;/h4&gt;
@@ -6882,14 +6897,13 @@ sourcetype = &amp;lt;SOURCE_TYPE_NAME&amp;gt;
                 <title>nix lights out failsafe</title>
                 <link rel="alternate" href="/2012/09/30/nix-lights-out-failsafe/" type="text/html" />
                 <id>/2012/09/30/nix-lights-out-failsafe/</id>
-                <updated>2012-09-30T19:22:00Z</updated>
+                <updated>2012-09-30T23:15:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Just like for &lt;a href=&#34;http://rush898.github.io/2013/05/29/cisco-lights-out-failsafe/&#34;&gt;cisco&lt;/a&gt; a&lt;br&gt;
-scheduled reboot can be an aggressive but necessary recovery option.  If you are doing&lt;br&gt;
-iptables maintenance remote I always like to store my rules in a script and run them&lt;br&gt;
-without saving.  With a scheduled reboot pending locking myself out is a recoverable&lt;br&gt;
+&lt;p&gt;Just like for &lt;a href=&#34;http://rush898.github.io/2013/05/29/cisco-lights-out-failsafe/&#34;&gt;cisco&lt;/a&gt; a scheduled reboot can be an &lt;br&gt;
+aggressive but necessary recovery option.  If you are doing iptables maintenance remote I always like to store my &lt;br&gt;
+rules in a script and run them without saving.  With a scheduled reboot pending locking myself out is a recoverable &lt;br&gt;
 offense.&lt;/p&gt;
 &lt;h4&gt;/usr/local/bin/rsched&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -6979,12 +6993,12 @@ done
                 <title>monitor interface usage</title>
                 <link rel="alternate" href="/2012/09/13/monitor-interface-usage/" type="text/html" />
                 <id>/2012/09/13/monitor-interface-usage/</id>
-                <updated>2012-09-13T19:21:00Z</updated>
+                <updated>2012-09-13T23:14:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I like to use utilities like iftop, but sometimes simple is better.  I found a small&lt;br&gt;
-example of this but I believe I have improved the conversions.&lt;/p&gt;
+&lt;p&gt;I like to use utilities like iftop, but sometimes simple is better.  I found a small example of this but I believe I &lt;br&gt;
+have improved the conversions.&lt;/p&gt;
 &lt;h4&gt;Example found&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://www.madmadmod.com/sysadmin/54-how-to-get-the-current-network-bandwidth-usage-on-linux.html&#34;&gt;madmadmod script&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;My version&lt;/h4&gt;
@@ -7052,13 +7066,12 @@ done
                 <title>puppet cert signing</title>
                 <link rel="alternate" href="/2012/09/03/puppet-cert-signing/" type="text/html" />
                 <id>/2012/09/03/puppet-cert-signing/</id>
-                <updated>2012-09-03T19:21:00Z</updated>
+                <updated>2012-09-03T23:14:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Setting up a new host with Puppet.  This assumes you have a Puppet Master already going.  One&lt;br&gt;
-nice thing to do is have a cname that forwards the &amp;#39;puppet&amp;#39; name to your Puppet Master so that&lt;br&gt;
-hosts find it easily as the default.&lt;/p&gt;
+&lt;p&gt;Setting up a new host with Puppet.  This assumes you have a Puppet Master already going.  One nice thing to do is &lt;br&gt;
+have a cname that forwards the &amp;#39;puppet&amp;#39; name to your Puppet Master so that hosts find it easily as the default.&lt;/p&gt;
 &lt;h4&gt;Did a host have this name previously?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@pmaster:~# puppet cert -l -all | g foo.com
 + &amp;#34;foo.com&amp;#34;           (SHA1) &amp;lt;hash&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Remove old serverside cert&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;me@pmaster:~# puppet cert --clean foo.com 
@@ -7080,12 +7093,12 @@ Signed certificate request for blah.com
                 <title>examining PXE boot</title>
                 <link rel="alternate" href="/2012/08/29/examining-pxe-boot/" type="text/html" />
                 <id>/2012/08/29/examining-pxe-boot/</id>
-                <updated>2012-08-29T18:42:00Z</updated>
+                <updated>2012-08-29T23:14:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I have a host with MAC 00:30:48:60:f3:ca.  This host is configured to look&lt;br&gt;
-for a PXE server, but was not matching the correct profile.&lt;/p&gt;
+&lt;p&gt;I have a host with MAC 00:30:48:60:f3:ca.  This host is configured to look for a PXE server, but was not matching &lt;br&gt;
+the correct profile.&lt;/p&gt;
 &lt;h4&gt;Verify my configuration&lt;/h4&gt;
 &lt;p&gt;dhcpd.conf:&lt;/p&gt;
 
@@ -7187,14 +7200,14 @@ IP lab01.da.49155 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  39 RRQ &#34;initrd.gz&#
                 <title>ssh go forth and do my will</title>
                 <link rel="alternate" href="/2012/08/21/ssh-go-forth-and-do-my-will/" type="text/html" />
                 <id>/2012/08/21/ssh-go-forth-and-do-my-will/</id>
-                <updated>2012-08-21T18:45:00Z</updated>
+                <updated>2012-08-21T23:14:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Commands run via SSH silently as a background process.&lt;/p&gt;
 
-&lt;p&gt;Occassionally, I need to run a command on a remote host and I don&amp;#39;t have time to wait for&lt;br&gt;
-the output.  If success or failure isn&amp;#39;t a big deal I sometimes use the following method.&lt;/p&gt;
+&lt;p&gt;Occassionally, I need to run a command on a remote host and I don&amp;#39;t have time to wait for the output.  If success or &lt;br&gt;
+failure isn&amp;#39;t a big deal I sometimes use the following method.&lt;/p&gt;
 &lt;h4&gt;ls remotely&lt;/h4&gt;
 &lt;p&gt;Let&amp;#39;s say I badly need a recursive ls on a box&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ssh &amp;lt;me&amp;gt;@&amp;lt;server&amp;gt; &amp;#39;nohup ls -R &amp;amp;&amp;gt; /tmp/ls.txt &amp;amp;&amp;#39;
@@ -7287,14 +7300,14 @@ minutes: 22
                 <title>simple deb from github python</title>
                 <link rel="alternate" href="/2012/08/08/simple-deb-from-github-python/" type="text/html" />
                 <id>/2012/08/08/simple-deb-from-github-python/</id>
-                <updated>2012-08-08T18:44:00Z</updated>
+                <updated>2012-08-08T23:14:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;One of the things I do often is download projects from github.  Pypi (py-pee-eye) is nice and &lt;br&gt;
-so is pip, but I like to have one reference for packages on a host.  If at all possible I&lt;br&gt;
-prefer to make binaries.  It is nice for reporting, and because we run our own internal&lt;br&gt;
-repostories it affords us certain advantages for reporting and dependency handling.&lt;/p&gt;
+&lt;p&gt;One of the things I do often is download projects from github.  Pypi (py-pee-eye) is nice and so is pip, but I like &lt;br&gt;
+to have one reference for packages on a host.  If at all possible I prefer to make binaries.  It is nice for &lt;br&gt;
+reporting, and because we run our own internal repostories it affords us certain advantages for reporting and &lt;br&gt;
+dependency handling.&lt;/p&gt;
 &lt;h4&gt;Install a few packages:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install build-essential python-dev python-setuptools python-stdeb python-support
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Download a project: &lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;https://github.com/xb95/nagios-api.git&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;git clone https://github.com/xb95/nagios-api.git
 cd cd nagios-api/
@@ -7330,8 +7343,8 @@ Setting up python-nagios-api (1.2.1-1) ...
 Processing triggers for python-support ...
 &amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
-&lt;p&gt;Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always&lt;br&gt;
-this can be overcome, but if necessary then you can use:&lt;/p&gt;
+&lt;p&gt;Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always this can &lt;br&gt;
+be overcome, but if necessary then you can use:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;python setup.py dh_make
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://pypi.python.org/pypi&#34;&gt;pypi&lt;/a&gt;&lt;br&gt;
@@ -7547,14 +7560,13 @@ you
                 <title>asa vpn user admin</title>
                 <link rel="alternate" href="/2012/03/19/asa-vpn-user-admin/" type="text/html" />
                 <id>/2012/03/19/asa-vpn-user-admin/</id>
-                <updated>2012-03-19T22:55:00Z</updated>
+                <updated>2012-03-19T23:13:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;The ASA does VPN quite well.  I use some form of &lt;a href=&#34;http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a00808efbd2.shtml&#34;&gt;this&lt;/a&gt; setup&lt;br&gt;
-involving a self-signed CA on the ASA and the anyconnect client.  I also like to use the&lt;br&gt;
-downloadable ACL feature with Cisco ACS or Freeradius.  If you get this going you need&lt;br&gt;
-to administer users.  This is a brief showing of that.&lt;/p&gt;
+&lt;p&gt;The ASA does VPN quite well.  I use some form of &lt;a href=&#34;http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a00808efbd2.shtml&#34;&gt;this&lt;/a&gt; setup &lt;br&gt;
+involving a self-signed CA on the ASA and the anyconnect client.  I also like to use the downloadable ACL feature &lt;br&gt;
+with Cisco ACS or Freeradius.  If you get this going you need to administer users.  This is a brief showing of that.&lt;/p&gt;
 &lt;h4&gt;Summary&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;asa# show vpn-sessiondb summary
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -7627,14 +7639,12 @@ VLAN Mapping : N/A                    VLAN         : none
                 <title>proxychains</title>
                 <link rel="alternate" href="/2012/02/18/proxychains/" type="text/html" />
                 <id>/2012/02/18/proxychains/</id>
-                <updated>2012-02-18T18:40:00Z</updated>
+                <updated>2012-02-18T23:13:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Some commands do not support a proxy (RE: telnet).  Other&lt;br&gt;
-times it is just easier to do a one-off instance rather&lt;br&gt;
-than mess with environment settings.  A lot of people use&lt;br&gt;
-this with Tor.&lt;/p&gt;
+&lt;p&gt;Some commands do not support a proxy (RE: telnet).  Other times it is just easier to do a one-off instance rather &lt;br&gt;
+than mess with environment settings.  A lot of people use this with Tor.&lt;/p&gt;
 &lt;h4&gt;ProxyChains&lt;/h4&gt;
 &lt;p&gt;Allows you to send traffic through a proxy without the command&lt;br&gt;
 itself having foreknowledge.&lt;/p&gt;
@@ -7682,9 +7692,8 @@ Connected to google.com.
 Escape character is &#39;^]&#39;.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Excluding traffic from your proxy&lt;/h4&gt;
-&lt;p&gt;In theory you can set the localnet option in your configuration file to&lt;br&gt;
-exclude the local LAN by default from proxy behavior.  This has not worked&lt;br&gt;
-for  me with proxychains under Debian 6.0&lt;/p&gt;
+&lt;p&gt;In theory you can set the localnet option in your configuration file to exclude the local LAN by default from proxy &lt;br&gt;
+behavior.  This has not worked for me with proxychains under Debian 6.0&lt;/p&gt;
 
 &lt;p&gt;In case you are interested though: &lt;a href=&#34;https://github.com/haad/proxychains/issues/6#issuecomment-4041824&#34;&gt;localnet docs&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
@@ -7699,22 +7708,18 @@ for  me with proxychains under Debian 6.0&lt;/p&gt;
                 <title>internet notoriety</title>
                 <link rel="alternate" href="/2012/02/07/internet-famous-one/" type="text/html" />
                 <id>/2012/02/07/internet-famous-one/</id>
-                <updated>2012-02-07T18:39:00Z</updated>
+                <updated>2012-02-07T23:13:00Z</updated>
                 
-                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
-and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
-for my boss that has become something of urban legend.  One of my coworkers posted it&lt;br&gt;
-on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
-it got picked up by someone who blogs regularly at Microsoft.  It was associated&lt;br&gt;
-with another urban legend story at MS about a new employee  dinging the car of someone with&lt;br&gt;
-the lastname Gates.</summary>
-                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors&lt;br&gt;
-and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail&lt;br&gt;
-for my boss that has become something of urban legend.  One of my coworkers posted it&lt;br&gt;
-on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and&lt;br&gt;
-it got picked up by someone who blogs regularly at Microsoft.  It was associated&lt;br&gt;
-with another urban legend story at MS about a new employee  dinging the car of someone with&lt;br&gt;
-the lastname Gates.&lt;/p&gt;
+                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors and I set off an insane alarm.  Strobe &lt;br&gt;
+lights were in effect.  I left a voicemail for my boss that has become something of urban legend.  One of my &lt;br&gt;
+coworkers posted it on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and it got picked up &lt;br&gt;
+by someone who blogs regularly at Microsoft.  It was associated with another urban legend story at MS about a new &lt;br&gt;
+employee dinging the car of someone with the lastname Gates.</summary>
+                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors and I set off an insane alarm.  Strobe &lt;br&gt;
+lights were in effect.  I left a voicemail for my boss that has become something of urban legend.  One of my &lt;br&gt;
+coworkers posted it on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and it got picked up &lt;br&gt;
+by someone who blogs regularly at Microsoft.  It was associated with another urban legend story at MS about a new &lt;br&gt;
+employee dinging the car of someone with the lastname Gates.&lt;/p&gt;
 
 &lt;p&gt;The original post:&lt;/p&gt;
 
@@ -7736,16 +7741,14 @@ own up my second &amp;#39;Internet Notorious&amp;#39; moment.&lt;/p&gt;
                 <title>previous blog long gone -- new beginnings</title>
                 <link rel="alternate" href="/2012/02/06/starting-over/" type="text/html" />
                 <id>/2012/02/06/starting-over/</id>
-                <updated>2012-02-06T18:40:00Z</updated>
+                <updated>2012-02-06T23:13:00Z</updated>
                 
-                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!</summary>
-                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to&lt;br&gt;
-start adding new things to this blog, and I will try to track down old posts&lt;br&gt;
-and incorporate them.  So here&amp;#39;s to someone finding something useful and me learning&lt;br&gt;
-to express my thoughts more clearly than before!&lt;/p&gt;
+                <summary type="html">I used to blog useful tidbits and even ran a wiki at one point.  I have decided to start adding new things to this &lt;br&gt;
+blog, and I will try to track down old posts and incorporate them.  So here&amp;#39;s to someone finding something useful &lt;br&gt;
+and me learning to express my thoughts more clearly than before!</summary>
+                <content type="html">&lt;p&gt;I used to blog useful tidbits and even ran a wiki at one point.  I have decided to start adding new things to this &lt;br&gt;
+blog, and I will try to track down old posts and incorporate them.  So here&amp;#39;s to someone finding something useful &lt;br&gt;
+and me learning to express my thoughts more clearly than before!&lt;/p&gt;
 </content>
             </entry>
         
