@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-14T01:26:57Z</updated>
+        <updated>2013-09-16T21:11:30Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,77 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>freeradius external authentication</title>
+                <link rel="alternate" href="/2013/09/16/freeradius-external-authentication/" type="text/html" />
+                <id>/2013/09/16/freeradius-external-authentication/</id>
+                <updated>2013-09-16T21:11:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Installing Freeradius&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install freeradius
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+Package: freeradius
+Status: install ok installed
+Maintainer: Josip Rodin &lt;joy-packages@debian.org&gt;
+Architecture: amd64
+Version: 2.1.10+dfsg-2+squeeze1
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Installing example external auth script&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;git clone https://github.com/chasemp/fradiusauth.git
+cp fradiusauth/fradiusauth.py /usr/local/bin/
+cp fradiusauth/libradclient.py /usr/local/bin/
+chmod +x /usr/local/bin/fradiusauth.py
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Change &amp;#39;chasemp&amp;#39; user and password to yours.&lt;/p&gt;
+&lt;h4&gt;Make the external script responsible for auth and add user&lt;/h4&gt;
+&lt;p&gt;This signifies that freeradius should call your external script for authentiaction. It will wait for execution of &lt;br&gt;
+the script to finish and use the exit code.  0 is considered a healthy and viable auth, and anything else is &lt;br&gt;
+considered invalid.&lt;/p&gt;
+
+&lt;p&gt;/etc/freeradius/users/&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+DEFAULT  Auth-Type = Accept
+         Exec-Program-Wait = &#34;/usr/local/bin/fradiusauth.py %{User-Name} &#39;%{User-Password}&#39; %{Calling-Station-Id} %{NAS-IP-Address} %{Framed-Protocol}&#34;,
+         Fall-Through = Yes
+
+&lt;yourusername&gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Add your client&lt;/h4&gt;
+&lt;p&gt;This should reflect the calling IP the authentication host is calling from.&lt;/p&gt;
+
+&lt;p&gt;/etc/freeradius/clients.conf&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+client 127.0.0.1 {
+  secret = radsecret
+  shortname = myhost
+  nastype = other
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Testing authentication&lt;/h4&gt;
+&lt;p&gt;There is a good and basic radius client implementation on gh called &lt;a href=&#34;https://github.com/chasemp/py-radius.git&#34;&gt;py-radius&lt;/a&gt;.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+git clone https://github.com/chasemp/py-radius.git
+cd py-radius
+python setup.py install
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;libradclient.py 127.0.0.1 radsecret &amp;lt;yourusername&amp;gt; &amp;lt;yourpass&amp;gt;
+&amp;lt;you&amp;gt; authenticated
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;ol&gt;
+&lt;li&gt;Freeradius support the &amp;#39;reload&amp;#39; command for init&lt;/li&gt;
+&lt;li&gt;If you want to debug radius stop the service and launch in your terminal like &amp;#39;/usr/bin/freeradius -X&amp;#39;&lt;/li&gt;
+&lt;li&gt;-X debugging sessions will receive incoming passwords &lt;strong&gt;unencrypted&lt;/strong&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4&gt;Referenence&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/chasemp/fradiusauth&#34;&gt;gh&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/btimby/py-radius&#34;&gt;py radius&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://freeradius.org/&#34;&gt;freeradius&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>selecting a subset for sampling</title>
