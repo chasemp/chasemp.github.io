@@ -89,7 +89,29 @@ function toggleDiv(divId) {
         </div>
         
         <div class="body">
-            <h4>send test data to graphite carbon listener</h4>
+            <h4>Sending data to statsd</h4>
+<p><a href="https://raw.github.com/chasemp/bin/master/graphite/statsd_client.py">statsd client</a></p>
+
+<p>Looks like</p>
+
+<pre><code>
+1379719305.18 0.670906537626
+test.counter.srpoint5:1|c|@0.2
+test.fixed.counter.1:1|c
+test.nonrandom:1|ms
+test.nonrandom:2|ms
+test.nonrandom:3|ms
+test.random.gauge:0.670906537626|g
+test.random.timer:0.670906537626|ms
+test.random.set:0.670906537626|s
+test.random.counter:0.670906537626|c
+test.fixed.counter.2:2|c
+test.fixed.counter.updown.1:1|c
+test.fixed.counter.updown.1:-1|c
+test.fixed.counter.updown.1_1:1.1|c
+test.fixed.counter.updown.1_1:-1|c
+</code></pre>
+<h4>send test data to graphite carbon listener</h4>
 <pre><code>
 #!/usr/bin/env python
 import socket
@@ -132,68 +154,7 @@ def main():
         s.close()
 main()
 </code></pre>
-<h4>Simple python statsd client library</h4>
-<pre><code>
-#!/usr/bin/env python
-
-usage = """
-     Takes two arguments: <statsd ip> <statsd port>
-        """
-
-import socket
-import time
-import json
-import sys
-
-class StatsdClient(object):
-
-        def __init__(self, ip, port):
-            self.ip = ip
-            self.port = int(port)
-
-        def _send(self, msg):
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
-            s.connect((self.ip, self.port))
-            try:
-                s.sendall(msg)
-            #try w/ only finally seems to eat exceptions.
-            finally:
-                s.close()
-            return
-
-        def set(self, gauge, value):
-            self._publish(gauge, value, 's')
-
-        def timer(self, gauge, value):
-            self._publish(gauge, value, 't')
-
-        def gauge(self, gauge, value):
-            self._publish(gauge, value, 'g')
-
-        def increment(self, gauge, value):
-            self._publish(gauge, value, 'c')
-
-        def decrement(self, gauge, value):
-            self._publish(gauge, '-' + value, 'c')
-
-        def _publish(self, metric, value, type):
-            #valid: metric:value|type
-            statstring = metric +  ':' + str(value) + '|' + type
-            return self._send(statstring)
-
-
-def main():
-    if len(sys.argv) < 3:
-        print usage
-        sys.exit(1)
-
-    statengine = StatsdClient(sys.argv[1], sys.argv[2])
-    statengine.gauge("blah", 1)
-    statengine.set("hi", 1)
-
-main()
-</code></pre>
-<h4>Testing statsd with invalid data</h4>
+<h4>Simple python statsd client library</h4><h4>Testing statsd with invalid data</h4>
 <pre><code>
 import socket
 # addressing information of target

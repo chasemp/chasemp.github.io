@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-16T23:15:29Z</updated>
+        <updated>2013-09-20T23:22:33Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -334,7 +334,7 @@ nonmatches: 8998573
                 <title>graphite on centos6 lessons learned</title>
                 <link rel="alternate" href="/2013/09/12/graphite-on-centos6-lessons-learned/" type="text/html" />
                 <id>/2013/09/12/graphite-on-centos6-lessons-learned/</id>
-                <updated>2013-09-12T21:23:00Z</updated>
+                <updated>2013-09-12T23:22:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1682,10 +1682,32 @@ some definite usage, but still a CPU intensive operation.&lt;/p&gt;
                 <title>graphite test clients</title>
                 <link rel="alternate" href="/2013/08/15/graphite-test-clients/" type="text/html" />
                 <id>/2013/08/15/graphite-test-clients/</id>
-                <updated>2013-08-15T01:00:00Z</updated>
+                <updated>2013-08-15T23:22:00Z</updated>
                 
                 
-                <content type="html">&lt;h4&gt;send test data to graphite carbon listener&lt;/h4&gt;
+                <content type="html">&lt;h4&gt;Sending data to statsd&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://raw.github.com/chasemp/bin/master/graphite/statsd_client.py&#34;&gt;statsd client&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Looks like&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+1379719305.18 0.670906537626
+test.counter.srpoint5:1|c|@0.2
+test.fixed.counter.1:1|c
+test.nonrandom:1|ms
+test.nonrandom:2|ms
+test.nonrandom:3|ms
+test.random.gauge:0.670906537626|g
+test.random.timer:0.670906537626|ms
+test.random.set:0.670906537626|s
+test.random.counter:0.670906537626|c
+test.fixed.counter.2:2|c
+test.fixed.counter.updown.1:1|c
+test.fixed.counter.updown.1:-1|c
+test.fixed.counter.updown.1_1:1.1|c
+test.fixed.counter.updown.1_1:-1|c
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;send test data to graphite carbon listener&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
 #!/usr/bin/env python
 import socket
@@ -1728,68 +1750,7 @@ def main():
         s.close()
 main()
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;Simple python statsd client library&lt;/h4&gt;
-&lt;pre&gt;&lt;code&gt;
-#!/usr/bin/env python
-
-usage = &#34;&#34;&#34;
-     Takes two arguments: &lt;statsd ip&gt; &lt;statsd port&gt;
-        &#34;&#34;&#34;
-
-import socket
-import time
-import json
-import sys
-
-class StatsdClient(object):
-
-        def __init__(self, ip, port):
-            self.ip = ip
-            self.port = int(port)
-
-        def _send(self, msg):
-            s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM, 0)
-            s.connect((self.ip, self.port))
-            try:
-                s.sendall(msg)
-            #try w/ only finally seems to eat exceptions.
-            finally:
-                s.close()
-            return
-
-        def set(self, gauge, value):
-            self._publish(gauge, value, &#39;s&#39;)
-
-        def timer(self, gauge, value):
-            self._publish(gauge, value, &#39;t&#39;)
-
-        def gauge(self, gauge, value):
-            self._publish(gauge, value, &#39;g&#39;)
-
-        def increment(self, gauge, value):
-            self._publish(gauge, value, &#39;c&#39;)
-
-        def decrement(self, gauge, value):
-            self._publish(gauge, &#39;-&#39; + value, &#39;c&#39;)
-
-        def _publish(self, metric, value, type):
-            #valid: metric:value|type
-            statstring = metric +  &#39;:&#39; + str(value) + &#39;|&#39; + type
-            return self._send(statstring)
-
-
-def main():
-    if len(sys.argv) &lt; 3:
-        print usage
-        sys.exit(1)
-
-    statengine = StatsdClient(sys.argv[1], sys.argv[2])
-    statengine.gauge(&#34;blah&#34;, 1)
-    statengine.set(&#34;hi&#34;, 1)
-
-main()
-&lt;/code&gt;&lt;/pre&gt;
-&lt;h4&gt;Testing statsd with invalid data&lt;/h4&gt;
+&lt;h4&gt;Simple python statsd client library&lt;/h4&gt;&lt;h4&gt;Testing statsd with invalid data&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
 import socket
 # addressing information of target
