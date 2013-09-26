@@ -98,9 +98,7 @@ function toggleDiv(divId) {
 <pre><code>Time TimeoutSocket fake socket doesn&#39;t have a sendall method \
 so you get the above error when using https.
 </code></pre>
-<p>I am saving this module as sslhandler.py</p>
-
-<p><a href="javascript:toggleDiv('hideme');">Show sslhandler.py</a></p>
+<p>I am saving this module as <a href="javascript:toggleDiv('hideme');">sslhandler.py</a></p>
 
 <div id="hideme" style="display:none;">
 <pre><code>
@@ -209,7 +207,7 @@ if __name__ == '__main__':
 <p>This is sufficient for making a post to a local REST API.</p>
 
 <p>I am saving this file as <strong>basic.py</strong>.</p>
-<h4>Making requst through the proxy using our https opener</h4>
+<h4>Making a request through the proxy using our https opener</h4>
 <pre><code>
 import urllib2
 from sslhandler import ConnectHTTPHandler, ConnectHTTPSHandler
@@ -226,7 +224,7 @@ if __name__ == '__main__':
     print request('https://remotehost', '/info')
 </pre></code>
 
-This uses our  urllib2 opener to connect through a proxy using the CONNECT method
+This uses our urllib2 opener to connect through a proxy using the CONNECT method
 
 I am saving this file as __proxied.py__.
 
