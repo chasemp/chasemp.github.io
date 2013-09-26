@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-26T17:20:17Z</updated>
+        <updated>2013-09-26T17:23:14Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -4111,7 +4111,7 @@ aptitude install puppetmaster
                 <title>simple site loadtesting</title>
                 <link rel="alternate" href="/2013/06/25/simple-site-loadtesting/" type="text/html" />
                 <id>/2013/06/25/simple-site-loadtesting/</id>
-                <updated>2013-06-25T19:14:00Z</updated>
+                <updated>2013-06-25T17:23:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4125,9 +4125,7 @@ aptitude install puppetmaster
 &lt;p&gt;On your webserver:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;aptitude install htop
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Seige is a lowkey load test tool, httping is nice for measuring response times in a &lt;br&gt;
-consistent way while load testing, and apache is because we want the apache benchmark&lt;br&gt;
-tool or &amp;#39;ab&amp;#39;.&lt;/p&gt;
+&lt;p&gt;Seige is a lowkey load test tool, httping is nice for measuring response times in a consistent way while load testing, and apache is because we want the apache benchmark tool or &amp;#39;ab&amp;#39;.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;root@&amp;lt;lhost&amp;gt;:~# which ab
 /usr/bin/ab
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Launching a test with seige: 3 concurrent users with 3 connections&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;~# siege -b -c 3 -r 3 &amp;lt;webserver&amp;gt;:80
@@ -4177,8 +4175,7 @@ ulimit -Hn
 &lt;pre&gt;&lt;code&gt;socket: connection timed out
 [error] socket: unable to connect sock.c:222: Operation already in progress
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;So I&amp;#39;m not too happy with seige.  For some tests it seems ok.  For large test pools it hasn&amp;#39;t &lt;br&gt;
-won me over.  Then again the launching host isn&amp;#39;t that great so maybe it&amp;#39;s on my side.&lt;/p&gt;
+&lt;p&gt;So I&amp;#39;m not too happy with seige.  For some tests it seems ok.  For large test pools it hasn&amp;#39;t won me over.  Then again the launching host isn&amp;#39;t that great so maybe it&amp;#39;s on my side.&lt;/p&gt;
 
 &lt;p&gt;A good compromise I found was:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;siege -b -c 1000 -r 3 &amp;lt;webserver&amp;gt;:80
@@ -4249,10 +4246,7 @@ the launching system.&lt;/p&gt;
 &lt;p&gt;I eventually settled on:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;ab -k -n 2000000 -c 50 http://&amp;lt;webserver&amp;gt;/
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Use http-keepalive (for consistency with production) at 2 million requests making 50&lt;br&gt;
-simultaneously.  These numbers were hitting a load of 8+ on my test server.  Anything &lt;br&gt;
-averaging over 3.5 in production would be flagged to look at, but load testing is all&lt;br&gt;
-about pushing limits.  &lt;/p&gt;
+&lt;p&gt;Use http-keepalive (for consistency with production) at 2 million requests making 50 simultaneously.  These numbers were hitting a load of 8+ on my test server.  Anything averaging over 3.5 in production would be flagged to look at, but load testing is all about pushing limits.  &lt;/p&gt;
 
 &lt;p&gt;Getting macro numbers from ab.  Run your tests a lot and look at overall numbers.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;for i in {1..3}; do ab -n 1000 -c 1000 http://&amp;lt;webserver&amp;gt;/ &amp;gt;&amp;gt; test.txt; done
@@ -4267,14 +4261,12 @@ about pushing limits.  &lt;/p&gt;
 
 1518 (ms)
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;This number is of limited value but adding your 95% through 100% and figuring out what&lt;br&gt;
-your response times are for 95th perctile and above can be useful.&lt;/p&gt;
+&lt;p&gt;This number is of limited value but adding your 95% through 100% and figuring out what your response times are for 95th perctile and above can be useful.&lt;/p&gt;
 
 &lt;p&gt;Something like:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;grep -A 3 95% test.txt | awk &amp;#39;{total = total + $2}END{print total}&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;httping&lt;/h4&gt;
-&lt;p&gt;I like using httping in the background or on another host as a consistent measure of my&lt;br&gt;
-response times.&lt;/p&gt;
+&lt;p&gt;I like using httping in the background or on another host as a consistent measure of my response times.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;httping -c 10 &amp;lt;webserver&amp;gt; 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This makes 10 requests that look like:&lt;/p&gt;
@@ -4473,13 +4465,11 @@ sudo chmod -R a+w /opt/graphite/storage
                 <title>code test beginnings</title>
                 <link rel="alternate" href="/2013/06/07/unit-test-beginnings/" type="text/html" />
                 <id>/2013/06/07/unit-test-beginnings/</id>
-                <updated>2013-06-07T03:24:00Z</updated>
+                <updated>2013-06-07T17:22:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Testing your code as you go.  Writing &amp;#39;production&amp;#39; code is really as much a set practices as it&lt;br&gt;
-is a  specific coding ability.  Everyone breaks things.  When something breaks&lt;br&gt;
-we will all fix it.  The trick is to always know when something breaks.&lt;/p&gt;
+&lt;p&gt;Testing your code as you go.  Writing &amp;#39;production&amp;#39; code is really as much a set practices as it is a  specific coding ability.  Everyone breaks things.  When something breaks we will all fix it.  The trick is to always know when something breaks.&lt;/p&gt;
 
 &lt;p&gt;How I currently see the world:&lt;/p&gt;
 
@@ -4498,8 +4488,7 @@ we will all fix it.  The trick is to always know when something breaks.&lt;/p&gt
 &lt;li&gt; Test Security&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;There are a lot of ways to break down this basic idea.  Some much better than this.  But I&lt;br&gt;
-feel like if you can visualize these 6 you are going in the right direction.&lt;/p&gt;
+&lt;p&gt;There are a lot of ways to break down this basic idea.  Some much better than this.  But I feel like if you can visualize these 7 you are going in the right direction.&lt;/p&gt;
 &lt;h4&gt;Write Code&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;def what():
     return &amp;#39;123&amp;#39;
 
@@ -4512,11 +4501,9 @@ if __name__ == &amp;#39;__main__&amp;#39;:
    123
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Unit Testing - Testing Small Things&lt;/h4&gt;
-&lt;p&gt;My idea of unittesting is if every function and class takes care of itself the entire&lt;br&gt;
-codebase is better off.&lt;/p&gt;
+&lt;p&gt;My idea of unittesting is if every function and class takes care of itself the entire codebase is better off.&lt;/p&gt;
 
-&lt;p&gt;Doctest is a way to write small tests into the docstring.  Some people do not consider this&lt;br&gt;
-to be valid unittesting.  I think it&amp;#39;s a good start.&lt;/p&gt;
+&lt;p&gt;Doctest is a way to write small tests into the docstring.  Some people do not consider this to be valid unittesting.  I think it&amp;#39;s a good start.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;def what():
     &amp;#34;&amp;#34;&amp;#34;
     &amp;gt;&amp;gt;&amp;gt; what()
@@ -4529,7 +4516,6 @@ if __name__ == &amp;#39;__main__&amp;#39;:
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;&amp;#39;python -m doctest t.py&amp;#39; returns nothing.&lt;/p&gt;
 &lt;h4&gt;But:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;#39;python -m doctest t.py  -v&amp;#39; returns useful output:
-
 
 Trying:
     what()
@@ -4616,8 +4602,7 @@ Got:
 
 &lt;p&gt;We can fix it and make good.&lt;/p&gt;
 &lt;h4&gt;One step up from &amp;#39;-m doctest&amp;#39;&lt;/h4&gt;
-&lt;p&gt;I like to use nose to run my tests.  It can handle tests written in multiple styles&lt;br&gt;
-and most code review tools integrate with it.&lt;/p&gt;
+&lt;p&gt;I like to use nose to run my tests.  It can handle tests written in multiple styles and most code review tools integrate with it.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;aptitude install python-nose
 
 nano pre-commit
@@ -4656,9 +4641,7 @@ Ran 1 test in 0.006s
 FAILED (failures=1)
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Separating your test from your function&lt;/h4&gt;
-&lt;p&gt;Ok up until now we have been validating our docstring and that is valuable.  But&lt;br&gt;
-it is also cluttered and can be unwieldy.  Writing a basic test function.  I also&lt;br&gt;
-added &amp;#39;-v&amp;#39; to the nosetest hook.&lt;/p&gt;
+&lt;p&gt;Ok up until now we have been validating our docstring and that is valuable.  But it is also cluttered and can be unwieldy.  Writing a basic test function.  I also added &amp;#39;-v&amp;#39; to the nosetest hook.&lt;/p&gt;
 
 &lt;p&gt;This function should literally start with &amp;#39;test&amp;#39;&lt;/p&gt;
 
@@ -4854,62 +4837,16 @@ Arguments:
             </entry>
         
             <entry>
-                <title>cisco lights out failsafe</title>
-                <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
-                <id>/2013/05/29/cisco-lights-out-failsafe/</id>
-                <updated>2013-05-29T16:45:00Z</updated>
-                
-                
-                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some nice &amp;quot;fail back to my previous config&amp;quot;, and Cisco now in some cases provides the archive rollback feature.  Which is awesome.  But it may not be available or if for any reason the more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best you can do.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt; &lt;/p&gt;
-
-&lt;p&gt;Updated preamble to reference rollback option.&lt;/p&gt;
-
-&lt;p&gt;So...if it suits your needs use &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;archive&lt;/a&gt; &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;Walk through:&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;It&amp;#39;s 2 AM and I&amp;#39;m up for maintenace&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#reload in 30
-System configuration has been modified. Save? [yes/no]: no
-Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
-Reload reason: Reload Command
-Proceed with reload? [confirm]
-myrtr#
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;*** Making changes *** &lt;/p&gt;
-
-&lt;p&gt;*** How long until a reset? ***&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#show reload
-Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
-Reload reason: Reload Command
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;*** test everything is good -- ok clear scheduled reload ***&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#reload cancel
-***
-*** --- SHUTDOWN ABORTED ---
-***
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/fundamentals/configuration/guide/cf_config-rollback.html&#34;&gt;replace and rollback&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/config-mgmt/configuration/xe-3s/asr1000/cm-config-rollback.html&#34;&gt;ios-xe replace and rollback&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.techrepublic.com/blog/data-center/use-the-cisco-ios-archive-command-to-archive-your-routers-configuration/&#34;&gt;archive intro&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback example&lt;/a&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>launching a syn flood test</title>
                 <link rel="alternate" href="/2013/05/29/launching-a-syn-flood-test/" type="text/html" />
                 <id>/2013/05/29/launching-a-syn-flood-test/</id>
-                <updated>2013-05-29T03:24:00Z</updated>
+                <updated>2013-05-29T17:21:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Launching a SYN flood.&lt;/p&gt;
 
-&lt;p&gt;Everyone know DDOS attacks happen and of these SYN floods may be the simplest to organize for&lt;br&gt;
-attackers.  As a defender you don&amp;#39;t want the first time you see this kind of traffic to&lt;br&gt;
-be when you are under attack.&lt;/p&gt;
+&lt;p&gt;Everyone know DDOS attacks happen and of these SYN floods may be the simplest to organize for attackers.  As a defender you don&amp;#39;t want the first time you see this kind of traffic to be when you are under attack.&lt;/p&gt;
 &lt;h4&gt;Launching a SYN attack against yourself.&lt;/h4&gt;
 &lt;ol&gt;
 &lt;li&gt;You can learn some tools of the trade&lt;/li&gt;
@@ -5023,6 +4960,50 @@ for i in {1..100}; do ./t50 &amp;lt;target&amp;gt; --threshold 10000 -S; sleep 3
 &lt;a href=&#34;http://www.gossamer-threads.com/lists/fulldisc/full-disclosure/77770?do=post_view_threaded&#34;&gt;fulldisclosure info&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.cisco.com/web/about/ac123/ac147/archived_issues/ipj_9-4/syn_flooding_attacks.html&#34;&gt;cisco on syn floods&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://h4xors.wordpress.com/tag/t50/&#34;&gt;t50 info&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>cisco lights out failsafe</title>
+                <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
+                <id>/2013/05/29/cisco-lights-out-failsafe/</id>
+                <updated>2013-05-29T16:45:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some nice &amp;quot;fail back to my previous config&amp;quot;, and Cisco now in some cases provides the archive rollback feature.  Which is awesome.  But it may not be available or if for any reason the more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best you can do.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt; &lt;/p&gt;
+
+&lt;p&gt;Updated preamble to reference rollback option.&lt;/p&gt;
+
+&lt;p&gt;So...if it suits your needs use &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;archive&lt;/a&gt; &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Walk through:&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;It&amp;#39;s 2 AM and I&amp;#39;m up for maintenace&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload in 30
+System configuration has been modified. Save? [yes/no]: no
+Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+Proceed with reload? [confirm]
+myrtr#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** Making changes *** &lt;/p&gt;
+
+&lt;p&gt;*** How long until a reset? ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#show reload
+Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** test everything is good -- ok clear scheduled reload ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload cancel
+***
+*** --- SHUTDOWN ABORTED ---
+***
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/fundamentals/configuration/guide/cf_config-rollback.html&#34;&gt;replace and rollback&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/config-mgmt/configuration/xe-3s/asr1000/cm-config-rollback.html&#34;&gt;ios-xe replace and rollback&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.techrepublic.com/blog/data-center/use-the-cisco-ios-archive-command-to-archive-your-routers-configuration/&#34;&gt;archive intro&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback example&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         

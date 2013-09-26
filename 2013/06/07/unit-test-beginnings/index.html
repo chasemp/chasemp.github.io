@@ -90,9 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Testing your code as you go.  Writing &#39;production&#39; code is really as much a set practices as it<br>
-is a  specific coding ability.  Everyone breaks things.  When something breaks<br>
-we will all fix it.  The trick is to always know when something breaks.</p>
+<p>Testing your code as you go.  Writing &#39;production&#39; code is really as much a set practices as it is a  specific coding ability.  Everyone breaks things.  When something breaks we will all fix it.  The trick is to always know when something breaks.</p>
 
 <p>How I currently see the world:</p>
 
@@ -111,8 +109,7 @@ we will all fix it.  The trick is to always know when something breaks.</p>
 <li> Test Security</li>
 </ul>
 
-<p>There are a lot of ways to break down this basic idea.  Some much better than this.  But I<br>
-feel like if you can visualize these 6 you are going in the right direction.</p>
+<p>There are a lot of ways to break down this basic idea.  Some much better than this.  But I feel like if you can visualize these 7 you are going in the right direction.</p>
 <h4>Write Code</h4><pre><code>def what():
     return &#39;123&#39;
 
@@ -125,11 +122,9 @@ if __name__ == &#39;__main__&#39;:
    123
 </code></pre>
 <h4>Unit Testing - Testing Small Things</h4>
-<p>My idea of unittesting is if every function and class takes care of itself the entire<br>
-codebase is better off.</p>
+<p>My idea of unittesting is if every function and class takes care of itself the entire codebase is better off.</p>
 
-<p>Doctest is a way to write small tests into the docstring.  Some people do not consider this<br>
-to be valid unittesting.  I think it&#39;s a good start.</p>
+<p>Doctest is a way to write small tests into the docstring.  Some people do not consider this to be valid unittesting.  I think it&#39;s a good start.</p>
 <pre><code>def what():
     &#34;&#34;&#34;
     &gt;&gt;&gt; what()
@@ -142,7 +137,6 @@ if __name__ == &#39;__main__&#39;:
 </code></pre>
 <p>&#39;python -m doctest t.py&#39; returns nothing.</p>
 <h4>But:</h4><pre><code>&#39;python -m doctest t.py  -v&#39; returns useful output:
-
 
 Trying:
     what()
@@ -229,8 +223,7 @@ Got:
 
 <p>We can fix it and make good.</p>
 <h4>One step up from &#39;-m doctest&#39;</h4>
-<p>I like to use nose to run my tests.  It can handle tests written in multiple styles<br>
-and most code review tools integrate with it.</p>
+<p>I like to use nose to run my tests.  It can handle tests written in multiple styles and most code review tools integrate with it.</p>
 <pre><code>aptitude install python-nose
 
 nano pre-commit
@@ -269,9 +262,7 @@ Ran 1 test in 0.006s
 FAILED (failures=1)
 </code></pre>
 <h4>Separating your test from your function</h4>
-<p>Ok up until now we have been validating our docstring and that is valuable.  But<br>
-it is also cluttered and can be unwieldy.  Writing a basic test function.  I also<br>
-added &#39;-v&#39; to the nosetest hook.</p>
+<p>Ok up until now we have been validating our docstring and that is valuable.  But it is also cluttered and can be unwieldy.  Writing a basic test function.  I also added &#39;-v&#39; to the nosetest hook.</p>
 
 <p>This function should literally start with &#39;test&#39;</p>
 
