@@ -281,12 +281,12 @@ esac
 
 <p>You need to update your local_settings.py as noted above.  And anytime you edit local_settings.py you need to rerun your <br>
 db sync.</p>
-<pre><code>python /opt/graphite/webapp/graphite/manage.py syncdb
+<pre><code>&lt;pre&gt;&lt;code&gt;python /opt/graphite/webapp/graphite/manage.py syncdb&lt;/code&gt;&lt;/pre&gt;
 </code></pre>
 <ol>
 <li><p>You can list all grouped installs via yum</p>
 
-<p>yum grouplist</p></li>
+<pre><code>yum grouplist</code></pre></li>
 <li><p>Twisted seems to throw this error a lot, it is a python path issue and is a pain to track down and fix.</p>
 
 <p>exceptions.ImportError: cannot import name _PY3</p></li>

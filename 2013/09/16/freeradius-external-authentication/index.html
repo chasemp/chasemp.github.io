@@ -105,9 +105,7 @@ chmod +x /usr/local/bin/fradiusauth.py
 </code></pre>
 <p>Change &#39;chasemp&#39; user and password to yours.</p>
 <h4>Make the external script responsible for auth and add user</h4>
-<p>This signifies that freeradius should call your external script for authentiaction. It will wait for execution of <br>
-the script to finish and use the exit code.  0 is considered a healthy and viable auth, and anything else is <br>
-considered invalid.</p>
+<p>This signifies that freeradius should call your external script for authentication. It will wait for execution of the script to finish and use the exit code.  0 is considered a healthy and viable auth, and anything else is considered invalid.</p>
 
 <p>/etc/freeradius/users/</p>
 

@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>making sense of squid logs &ndash; devops type thoughts</title>
+    <title>sup intro devops kc &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -84,35 +84,21 @@ function toggleDiv(divId) {
             
     <div class="item">
         <div class="header">
-            <h1>making sense of squid logs</h1>
-            <h2>Thursday, September 05, 2013 <span>&raquo;</span> <a href="/tags/debian/">debian</a>, <a href="/tags/squid/">squid</a></h2>
+            <h1>sup intro devops kc</h1>
+            <h2>Thursday, September 26, 2013 <span>&raquo;</span> <a href="/tags/devops/">devops</a>, <a href="/tags/kc/">kc</a>, <a href="/tags/sup/">sup</a></h2>
         </div>
         
         <div class="body">
-            <p>Squid defaults to logging things using epoch time.  Which can be a pain to decypher if you are in a hurry.</p>
-<pre><code>1378405786.009      0 127.0.0.1 TCP_DENIED/400 1342 GET NONE:// - NONE/- text/html
-</code></pre>
-<p>You see: <strong>1378405786.009</strong><br>
-It means: <strong>GMT: Thu, 05 Sep 2013 18:29:46 GMT</strong></p>
+            <h4>Presentation</h4>
+<p>I walked through these slides demonstrating the simple tool <a href="https://github.com/chasemp/sup">sup.py</a> I wrote at the <a href="http://www.meetup.com/DevOps-Kansas-City/">devops kc meetup</a>.  Sup can be used in place of ping/tcping/httping on some occasions to great/medium/some success!</p>
 
-<p>Years ago I wrote a <a href="https://raw.github.com/chasemp/archive/master/parse_squid.py">script</a> to handle this on-the-fly as I was looking for information I needed to pass an audit.  In a pinch, on an unfamiliar server, it works.  But it&#39;s not ideal.</p>
-
-<p>This configuration in /etc/squid/squid.conf makes timestamps natively sane:</p>
-<pre><code>logformat sanelogfrmt %tl.%03tu %6tr %&gt;a %Ss/%03Hs %&lt;st %rm %ru %un %Sh/%&lt;A %mt
-access_log /var/log/squid/access.log sanelogfrmt
-</code></pre>
-<p>Looks like:</p>
-<pre><code>05/Sep/2013:11:30:46 -0700      0 127.0.0.1 TCP_DENIED/400 1342 \
-GET NONE:// - NONE/- text/html
-</code></pre>
-<p>For a nice explaination of the fields in this log see the <a href="http://trafficserver.apache.org/docs/trunk/admin/working-log-files/log-formats.en.html">docs</a></p>
-
-<p>Some version of squid support the <strong>emulate_httpd_log on</strong> option as well.</p>
-
-<p><a href="http://wiki.squid-cache.org/Features/LogFormat">squid wiki</a><br>
-<a href="http://trafficserver.apache.org/docs/trunk/admin/working-log-files/log-formats.en.html">docs on format</a><br>
-<a href="http://devel.squid-cache.org/customlog/logformat.html">squid docs on log field options</a><br>
-<a href="http://answers.splunk.com/answers/13599/custom-squid-log-format">splunk doc</a></p>
+<p><center><iframe src="http://www.slideshare.net/slideshow/embed_code/26585437" width="476" height="400" frameborder="0" marginwidth="0" marginheight="0" scrolling="no"></iframe></center></p>
+<h4>Reference</h4>
+<p><a href="/assets/slides/sup_intro.pdf">slides pdf</a><br>
+<a href="http://www.meetup.com/DevOps-Kansas-City/">devops kc</a><br>
+<a href="http://www.vanheusden.com/httping/">httping</a><br>
+<a href="http://www.elifulkerson.com/projects/tcping.phphttp://www.elifulkerson.com/projects/tcping.php">tcping</a><br>
+<a href="http://nmap.org/">nmap</a></p>
 
         </div>
     </div>

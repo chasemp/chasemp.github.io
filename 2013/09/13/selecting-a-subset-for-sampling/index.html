@@ -90,18 +90,11 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>In the devops world there are a lot of reasons to want good stats, but sometimes the load for collecting those stats on <br>
-every execution of a script or web page is too invasive.  <a href="http://en.wikipedia.org/wiki/A/B_testing">A/B testing</a> is <br>
-another place where we want to select a certain portion of served pages and take appropriate action.  The straight forward <br>
-way to select a subset is a state based system.  For every page that executes you can add an id to a set in redis.  If you <br>
-are looking for 5% of pages then look to see if the item count is 20.  If you are number 20 you can flush the list and the <br>
-count starts over.  This is not meant for real world usage but that is the basic idea behind selecting a portion of pages <br>
-by keeping state between all executions.</p>
+<p>In the devops world there are a lot of reasons to want good stats, but sometimes the load for collecting those stats on every execution of a script or web page is too invasive.  <a href="http://en.wikipedia.org/wiki/A/B_testing">A/B testing</a> is another place where we want to select a certain portion of served pages and take appropriate action.  The straight forward way to select a subset is a state based system.  For every page that executes you can add an id to a set in redis.  If you are looking for 5% of pages then look to see if the item count is 20.  If you are number 20 you can flush the list and the count starts over.  This is not meant for real world usage but that is the basic idea behind selecting a portion of pages by keeping state between all executions.</p>
 
 <p>If the state based system is too slow, clunky, unreliable or inelegant there has to be an alternative.</p>
 <h4>Modulo Operation</h4>
-<p>The <a href="http://en.wikipedia.org/wiki/Modulo_operation">modulo operation</a> finds the remainder of one number <br>
-divided by another.</p>
+<p>The <a href="http://en.wikipedia.org/wiki/Modulo_operation">modulo operation</a> finds the remainder of one number divided by another.</p>
 
 <p>Example of Modulo operations:</p>
 
@@ -116,14 +109,9 @@ divided by another.</p>
 2
 </code></pre>
 
-<p>So you take all the numbers 1 - 100 the percentage of modulus operations with a remainder of 0 for the number 10 is <br>
-10%.</p>
+<p>So you take all the numbers 1 - 100 the percentage of modulus operations with a remainder of 0 for the number 10 is 10%.</p>
 <h4>Combining stateful tracking of executions and modulus</h4>
-<p>If you want to you can combine these two ideas.  In order to sample 5% of executions you could track the execution order <br>
-of your scripts in redis (or somwhere) looking for a modulus operation remainder of 0 each time to identify an appropriate <br>
-sample page.  Exectuions 1 - 19 will not be sampled, but 20 will.  So will 40, 60, 80, and 100.  When script 101 queries <br>
-to see where in the order it is it will be told it is 1 and the cycle starts over.  This way each job would have a 5% <br>
-chance of being selected as a sample.</p>
+<p>If you want to you can combine these two ideas.  In order to sample 5% of executions you could track the execution order of your scripts in redis (or somwhere) looking for a modulus operation remainder of 0 each time to identify an appropriate sample page.  Exectuions 1 - 19 will not be sampled, but 20 will.  So will 40, 60, 80, and 100.  When script 101 queries to see where in the order it is it will be told it is 1 and the cycle starts over.  This way each job would have a 5% chance of being selected as a sample.</p>
 
 <p>This is not any more advantages than the simply having every page know when it&#39;s number 20.</p>
 <h4>Using the law of averages to provide a quick sample determination</h4>
@@ -140,14 +128,9 @@ if random.randint(0, 100) % sample_interal == 0:
     submit_to_statsd('time.to.query.userid', total_time)
 </code></pre>
 
-<p>Over time this should submit a sample of 5% of all user_id queries to statsd.  The first 100 you may get 0, 5, or 8 but <br>
-with a larger sample you get around 5% and it is much cheaper than trying to have each execution determine where it is in <br>
-the pecking order for stats submission.</p>
+<p>Over time this should submit a sample of 5% of all user_id queries to statsd.  The first 100 you may get 0, 5, or 8 but with a larger sample you get around 5% and it is much cheaper than trying to have each execution determine where it is in the pecking order for stats submission.</p>
 <h4>Just how accurate is the law of averages here?</h4>
-<p>Here is a snippet to figure out the percentage of matches in a spread for a particular modulus integer.  Ideally using the <br>
-operation &#39;int % 10 == 0&#39; will have a sample rate of 10 percent.  The user passes in the top end of the range, we cycle <br>
-through 10 times.  The number of matches in each pass is summed and then used to calculate in the average match percentage <br>
-across all tries.</p>
+<p>Here is a snippet to figure out the percentage of matches in a spread for a particular modulus integer.  Ideally using the operation &#39;int % 10 == 0&#39; will have a sample rate of 10 percent.  The user passes in the top end of the range, we cycle through 10 times.  The number of matches in each pass is summed and then used to calculate in the average match percentage across all tries.</p>
 
 <pre><code>
 import sys

@@ -90,15 +90,13 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Since urllib2 openers are global I recently had some expected behavior<br>
-I would like to explore.</p>
+<p>Since urllib2 openers are global I recently had some expected behavior I would like to explore.</p>
 <h4>urllib2, https, and proxies</h4>
-<p>urllib2 does <a href="http://docs.python.org/2/howto/urllib2.html#id8">not</a> support https proxy natively.  There<br>
-is a nice activestate <a href="http://code.activestate.com/recipes/456195/">recipe</a> for handling it though.</p>
+<p>urllib2 does <a href="http://docs.python.org/2/howto/urllib2.html#id8">not</a> support https proxy natively.  There is a nice activestate <a href="http://code.activestate.com/recipes/456195/">recipe</a> for handling it though.</p>
 
 <p>There is one <a href="http://sourceforge.net/p/pywebsvcs/bugs/296/">bug</a> I ran into.</p>
 <pre><code>Time TimeoutSocket fake socket doesn&#39;t have a sendall method \
- so you get the above error when using https.
+so you get the above error when using https.
 </code></pre>
 <p>I am saving this module as sslhandler.py</p>
 
@@ -299,12 +297,9 @@ urllib2.URLError: <urlopen error [Errno 61] Connection refused>
 
 <p>Our local call failed and the remote one succeeded when we reversed them.</p>
 <h4>Why does urllib2 hate me?</h4>
-<p>The basic idea here is when the basic post is the first directive everything is fine, <br>
-but if we make the proxy request first then both try to use the proxy.</p>
+<p>The basic idea here is when the basic post is the first directive everything is fine, but if we make the proxy request first then both try to use the proxy.</p>
 
-<p>This a product of the urllib2 <a href="http://docs.python.org/2/library/urllib2.html#urllib2.install_opener">opener</a> being global.<br>
-Even though these are two libraries the way import handles arranging resources both are calling the same instance<br>
-of urllib2.</p>
+<p>This a product of the urllib2 <a href="http://docs.python.org/2/library/urllib2.html#urllib2.install_opener">opener</a> being global.  Even though these are two libraries the way import handles arranging resources both are calling the same instance of urllib2.</p>
 
 <p>So I can&#39;t install my proxy opener and call urllib2 without using it</p>
 <h4>Solution 1</h4>

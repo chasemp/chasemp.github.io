@@ -90,17 +90,11 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>When possible it is beneficial having a canonical reference for resources installed<br>
-on a server.  Binary packages have built in logic for upgrade, downgrade,<br>
-install, etc.  This makes them an attractive, yet sometimes, overcomplicated<br>
-distribution mechanisms.</p>
+<p>When possible it is beneficial having a canonical reference for resources installed on a server.  Binary packages have built in logic for upgrade, downgrade, install, etc.  This makes them an attractive, yet sometimes, overcomplicated distribution mechanisms.</p>
 
-<p>I am going to demonstrate making a simple script into a debian binary<br>
-and installing it.  Adding this to an in-house repo would be a nice next<br>
-step.</p>
+<p>I am going to demonstrate making a simple script into a debian binary and installing it.  Adding this to an in-house repo would be a nice next step.</p>
 <h4>Getting Packages</h4>
-<p>Assuming you have dpkg but if not we need it.  Fakeroot we use to make packages<br>
-with the right permissions on files.</p>
+<p>Assuming you have dpkg but if not we need it.  Fakeroot we use to make packages with the right permissions on files.</p>
 <pre><code>aptitude install dpkg fakeroot lintian
 </code></pre>
 <p>We will be using dpkg-deb which is generally considered &#39;built in&#39; to debian.</p>
@@ -110,9 +104,7 @@ me@vm:# dpkg -S /usr/bin/dpkg-deb
 dpkg: /usr/bin/dpkg-debø
 </code></pre>
 <h4>Package: my-files.</h4>
-<p>Starting at version 1.0 and meant for all architectures.  &#39;all&#39; is a common<br>
-assignment for architecture when the files/scripts are interpreted such as<br>
-with python or ruby.</p>
+<p>Starting at version 1.0 and meant for all architectures.  &#39;all&#39; is a common assignment for architecture when the files/scripts are interpreted such as with python or ruby.</p>
 <pre><code>mkdir my-files_1.0_all
 </code></pre><h4>Making my package tree</h4><pre><code>mkdir -p my-files_1.0_all/usr/local/bin/
 mkdir -p my-files_1.0_all/DEBIAN

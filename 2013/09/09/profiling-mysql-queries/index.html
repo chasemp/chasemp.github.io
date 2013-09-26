@@ -118,8 +118,7 @@ dpkg -i percona-toolkit_2.2.4_all.deb
 </code></pre><h4>Capture Query Traffic</h4><pre><code>tcpdump -s 65535 -x -nn -q -tttt -i any port 3306 &gt; mysql.netdump.txt
 </code></pre><h4>Translating Network Dump into MySQL details</h4><pre><code>pt-query-digest --type tcpdump mysql.tcp.txt &gt; dump.log
 </code></pre>
-<p>Some useful details: ranking of queries by time spent, index ratio, break<br>
-down of query durations, and a breakout of individual queries.</p>
+<p>Some useful details: ranking of queries by time spent, index ratio, break down of query durations, and a breakout of individual queries.</p>
 
 <p><a href="javascript:toggleDiv('hideme');">Show Example dump.log Analysis</a></p>
 

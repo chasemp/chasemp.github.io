@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-20T23:22:33Z</updated>
+        <updated>2013-09-26T16:50:27Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -16,10 +16,30 @@
         
         
             <entry>
+                <title>sup intro devops kc</title>
+                <link rel="alternate" href="/2013/09/26/sup-intro-devops-kc/" type="text/html" />
+                <id>/2013/09/26/sup-intro-devops-kc/</id>
+                <updated>2013-09-26T16:34:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Presentation&lt;/h4&gt;
+&lt;p&gt;I walked through these slides demonstrating the simple tool &lt;a href=&#34;https://github.com/chasemp/sup&#34;&gt;sup.py&lt;/a&gt; I wrote at the &lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/&#34;&gt;devops kc meetup&lt;/a&gt;.  Sup can be used in place of ping/tcping/httping on some occasions to great/medium/some success!&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/26585437&#34; width=&#34;476&#34; height=&#34;400&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34;&gt;&lt;/iframe&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;/assets/slides/sup_intro.pdf&#34;&gt;slides pdf&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/&#34;&gt;devops kc&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.vanheusden.com/httping/&#34;&gt;httping&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.elifulkerson.com/projects/tcping.phphttp://www.elifulkerson.com/projects/tcping.php&#34;&gt;tcping&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://nmap.org/&#34;&gt;nmap&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
                 <title>freeradius external authentication</title>
                 <link rel="alternate" href="/2013/09/16/freeradius-external-authentication/" type="text/html" />
                 <id>/2013/09/16/freeradius-external-authentication/</id>
-                <updated>2013-09-16T23:12:00Z</updated>
+                <updated>2013-09-16T16:35:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Installing Freeradius&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install freeradius
@@ -38,9 +58,7 @@ chmod +x /usr/local/bin/fradiusauth.py
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Change &amp;#39;chasemp&amp;#39; user and password to yours.&lt;/p&gt;
 &lt;h4&gt;Make the external script responsible for auth and add user&lt;/h4&gt;
-&lt;p&gt;This signifies that freeradius should call your external script for authentiaction. It will wait for execution of &lt;br&gt;
-the script to finish and use the exit code.  0 is considered a healthy and viable auth, and anything else is &lt;br&gt;
-considered invalid.&lt;/p&gt;
+&lt;p&gt;This signifies that freeradius should call your external script for authentication. It will wait for execution of the script to finish and use the exit code.  0 is considered a healthy and viable auth, and anything else is considered invalid.&lt;/p&gt;
 
 &lt;p&gt;/etc/freeradius/users/&lt;/p&gt;
 
@@ -94,22 +112,15 @@ python setup.py install
                 <title>selecting a subset for sampling</title>
                 <link rel="alternate" href="/2013/09/13/selecting-a-subset-for-sampling/" type="text/html" />
                 <id>/2013/09/13/selecting-a-subset-for-sampling/</id>
-                <updated>2013-09-13T21:18:00Z</updated>
+                <updated>2013-09-13T16:36:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;In the devops world there are a lot of reasons to want good stats, but sometimes the load for collecting those stats on &lt;br&gt;
-every execution of a script or web page is too invasive.  &lt;a href=&#34;http://en.wikipedia.org/wiki/A/B_testing&#34;&gt;A/B testing&lt;/a&gt; is &lt;br&gt;
-another place where we want to select a certain portion of served pages and take appropriate action.  The straight forward &lt;br&gt;
-way to select a subset is a state based system.  For every page that executes you can add an id to a set in redis.  If you &lt;br&gt;
-are looking for 5% of pages then look to see if the item count is 20.  If you are number 20 you can flush the list and the &lt;br&gt;
-count starts over.  This is not meant for real world usage but that is the basic idea behind selecting a portion of pages &lt;br&gt;
-by keeping state between all executions.&lt;/p&gt;
+&lt;p&gt;In the devops world there are a lot of reasons to want good stats, but sometimes the load for collecting those stats on every execution of a script or web page is too invasive.  &lt;a href=&#34;http://en.wikipedia.org/wiki/A/B_testing&#34;&gt;A/B testing&lt;/a&gt; is another place where we want to select a certain portion of served pages and take appropriate action.  The straight forward way to select a subset is a state based system.  For every page that executes you can add an id to a set in redis.  If you are looking for 5% of pages then look to see if the item count is 20.  If you are number 20 you can flush the list and the count starts over.  This is not meant for real world usage but that is the basic idea behind selecting a portion of pages by keeping state between all executions.&lt;/p&gt;
 
 &lt;p&gt;If the state based system is too slow, clunky, unreliable or inelegant there has to be an alternative.&lt;/p&gt;
 &lt;h4&gt;Modulo Operation&lt;/h4&gt;
-&lt;p&gt;The &lt;a href=&#34;http://en.wikipedia.org/wiki/Modulo_operation&#34;&gt;modulo operation&lt;/a&gt; finds the remainder of one number &lt;br&gt;
-divided by another.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&#34;http://en.wikipedia.org/wiki/Modulo_operation&#34;&gt;modulo operation&lt;/a&gt; finds the remainder of one number divided by another.&lt;/p&gt;
 
 &lt;p&gt;Example of Modulo operations:&lt;/p&gt;
 
@@ -124,14 +135,9 @@ divided by another.&lt;/p&gt;
 2
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;So you take all the numbers 1 - 100 the percentage of modulus operations with a remainder of 0 for the number 10 is &lt;br&gt;
-10%.&lt;/p&gt;
+&lt;p&gt;So you take all the numbers 1 - 100 the percentage of modulus operations with a remainder of 0 for the number 10 is 10%.&lt;/p&gt;
 &lt;h4&gt;Combining stateful tracking of executions and modulus&lt;/h4&gt;
-&lt;p&gt;If you want to you can combine these two ideas.  In order to sample 5% of executions you could track the execution order &lt;br&gt;
-of your scripts in redis (or somwhere) looking for a modulus operation remainder of 0 each time to identify an appropriate &lt;br&gt;
-sample page.  Exectuions 1 - 19 will not be sampled, but 20 will.  So will 40, 60, 80, and 100.  When script 101 queries &lt;br&gt;
-to see where in the order it is it will be told it is 1 and the cycle starts over.  This way each job would have a 5% &lt;br&gt;
-chance of being selected as a sample.&lt;/p&gt;
+&lt;p&gt;If you want to you can combine these two ideas.  In order to sample 5% of executions you could track the execution order of your scripts in redis (or somwhere) looking for a modulus operation remainder of 0 each time to identify an appropriate sample page.  Exectuions 1 - 19 will not be sampled, but 20 will.  So will 40, 60, 80, and 100.  When script 101 queries to see where in the order it is it will be told it is 1 and the cycle starts over.  This way each job would have a 5% chance of being selected as a sample.&lt;/p&gt;
 
 &lt;p&gt;This is not any more advantages than the simply having every page know when it&amp;#39;s number 20.&lt;/p&gt;
 &lt;h4&gt;Using the law of averages to provide a quick sample determination&lt;/h4&gt;
@@ -148,14 +154,9 @@ if random.randint(0, 100) % sample_interal == 0:
     submit_to_statsd(&#39;time.to.query.userid&#39;, total_time)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Over time this should submit a sample of 5% of all user_id queries to statsd.  The first 100 you may get 0, 5, or 8 but &lt;br&gt;
-with a larger sample you get around 5% and it is much cheaper than trying to have each execution determine where it is in &lt;br&gt;
-the pecking order for stats submission.&lt;/p&gt;
+&lt;p&gt;Over time this should submit a sample of 5% of all user_id queries to statsd.  The first 100 you may get 0, 5, or 8 but with a larger sample you get around 5% and it is much cheaper than trying to have each execution determine where it is in the pecking order for stats submission.&lt;/p&gt;
 &lt;h4&gt;Just how accurate is the law of averages here?&lt;/h4&gt;
-&lt;p&gt;Here is a snippet to figure out the percentage of matches in a spread for a particular modulus integer.  Ideally using the &lt;br&gt;
-operation &amp;#39;int % 10 == 0&amp;#39; will have a sample rate of 10 percent.  The user passes in the top end of the range, we cycle &lt;br&gt;
-through 10 times.  The number of matches in each pass is summed and then used to calculate in the average match percentage &lt;br&gt;
-across all tries.&lt;/p&gt;
+&lt;p&gt;Here is a snippet to figure out the percentage of matches in a spread for a particular modulus integer.  Ideally using the operation &amp;#39;int % 10 == 0&amp;#39; will have a sample rate of 10 percent.  The user passes in the top end of the range, we cycle through 10 times.  The number of matches in each pass is summed and then used to calculate in the average match percentage across all tries.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 import sys
@@ -334,7 +335,7 @@ nonmatches: 8998573
                 <title>graphite on centos6 lessons learned</title>
                 <link rel="alternate" href="/2013/09/12/graphite-on-centos6-lessons-learned/" type="text/html" />
                 <id>/2013/09/12/graphite-on-centos6-lessons-learned/</id>
-                <updated>2013-09-12T23:22:00Z</updated>
+                <updated>2013-09-12T16:37:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -529,12 +530,12 @@ esac
 
 &lt;p&gt;You need to update your local_settings.py as noted above.  And anytime you edit local_settings.py you need to rerun your &lt;br&gt;
 db sync.&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;python /opt/graphite/webapp/graphite/manage.py syncdb
+&lt;pre&gt;&lt;code&gt;&amp;lt;pre&amp;gt;&amp;lt;code&amp;gt;python /opt/graphite/webapp/graphite/manage.py syncdb&amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;ol&gt;
 &lt;li&gt;&lt;p&gt;You can list all grouped installs via yum&lt;/p&gt;
 
-&lt;p&gt;yum grouplist&lt;/p&gt;&lt;/li&gt;
+&lt;pre&gt;&lt;code&gt;yum grouplist&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
 &lt;li&gt;&lt;p&gt;Twisted seems to throw this error a lot, it is a python path issue and is a pain to track down and fix.&lt;/p&gt;
 
 &lt;p&gt;exceptions.ImportError: cannot import name _PY3&lt;/p&gt;&lt;/li&gt;
@@ -551,7 +552,7 @@ db sync.&lt;/p&gt;
                 <title>profiling mysql queries</title>
                 <link rel="alternate" href="/2013/09/09/profiling-mysql-queries/" type="text/html" />
                 <id>/2013/09/09/profiling-mysql-queries/</id>
-                <updated>2013-09-09T23:03:00Z</updated>
+                <updated>2013-09-09T16:37:00Z</updated>
                 
                 <summary type="html">MySQL has some native profiling and troubleshootings logs for queries.  Logging of &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/slow-query-log.html&#34;&gt;slow queries&lt;/a&gt; or even all &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.1/en/query-log.html&#34;&gt;queries&lt;/a&gt; done is possible, but can be a performance hit.  In some instances not having access to the application or permissions within SQL can also be a problem.</summary>
                 <content type="html">&lt;p&gt;MySQL has some native profiling and troubleshootings logs for queries.  Logging of &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/slow-query-log.html&#34;&gt;slow queries&lt;/a&gt; or even all &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.1/en/query-log.html&#34;&gt;queries&lt;/a&gt; done is possible, but can be a performance hit.  In some instances not having access to the application or permissions within SQL can also be a problem.&lt;/p&gt;
@@ -583,8 +584,7 @@ dpkg -i percona-toolkit_2.2.4_all.deb
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Capture Query Traffic&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;tcpdump -s 65535 -x -nn -q -tttt -i any port 3306 &amp;gt; mysql.netdump.txt
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Translating Network Dump into MySQL details&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;pt-query-digest --type tcpdump mysql.tcp.txt &amp;gt; dump.log
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Some useful details: ranking of queries by time spent, index ratio, break&lt;br&gt;
-down of query durations, and a breakout of individual queries.&lt;/p&gt;
+&lt;p&gt;Some useful details: ranking of queries by time spent, index ratio, break down of query durations, and a breakout of individual queries.&lt;/p&gt;
 
 &lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show Example dump.log Analysis&lt;/a&gt;&lt;/p&gt;
 
@@ -651,20 +651,16 @@ administrator command: Connect\G
                 <title>making sense of squid logs</title>
                 <link rel="alternate" href="/2013/09/05/making-sense-of-squid-logs/" type="text/html" />
                 <id>/2013/09/05/making-sense-of-squid-logs/</id>
-                <updated>2013-09-05T21:47:00Z</updated>
+                <updated>2013-09-05T16:38:00Z</updated>
                 
-                <summary type="html">Squid seems to always default to logging things using epoch time.  Which can&lt;br&gt;
-be a pain to decypher if you are in a hurry.</summary>
-                <content type="html">&lt;p&gt;Squid seems to always default to logging things using epoch time.  Which can&lt;br&gt;
-be a pain to decypher if you are in a hurry.&lt;/p&gt;
+                <summary type="html">Squid defaults to logging things using epoch time.  Which can be a pain to decypher if you are in a hurry.</summary>
+                <content type="html">&lt;p&gt;Squid defaults to logging things using epoch time.  Which can be a pain to decypher if you are in a hurry.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;1378405786.009      0 127.0.0.1 TCP_DENIED/400 1342 GET NONE:// - NONE/- text/html
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;You see: &lt;strong&gt;1378405786.009&lt;/strong&gt;&lt;br&gt;
 It means: &lt;strong&gt;GMT: Thu, 05 Sep 2013 18:29:46 GMT&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;Years ago I wrote a &lt;a href=&#34;https://raw.github.com/chasemp/archive/master/parse_squid.py&#34;&gt;script&lt;/a&gt; to handle this on-the-fly as I was looking for&lt;br&gt;
-information I needed to pass an audit.  In a pinch, on an unfamiliar server,&lt;br&gt;
-it works.  But it&amp;#39;s not ideal.&lt;/p&gt;
+&lt;p&gt;Years ago I wrote a &lt;a href=&#34;https://raw.github.com/chasemp/archive/master/parse_squid.py&#34;&gt;script&lt;/a&gt; to handle this on-the-fly as I was looking for information I needed to pass an audit.  In a pinch, on an unfamiliar server, it works.  But it&amp;#39;s not ideal.&lt;/p&gt;
 
 &lt;p&gt;This configuration in /etc/squid/squid.conf makes timestamps natively sane:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;logformat sanelogfrmt %tl.%03tu %6tr %&amp;gt;a %Ss/%03Hs %&amp;lt;st %rm %ru %un %Sh/%&amp;lt;A %mt
@@ -689,19 +685,17 @@ GET NONE:// - NONE/- text/html
                 <title>python urllib2 and https proxy</title>
                 <link rel="alternate" href="/2013/08/28/python-urllib2-and-https-proxy/" type="text/html" />
                 <id>/2013/08/28/python-urllib2-and-https-proxy/</id>
-                <updated>2013-08-28T15:58:00Z</updated>
+                <updated>2013-08-28T16:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Since urllib2 openers are global I recently had some expected behavior&lt;br&gt;
-I would like to explore.&lt;/p&gt;
+&lt;p&gt;Since urllib2 openers are global I recently had some expected behavior I would like to explore.&lt;/p&gt;
 &lt;h4&gt;urllib2, https, and proxies&lt;/h4&gt;
-&lt;p&gt;urllib2 does &lt;a href=&#34;http://docs.python.org/2/howto/urllib2.html#id8&#34;&gt;not&lt;/a&gt; support https proxy natively.  There&lt;br&gt;
-is a nice activestate &lt;a href=&#34;http://code.activestate.com/recipes/456195/&#34;&gt;recipe&lt;/a&gt; for handling it though.&lt;/p&gt;
+&lt;p&gt;urllib2 does &lt;a href=&#34;http://docs.python.org/2/howto/urllib2.html#id8&#34;&gt;not&lt;/a&gt; support https proxy natively.  There is a nice activestate &lt;a href=&#34;http://code.activestate.com/recipes/456195/&#34;&gt;recipe&lt;/a&gt; for handling it though.&lt;/p&gt;
 
 &lt;p&gt;There is one &lt;a href=&#34;http://sourceforge.net/p/pywebsvcs/bugs/296/&#34;&gt;bug&lt;/a&gt; I ran into.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;Time TimeoutSocket fake socket doesn&amp;#39;t have a sendall method \
- so you get the above error when using https.
+so you get the above error when using https.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I am saving this module as sslhandler.py&lt;/p&gt;
 
@@ -902,12 +896,9 @@ urllib2.URLError: &lt;urlopen error [Errno 61] Connection refused&gt;
 
 &lt;p&gt;Our local call failed and the remote one succeeded when we reversed them.&lt;/p&gt;
 &lt;h4&gt;Why does urllib2 hate me?&lt;/h4&gt;
-&lt;p&gt;The basic idea here is when the basic post is the first directive everything is fine, &lt;br&gt;
-but if we make the proxy request first then both try to use the proxy.&lt;/p&gt;
+&lt;p&gt;The basic idea here is when the basic post is the first directive everything is fine, but if we make the proxy request first then both try to use the proxy.&lt;/p&gt;
 
-&lt;p&gt;This a product of the urllib2 &lt;a href=&#34;http://docs.python.org/2/library/urllib2.html#urllib2.install_opener&#34;&gt;opener&lt;/a&gt; being global.&lt;br&gt;
-Even though these are two libraries the way import handles arranging resources both are calling the same instance&lt;br&gt;
-of urllib2.&lt;/p&gt;
+&lt;p&gt;This a product of the urllib2 &lt;a href=&#34;http://docs.python.org/2/library/urllib2.html#urllib2.install_opener&#34;&gt;opener&lt;/a&gt; being global.  Even though these are two libraries the way import handles arranging resources both are calling the same instance of urllib2.&lt;/p&gt;
 
 &lt;p&gt;So I can&amp;#39;t install my proxy opener and call urllib2 without using it&lt;/p&gt;
 &lt;h4&gt;Solution 1&lt;/h4&gt;
@@ -1380,14 +1371,10 @@ Action: allow&lt;br&gt;
                 <title>ios diff run and start</title>
                 <link rel="alternate" href="/2013/08/19/ios-diff-run-and-start/" type="text/html" />
                 <id>/2013/08/19/ios-diff-run-and-start/</id>
-                <updated>2013-08-19T23:40:00Z</updated>
+                <updated>2013-08-19T16:41:00Z</updated>
                 
-                <summary type="html">archive is incredibly useful for IOS and IOS-XE.  One of the things&lt;br&gt;
-I have always wanted since starting into the Cisco world is a way&lt;br&gt;
-to diff the start and running configuration.</summary>
-                <content type="html">&lt;p&gt;archive is incredibly useful for IOS and IOS-XE.  One of the things&lt;br&gt;
-I have always wanted since starting into the Cisco world is a way&lt;br&gt;
-to diff the start and running configuration.&lt;/p&gt;
+                <summary type="html">archive is incredibly useful for IOS and IOS-XE.  One of the things I have always wanted since starting into the Cisco world is a way to diff the start and running configuration.</summary>
+                <content type="html">&lt;p&gt;archive is incredibly useful for IOS and IOS-XE.  One of the things I have always wanted since starting into the Cisco world is a way to diff the start and running configuration.&lt;/p&gt;
 
 &lt;p&gt;Now I have it.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;show archive config diff
@@ -1407,7 +1394,7 @@ int gi0/0/0
                 <title>site loadtesting wrk</title>
                 <link rel="alternate" href="/2013/08/16/site-loadtesting-wrk/" type="text/html" />
                 <id>/2013/08/16/site-loadtesting-wrk/</id>
-                <updated>2013-08-16T19:38:00Z</updated>
+                <updated>2013-08-16T16:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -1432,7 +1419,8 @@ cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/ae.o src/ae.c
 cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/zmalloc.o src/zmalloc.c
 cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/http_parser.o src/http_parser.c
 cc -std=c99 -Wall -O2 -D_REENTRANT -c -o obj/tinymt64.o src/tinymt64.c
-cc  -o wrk obj/wrk.o obj/net.o obj/ssl.o obj/aprintf.o obj/stats.o obj/units.o obj/ae.o obj/zmalloc.o obj/http_parser.o obj/tinymt64.o -lpthread -lm -lcrypto -lssl
+cc  -o wrk obj/wrk.o obj/net.o obj/ssl.o obj/aprintf.o obj/stats.o \
+obj/units.o obj/ae.o obj/zmalloc.o obj/http_parser.o obj/tinymt64.o -lpthread -lm -lcrypto -lssl
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Source host specfications&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;cpuspecs&#39;);&#34;&gt;Show CPU Specs&lt;/a&gt;&lt;/p&gt;
@@ -1665,9 +1653,7 @@ Requests/sec:   9363.01
 Transfer/sec:      4.11MB
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;CPU is finally taking a hit.  Now using 70% of available resources most&lt;br&gt;
-of the time, but wrk seems to be distributing load well.  Memory is now showing&lt;br&gt;
-some definite usage, but still a CPU intensive operation.&lt;/p&gt;
+&lt;p&gt;CPU is finally taking a hit.  Now using 70% of available resources most of the time, but wrk seems to be distributing load well.  Memory is now showing some definite usage, but still a CPU intensive operation.&lt;/p&gt;
 &lt;h4&gt;WRK Test: 4&lt;/h4&gt;
 &lt;p&gt;This is going well beyond our means to see what happens.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;./wrk -c 100000 -d 60 -t 10000 http://webdos
@@ -1774,19 +1760,17 @@ s.close()
                 <title>anatomy of a fw vpn issue</title>
                 <link rel="alternate" href="/2013/08/14/anatomy-of-a-fw-issue/" type="text/html" />
                 <id>/2013/08/14/anatomy-of-a-fw-issue/</id>
-                <updated>2013-08-14T19:39:00Z</updated>
+                <updated>2013-08-14T16:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I recently had to jump in on a Firewall issue. Traffic was not passing on a new IPSec&lt;br&gt;
-tunnel.  I thought I would layout my troubleshooting for further reflection.&lt;/p&gt;
+&lt;p&gt;I recently had to jump in on a Firewall issue. Traffic was not passing on a new IPSec tunnel.  I thought I would layout my troubleshooting for further reflection.&lt;/p&gt;
 &lt;h4&gt;Problem&lt;/h4&gt;
 &lt;p&gt;Sorry, no visio.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/anatonmyfw.png&#34; alt=&#34;diagram&#34; title=&#34;fw&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;The VPN between FW1 and FW2 does not pass traffic.  FW1 is the hub of several&lt;br&gt;
-VPN L2L tunnels. FW2 has no pre-exiting VPN sessions.&lt;/p&gt;
+&lt;p&gt;The VPN between FW1 and FW2 does not pass traffic.  FW1 is the hub of several VPN L2L tunnels. FW2 has no pre-exiting VPN sessions.&lt;/p&gt;
 
 &lt;p&gt;Details have been masked for obvious reasons.&lt;/p&gt;
 &lt;h3&gt;Verify basic IP connectivity&lt;/h3&gt;&lt;h4&gt;HOST2&lt;/h4&gt;
@@ -2573,7 +2557,7 @@ practice I will change both sides to use AES256.&lt;/p&gt;
                 <title>submerging an asr 1002</title>
                 <link rel="alternate" href="/2013/08/08/submerging-an-asr-1002/" type="text/html" />
                 <id>/2013/08/08/submerging-an-asr-1002/</id>
-                <updated>2013-08-08T04:41:00Z</updated>
+                <updated>2013-08-08T16:44:00Z</updated>
                 
                 <summary type="html">A colleague of mine captured this.  Cisco ASR routers are not water resistent.</summary>
                 <content type="html">&lt;p&gt;A colleague of mine captured this.  Cisco ASR routers are not water resistent.&lt;/p&gt;
@@ -3488,10 +3472,10 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
                 <title>happy sysadmin day</title>
                 <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
                 <id>/2013/07/26/happy-sysadmin-day/</id>
-                <updated>2013-07-26T05:07:00Z</updated>
+                <updated>2013-07-26T16:43:00Z</updated>
                 
-                <summary type="html">&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;</summary>
-                <content type="html">&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
+                <summary type="html">&lt;center&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/center&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;center&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/center&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -3736,10 +3720,10 @@ print(&#39;wtf&#39;)
                 <title>ubuntu edge</title>
                 <link rel="alternate" href="/2013/07/25/ubuntu-edge/" type="text/html" />
                 <id>/2013/07/25/ubuntu-edge/</id>
-                <updated>2013-07-25T03:30:00Z</updated>
+                <updated>2013-07-25T16:43:00Z</updated>
                 
-                <summary type="html">&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;</summary>
-                <content type="html">&lt;p&gt;&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;&lt;/p&gt;
+                <summary type="html">&lt;center&gt;&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;&lt;/center&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;&lt;/center&gt;&lt;/p&gt;
 
 &lt;p&gt;I started using Ubuntu around early 2006, and even though Debian is&lt;br&gt;
 still my first love as a server OS at this point.  I have great respect&lt;br&gt;
@@ -3782,13 +3766,11 @@ for the canonical folks and use it as my primary desktop OS.&lt;/p&gt;
                 <title>su directive logrotate</title>
                 <link rel="alternate" href="/2013/07/24/su-directive-logrotate/" type="text/html" />
                 <id>/2013/07/24/su-directive-logrotate/</id>
-                <updated>2013-07-24T03:29:00Z</updated>
+                <updated>2013-07-24T16:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;If the parent directory for logging is world writable and&lt;br&gt;
-not owned by root logrotate needs to know what user should&lt;br&gt;
-be used to rotate.&lt;/p&gt;
+&lt;p&gt;If the parent directory for logging is world writable and not owned by root logrotate needs to know what user should be used to rotate.&lt;/p&gt;
 &lt;h4&gt;Log Dir&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
 me@vm#ls -al /var/log/myapp/
@@ -4877,18 +4859,11 @@ Arguments:
                 <title>cisco lights out failsafe</title>
                 <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
                 <id>/2013/05/29/cisco-lights-out-failsafe/</id>
-                <updated>2013-05-29T21:13:00Z</updated>
+                <updated>2013-05-29T16:45:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices&lt;br&gt;
-your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates&lt;br&gt;
-the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some&lt;br&gt;
-nice &amp;quot;fail back to my previous config&amp;quot;, and Cisco now in some cases provides the archive&lt;br&gt;
-rollback feature.  Which is awesome.  But it may not be available or if for any reason the&lt;br&gt;
-more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will&lt;br&gt;
-obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best&lt;br&gt;
-you can do.&lt;/p&gt;
+&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some nice &amp;quot;fail back to my previous config&amp;quot;, and Cisco now in some cases provides the archive rollback feature.  Which is awesome.  But it may not be available or if for any reason the more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best you can do.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt; &lt;/p&gt;
 
@@ -5271,14 +5246,11 @@ iptables -P OUTPUT ACCEPT
                 <title>beginning bgp</title>
                 <link rel="alternate" href="/2013/04/18/beginning-bgp/" type="text/html" />
                 <id>/2013/04/18/beginning-bgp/</id>
-                <updated>2013-04-18T01:09:00Z</updated>
+                <updated>2013-04-18T16:48:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I remember hearing a lot of conflicting information about BGP when&lt;br&gt;
-I first started doing network admin stuff.  A lot of time BGP is part of an HA strategy and there&lt;br&gt;
-are people making business decisions surrounding the protocol itself.  This breakdown strives to be &lt;br&gt;
-accurate and laymen without being misleading.&lt;/p&gt;
+&lt;p&gt;I remember hearing a lot of conflicting information about BGP when I first started doing network admin stuff.  A lot of time BGP is part of an HA strategy and there are people making business decisions surrounding the protocol itself.  This breakdown strives to be accurate and laymen without being misleading.&lt;/p&gt;
 
 &lt;p&gt;&lt;em&gt;Specific misconceptions:&lt;/em&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;You need a full time admin doing only BGP stuff.
@@ -5287,43 +5259,19 @@ You can accidentally take down the Internet if you mess up.
 
 BGP is hard.
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You do not need a &amp;#39;full time&amp;#39; guy thinking about BGP around the clock, although &lt;br&gt;
-you do need designated contacts for just-in-case scenarios.  If your providers are handling&lt;br&gt;
-their own business you don&amp;#39;t have to worry about taking down the Internet.  (Although some small&lt;br&gt;
-version of this happened to YouTube &lt;a href=&#34;http://www.macworld.com/article/1132256/networking.html&#34;&gt;http://www.macworld.com/article/1132256/networking.html&lt;/a&gt;).&lt;br&gt;
-BGP is no harder or easier than anything else.  I have seen configurations that boggle the mind&lt;br&gt;
-work for years.  Correctly administered BGP does involves some savy.&lt;/p&gt;
+&lt;p&gt;You do not need a &amp;#39;full time&amp;#39; guy thinking about BGP around the clock, although you do need designated contacts for just-in-case scenarios.  If your providers are handling their own business you don&amp;#39;t have to worry about taking down the Internet.  (Although some small version of this happened to YouTube &lt;a href=&#34;http://www.macworld.com/article/1132256/networking.html&#34;&gt;http://www.macworld.com/article/1132256/networking.html&lt;/a&gt;).  BGP is no harder or easier than anything else.  I have seen configurations that boggle the mind work for years.  Correctly administered BGP does involves some savy.&lt;/p&gt;
 &lt;h4&gt;What is BGP?&lt;/h4&gt;
 &lt;p&gt;Usually referring to the current version 4.  Just read it: &lt;a href=&#34;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&#34;&gt;https://en.wikipedia.org/wiki/Border_Gateway_Protocol&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Seriously, What is BGP for though?&lt;/h4&gt;
-&lt;p&gt;In order to have a service (or anything) available on the Internet it needs to be announced.  Usually, your&lt;br&gt;
-Internet Provider does this announcing for you.  If you want to be the master of your own destiny you need to&lt;br&gt;
-announce yourself.  Literally, you say &amp;quot;here I am&amp;quot; to your provider.  Your provider talks to other providers&lt;br&gt;
-and before long everyone knows how to find you.  When a user connects to their Internet provider they send a&lt;br&gt;
-request for your service. Since you have made yourself known they can find you.&lt;/p&gt;
+&lt;p&gt;In order to have a service (or anything) available on the Internet it needs to be announced.  Usually, your Internet Provider does this announcing for you.  If you want to be the master of your own destiny you need to announce yourself.  Literally, you say &amp;quot;here I am&amp;quot; to your provider.  Your provider talks to other providers and before long everyone knows how to find you.  When a user connects to their Internet provider they send a request for your service. Since you have made yourself known they can find you&lt;/p&gt;
 
 &lt;p&gt;BGP is how we find people on the Internet.&lt;/p&gt;
 &lt;h4&gt;How can I start announcing myself?&lt;/h4&gt;
-&lt;p&gt;In order to announce that you exist you need to have IP addresses.  It&amp;#39;s a non-human way for tracking down a &lt;br&gt;
-resource; think phone numbers.  The gentlemen at ARIN keep a big list of addresses in use.  If&lt;br&gt;
-you want to use BGP; you need addressing.  If you want addressing; you talk to ARIN.  There are two simultaneous&lt;br&gt;
-IP address pools.  The old is IPv4 and we are scraping the bottom of the bucket.  That bucket&lt;br&gt;
-was large enough to get the Internet this far (4 Billion+ addresses with a large chunk carved out for special reservations).&lt;br&gt;
-The second bucket is called IPv6.  IPv6 is a much deeper bucket, 3.4 x 10 to the 38th power.  That is far, far, far&lt;br&gt;
-more addresses than IPv4 has available.  IPv6 has addresses reserved already for the Moon.  Seriously.&lt;/p&gt;
+&lt;p&gt;In order to announce that you exist you need to have IP addresses.  It&amp;#39;s a non-human way for tracking down a  resource; think phone numbers.  The gentlemen at ARIN keep a big list of addresses in use.  If you want to use BGP; you need addressing.  If you want addressing; you talk to ARIN.  There are two simultaneous IP address pools.  The old is IPv4 and we are scraping the bottom of the bucket.  That bucket was large enough to get the Internet this far (4 Billion+ addresses with a large chunk carved out for special reservations). The second bucket is called IPv6.  IPv6 is a much deeper bucket, 3.4 x 10 to the 38th power.  That is far, far, far more addresses than IPv4 has available.  IPv6 has addresses reserved already for the Moon.  Seriously.&lt;/p&gt;
 
 &lt;p&gt;To get addresses you apply.  It&amp;#39;s that simple.  &lt;a href=&#34;https://www.arin.net/resources/request.html&#34;&gt;https://www.arin.net/resources/request.html&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;...almost that simple.&lt;/h4&gt;
-&lt;p&gt;IPv4 is a dwindling resource.  But it has been one for a long time.  In my experience, getting an IPv6 block&lt;br&gt;
-is very easy.  Getting an IPv4 block requires more justification.  Scarce resources are more valued.  Without a &lt;br&gt;
-block of my own addresses can I use BGP?  Well, maybe.  Some providers will allocate you a block of addresses&lt;br&gt;
-from their pool.  You don&amp;#39;t own them.  You may be able to advertise them out another provider if both providers&lt;br&gt;
-agree that is reasonable.  BGP is all about relationships.  No provider has to allow you to announce your block&lt;br&gt;
-on their network whether it has been issued to you or them.  Thankfully providers are in the business of making&lt;br&gt;
-money, and the only way to make money for them is to move traffic.  If you can get an address block of your very&lt;br&gt;
-own it is called Provider Independent Address Space.  Meaning you can take your addresses and move to any provider&lt;br&gt;
-that will have you.  If you talk a provider into allocating you a block of addresses it is called Provider Dependent&lt;br&gt;
-Address Space.  In order to change providers you have to change IP blocks.  It can be done.&lt;/p&gt;
+&lt;p&gt;IPv4 is a dwindling resource.  But it has been one for a long time.  In my experience, getting an IPv6 block is very easy.  Getting an IPv4 block requires more justification.  Scarce resources are more valued.  Without a  block of my own addresses can I use BGP?  Well, maybe.  Some providers will allocate you a block of addresses from their pool.  You don&amp;#39;t own them.  You may be able to advertise them out another provider if both providers agree that is reasonable.  BGP is all about relationships.  No provider has to allow you to announce your block on their network whether it has been issued to you or them.  Thankfully providers are in the business of making money, and the only way to make money for them is to move traffic.  If you can get an address block of your very own it is called Provider Independent Address Space.  Meaning you can take your addresses and move to any provider that will have you.  If you talk a provider into allocating you a block of addresses it is called Provider Dependent Address Space.  In order to change providers you have to change IP blocks.  It can be done.&lt;/p&gt;
 &lt;h4&gt;Understanding Addressing&lt;/h4&gt;
 &lt;p&gt;All address space given out is public information.  &lt;/p&gt;
 
@@ -5335,9 +5283,7 @@ Address Space.  In order to change providers you have to change IP blocks.  It c
 &lt;p&gt;Yahoo: &lt;a href=&#34;http://whois.arin.net/rest/customer/C00146168&#34;&gt;http://whois.arin.net/rest/customer/C00146168&lt;/a&gt;&lt;br&gt;
 Mozilla: &lt;a href=&#34;http://whois.arin.net/rest/customer/C01111858&#34;&gt;http://whois.arin.net/rest/customer/C01111858&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Wait...They want my ASN?&lt;/h4&gt;
-&lt;p&gt;ASN is automomous system number.  It is both a technical and a nontechnical entity.  In a non-technical sense&lt;br&gt;
-it is a number assigned to networks under a singular control.  Some companies have multiple ASN&amp;#39;s, but in general&lt;br&gt;
-you join ARIN and you get an ASN.  This ASN is unique to you, and it is how providers will know you.  &lt;/p&gt;
+&lt;p&gt;ASN is automomous system number.  It is both a technical and a nontechnical entity.  In a non-technical sense it is a number assigned to networks under a singular control.  Some companies have multiple ASN&amp;#39;s, but in general you join ARIN and you get an ASN.  This ASN is unique to you, and it is how providers will know you.  &lt;/p&gt;
 
 &lt;p&gt;BGP thinks in ASN&amp;#39;s.&lt;/p&gt;
 
@@ -5350,25 +5296,15 @@ you join ARIN and you get an ASN.  This ASN is unique to you, and it is how prov
 &lt;h4&gt;Why ASN&amp;#39;s &lt;em&gt;AND&lt;/em&gt; IP addresses?&lt;/h4&gt;
 &lt;p&gt;When providers talk BGP to each other they refer to you and themselves by ASN number.  That&amp;#39;s the short version.&lt;/p&gt;
 
-&lt;p&gt;BGP is a routing protocol.  Most routing protocols rely on an addressing hierarchy.  Therefore it&amp;#39;s easy to follow&lt;br&gt;
-the numbers and find your destination.  If two roomates live in a house together and use the network 192.168.0.0/16&lt;br&gt;
-and they link up with their neighbors who use 172.16.0.0/16.  They can point routes at each other and communications happens.&lt;br&gt;
-If one roomate in the first house wants his own subnet they can break things down.  192.168.0.0/16 becomes 192.168.0.0/24 &lt;br&gt;
-(first roomate) AND 192.168.1.0/24 (second roomate).  But their neighbors still only use 192.168.0.0/16 as it&amp;#39;s &amp;#39;good enough&amp;#39;&lt;br&gt;
-to get to their house, and their house router knows how to distinguish between their rooms.&lt;/p&gt;
+&lt;p&gt;BGP is a routing protocol.  Most routing protocols rely on an addressing hierarchy.  Therefore it&amp;#39;s easy to follow the numbers and find your destination.  If two roomates live in a house together and use the network 192.168.0.0/16 and they link up with their neighbors who use 172.16.0.0/16.  They can point routes at each other and communications happens. If one roomate in the first house wants his own subnet they can break things down.  192.168.0.0/16 becomes 192.168.0.0/24  (first roomate) AND 192.168.1.0/24 (second roomate).  But their neighbors still only use 192.168.0.0/16 as it&amp;#39;s &amp;#39;good enough&amp;#39; to get to their house, and their house router knows how to distinguish between their rooms.&lt;/p&gt;
 
-&lt;p&gt;BGP exists on a larger playing field.  10.0.1.0/24 and 10.0.2.0/24 could be assigned to people or companies that have&lt;br&gt;
-no relationship to each other.  Addressing on the Internet is not assigned in a way that makes it contiguous.&lt;/p&gt;
+&lt;p&gt;BGP exists on a larger playing field.  10.0.1.0/24 and 10.0.2.0/24 could be assigned to people or companies that have no relationship to each other.  Addressing on the Internet is not assigned in a way that makes it contiguous.&lt;/p&gt;
 
-&lt;p&gt;It would be like if the two roomates were still using 192.168.0.0/24 and 192.168.1.0/24 but had now moved to different&lt;br&gt;
-addresses.  We would need to find a way to associate their IP block with their new location.  The location would be&lt;br&gt;
-the ASN and the address block ...would be the address block.&lt;/p&gt;
+&lt;p&gt;It would be like if the two roomates were still using 192.168.0.0/24 and 192.168.1.0/24 but had now moved to different addresses.  We would need to find a way to associate their IP block with their new location.  The location would be the ASN and the address block ...would be the address block.&lt;/p&gt;
 
 &lt;p&gt;So when two routers talk BGP to each other they say: ASN 1 has 192.168.0.0/24.  ASN 2 has 192.168.1.0/24&lt;/p&gt;
 
-&lt;p&gt;So if BGPRouter1 says this to BGPRouter2.  BGPRouter1 has to be associated with an ASN too.  Let&amp;#39;s say BGPRouter1 has&lt;br&gt;
-ASN 3.  Now BGPRouter2 knows: when I need to get to ASN1 or ASN2 I send things to ASN3.  Like, if I need to mail this letter&lt;br&gt;
-to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
+&lt;p&gt;So if BGPRouter1 says this to BGPRouter2.  BGPRouter1 has to be associated with an ASN too.  Let&amp;#39;s say BGPRouter1 has ASN 3.  Now BGPRouter2 knows: when I need to get to ASN1 or ASN2 I send things to ASN3.  Like, if I need to mail this letter to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
 &lt;h4&gt;Summation&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;BGP is how people find each other on the Internet.  Usually providers worry about it.&lt;/li&gt;
@@ -5387,7 +5323,7 @@ to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
                 <title>beginning bgp configuration</title>
                 <link rel="alternate" href="/2013/04/16/beginning-bgp-configuration/" type="text/html" />
                 <id>/2013/04/16/beginning-bgp-configuration/</id>
-                <updated>2013-04-16T01:07:00Z</updated>
+                <updated>2013-04-16T16:46:00Z</updated>
                 
                 
                 <content type="html">&lt;h5&gt;Preamble&lt;/h5&gt;
@@ -5397,9 +5333,7 @@ to Les Sauvages, France the first step is getting it to France.&lt;/p&gt;
 
 &lt;p&gt;First off: you need your ASN.  You need your address block.  Your address block must be at least /24.&lt;/p&gt;
 
-&lt;p&gt;A general rule of thumb for awhile has been 2 GB of memory per full BGP table.  Sometimes more is&lt;br&gt;
-required and sometimes significantly less.  The table is still growing and 2 GB is my personal&lt;br&gt;
-baseline required.&lt;/p&gt;
+&lt;p&gt;A general rule of thumb for awhile has been 2 GB of memory per full BGP table.  Sometimes more is required and sometimes significantly less.  The table is still growing and 2 GB is my personal baseline required.&lt;/p&gt;
 &lt;h4&gt;Aliases: you will learn to like them&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;alias exec sumbgp6 show bgp ipv6 unicast summary
 alias exec sumbgp show ip bgp summary
 alias exec sbgp show run | section bgp
@@ -5465,11 +5399,11 @@ Multipath: eBGP
 RTRME(config)####
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Resetting BGP&lt;/h4&gt;
-&lt;p&gt;This is very aggressive and will reset your peering status.  Lookup soft in/out if&lt;br&gt;
-you are alreadying using BGP in production.&lt;br&gt;
-&lt;pre&gt;&lt;code&gt;&lt;br&gt;
-RTRME####clear ip bgp *&lt;br&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/p&gt;
+&lt;p&gt;This is very aggressive and will reset your peering status.  Lookup soft in/out if you are alreadying using BGP in production.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+RTRME####clear ip bgp *
+&lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Things we know about our neighbor&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;What is their status?&lt;/em&gt;&lt;/p&gt;
 
@@ -5638,13 +5572,11 @@ non-responsive for the graceful shutdown command.&lt;/p&gt;
                 <title>IOS granular permissions</title>
                 <link rel="alternate" href="/2013/04/03/ios-granular-permissions/" type="text/html" />
                 <id>/2013/04/03/ios-granular-permissions/</id>
-                <updated>2013-04-03T00:59:00Z</updated>
+                <updated>2013-04-03T16:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;If you have tiered levels of administrators, or you want to&lt;br&gt;
-create an account for automation purposes best practice is to&lt;br&gt;
-define a custom security level in IOS.&lt;/p&gt;
+&lt;p&gt;If you have tiered levels of administrators, or you want to create an account for automation purposes best practice is to define a custom security level in IOS.&lt;/p&gt;
 
 &lt;p&gt;Levels 1 and 15 are defined by default.&lt;/p&gt;
 &lt;h4&gt;Allowing lower levels to see your configuration: IOS&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;conf t
@@ -5723,13 +5655,11 @@ Skipping run of Puppet configuration client; administratively disabled
                 <title>basic redis python pubsub</title>
                 <link rel="alternate" href="/2013/03/26/basic-redis-python-pubsub/" type="text/html" />
                 <id>/2013/03/26/basic-redis-python-pubsub/</id>
-                <updated>2013-03-26T19:31:00Z</updated>
+                <updated>2013-03-26T16:43:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I am serializing a dict as JSON and publishing it.  The subscriber will&lt;br&gt;
-receive and print.  It is not necessary to use JSON as redis has awesome&lt;br&gt;
-datatype compatibility with python: &lt;a href=&#34;http://redis.io/topics/data-types&#34;&gt;type ref&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I am serializing a dict as JSON and publishing it.  The subscriber will receive and print.  It is not necessary to use JSON as redis has awesome datatype compatibility with python: &lt;a href=&#34;http://redis.io/topics/data-types&#34;&gt;type ref&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Using pubsub to distribute messages is often the &amp;#39;right way&amp;#39;.&lt;/p&gt;
 
@@ -5903,13 +5833,11 @@ failing because of this falsly accussed dependency now can be debugged.&lt;/p&gt
                 <title>allowing env magic via sudo</title>
                 <link rel="alternate" href="/2013/02/25/allowing-env-magic-via-sudo/" type="text/html" />
                 <id>/2013/02/25/allowing-env-magic-via-sudo/</id>
-                <updated>2013-02-25T19:29:00Z</updated>
+                <updated>2013-02-25T16:43:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;In an environment with heavy automation and numerous service account&lt;br&gt;
-users it is easy to end up in a situation where compromising one service&lt;br&gt;
-becomes compromising an entire system.&lt;/p&gt;
+&lt;p&gt;In an environment with heavy automation and numerous service account users it is easy to end up in a situation where compromising one service becomes compromising an entire system.&lt;/p&gt;
 &lt;h4&gt;Granting permission to a single command&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;vi /etc/sudoers.d/makingpie
 
 myuser ALL = NOPASSWD: /usr/local/bin/makepie
@@ -5944,21 +5872,15 @@ Defaults env_keep += &amp;#34;LD_PRELOAD&amp;#34;
                 <title>making trivial debian packages</title>
                 <link rel="alternate" href="/2013/02/19/making-trivial-debian-packages/" type="text/html" />
                 <id>/2013/02/19/making-trivial-debian-packages/</id>
-                <updated>2013-02-19T19:28:00Z</updated>
+                <updated>2013-02-19T16:40:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;When possible it is beneficial having a canonical reference for resources installed&lt;br&gt;
-on a server.  Binary packages have built in logic for upgrade, downgrade,&lt;br&gt;
-install, etc.  This makes them an attractive, yet sometimes, overcomplicated&lt;br&gt;
-distribution mechanisms.&lt;/p&gt;
+&lt;p&gt;When possible it is beneficial having a canonical reference for resources installed on a server.  Binary packages have built in logic for upgrade, downgrade, install, etc.  This makes them an attractive, yet sometimes, overcomplicated distribution mechanisms.&lt;/p&gt;
 
-&lt;p&gt;I am going to demonstrate making a simple script into a debian binary&lt;br&gt;
-and installing it.  Adding this to an in-house repo would be a nice next&lt;br&gt;
-step.&lt;/p&gt;
+&lt;p&gt;I am going to demonstrate making a simple script into a debian binary and installing it.  Adding this to an in-house repo would be a nice next step.&lt;/p&gt;
 &lt;h4&gt;Getting Packages&lt;/h4&gt;
-&lt;p&gt;Assuming you have dpkg but if not we need it.  Fakeroot we use to make packages&lt;br&gt;
-with the right permissions on files.&lt;/p&gt;
+&lt;p&gt;Assuming you have dpkg but if not we need it.  Fakeroot we use to make packages with the right permissions on files.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;aptitude install dpkg fakeroot lintian
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;We will be using dpkg-deb which is generally considered &amp;#39;built in&amp;#39; to debian.&lt;/p&gt;
@@ -5968,9 +5890,7 @@ me@vm:# dpkg -S /usr/bin/dpkg-deb
 dpkg: /usr/bin/dpkg-debø
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Package: my-files.&lt;/h4&gt;
-&lt;p&gt;Starting at version 1.0 and meant for all architectures.  &amp;#39;all&amp;#39; is a common&lt;br&gt;
-assignment for architecture when the files/scripts are interpreted such as&lt;br&gt;
-with python or ruby.&lt;/p&gt;
+&lt;p&gt;Starting at version 1.0 and meant for all architectures.  &amp;#39;all&amp;#39; is a common assignment for architecture when the files/scripts are interpreted such as with python or ruby.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;mkdir my-files_1.0_all
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Making my package tree&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mkdir -p my-files_1.0_all/usr/local/bin/
 mkdir -p my-files_1.0_all/DEBIAN
@@ -6590,12 +6510,11 @@ Finished catalog run in 12.39 seconds&lt;br&gt;
                 <title>mysql full partition</title>
                 <link rel="alternate" href="/2012/11/02/mysql-full-partition/" type="text/html" />
                 <id>/2012/11/02/mysql-full-partition/</id>
-                <updated>2012-11-02T19:24:00Z</updated>
+                <updated>2012-11-02T16:37:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Ever go to start mysql and there is not enough disk space.  We need to get&lt;br&gt;
-MySQL past disk full warnings.&lt;/p&gt;
+&lt;p&gt;Ever go to start mysql and there is not enough disk space.  We need to get MySQL past disk full warnings.&lt;/p&gt;
 
 &lt;p&gt;I tried to:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;/etc/init.d/mysql start
@@ -6858,14 +6777,11 @@ sourcetype = &amp;lt;SOURCE_TYPE_NAME&amp;gt;
                 <title>nix lights out failsafe</title>
                 <link rel="alternate" href="/2012/09/30/nix-lights-out-failsafe/" type="text/html" />
                 <id>/2012/09/30/nix-lights-out-failsafe/</id>
-                <updated>2012-09-30T23:15:00Z</updated>
+                <updated>2012-09-30T16:45:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Just like for &lt;a href=&#34;http://rush898.github.io/2013/05/29/cisco-lights-out-failsafe/&#34;&gt;cisco&lt;/a&gt; a scheduled reboot can be an &lt;br&gt;
-aggressive but necessary recovery option.  If you are doing iptables maintenance remote I always like to store my &lt;br&gt;
-rules in a script and run them without saving.  With a scheduled reboot pending locking myself out is a recoverable &lt;br&gt;
-offense.&lt;/p&gt;
+&lt;p&gt;Just like for &lt;a href=&#34;http://rush898.github.io/2013/05/29/cisco-lights-out-failsafe/&#34;&gt;cisco&lt;/a&gt; a scheduled reboot can be an aggressive but necessary recovery option.  If you are doing iptables maintenance remote I always like to store my rules in a script and run them without saving.  With a scheduled reboot pending locking myself out is a recoverable offense.&lt;/p&gt;
 &lt;h4&gt;/usr/local/bin/rsched&lt;/h4&gt;
 &lt;pre&gt;&lt;code&gt;
 #!/bin/bash

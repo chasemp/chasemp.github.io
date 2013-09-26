@@ -96,9 +96,7 @@ function toggleDiv(divId) {
 
 <p>First off: you need your ASN.  You need your address block.  Your address block must be at least /24.</p>
 
-<p>A general rule of thumb for awhile has been 2 GB of memory per full BGP table.  Sometimes more is<br>
-required and sometimes significantly less.  The table is still growing and 2 GB is my personal<br>
-baseline required.</p>
+<p>A general rule of thumb for awhile has been 2 GB of memory per full BGP table.  Sometimes more is required and sometimes significantly less.  The table is still growing and 2 GB is my personal baseline required.</p>
 <h4>Aliases: you will learn to like them</h4><pre><code>alias exec sumbgp6 show bgp ipv6 unicast summary
 alias exec sumbgp show ip bgp summary
 alias exec sbgp show run | section bgp
@@ -164,11 +162,11 @@ Multipath: eBGP
 RTRME(config)####
 </code></pre>
 <h4>Resetting BGP</h4>
-<p>This is very aggressive and will reset your peering status.  Lookup soft in/out if<br>
-you are alreadying using BGP in production.<br>
-<pre><code><br>
-RTRME####clear ip bgp *<br>
-</code></pre></p>
+<p>This is very aggressive and will reset your peering status.  Lookup soft in/out if you are alreadying using BGP in production.</p>
+
+<pre><code>
+RTRME####clear ip bgp *
+</code></pre>
 <h4>Things we know about our neighbor</h4>
 <p><em>What is their status?</em></p>
 
