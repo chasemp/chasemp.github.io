@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-09-27T17:17:21Z</updated>
+        <updated>2013-10-05T01:21:11Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -16,10 +16,189 @@
         
         
             <entry>
+                <title>sqlite truncate</title>
+                <link rel="alternate" href="/2013/10/04/sqlite-truncate/" type="text/html" />
+                <id>/2013/10/04/sqlite-truncate/</id>
+                <updated>2013-10-04T21:55:00Z</updated>
+                
+                <summary type="html">SQLite does not seem to support the &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/truncate-table.html&#34;&gt;truncate&lt;/a&gt; command.  This is hacky way to do it.</summary>
+                <content type="html">&lt;p&gt;SQLite does not seem to support the &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/truncate-table.html&#34;&gt;truncate&lt;/a&gt; command.  This is hacky way to do it.&lt;/p&gt;
+
+&lt;p&gt;Getting the schema for a table name...&lt;/p&gt;
+
+&lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+SQLite version 3.7.7 2011-06-25 16:35:41&lt;br&gt;
+Enter &amp;quot;.help&amp;quot; for instructions&lt;br&gt;
+Enter SQL statements terminated with a &amp;quot;;&amp;quot;&lt;br&gt;
+sqlite&amp;gt; .schema&lt;br&gt;
+&lt;/pre&gt;&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Let&amp;#39;s say this is part of our schema...&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;CREATE TABLE CHANGELOG(myoverruntable TEXT NOT NULL,
+                       datetime timestamp);
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Drop all rows in a table&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;Delete from myoverruntable
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Reset autoincrement counter if applicable&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;DELETE FROM SQLITE_SEQUENCE WHERE name=&amp;#39;myoverruntable&amp;#39;;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://sqlite.org/lang_delete.html&#34;&gt;sqlite delete&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>fabric basics part 2</title>
+                <link rel="alternate" href="/2013/10/04/fabric-basics-part-2/" type="text/html" />
+                <id>/2013/10/04/fabric-basics-part-2/</id>
+                <updated>2013-10-04T01:21:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Small fabric examples of functionality continued from fabric basics.&lt;/p&gt;
+&lt;h4&gt;Define server roles&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+from fabric.api import env, sudo, parallel, roles
+
+env.roledefs = {
+    &#39;web&#39;: [&#39;host1&#39;, &#39;host2&#39;, &#39;host3&#39;, &#39;host4&#39;, &#39;host5&#39;],
+}
+
+@roles(&#39;web&#39;)
+def uname():
+    sudo(&#39;uname -a&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+me@vm:$ time fab uname
+[host1] Executing task &#39;uname&#39;
+[host1] sudo: uname -a
+[host1] out: Linux host1 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host1] out: 
+
+[host2] Executing task &#39;uname&#39;
+[host2] sudo: uname -a
+[host2] out: Linux host2 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host2] out: 
+
+[host3] Executing task &#39;uname&#39;
+[host3] sudo: uname -a
+[host3] out: Linux host3 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host3] out: 
+
+[host4] Executing task &#39;uname&#39;
+[host4] sudo: uname -a
+[host4] out: Linux host4 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host4] out: 
+
+[host5] Executing task &#39;uname&#39;
+[host5] sudo: uname -a
+[host5] out: Linux host5 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host5] out: 
+
+
+Done.
+Disconnecting from host3... done.
+Disconnecting from host4... done.
+Disconnecting from host5... done.
+Disconnecting from host1... done.
+Disconnecting from host2... done.
+
+real    0m11.328s
+user    0m0.396s
+sys 0m0.079s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Run tasks in &lt;a href=&#34;http://docs.fabfile.org/en/1.3.2/usage/parallel.html&#34;&gt;parallel&lt;/a&gt;&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+from fabric.api import env, sudo, parallel, roles
+
+env.roledefs = {
+    &#39;web&#39;: [&#39;host1&#39;, &#39;host2&#39;, &#39;host3&#39;, &#39;host4&#39;, &#39;host5&#39;],
+}
+
+@parallel
+@roles(&#39;web&#39;)
+def uname():
+    sudo(&#39;uname -a&#39;)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;pre&gt;&lt;code&gt;
+[host1] Executing task &#39;uname&#39;
+[host2] Executing task &#39;uname&#39;
+[host3] Executing task &#39;uname&#39;
+[host4] Executing task &#39;uname&#39;
+[host5] Executing task &#39;uname&#39;
+[host5] sudo: uname -a
+[host4] sudo: uname -a
+[host3] sudo: uname -a
+[host2] sudo: uname -a
+[host1] sudo: uname -a
+[host5] out: Linux host5 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host5] out: 
+[host3] out: Linux host3 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host3] out: 
+[host4] out: Linux host4 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host4] out: 
+[host1] out: Linux host1 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host1] out: 
+[host2] out: Linux host2 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1+deb7u1 x86_64 GNU/Linux
+[host2] out: 
+
+
+Done.
+
+real    0m2.164s
+user    0m0.549s
+sys 0m0.116s
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;running commands on remote in bg&lt;/h4&gt;
+&lt;p&gt;Because of how remote shells are spawned, etc running commands remotely in the background can be tricky.  This example&lt;br&gt;
+is provided in the wiki.  I did not get this to work reliably.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;run(&amp;#34;nohup %s &amp;gt;&amp;amp; /dev/null &amp;lt; /dev/null &amp;amp;&amp;#34; % (cmd,))
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I prefer using dtach...&lt;/p&gt;
+
+&lt;p&gt;vs using &lt;a href=&#34;http://stackoverflow.com/questions/8775598/start-a-background-process-with-nohup-using-fabric&#34;&gt;dtach&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;aptitude install dtach
+def bg_cmd(cmd):
+    run(&amp;#39;dtach -n `mktemp -u /tmp/%s.XXXX` %s&amp;#39; % (env.user, cmd)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This way if a job runs long or hangs you can always remote in and attack to the session to investigate.&lt;/p&gt;
+&lt;h4&gt;Using sudo&lt;/h4&gt;
+&lt;p&gt;If you need to escalate permissions on a remote host you can use sudo() or just run().  If you are using key based&lt;br&gt;
+authentication with key forwarding you should have things configured so passwords are not required.  However, you can&lt;br&gt;
+also have it prompt for a passphrase.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;me@vm:$ time fab uname -H user@idle01
+[user@idle01] Executing task &amp;#39;uname&amp;#39;
+[user@idle01] sudo: uname -a
+[user@idle01] Passphrase for private key: 
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Regular sudo commands with key auth can be run using run() as well.  This works fine.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;def foo():
+    run(&amp;#39;sudo whoami&amp;#39;)
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;When restarting a daemon try &lt;a href=&#34;https://github.com/fabric/fabric/issues/395&#34;&gt;&amp;#39;pty=False&amp;#39;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If this is a lab scenario with constantly changing host names and keys you can use &lt;a href=&#34;http://docs.fabfile.org/en/1.4.2/usage/env.html#disable-known-hosts&#34;&gt;disable known hosts&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;in order to avoid...&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;fabric.exceptions.NetworkError: Host key for OLDHOST did not match pre-existing key! Server&amp;#39;s key was changed recently, or possible man-in-the-middle attack.
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.fabfile.org/en/1.3.4/faq.html&#34;&gt;fabric faq&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/fabric/fabric/issues/216&#34;&gt;issue on running procs in bg&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/16367144/fabric-sudo-silently-failing&#34;&gt;restarting daemon on so&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.linuxandlife.com/2012/01/make-sudo-stop-asking-for-password-when.html&#34;&gt;sudo no password&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.pythonforbeginners.com/systems-programming/how-to-use-fabric-in-python/&#34;&gt;fabric howto&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/3737003/can-i-prevent-fabric-from-prompting-me-for-a-sudo-password&#34;&gt;sudo and prompts&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
                 <title>fabric basics</title>
                 <link rel="alternate" href="/2013/09/26/fabric-basics/" type="text/html" />
                 <id>/2013/09/26/fabric-basics/</id>
-                <updated>2013-09-26T17:17:00Z</updated>
+                <updated>2013-09-26T17:22:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -263,7 +442,12 @@ drwxr-xr-x 9 root        root    96 Jan 11  2013 ..
 drwx------ 2 serviceuser root    28 Apr  9  2012 .ssh
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://docs.fabfile.org/en/1.4.0/usage/env.html&#34;&gt;ENV&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/fabric/fabric&#34;&gt;fabric on gh&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.fabfile.org/en/1.4.0/usage/env.html&#34;&gt;ENV&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.fabfile.org/en/1.4.0/usage/output_controls.html&#34;&gt;output controls&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://stackoverflow.com/questions/4888568/can-i-catch-error-codes-when-using-fabric-to-run-calls-in-a-remote-shell&#34;&gt;so errors code with fabric&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.debian-administration.org/articles/671&#34;&gt;debian intro&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.linuxjournal.com/content/fabric-system-administrators-best-friend?page=0,1&#34;&gt;linux journal&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -6103,7 +6287,7 @@ Defaults env_keep += &amp;#34;LD_PRELOAD&amp;#34;
                 <title>making trivial debian packages</title>
                 <link rel="alternate" href="/2013/02/19/making-trivial-debian-packages/" type="text/html" />
                 <id>/2013/02/19/making-trivial-debian-packages/</id>
-                <updated>2013-02-19T16:40:00Z</updated>
+                <updated>2013-02-19T22:06:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7408,7 +7592,7 @@ minutes: 22
                 <title>simple deb from github python</title>
                 <link rel="alternate" href="/2012/08/08/simple-deb-from-github-python/" type="text/html" />
                 <id>/2012/08/08/simple-deb-from-github-python/</id>
-                <updated>2012-08-08T23:14:00Z</updated>
+                <updated>2012-08-08T22:06:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7418,7 +7602,7 @@ reporting, and because we run our own internal repostories it affords us certain
 dependency handling.&lt;/p&gt;
 &lt;h4&gt;Install a few packages:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install build-essential python-dev python-setuptools python-stdeb python-support
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Download a project: &lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;https://github.com/xb95/nagios-api.git&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;git clone https://github.com/xb95/nagios-api.git
-cd cd nagios-api/
+cd nagios-api/
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Making a Deb&lt;/h4&gt;
 &lt;p&gt;This where with traditional disutils you would do &lt;em&gt;python setup.py install&lt;/em&gt;&lt;/p&gt;
 
@@ -7450,6 +7634,18 @@ Unpacking python-nagios-api (from .../python-nagios-api_1.2.1-1_all.deb) ...
 Setting up python-nagios-api (1.2.1-1) ...
 Processing triggers for python-support ...
 &amp;lt;/code&amp;gt;&amp;lt;/pre&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Changing package particulars&lt;/h4&gt;
+&lt;p&gt;stdeb allows you to specify many options you would normally need to provide in a debian control file.  For example&lt;br&gt;
+in order to change the name of the package we end up with from &amp;#39;python-nagios-api&amp;#39; to just nagios-api we can do&lt;br&gt;
+the the following.&lt;/p&gt;
+
+&lt;p&gt;cd nagios-api/&lt;/p&gt;
+
+&lt;p&gt;n stdeb.cfg #should be in the same dir as setup.py&lt;/p&gt;
+
+&lt;p&gt;contents:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[DEFAULT]
+Package: nagios-api
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
 &lt;p&gt;Some repositories will have a problem with the lack of changelog file or other particulars.  Almost always this can &lt;br&gt;
 be overcome, but if necessary then you can use:&lt;/p&gt;
@@ -7457,7 +7653,8 @@ be overcome, but if necessary then you can use:&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://pypi.python.org/pypi&#34;&gt;pypi&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://lists.debian.org/debian-python/2004/10/msg00017.html&#34;&gt;debian list notes&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;nagios-api github&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;nagios-api github&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://pypi.python.org/pypi/stdeb#stdeb-cfg-configuration-file&#34;&gt;stdeb pypi&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
