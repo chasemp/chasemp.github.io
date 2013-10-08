@@ -187,8 +187,7 @@ user    0m0.549s
 sys 0m0.116s
 </code></pre>
 <h4>running commands on remote in bg</h4>
-<p>Because of how remote shells are spawned, etc running commands remotely in the background can be tricky.  This example<br>
-is provided in the wiki.  I did not get this to work reliably.</p>
+<p>Because of how remote shells are spawned, etc running commands remotely in the background can be tricky.  This example is provided in the wiki.  I did not get this to work reliably.</p>
 <pre><code>run(&#34;nohup %s &gt;&amp; /dev/null &lt; /dev/null &amp;&#34; % (cmd,))
 </code></pre>
 <p>I prefer using dtach...</p>
@@ -200,9 +199,7 @@ def bg_cmd(cmd):
 </code></pre>
 <p>This way if a job runs long or hangs you can always remote in and attack to the session to investigate.</p>
 <h4>Using sudo</h4>
-<p>If you need to escalate permissions on a remote host you can use sudo() or just run().  If you are using key based<br>
-authentication with key forwarding you should have things configured so passwords are not required.  However, you can<br>
-also have it prompt for a passphrase.</p>
+<p>If you need to escalate permissions on a remote host you can use sudo() or just run().  If you are using key based authentication with key forwarding you should have things configured so passwords are not required.  However, you can also have it prompt for a passphrase.</p>
 <pre><code>me@vm:$ time fab uname -H user@idle01
 [user@idle01] Executing task &#39;uname&#39;
 [user@idle01] sudo: uname -a
@@ -212,13 +209,15 @@ also have it prompt for a passphrase.</p>
 <pre><code>def foo():
     run(&#39;sudo whoami&#39;)
 </code></pre><h4>Notes</h4>
-<ul>
+<ol>
 <li><p>When restarting a daemon try <a href="https://github.com/fabric/fabric/issues/395">&#39;pty=False&#39;</a></p></li>
 <li><p>If this is a lab scenario with constantly changing host names and keys you can use <a href="http://docs.fabfile.org/en/1.4.2/usage/env.html#disable-known-hosts">disable known hosts</a></p></li>
-</ul>
+</ol>
 
 <p>in order to avoid...</p>
-<pre><code>fabric.exceptions.NetworkError: Host key for OLDHOST did not match pre-existing key! Server&#39;s key was changed recently, or possible man-in-the-middle attack.
+<pre><code>fabric.exceptions.NetworkError: \
+Host key for OLDHOST did not match pre-existing key! \
+Server&#39;s key was changed recently, or possible man-in-the-middle attack.
 </code></pre><h4>Reference</h4>
 <p><a href="http://docs.fabfile.org/en/1.3.4/faq.html">fabric faq</a><br>
 <a href="https://github.com/fabric/fabric/issues/216">issue on running procs in bg</a><br>

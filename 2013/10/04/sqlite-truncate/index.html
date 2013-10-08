@@ -101,14 +101,14 @@ sqlite&gt; .schema<br>
 </pre></code></p>
 
 <p>Let&#39;s say this is part of our schema...</p>
-<pre><code>CREATE TABLE CHANGELOG(myoverruntable TEXT NOT NULL,
+<pre><code>CREATE TABLE MYTABLE(myfield TEXT NOT NULL,
                        datetime timestamp);
 </code></pre>
 <p>Drop all rows in a table</p>
-<pre><code>Delete from myoverruntable
+<pre><code>Delete from MYTABLE
 </code></pre>
 <p>Reset autoincrement counter if applicable</p>
-<pre><code>DELETE FROM SQLITE_SEQUENCE WHERE name=&#39;myoverruntable&#39;;
+<pre><code>DELETE FROM SQLITE_SEQUENCE WHERE name=&#39;MYTABLE&#39;;
 </code></pre><h4>Reference</h4>
 <p><a href="http://sqlite.org/lang_delete.html">sqlite delete</a></p>
 
