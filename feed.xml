@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-10-08T19:24:21Z</updated>
+        <updated>2013-10-17T15:00:30Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,91 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>lets not do opsdev</title>
+                <link rel="alternate" href="/2013/10/17/lets-not-do-opsdev/" type="text/html" />
+                <id>/2013/10/17/lets-not-do-opsdev/</id>
+                <updated>2013-10-17T14:59:00Z</updated>
+                
+                <summary type="html">This is a talk I gave to the &lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/events/142487902/&#34;&gt;devops KC&lt;/a&gt; group at &lt;a href=&#34;October%20Meetup%20Open%20Format&#34;&gt;kauffman labs&lt;/a&gt;.</summary>
+                <content type="html">&lt;p&gt;This is a talk I gave to the &lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/events/142487902/&#34;&gt;devops KC&lt;/a&gt; group at &lt;a href=&#34;October%20Meetup%20Open%20Format&#34;&gt;kauffman labs&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/27298299&#34; width=&#34;427&#34; height=&#34;356&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&#34; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&#34;margin-bottom:5px&#34;&gt; &lt;strong&gt; &lt;a href=&#34;https://www.slideshare.net/chasepettet/lets-not-doopsdev&#34; title=&#34;Lets not do_opsdev&#34; target=&#34;_blank&#34;&gt;Lets not do_opsdev&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a href=&#34;http://www.slideshare.net/chasepettet&#34; target=&#34;_blank&#34;&gt;chase pettet&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;/assets/slides/lets_not_do_opsdev.pdf&#34;&gt;slides pdf&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/&#34;&gt;devops kc&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>dynamic bash prompts</title>
+                <link rel="alternate" href="/2013/10/09/dynamic-bash-prompts/" type="text/html" />
+                <id>/2013/10/09/dynamic-bash-prompts/</id>
+                <updated>2013-10-09T14:41:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Getting useful info into the prompt.  Using git as an example.&lt;/p&gt;
+&lt;h4&gt;Shell script /usr/local/bin/prompt.sh&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+NORMAL=$(tput sgr0)
+RED=$(tput setaf 1; tput bold)
+MAGENTA=$(tput setaf 5)
+BLUE=$(tput setaf 4)
+
+function red() {
+    echo -e &#34;$RED$*$NORMAL&#34;
+}
+
+function mag() {
+    echo -e &#34;$MAGENTA$*$NORMAL&#34;
+}
+
+function blue() {
+    echo -e &#34;$BLUE$*$NORMAL&#34;
+}
+
+
+function parse_git_branch {
+    gs=$(git rev-parse --symbolic-full-name --abbrev-ref HEAD 2&gt; /dev/null)
+    if [ -z &#34;$gs&#34; ]; then
+      return
+    fi
+    if [ &#34;$gs&#34; == &#34;master&#34; ]
+    then
+        gs=$(mag &#34;m&#34;)
+    else
+        gs=$(red &#34;$gs&#34;)
+    fi
+
+    echo &#34;[$gs]&#34;
+}
+
+parse_git_branch
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;.bashrc&lt;/h4&gt;
+&lt;p&gt;Here we capture and extend the PROMPT_COMMAND in case it was defined previously.  On OSX Darwin it is.  We also define our PS1 in  PROMPT_COMMAND.  This does mean basically that we are executing our prompt.sh each time we hit return.  This does not feel sluggish for me, and this way when I use my setup in different environments I don&amp;#39;t have to worry about PS1 being defined somewhere else conflicting or stomping on my changes as we are going to prepend anyway.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+#so as not to stomp on existing prompt commands
+#we capture them to append our own
+if [ -z &#34;$PROMPT_COMMAND&#34; ]; then
+    PREV_CMD=
+else
+    PREV_CMD=&#34;${PROMPT_COMMAND}; &#34;
+fi
+
+PROMPT_COMMAND=&#34;${PREV_CMD}&#34;&#39;if [ -z &#34;${_PS1_ORIG}&#34; ]; then
+                    export _PS1_ORIG=$PS1;
+                fi;
+                export _PS1=&#34;$(/usr/local/bin/prompt.sh)&#34;;
+                PS1=&#34;${_PS1}${_PS1_ORIG}&#34;&#39;
+
+export PROMPT_COMMAND
+&lt;/code&gt;&lt;/pre&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>fabric basics part 2</title>
@@ -454,7 +539,7 @@ drwx------ 2 serviceuser root    28 Apr  9  2012 .ssh
                 <title>sup intro devops kc</title>
                 <link rel="alternate" href="/2013/09/26/sup-intro-devops-kc/" type="text/html" />
                 <id>/2013/09/26/sup-intro-devops-kc/</id>
-                <updated>2013-09-26T16:34:00Z</updated>
+                <updated>2013-09-26T14:56:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Presentation&lt;/h4&gt;
