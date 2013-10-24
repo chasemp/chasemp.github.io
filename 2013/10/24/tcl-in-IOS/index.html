@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>Tag  &rsaquo; bgp &ndash; devops type thoughts</title>
+    <title>tcl in IOS &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -82,33 +82,56 @@ function toggleDiv(divId) {
         
         <div id="content">
             
-    <h2>Tag &rsaquo; bgp</h2>
-    
-        <dl class="archives">
-            <dt><a href="/archives/2013/">2013</a></dt>
-            <dd>
-                <dl>
-                    
-                        
-                            <dt>Oct 24</dt>
-                            <dd><a href="/2013/10/24/tcl-in-IOS/">tcl in IOS</a><small>Tagged <span>&raquo;</span> <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/ios/">ios</a></small></dd>
-                        
-                            <dt>Oct 23</dt>
-                            <dd><a href="/2013/10/23/bgp-traffic-shaping/">bgp traffic shaping</a><small>Tagged <span>&raquo;</span> <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a></small></dd>
-                        
-                    
-                        
-                            <dt>Apr 18</dt>
-                            <dd><a href="/2013/04/18/beginning-bgp/">beginning bgp</a><small>Tagged <span>&raquo;</span> <a href="/tags/arin/">arin</a>, <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a></small></dd>
-                        
-                            <dt>Apr 16</dt>
-                            <dd><a href="/2013/04/16/beginning-bgp-configuration/">beginning bgp configuration</a><small>Tagged <span>&raquo;</span> <a href="/tags/arin/">arin</a>, <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a></small></dd>
-                        
-                    
-                </dl>
-            </dd>
-        </dl>
-    
+    <div class="item">
+        <div class="header">
+            <h1>tcl in IOS</h1>
+            <h2>Thursday, October 24, 2013 <span>&raquo;</span> <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/ios/">ios</a></h2>
+        </div>
+        
+        <div class="body">
+            <h4>Preamble</h4>
+<p>IOS has come with a <a href="http://en.wikipedia.org/wiki/Tcl">TCL</a> interpreter baked in for awhile now.  It is suprisingly full featured and awesome.  This is just some basic things I have included in my macro type scripts.</p>
+<h4>Printing out a message from your script</h4>
+<p>puts &quot;\nHello World!&quot;</p>
+<h4>Shut down an interface</h4>
+<p>puts &quot;\nShutdown loopback&quot;<br>
+ios_config &quot;interface Loopback0&quot; &quot;shutdown&quot;</p>
+<h4>Removing an advertised network from BGP</h4>
+<p>puts &quot;\nRemoving &#39;network 1.0.0.0 mask 255.255.255.0&#39;&quot;<br>
+ios_config &quot;router bgp l335&quot; &quot;address-family ipv4&quot; &quot;no network 1.0.0.0 mask 255.255.255.0&quot;</p>
+<h4>Echoing an affected portion of the configuration during execution</h4>
+<p>puts &quot;\nShow section BGP&quot;<br>
+puts [ exec &quot;show run | section bgp&quot; ]</p>
+<h4>Sleep for a certain amount of time then run a command</h4>
+<p>after 1000<br>
+puts [ exec &quot;show ip interface brief&quot; ]</p>
+<h4>Change MOTD banner to reflect some system status</h4>
+<p>puts &quot;\nsetting appropriate banner&quot;<br>
+ios_config &quot;no banner motd&quot;<br>
+ios_config &quot;banner motd c CURRENTLY UPDATING THIS CONFIGURATION c&quot;</p>
+<h4>Integration a TCL script</h4>
+<p>Instead of constantly running things like &quot;tclsh mystuff.tcl&quot; you can set an alias so the command is easier to use.</p>
+
+<p>Write your script and &#39;copy tftp flash:&#39;...</p>
+
+<p>So you see something like</p>
+
+<pre><code>
+asr01#dir
+Directory of bootflash:/
+   20  -rw-         100  Oct 22 2013 11:40:02 -07:00  mystuff.tcl
+</code></pre>
+
+<p>Then set an alias </p>
+<pre><code>alias exec mystuff tclsh flash:mystuff.tcl
+</code></pre>
+<p>Now you can just run your script using the &#39;mystuff&#39; command.</p>
+<h4>References</h4>
+<p><a href="http://www.sadikhov.com/forum/index.php?/topic/175724-tcl-scripting-in-ios-easy-to-understand-tutorial/">simple tcl in ios tutorial</a><br>
+<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/ios_tcl/configuration/12-4t/nm-script-tcl.html">official cisco ios tcl docs</a></p>
+
+        </div>
+    </div>
 
         </div>
         

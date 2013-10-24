@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-10-17T15:00:30Z</updated>
+        <updated>2013-10-24T17:48:02Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,206 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>tcl in IOS</title>
+                <link rel="alternate" href="/2013/10/24/tcl-in-IOS/" type="text/html" />
+                <id>/2013/10/24/tcl-in-IOS/</id>
+                <updated>2013-10-24T16:47:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;IOS has come with a &lt;a href=&#34;http://en.wikipedia.org/wiki/Tcl&#34;&gt;TCL&lt;/a&gt; interpreter baked in for awhile now.  It is suprisingly full featured and awesome.  This is just some basic things I have included in my macro type scripts.&lt;/p&gt;
+&lt;h4&gt;Printing out a message from your script&lt;/h4&gt;
+&lt;p&gt;puts &amp;quot;\nHello World!&amp;quot;&lt;/p&gt;
+&lt;h4&gt;Shut down an interface&lt;/h4&gt;
+&lt;p&gt;puts &amp;quot;\nShutdown loopback&amp;quot;&lt;br&gt;
+ios_config &amp;quot;interface Loopback0&amp;quot; &amp;quot;shutdown&amp;quot;&lt;/p&gt;
+&lt;h4&gt;Removing an advertised network from BGP&lt;/h4&gt;
+&lt;p&gt;puts &amp;quot;\nRemoving &amp;#39;network 1.0.0.0 mask 255.255.255.0&amp;#39;&amp;quot;&lt;br&gt;
+ios_config &amp;quot;router bgp l335&amp;quot; &amp;quot;address-family ipv4&amp;quot; &amp;quot;no network 1.0.0.0 mask 255.255.255.0&amp;quot;&lt;/p&gt;
+&lt;h4&gt;Echoing an affected portion of the configuration during execution&lt;/h4&gt;
+&lt;p&gt;puts &amp;quot;\nShow section BGP&amp;quot;&lt;br&gt;
+puts [ exec &amp;quot;show run | section bgp&amp;quot; ]&lt;/p&gt;
+&lt;h4&gt;Sleep for a certain amount of time then run a command&lt;/h4&gt;
+&lt;p&gt;after 1000&lt;br&gt;
+puts [ exec &amp;quot;show ip interface brief&amp;quot; ]&lt;/p&gt;
+&lt;h4&gt;Change MOTD banner to reflect some system status&lt;/h4&gt;
+&lt;p&gt;puts &amp;quot;\nsetting appropriate banner&amp;quot;&lt;br&gt;
+ios_config &amp;quot;no banner motd&amp;quot;&lt;br&gt;
+ios_config &amp;quot;banner motd c CURRENTLY UPDATING THIS CONFIGURATION c&amp;quot;&lt;/p&gt;
+&lt;h4&gt;Integration a TCL script&lt;/h4&gt;
+&lt;p&gt;Instead of constantly running things like &amp;quot;tclsh mystuff.tcl&amp;quot; you can set an alias so the command is easier to use.&lt;/p&gt;
+
+&lt;p&gt;Write your script and &amp;#39;copy tftp flash:&amp;#39;...&lt;/p&gt;
+
+&lt;p&gt;So you see something like&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+asr01#dir
+Directory of bootflash:/
+   20  -rw-         100  Oct 22 2013 11:40:02 -07:00  mystuff.tcl
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Then set an alias &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;alias exec mystuff tclsh flash:mystuff.tcl
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now you can just run your script using the &amp;#39;mystuff&amp;#39; command.&lt;/p&gt;
+&lt;h4&gt;References&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.sadikhov.com/forum/index.php?/topic/175724-tcl-scripting-in-ios-easy-to-understand-tutorial/&#34;&gt;simple tcl in ios tutorial&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/ios_tcl/configuration/12-4t/nm-script-tcl.html&#34;&gt;official cisco ios tcl docs&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>bgp traffic shaping</title>
+                <link rel="alternate" href="/2013/10/23/bgp-traffic-shaping/" type="text/html" />
+                <id>/2013/10/23/bgp-traffic-shaping/</id>
+                <updated>2013-10-23T17:47:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Traffic engineering in BGP is probably the most common problem encountered.  This is not intended to be a complete primer on it, just a few thoughts.&lt;/p&gt;
+
+&lt;p&gt;Selection process (cisco oriented) in my shorthand:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;prefer path with highest WEIGHT (local to the router)&lt;/li&gt;
+&lt;li&gt;prefer path with hight LOCAL_PREF (usually local to an AS)&lt;/li&gt;
+&lt;li&gt;prefer locally originated (network statement, aggregate BGP, or IGP source)&lt;/li&gt;
+&lt;li&gt;prefer the path with the shortest AS_PATH (unless &amp;#39;bestpath as-path ignore&amp;#39;)&lt;/li&gt;
+&lt;li&gt;prefer the path with the lowest origin type (ex. IGP is lower than EGP)&lt;/li&gt;
+&lt;li&gt;prefer the path with the lowest multi-exit discriminator (MED value)
+-- first AS must be the same for this to matter unless &amp;#39;bgp always-compare-med&amp;#39;
+-- no med means med is 0 unless &amp;#39;bgp bestpath med missing-as-worst&amp;#39;
+-- bgp deterministic-med command can change this&lt;/li&gt;
+&lt;li&gt;prefer eBGP over iBGP paths.&lt;/li&gt;
+&lt;li&gt;prefer the path with the lowest IGP metric to the BGP next hop (continue on even if bestpath is already selected)&lt;/li&gt;
+&lt;li&gt;determine if multiple paths require installation in the routing table for BGP Multipath&lt;/li&gt;
+&lt;li&gt;when both paths are external, prefer the path that was received first (the oldest one).&lt;/li&gt;
+&lt;li&gt;Prefer the route that comes from the BGP router with the lowest router ID (bgp router-id or highest IP)&lt;/li&gt;
+&lt;li&gt;if the originator or router ID is the same for multiple paths, prefer the path with the minimum cluster list length.&lt;/li&gt;
+&lt;li&gt;prefer the path that comes from the lowest neighbor address.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I am going to look at two scenarios: one for inbound and one for outbound traffic.&lt;/p&gt;
+&lt;h4&gt;Starting Configuration&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+router bgp 64512
+ bgp router-id 192.168.1.3
+ no bgp fast-external-fallover
+ bgp log-neighbor-changes
+ bgp graceful-restart restart-time 120
+ bgp graceful-restart stalepath-time 360
+ bgp graceful-restart
+ bgp maxas-limit 200
+ no bgp default ipv4-unicast
+ neighbor 192.168.2.2 remote-as 64513
+ neighbor 192.168.2.2 description NEIGHBORONE
+ neighbor 192.168.2.2 version 4
+ neighbor 192.168.3.2 remote-as 64514
+ neighbor 192.168.3.2 description NEIGHBORTWO
+ neighbor 192.168.3.2 version 4
+ !
+ address-family ipv4
+  neighbor 192.168.2.2 activate
+  neighbor 192.168.2.2 soft-reconfiguration inbound
+  neighbor 192.168.3.2 activate
+  neighbor 192.168.3.2 soft-reconfiguration inbound
+ exit-address-family
+ !
+ip bgp-community new-format
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;When it comes to influencing outbound traffic Weight on a Cisco device can be the simplest option, but it also is heavy handed in that it overrides default BGP native best path selection.  In-bound traffic shapping on the other hand  solely using BGP is a strange beast as no matter how many times you prepend your AS it is still possible for it to be chosen.  The best you can do, is the best you can do.  If you really need a dark link your options are to not advertise BP when it is not desired or redirect traffic at other points in the traffic direction process.&lt;/p&gt;
+&lt;h4&gt;prepending to shape inbound traffic&lt;/h4&gt;
+&lt;p&gt;Using prepend to artificially inflate your route path via one ISP.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+!
+!5 is a pretty reasonable prepend starting point
+route-map PREPEND_FIVE permit 10
+ set as-path prepend 64512 64512 64512 64512 64512
+!         
+router bgp 64512
+ !
+ address-family ipv4
+  !
+  !prepend your AS as you send out your advert
+  neighbor 192.168.3.2 route-map PREPEND_FIVE out
+  !
+  end
+ !
+!reestablish your relationship nicely
+clear ip bgp 192.168.3.2 soft out
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;using a tie breaker to influence outbound traffic&lt;/h4&gt;
+&lt;p&gt;There are a few ways to do this, but this one is really explicit so I like it.  Basically, we are giving all path length ties that match a regex to ISP1.  This can be tweaked depending on how favorable one ISP may be over another by assigning more or fewer tie breakers.  This is a nice to way to balance outbound as it still allows for optimum BGP route selection in most cases while influencing the utilization of your links in a deterministic way.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+!
+!match AS-PATHS ending in 0-5
+ip as-path access-list 1 permit [0-5]$
+!
+!set up route map to assign LOW metric to matching as-paths to ISP1
+route-map NEIGHBORTWO-in permit 10
+ match as-path 1
+ set metric 10
+!
+!set up route map to assign HIGH metric to matching as-paths to ISP1
+route-map NEIGHBORTWO-in permit 20
+ set metric 20
+!         
+!set up route map to assign HIGH metric to matching as-paths to ISP2
+route-map NEIGHBORONE-in permit 10
+ match as-path 1
+ set metric 20
+!         
+!set up route map to assign LOW metric to matching as-paths to ISP2
+route-map NEIGHBORONE-in permit 20
+ set metric 10
+!
+router bgp 64512
+ !
+ bgp always-compare-med
+ !
+ address-family ipv4
+  neighbor 192.168.2.2 route-map NEIGHBORONE-in in
+  neighbor 192.168.3.2 route-map NEIGHBORTWO-in in
+ !
+ end
+ !
+wr mem
+!
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Distribute your outbound ties to use a less preferable ISP link:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+*&gt; 1.0.0.0/24       192.168.2.2          10             0 64513 15169 i
+*                   192.168.3.2           20             0 64514 2828 15169 i
+*  1.0.4.0/24       192.168.2.2          20             0 64513 2828 7545 56203 i
+*&gt;                  192.168.3.2           10             0 64514 2828 7545 56203 i
+*  1.0.5.0/24       192.168.2.2          20             0 64513 2828 7545 56203 i
+*&gt;                  192.168.3.2           10             0 64514 2828 7545 56203 i
+*  1.0.6.0/24       192.168.2.2          20             0 64513 2828 4826 38803 56203 i
+*&gt;                  192.168.3.2           10             0 64514 2828 4826 38803 56203 i
+&lt;/code&gt;&lt;pre&gt;
+
+The better ISP still wins when Path is the deciding factor:
+
+&lt;pre&gt;&lt;code&gt;
+*&gt; 1.0.20.0/23      192.168.2.2          10             0 64513 2519 i
+*                   192.168.3.2           20             0 64514 2828 2516 2519 i
+
+*&gt; 1.0.26.0/23      192.168.2.2          10             0 64513 2519 i
+*                   192.168.3.2           20             0 64514 2828 2516 2519 i
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a0080094431.shtml&#34;&gt;bgp path selection&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/tech/tk365/technologies_tech_note09186a0080094934.shtml&#34;&gt;using med well&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>lets not do opsdev</title>
