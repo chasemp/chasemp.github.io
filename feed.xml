@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-10-24T19:00:57Z</updated>
+        <updated>2013-11-04T21:17:07Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,113 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>user args to python variables</title>
+                <link rel="alternate" href="/2013/11/04/user-args-to-python-variables/" type="text/html" />
+                <id>/2013/11/04/user-args-to-python-variables/</id>
+                <updated>2013-11-04T21:15:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Sometimes there is no choice to but to take a certain action from a configuration file or user input.  This can involve a device type or parameter that is essentially a class specification.  There are few ways to do this kind of matching that I know of.&lt;/p&gt;
+
+&lt;p&gt;All of these examples have the same output:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;me@vm:python test.py Fun
+Fun
+HI Im Fun!
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Using &lt;a href=&#34;http://docs.python.org/2/library/functions.html#eval&#34;&gt;Eval&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Well...&lt;a href=&#34;http://docs.python.org/2/library/functions.html#eval&#34;&gt;eval&lt;/a&gt; can ultimately be used for good or evil. This is pretty much evil but does work.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+import sys
+
+class Fun(object):
+    def __init__(self):
+        print &#39;HI Im Fun!&#39;
+
+arg = sys.argv[1]
+print arg
+myclass = eval(arg)
+instance = myclass()
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The obvious fear here is someone doing something harmful that could start like:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;python test.py &amp;#34;sys.path.append(&amp;#39;/opt&amp;#39;)&amp;#34;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Which just results in:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;sys.path.append(&amp;#39;/opt&amp;#39;)
+Traceback (most recent call last):
+File &amp;#34;test.py&amp;#34;, line 10, in &amp;lt;module&amp;gt;
+instance = myclass()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;But does show harm potential as we can see &amp;#39;/opt&amp;#39; in our modified path.&lt;/p&gt;
+&lt;h4&gt;Using &lt;a href=&#34;http://docs.python.org/2/library/functions.html#getattr&#34;&gt;Getattr&lt;/a&gt;&lt;/h4&gt;
+&lt;p&gt;Probably the most canonical and readable option.  This is still, at least in my eyes, a potentially unsafe operation if it is as blatant as this.  Taking a raw string from a user as your class name is definitly not something to do in the wild.  Python namespaces can be tricky things and getattr is not to be used without caution.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+import sys
+
+class Fun(object):
+    def __init__(self):
+        print &#39;HI Im Fun!&#39;
+
+arg = sys.argv[1]
+print arg
+myclass = getattr(sys.modules[__name__], arg)
+instance = myclass()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Predefined dictionary&lt;/h4&gt;
+&lt;p&gt;This may be the most manual and safest option.  Manual being the downside.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+import sys
+
+class Fun(object):
+    def __init__(self):
+        print &#39;HI Im Fun!&#39;
+
+classes = {&#39;Fun&#39;: Fun}
+
+arg = sys.argv[1]
+print arg
+myclass = classes[arg]
+instance = myclass()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Inspect defined dictionary&lt;/h4&gt;
+&lt;p&gt;This is the approach I have taken in the past.  This allows for only predefined classes by convention, and the list doesn&amp;#39;t have to be maintained manually.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+import sys
+
+class user_Fun(object):
+    def __init__(self):
+        print &#39;HI Im Fun!&#39;
+
+#classes = {&#39;Fun&#39;: Fun}
+
+import inspect
+#http://stackoverflow.com/questions/1796180/python-get-list-of-all-classes-within-current-module
+clsmembers = inspect.getmembers(sys.modules[__name__], inspect.isclass)
+#[(&#39;user_Fun&#39;, &lt;class &#39;__main__.user_Fun&#39;&gt;)]
+classes = {}
+for discoveredclass in clsmembers:
+    classes[discoveredclass[0].split(&#39;_&#39;)[1]] = discoveredclass[1]
+
+#we get
+#print classes &gt;&gt; {&#39;Fun&#39;: &lt;class &#39;__main__.user_Fun&#39;&gt;}
+
+arg = sys.argv[1]
+print arg
+myclass = classes[arg]
+instance = myclass()
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.python.org/2/library/functions.html#getattr&#34;&gt;getattr&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/functions.html#eval&#34;&gt;eval&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://docs.python.org/2/library/inspect.html&#34;&gt;inspect&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>tcl in IOS</title>
@@ -1272,12 +1379,10 @@ db sync.&lt;/p&gt;
                 <title>profiling mysql queries</title>
                 <link rel="alternate" href="/2013/09/09/profiling-mysql-queries/" type="text/html" />
                 <id>/2013/09/09/profiling-mysql-queries/</id>
-                <updated>2013-09-09T16:37:00Z</updated>
+                <updated>2013-09-09T19:02:00Z</updated>
                 
                 <summary type="html">MySQL has some native profiling and troubleshootings logs for queries.  Logging of &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/slow-query-log.html&#34;&gt;slow queries&lt;/a&gt; or even all &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.1/en/query-log.html&#34;&gt;queries&lt;/a&gt; done is possible, but can be a performance hit.  In some instances not having access to the application or permissions within SQL can also be a problem.</summary>
                 <content type="html">&lt;p&gt;MySQL has some native profiling and troubleshootings logs for queries.  Logging of &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.0/en/slow-query-log.html&#34;&gt;slow queries&lt;/a&gt; or even all &lt;a href=&#34;http://dev.mysql.com/doc/refman/5.1/en/query-log.html&#34;&gt;queries&lt;/a&gt; done is possible, but can be a performance hit.  In some instances not having access to the application or permissions within SQL can also be a problem.&lt;/p&gt;
-
-&lt;p&gt;You can use the &lt;a href=&#34;http://www.percona.com/software/percona-toolkit&#34;&gt;Percona Tool Kit&lt;/a&gt; to profile the load on your MySQL server without asking MySQL to handle any extra load.&lt;/p&gt;
 
 &lt;p&gt;You can get some good information using mysqadmin such as a count by query type.&lt;/p&gt;
 
