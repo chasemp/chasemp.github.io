@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2013-11-12T21:57:01Z</updated>
+        <updated>2013-11-12T22:06:17Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>trying out landscape.io</title>
                 <link rel="alternate" href="/2013/11/12/trying-out-landscape.io/" type="text/html" />
                 <id>/2013/11/12/trying-out-landscape.io/</id>
-                <updated>2013-11-12T21:56:00Z</updated>
+                <updated>2013-11-12T22:06:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -29,8 +29,8 @@
 &lt;pre&gt;&lt;code&gt;Landscape is a code quality inspector for Python codebases.
 It inspects your code to find errors, possible problems, security issues.
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Basically you associate their service with your repo and they use Pylint and other tools to assign it an overall score based on PEP8 compatibility and other criteria.&lt;/p&gt;
-&lt;h4&gt;Using &lt;a href=&#34;https://github.com/chasemp/sup&#34;&gt;Sup&lt;/a&gt;as an example&lt;/h4&gt;
+&lt;p&gt;Basically, you associate their service with your repo and they use Pylint and other tools to assign it an overall score based on PEP8 compatibility and other criteria.&lt;/p&gt;
+&lt;h4&gt;Using &lt;a href=&#34;https://github.com/chasemp/sup&#34;&gt;Sup&lt;/a&gt; as an example&lt;/h4&gt;
 &lt;p&gt;I have this very small project that a few people use in place of Ping so I pointed it towards that.&lt;/p&gt;
 
 &lt;p&gt;I received an email with my first report card:&lt;/p&gt;
@@ -45,11 +45,11 @@ It inspects your code to find errors, possible problems, security issues.
 &lt;h4&gt;What is it they are finding?&lt;/h4&gt;
 &lt;p&gt;Most of what they found is cruft that should be cleaned up or removed.&lt;/p&gt;
 
-&lt;p&gt;The socket module  reimported in my code for different classes...&lt;/p&gt;
+&lt;p&gt;The socket module being reimported in my code for different classes...&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/landscape/landscape_rating_ex1.png&#34; alt=&#34;ex1&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;An unused import from previous refactoring...&lt;/p&gt;
+&lt;p&gt;An unused import from a previous refactoring...&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/landscape/landscape_rating_ex2.png&#34; alt=&#34;ex2&#34;&gt;&lt;/p&gt;
 
@@ -57,7 +57,7 @@ It inspects your code to find errors, possible problems, security issues.
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/landscape/landscape_rating_ex3.png&#34; alt=&#34;ex3&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Improving my score&lt;/h4&gt;
-&lt;p&gt;I addressed some of the concerns as seen &lt;a href=&#34;https://github.com/chasemp/sup/commit/9f04409f4ab0a65480289842621b889970390cfa&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;I addressed some of the concerns as seen &lt;a href=&#34;https://github.com/chasemp/sup/commit/9f04409f4ab0a65480289842621b889970390cfa&#34;&gt;here&lt;/a&gt; and got my new score.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/landscape/landscape_new_sup_rating.png&#34; alt=&#34;newrating&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Thoughts&lt;/h4&gt;

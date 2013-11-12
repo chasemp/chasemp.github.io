@@ -96,8 +96,8 @@ function toggleDiv(divId) {
 <pre><code>Landscape is a code quality inspector for Python codebases.
 It inspects your code to find errors, possible problems, security issues.
 </code></pre>
-<p>Basically you associate their service with your repo and they use Pylint and other tools to assign it an overall score based on PEP8 compatibility and other criteria.</p>
-<h4>Using <a href="https://github.com/chasemp/sup">Sup</a>as an example</h4>
+<p>Basically, you associate their service with your repo and they use Pylint and other tools to assign it an overall score based on PEP8 compatibility and other criteria.</p>
+<h4>Using <a href="https://github.com/chasemp/sup">Sup</a> as an example</h4>
 <p>I have this very small project that a few people use in place of Ping so I pointed it towards that.</p>
 
 <p>I received an email with my first report card:</p>
@@ -112,11 +112,11 @@ It inspects your code to find errors, possible problems, security issues.
 <h4>What is it they are finding?</h4>
 <p>Most of what they found is cruft that should be cleaned up or removed.</p>
 
-<p>The socket module  reimported in my code for different classes...</p>
+<p>The socket module being reimported in my code for different classes...</p>
 
 <p><img src="/assets/images/landscape/landscape_rating_ex1.png" alt="ex1"></p>
 
-<p>An unused import from previous refactoring...</p>
+<p>An unused import from a previous refactoring...</p>
 
 <p><img src="/assets/images/landscape/landscape_rating_ex2.png" alt="ex2"></p>
 
@@ -124,7 +124,7 @@ It inspects your code to find errors, possible problems, security issues.
 
 <p><img src="/assets/images/landscape/landscape_rating_ex3.png" alt="ex3"></p>
 <h4>Improving my score</h4>
-<p>I addressed some of the concerns as seen <a href="https://github.com/chasemp/sup/commit/9f04409f4ab0a65480289842621b889970390cfa">here</a></p>
+<p>I addressed some of the concerns as seen <a href="https://github.com/chasemp/sup/commit/9f04409f4ab0a65480289842621b889970390cfa">here</a> and got my new score.</p>
 
 <p><img src="/assets/images/landscape/landscape_new_sup_rating.png" alt="newrating"></p>
 <h4>Thoughts</h4>
