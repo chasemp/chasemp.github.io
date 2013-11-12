@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>tcl in IOS &ndash; devops type thoughts</title>
+    <title>trying out landscape.io &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -84,51 +84,64 @@ function toggleDiv(divId) {
             
     <div class="item">
         <div class="header">
-            <h1>tcl in IOS</h1>
-            <h2>Thursday, October 24, 2013 <span>&raquo;</span> <a href="/tags/bgp/">bgp</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/ios/">ios</a></h2>
+            <h1>trying out landscape.io</h1>
+            <h2>Tuesday, November 12, 2013 <span>&raquo;</span> <a href="/tags/landscape/">landscape</a>, <a href="/tags/python/">python</a></h2>
         </div>
         
         <div class="body">
             <h4>Preamble</h4>
-<p>IOS has come with a <a href="http://en.wikipedia.org/wiki/Tcl">TCL</a> interpreter baked in for awhile now.  It is suprisingly full featured and awesome.  These are some basic ideas and things I have included in my own scripts.</p>
-<h4>Printing out a message from your script</h4>
-<p>puts &quot;\nHello World!&quot;</p>
-<h4>Shut down an interface</h4>
-<p>puts &quot;\nShutdown loopback&quot;<br>
-ios_config &quot;interface Loopback0&quot; &quot;shutdown&quot;</p>
-<h4>Removing an advertised network from BGP</h4>
-<p>puts &quot;\nRemoving &#39;network 1.0.0.0 mask 255.255.255.0&#39;&quot;<br>
-ios_config &quot;router bgp l335&quot; &quot;address-family ipv4&quot; &quot;no network 1.0.0.0 mask 255.255.255.0&quot;</p>
-<h4>Echoing an affected portion of the configuration during execution</h4>
-<p>puts &quot;\nShow section BGP&quot;<br>
-puts [ exec &quot;show run | section bgp&quot; ]</p>
-<h4>Sleep for a certain amount of time then run a command</h4>
-<p>after 1000<br>
-puts [ exec &quot;show ip interface brief&quot; ]</p>
-<h4>Change MOTD banner to reflect some system status</h4>
-<p>puts &quot;\nsetting appropriate banner&quot;<br>
-ios_config &quot;no banner motd&quot;<br>
-ios_config &quot;banner motd c CURRENTLY UPDATING THIS CONFIGURATION c&quot;</p>
-<h4>Integration a TCL script</h4>
-<p>Instead of constantly running things like &quot;tclsh mystuff.tcl&quot; you can set an alias so the command is easier to use.</p>
+<p>I recently came across a service in beta scoring Python repositories on github.</p>
+<h4><a href="https://landscape.io">Landscape</a></h4>
+<p>In their own words:</p>
+<pre><code>Landscape is a code quality inspector for Python codebases.
+It inspects your code to find errors, possible problems, security issues.
+</code></pre>
+<p>Basically you associate their service with your repo and they use Pylint and other tools to assign it an overall score based on PEP8 compatibility and other criteria.</p>
+<h4>Using <a href="https://github.com/chasemp/sup">Sup</a>as an example</h4>
+<p>I have this very small project that a few people use in place of Ping so I pointed it towards that.</p>
 
-<p>Write your script and &#39;copy tftp flash:&#39;...</p>
+<p>I received an email with my first report card:</p>
 
-<p>So you see something like</p>
+<p><img src="/assets/images/landscape/landscape_initial_sup_rating.png" alt="rc1"></p>
+
+<p>As shown on the site:</p>
+
+<p><img src="/assets/images/landscape/land_scape_sup_54.png" alt="rcsite"></p>
+
+<p>54% is listed as an &#39;OK&#39; rating.</p>
+<h4>What is it they are finding?</h4>
+<p>Most of what they found is cruft that should be cleaned up or removed.</p>
+
+<p>The socket module  reimported in my code for different classes...</p>
+
+<p><img src="/assets/images/landscape/landscape_rating_ex1.png" alt="ex1"></p>
+
+<p>An unused import from previous refactoring...</p>
+
+<p><img src="/assets/images/landscape/landscape_rating_ex2.png" alt="ex2"></p>
+
+<p>An unused exception assignment from debugging...</p>
+
+<p><img src="/assets/images/landscape/landscape_rating_ex3.png" alt="ex3"></p>
+<h4>Improving my score</h4>
+<p>I addressed some of the concerns as seen <a href="https://github.com/chasemp/sup/commit/9f04409f4ab0a65480289842621b889970390cfa">here</a></p>
+
+<p><img src="/assets/images/landscape/landscape_new_sup_rating.png" alt="newrating"></p>
+<h4>Thoughts</h4>
+<p>Seems pretty nice, and it&#39;s free so I can&#39;t complain. Right now it&#39;s only applicable to public Python repositories on github though.  The only thing I wasn&#39;t fond of was that after I had pushed my commit there was nothing on the site in my email saying they were running a new test.  I thought for sure from the delay there was a problem.</p>
+
+<p>My initial pushed fixes:</p>
 
 <pre><code>
-asr01#dir
-Directory of bootflash:/
-   20  -rw-         100  Oct 22 2013 11:40:02 -07:00  mystuff.tcl
+Commit:  9f04409f4ab0a65480289842621b889970390cfa
+Author:  Chase MP <rush@deviantart.com>
+Date:    (27 hours ago) 2013-11-11 13:11:59 -0600
+Subject: landscape cleanup and port niceties
 </code></pre>
 
-<p>Then set an alias </p>
-<pre><code>alias exec mystuff tclsh flash:mystuff.tcl
-</code></pre>
-<p>Now you can just run your script using the &#39;mystuff&#39; command.</p>
-<h4>References</h4>
-<p><a href="http://www.sadikhov.com/forum/index.php?/topic/175724-tcl-scripting-in-ios-easy-to-understand-tutorial/">simple tcl in ios tutorial</a><br>
-<a href="http://www.cisco.com/en/US/docs/ios-xml/ios/ios_tcl/configuration/12-4t/nm-script-tcl.html">official cisco ios tcl docs</a></p>
+<p>The new email didn&#39;t come until <pre><code> 11/11/13 6:57 PM </code></pre></p>
+<h4>Reference</h4>
+<p><a href="https://landscape.io">landscape</a></p>
 
         </div>
     </div>

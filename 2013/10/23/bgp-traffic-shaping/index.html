@@ -91,9 +91,7 @@ function toggleDiv(divId) {
         <div class="body">
             <h4>Preamble</h4>
 <p>Traffic engineering in BGP is probably the most common problem encountered.  This is not intended to be a complete primer on it, just a few thoughts.</p>
-
-<p>Selection process (cisco oriented) in my shorthand:</p>
-
+<h4>BGP Selection process (cisco oriented) in my shorthand:</h4>
 <ul>
 <li>prefer path with highest WEIGHT (local to the router)</li>
 <li>prefer path with hight LOCAL_PREF (usually local to an AS)</li>
@@ -115,6 +113,8 @@ function toggleDiv(divId) {
 
 <p>I am going to look at two scenarios: one for inbound and one for outbound traffic.</p>
 <h4>Starting Configuration</h4>
+<p>Our starting boiler plate configuration using a private AS.</p>
+
 <pre><code>
 router bgp 64512
  bgp router-id 192.168.1.3
@@ -142,7 +142,7 @@ router bgp 64512
 ip bgp-community new-format
 </code></pre>
 
-<p>When it comes to influencing outbound traffic Weight on a Cisco device can be the simplest option, but it also is heavy handed in that it overrides default BGP native best path selection.  In-bound traffic shapping on the other hand  solely using BGP is a strange beast as no matter how many times you prepend your AS it is still possible for it to be chosen.  The best you can do, is the best you can do.  If you really need a dark link your options are to not advertise BP when it is not desired or redirect traffic at other points in the traffic direction process.</p>
+<p>When it comes to influencing outbound traffic Weight on a Cisco device can be the simplest option.  It is also heavy handed since it overrides native BGP best path selection.  In-bound traffic shapping on the other hand solely using BGP is a strange beast as no matter how many times you prepend your AS for an ISP it is still possible for it to be chosen.  The best you can do, is the best you can do.  If you really need a dark link your options are to not advertise BGP or redirect traffic at other points in the process.</p>
 <h4>prepending to shape inbound traffic</h4>
 <p>Using prepend to artificially inflate your route path via one ISP.</p>
 
@@ -165,7 +165,7 @@ router bgp 64512
 clear ip bgp 192.168.3.2 soft out
 </code></pre>
 <h4>using a tie breaker to influence outbound traffic</h4>
-<p>There are a few ways to do this, but this one is really explicit so I like it.  Basically, we are giving all path length ties that match a regex to ISP1.  This can be tweaked depending on how favorable one ISP may be over another by assigning more or fewer tie breakers.  This is a nice to way to balance outbound as it still allows for optimum BGP route selection in most cases while influencing the utilization of your links in a deterministic way.</p>
+<p>There are a few ways to do this, but this being really explicit is nice for demonstration.  Basically, we are giving all path length ties that match a regex to ISP1.  This can be tweaked depending on how favorable one ISP may be over another by assigning more or fewer tie breakers.  This is a nice to way to balance outbound as it still allows for optimum BGP route selection in most cases while influencing the utilization of your links in a deterministic way.</p>
 
 <pre><code>
 !
@@ -204,7 +204,7 @@ wr mem
 !
 </code></pre>
 
-<p>Distribute your outbound ties to use a less preferable ISP link:</p>
+<p>Distribute your outbound ties to get more use out of a less preferable ISP link:</p>
 
 <pre><code>
 *> 1.0.0.0/24       192.168.2.2          10             0 64513 15169 i

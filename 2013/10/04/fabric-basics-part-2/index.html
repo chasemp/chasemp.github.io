@@ -92,6 +92,8 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>Small fabric examples of functionality continued from fabric basics.</p>
 <h4>Define server roles</h4>
+<p>Server roles allow you to group boxes for taking actions against them as a cluster.</p>
+
 <pre><code>
 from fabric.api import env, sudo, parallel, roles
 
@@ -144,6 +146,8 @@ user    0m0.396s
 sys 0m0.079s
 </code></pre>
 <h4>Run tasks in <a href="http://docs.fabfile.org/en/1.3.2/usage/parallel.html">parallel</a></h4>
+<p>Simultaneous instead of serial. Notice 2.6s vs. 11.328s above.</p>
+
 <pre><code>
 from fabric.api import env, sudo, parallel, roles
 
@@ -187,19 +191,17 @@ user    0m0.549s
 sys 0m0.116s
 </code></pre>
 <h4>running commands on remote in bg</h4>
-<p>Because of how remote shells are spawned, etc running commands remotely in the background can be tricky.  This example is provided in the wiki.  I did not get this to work reliably.</p>
+<p>Because of how remote shells are spawned running commands in the background remotely can be tricky.  This example is provided in the wiki.  I did not get this to work reliably.</p>
 <pre><code>run(&#34;nohup %s &gt;&amp; /dev/null &lt; /dev/null &amp;&#34; % (cmd,))
 </code></pre>
-<p>I prefer using dtach...</p>
-
-<p>vs using <a href="http://stackoverflow.com/questions/8775598/start-a-background-process-with-nohup-using-fabric">dtach</a></p>
+<p>I prefer using <a href="http://stackoverflow.com/questions/8775598/start-a-background-process-with-nohup-using-fabric">dtach</a></p>
 <pre><code>aptitude install dtach
 def bg_cmd(cmd):
     run(&#39;dtach -n `mktemp -u /tmp/%s.XXXX` %s&#39; % (env.user, cmd)
 </code></pre>
-<p>This way if a job runs long or hangs you can always remote in and attack to the session to investigate.</p>
+<p>This way if a job runs long or hangs you can always remote in and attach to the session to investigate.</p>
 <h4>Using sudo</h4>
-<p>If you need to escalate permissions on a remote host you can use sudo() or just run().  If you are using key based authentication with key forwarding you should have things configured so passwords are not required.  However, you can also have it prompt for a passphrase.</p>
+<p>If you need to escalate permissions on a remote host you can use sudo().  If you are using key based authentication with key forwarding you should have things configured so passwords are not required.  However, you can also have it prompt for a passphrase.</p>
 <pre><code>me@vm:$ time fab uname -H user@idle01
 [user@idle01] Executing task &#39;uname&#39;
 [user@idle01] sudo: uname -a
