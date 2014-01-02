@@ -90,11 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Graphite events allow you to overlay vertical bars on graphs for correlation of events<br>
-and trending data.  I know the <a href="http://codeascraft.com/2010/12/08/track-every-release/" title="etsy events">etsy</a><br>
-guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That<br>
-is a nice and reliable way to do it, but if you are looking for more flexbility using the <br>
-native (&#39;experimental&#39;) events feature may be useful.</p>
+<p>Graphite events allow you to overlay vertical bars on graphs for correlation of events and trending data.  I know the <a href="http://codeascraft.com/2010/12/08/track-every-release/" title="etsy events">etsy</a> guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That is a nice and reliable way to do it, but if you are looking for more flexbility using the  native (&#39;experimental&#39;) events feature may be useful.</p>
 
 <p><img src="/assets/images/events.png" alt="diagram" title="events"></p>
 <h4>Posting an event:</h4><pre><code>#!/bin/bash
@@ -133,9 +129,8 @@ https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#
 
 #Now code syncs from a specific user:
 https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;, &#39;user&#39;))
-</code></pre>
-<p>Reference:<br>
-<a href="http://graphite.readthedocs.org/en/1.0/functions.html">graphite docs</a><br>
+</code></pre><h4>Reference:</h4>
+<p><a href="http://graphite.readthedocs.org/en/1.0/functions.html">graphite docs</a><br>
 <a href="https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142">garphite events</a></p>
 
         </div>

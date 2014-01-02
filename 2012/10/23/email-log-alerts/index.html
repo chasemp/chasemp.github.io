@@ -92,8 +92,7 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>Getting emails based on strings that appear in a log file.</p>
 
-<p>Heavy duty logging platforms are nice but sometimes you have<br>
-to make do with the basics.</p>
+<p>Heavy duty logging platforms are nice but sometimes you have to make do with the basics.</p>
 <h4>Install</h4><pre><code>aptitude install log2mail rsyslog
 </code></pre><h4>Rsyslog configuration</h4><pre><code>#one dir/file per receiver IP
 $template FILENAME,&#34;/var/log/%fromhost-ip%/syslog.log&#34;

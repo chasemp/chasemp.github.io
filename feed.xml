@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-01-02T21:17:11Z</updated>
+        <updated>2014-01-02T21:45:22Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -1996,10 +1996,12 @@ sudo mount -t vmhgfs .host:/ops /mnt/ops
                 <title>making debs from php pecl</title>
                 <link rel="alternate" href="/2013/08/22/making-debs-from-php-pecl/" type="text/html" />
                 <id>/2013/08/22/making-debs-from-php-pecl/</id>
-                <updated>2013-08-22T03:05:00Z</updated>
+                <updated>2013-08-22T21:44:00Z</updated>
                 
                 
-                <content type="html">&lt;h4&gt;Installing Packages&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;apt-get install dh-make-php \
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Bending PECL to your deb building will.&lt;/p&gt;
+&lt;h4&gt;Installing Packages&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;apt-get install dh-make-php \
                 php5-dev \
                 build-essential \
                 libmagic-dev \
@@ -2035,12 +2037,11 @@ cd php-test-helpers-1.1.0/ &amp;&amp; ./debian/rules binary
                 <title>packaging R modules for debian</title>
                 <link rel="alternate" href="/2013/08/21/packaging-R-modules-for-debian/" type="text/html" />
                 <id>/2013/08/21/packaging-R-modules-for-debian/</id>
-                <updated>2013-08-21T05:57:00Z</updated>
+                <updated>2013-08-21T21:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;R is a well known statistics language and ecosystem.  Some of the more common&lt;br&gt;
-extensions to it are available in the Debian repo&amp;#39;s but not all.&lt;/p&gt;
+&lt;p&gt;R is a well known statistics language and ecosystem.  Some of the more common extensions to it are available in the Debian repo&amp;#39;s but not all.&lt;/p&gt;
 &lt;h4&gt;Install on a test VM&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install -y r-base fakeroot dpkg-deb build-essential
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This will result in a lot of dependency packages so site back for a bit.&lt;/p&gt;
@@ -2158,14 +2159,11 @@ RSvgDevice              An R SVG graphics device.
                 <title>asa hairpinning</title>
                 <link rel="alternate" href="/2013/08/20/asa-hairpinning/" type="text/html" />
                 <id>/2013/08/20/asa-hairpinning/</id>
-                <updated>2013-08-20T03:01:00Z</updated>
+                <updated>2013-08-20T21:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Hairpinning is when you exit a firewall on the via on the same interface&lt;br&gt;
-you terminate a VPN.  Essentially, you usually establish a dynamic tunnel&lt;br&gt;
-on the external interface and that same external interface has L2L tunnels&lt;br&gt;
-established that you need to go over.  Hairpinning is making a U-Turn.&lt;/p&gt;
+&lt;p&gt;Hairpinning is when you exit a firewall on the via on the same interface you terminate a VPN.  Essentially, you usually establish a dynamic tunnel on the external interface and that same external interface has L2L tunnels established that you need to go over.  Hairpinning is making a U-Turn.&lt;/p&gt;
 &lt;h4&gt;Diagram&lt;/h4&gt;
 &lt;p&gt;&lt;img src=&#34;/assets/images/hairpinning.png&#34; alt=&#34;hairpinning&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Making sure my RA VPN users get the route&lt;/h4&gt;
@@ -2353,7 +2351,7 @@ Action: allow&lt;br&gt;
                 <title>ios diff run and start</title>
                 <link rel="alternate" href="/2013/08/19/ios-diff-run-and-start/" type="text/html" />
                 <id>/2013/08/19/ios-diff-run-and-start/</id>
-                <updated>2013-08-19T17:23:00Z</updated>
+                <updated>2013-08-19T21:44:00Z</updated>
                 
                 <summary type="html">Archive is incredibly useful for IOS and IOS-XE.  One of the things I have always wanted since starting into the Cisco world is a way to diff the start and running configuration.</summary>
                 <content type="html">&lt;p&gt;Archive is incredibly useful for IOS and IOS-XE.  One of the things I have always wanted since starting into the Cisco world is a way to diff the start and running configuration.&lt;/p&gt;
@@ -2376,7 +2374,7 @@ int gi0/0/0
                 <title>site loadtesting wrk</title>
                 <link rel="alternate" href="/2013/08/16/site-loadtesting-wrk/" type="text/html" />
                 <id>/2013/08/16/site-loadtesting-wrk/</id>
-                <updated>2013-08-16T16:41:00Z</updated>
+                <updated>2013-08-16T21:44:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -2742,7 +2740,7 @@ s.close()
                 <title>anatomy of a fw vpn issue</title>
                 <link rel="alternate" href="/2013/08/14/anatomy-of-a-fw-issue/" type="text/html" />
                 <id>/2013/08/14/anatomy-of-a-fw-issue/</id>
-                <updated>2013-08-14T16:44:00Z</updated>
+                <updated>2013-08-14T21:43:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -3215,10 +3213,11 @@ wasn&amp;#39;t looking for it initially.&lt;/li&gt;
                 <title>python snippets</title>
                 <link rel="alternate" href="/2013/08/13/python-snippets/" type="text/html" />
                 <id>/2013/08/13/python-snippets/</id>
-                <updated>2013-08-13T04:30:00Z</updated>
+                <updated>2013-08-13T21:43:00Z</updated>
                 
-                <summary type="html">I recently found these snippets to be useful.</summary>
-                <content type="html">&lt;p&gt;I recently found these snippets to be useful.&lt;/p&gt;
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I recently found these snippets to be useful.&lt;/p&gt;
 &lt;h4&gt;Invoke garbage collection manually&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;import gc
 gc.collect()
 &lt;/code&gt;&lt;/pre&gt;
@@ -3280,12 +3279,11 @@ if __name__ == &#39;__main__&#39;:
                 <title>using a golang library</title>
                 <link rel="alternate" href="/2013/08/11/using-a-golang-library/" type="text/html" />
                 <id>/2013/08/11/using-a-golang-library/</id>
-                <updated>2013-08-11T18:06:00Z</updated>
+                <updated>2013-08-11T21:43:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://golang.org/&#34;&gt;Go&lt;/a&gt; is rather strict and has a &amp;#39;one right way&amp;#39; methodology.  I&lt;br&gt;
-am going to demonstrate using a Golang tool that mimicks tcpdump.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://golang.org/&#34;&gt;Go&lt;/a&gt; is rather strict and has a &amp;#39;one right way&amp;#39; methodology.  I am going to demonstrate using a Golang tool that mimicks tcpdump.&lt;/p&gt;
 &lt;h4&gt;Installing&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install golang libpcap0.8-dev 
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -3323,7 +3321,6 @@ mkdir -p $HOME/go/src
 export GOPATH=$HOME/go
 #including &amp;#39;go install&amp;#39; binaries in our normal $PATH
 export PATH=$PATH:$GOPATH/bin
-
 
 cd ~/go/src/
 git clone https://github.com/akrennmair/gopcap.git
@@ -3413,8 +3410,7 @@ me@vm:~/go/src/gopcap/tools/tcpdump# tree ~/go/
                 └── tcpdump.go
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Go and Paths&lt;/h4&gt;
-&lt;p&gt;So tcpdump is obviously already a *nix tool.  Right now if I issue the command I am&lt;br&gt;
-getting the Go version.&lt;/p&gt;
+&lt;p&gt;So tcpdump is obviously already a *nix tool.  Right now if I issue the command I am getting the Go version.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;&amp;gt;which tcpdump
 /root/go/bin/tcpdump
 
@@ -3476,23 +3472,10 @@ cp $WORK/gopcap/tools/tcpdump/_obj/a.out /root/go/bin/tcpdump
             </entry>
         
             <entry>
-                <title>trust me i am engineer</title>
-                <link rel="alternate" href="/2013/08/09/trust-me-i-am-engineer/" type="text/html" />
-                <id>/2013/08/09/trust-me-i-am-engineer/</id>
-                <updated>2013-08-09T05:15:00Z</updated>
-                
-                <summary type="html">Genius.</summary>
-                <content type="html">&lt;p&gt;Genius.&lt;/p&gt;
-
-&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;https://youtube.googleapis.com/v/rp8hvyjZWHs&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;https://youtube.googleapis.com/v/rp8hvyjZWHs&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>VPN encryption mismatch</title>
                 <link rel="alternate" href="/2013/08/09/VPN-encryption-mismatch/" type="text/html" />
                 <id>/2013/08/09/VPN-encryption-mismatch/</id>
-                <updated>2013-08-09T00:46:00Z</updated>
+                <updated>2013-08-09T21:42:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -3536,10 +3519,23 @@ practice I will change both sides to use AES256.&lt;/p&gt;
             </entry>
         
             <entry>
+                <title>trust me i am engineer</title>
+                <link rel="alternate" href="/2013/08/09/trust-me-i-am-engineer/" type="text/html" />
+                <id>/2013/08/09/trust-me-i-am-engineer/</id>
+                <updated>2013-08-09T05:15:00Z</updated>
+                
+                <summary type="html">Genius.</summary>
+                <content type="html">&lt;p&gt;Genius.&lt;/p&gt;
+
+&lt;p&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;https://youtube.googleapis.com/v/rp8hvyjZWHs&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;https://youtube.googleapis.com/v/rp8hvyjZWHs&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
                 <title>submerging an asr 1002</title>
                 <link rel="alternate" href="/2013/08/08/submerging-an-asr-1002/" type="text/html" />
                 <id>/2013/08/08/submerging-an-asr-1002/</id>
-                <updated>2013-08-08T16:44:00Z</updated>
+                <updated>2013-08-08T21:42:00Z</updated>
                 
                 <summary type="html">A colleague of mine captured this.  Cisco ASR routers are not water resistent.</summary>
                 <content type="html">&lt;p&gt;A colleague of mine captured this.  Cisco ASR routers are not water resistent.&lt;/p&gt;
@@ -3575,14 +3571,11 @@ practice I will change both sides to use AES256.&lt;/p&gt;
                 <title>debian rpaf fools mod_access</title>
                 <link rel="alternate" href="/2013/08/06/debian-rpaf-fools-mod_access/" type="text/html" />
                 <id>/2013/08/06/debian-rpaf-fools-mod_access/</id>
-                <updated>2013-08-06T03:30:00Z</updated>
+                <updated>2013-08-06T21:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;If you have a reverse proxy in front of apache you need a way to&lt;br&gt;
-persist the original host IP for logging, etc.  &lt;a href=&#34;http://stderr.net/apache/rpaf/&#34;&gt;rpaf&lt;/a&gt; does&lt;br&gt;
-this.  Essentially handles letting apache see the proxy provided&lt;br&gt;
-field of &lt;a href=&#34;http://en.wikipedia.org/wiki/X-Forwarded-For&#34;&gt;x-forward-for&lt;/a&gt; so things are handled in a sane manner.&lt;/p&gt;
+&lt;p&gt;If you have a reverse proxy in front of apache you need a way to persist the original host IP for logging, etc.  &lt;a href=&#34;http://stderr.net/apache/rpaf/&#34;&gt;rpaf&lt;/a&gt; does this.  Essentially handles letting apache see the proxy provided field of &lt;a href=&#34;http://en.wikipedia.org/wiki/X-Forwarded-For&#34;&gt;x-forward-for&lt;/a&gt; so things are handled in a sane manner.&lt;/p&gt;
 
 &lt;p&gt;Unfortunately this seems to have problems working with  &lt;a href=&#34;http://httpd.apache.org/docs/2.0/mod/mod_access.html&#34;&gt;mod_access&lt;/a&gt;.&lt;/p&gt;
 
@@ -3674,13 +3667,11 @@ IP of the reverse proxy.  This means everyone is allowed.&lt;/p&gt;
                 <title>configserver firewall and config script</title>
                 <link rel="alternate" href="/2013/08/05/configserver-firewall-and-config-script/" type="text/html" />
                 <id>/2013/08/05/configserver-firewall-and-config-script/</id>
-                <updated>2013-08-05T01:17:00Z</updated>
+                <updated>2013-08-05T21:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I have seen an all-in-one configure script for linux security mentioned several&lt;br&gt;
-times on &lt;a href=&#34;http://reddit.com/r/linuxadmin&#34;&gt;/r/linuxadmin&lt;/a&gt; and I am giving it a&lt;br&gt;
-quick runthrough to explore.&lt;/p&gt;
+&lt;p&gt;I have seen an all-in-one configure script for linux security mentioned several times on &lt;a href=&#34;http://reddit.com/r/linuxadmin&#34;&gt;/r/linuxadmin&lt;/a&gt; and I am giving it a quick runthrough to explore.&lt;/p&gt;
 &lt;h4&gt;Install&lt;/h4&gt;
 &lt;p&gt;Linux wheezytester 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1 x86_64 GNU/Linux&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;wget http://configserver.com/free/csf.tgz
@@ -4321,13 +4312,11 @@ a dummy host for attacking or tutorials.&lt;/p&gt;
                 <title>PEP8 Guide Updates</title>
                 <link rel="alternate" href="/2013/08/01/PEP8-Guide-Updates/" type="text/html" />
                 <id>/2013/08/01/PEP8-Guide-Updates/</id>
-                <updated>2013-08-01T03:30:00Z</updated>
+                <updated>2013-08-01T21:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.python.org/dev/peps/pep-0008/&#34;&gt;PEP8&lt;/a&gt; is the &amp;#39;official&amp;#39; style guide for Python.  The idea being if the Python&lt;br&gt;
-community can rally around a set of standards it makes the overall quality of&lt;br&gt;
-code in the community better.  At least that&amp;#39;s my idea.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.python.org/dev/peps/pep-0008/&#34;&gt;PEP8&lt;/a&gt; is the &amp;#39;official&amp;#39; style guide for Python.  The idea being if the Python community can rally around a set of standards it makes the overall quality of code in the community better.  At least that&amp;#39;s my idea.&lt;/p&gt;
 
 &lt;p&gt;The guide has now been updated.  Here are some things I found notable.&lt;/p&gt;
 &lt;h4&gt;Style Guide Exclusions&lt;/h4&gt;
@@ -4430,12 +4419,11 @@ code in the community better.  At least that&amp;#39;s my idea.&lt;/p&gt;
                 <title>OSX DNS Cache Clearing</title>
                 <link rel="alternate" href="/2013/07/29/OSX-DNS-Cache-Clearing/" type="text/html" />
                 <id>/2013/07/29/OSX-DNS-Cache-Clearing/</id>
-                <updated>2013-07-29T03:30:00Z</updated>
+                <updated>2013-07-29T21:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;OSX &amp;lt;10.6 caches DNS.  Which is very helpful unless you move servers between&lt;br&gt;
-VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
+&lt;p&gt;OSX &amp;lt;10.6 caches DNS.  Which is very helpful unless you move servers between VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
 &lt;h4&gt;details on the mDNSResponder&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;man mDNSResponder
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -4451,31 +4439,22 @@ VLAN&amp;#39;s a lot.  Then you have to clear your cache often.&lt;/p&gt;
             </entry>
         
             <entry>
-                <title>happy sysadmin day</title>
-                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
-                <id>/2013/07/26/happy-sysadmin-day/</id>
-                <updated>2013-07-26T16:43:00Z</updated>
-                
-                <summary type="html">&lt;center&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/center&gt;</summary>
-                <content type="html">&lt;p&gt;&lt;center&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/center&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>getting to know python import</title>
                 <link rel="alternate" href="/2013/07/26/getting-to-know-python-import/" type="text/html" />
                 <id>/2013/07/26/getting-to-know-python-import/</id>
-                <updated>2013-07-26T04:20:00Z</updated>
+                <updated>2013-07-26T21:41:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
-&lt;p&gt;Python&amp;#39;s &lt;a href=&#34;https://phrac.deviantart.net/D3628&#34;&gt;import&lt;/a&gt; system is one of the things that I&lt;br&gt;
-enjoy about the language. Exploring it is time well spent.  This is somewhat of a practical&lt;br&gt;
-walk through.  The import system goes pretty deep. There are finders and loaders and all &lt;br&gt;
-kinds of awesome details I&amp;#39;m not getting into.  This is not exhaustive but hopefully is&lt;br&gt;
-useful enough to be worthwhile.&lt;/p&gt;
+&lt;p&gt;Python&amp;#39;s &lt;a href=&#34;https://phrac.deviantart.net/D3628&#34;&gt;import&lt;/a&gt; system is one of the things that I enjoy about the language. Exploring it is time well spent.  This is somewhat of a practical walk through.  The import system goes pretty deep. There are finders and loaders and all o kinds of awesome details I&amp;#39;m not getting into.  This is not exhaustive but hopefully is useful enough to be worthwhile.&lt;/p&gt;
 
 &lt;p&gt;For the full details on import watch the pycon video &lt;a href=&#34;http://pyvideo.org/video/1707/how-import-works&#34;&gt;here&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Seriously, awesome talk.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;edit 01/02/14&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;this was meant to be part 1 of a series.  the series has not happened yet so it seems terse.  the talk is still worth watching.&lt;/p&gt;
 &lt;h4&gt;The Terrain&lt;/h4&gt;
 &lt;p&gt;I am using the interactive &lt;a href=&#34;http://docs.python.org/2/tutorial/interpreter.html&#34;&gt;interpreter&lt;/a&gt; and making basic modules are demonstrated.&lt;/p&gt;
 
@@ -4699,17 +4678,26 @@ print(&#39;wtf&#39;)
             </entry>
         
             <entry>
+                <title>happy sysadmin day</title>
+                <link rel="alternate" href="/2013/07/26/happy-sysadmin-day/" type="text/html" />
+                <id>/2013/07/26/happy-sysadmin-day/</id>
+                <updated>2013-07-26T21:41:00Z</updated>
+                
+                <summary type="html">&lt;center&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/center&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;center&gt;&lt;object width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;param name=&#34;movie&#34; value=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowFullScreen&#34; value=&#34;true&#34;&gt;&lt;/param&gt;&lt;param name=&#34;allowscriptaccess&#34; value=&#34;always&#34;&gt;&lt;/param&gt;&lt;embed src=&#34;http://www.youtube.com/v/HU92ryHp_Fg&amp;amp;hl=en_US&amp;amp;fs=1&#34; type=&#34;application/x-shockwave-flash&#34; allowscriptaccess=&#34;always&#34; allowfullscreen=&#34;true&#34; width=&#34;480&#34; height=&#34;385&#34;&gt;&lt;/embed&gt;&lt;/object&gt;&lt;/center&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
                 <title>ubuntu edge</title>
                 <link rel="alternate" href="/2013/07/25/ubuntu-edge/" type="text/html" />
                 <id>/2013/07/25/ubuntu-edge/</id>
-                <updated>2013-07-25T16:43:00Z</updated>
+                <updated>2013-07-25T21:39:00Z</updated>
                 
                 <summary type="html">&lt;center&gt;&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;&lt;/center&gt;</summary>
                 <content type="html">&lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/edge/edgeshow.png&#34; alt=&#34;edge&#34; title=&#34;edge promo&#34;&gt;&lt;/center&gt;&lt;/p&gt;
 
-&lt;p&gt;I started using Ubuntu around early 2006, and even though Debian is&lt;br&gt;
-still my first love as a server OS at this point.  I have great respect&lt;br&gt;
-for the canonical folks and use it as my primary desktop OS.&lt;/p&gt;
+&lt;p&gt;I started using Ubuntu around early 2006, and even though Debian is still my first love as a server OS at this point.  I have great respect for the canonical folks and use it as my primary desktop OS.&lt;/p&gt;
 
 &lt;p&gt;I hate carrier lockin for phones, I bought a &lt;a href=&#34;http://www.google.com/nexus/4/&#34;&gt;nexus&lt;/a&gt;.&lt;/p&gt;
 
@@ -4748,7 +4736,7 @@ for the canonical folks and use it as my primary desktop OS.&lt;/p&gt;
                 <title>su directive logrotate</title>
                 <link rel="alternate" href="/2013/07/24/su-directive-logrotate/" type="text/html" />
                 <id>/2013/07/24/su-directive-logrotate/</id>
-                <updated>2013-07-24T16:44:00Z</updated>
+                <updated>2013-07-24T21:39:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4817,7 +4805,7 @@ may not be the way to go.  But if you can less permissive is always better.&lt;/
                 <title>ubuntuforums.org hacked bummer</title>
                 <link rel="alternate" href="/2013/07/22/ubuntuforums.org-hacked-bummer/" type="text/html" />
                 <id>/2013/07/22/ubuntuforums.org-hacked-bummer/</id>
-                <updated>2013-07-22T03:29:00Z</updated>
+                <updated>2013-07-22T21:39:00Z</updated>
                 
                 <summary type="html">I got this email today:</summary>
                 <content type="html">&lt;p&gt;I got this email today:&lt;/p&gt;
@@ -4847,13 +4835,11 @@ breach.  The first was &lt;a href=&#34;http://chasemp.github.io/2013/05/09/name.
                 <title>mcollective bugs debian wheezy</title>
                 <link rel="alternate" href="/2013/07/16/mcollective-bugs-debian-wheezy/" type="text/html" />
                 <id>/2013/07/16/mcollective-bugs-debian-wheezy/</id>
-                <updated>2013-07-16T04:09:00Z</updated>
+                <updated>2013-07-16T21:39:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Debian Wheezy is on mcollective 2.0.  There are several agents that require&lt;br&gt;
-at least 2.2.  You can download from the official PuppetLabs repository version &lt;br&gt;
-but for Wheezy there are several bugs.  &lt;/p&gt;
+&lt;p&gt;Debian Wheezy is on mcollective 2.0.  There are several agents that require at least 2.2.  You can download from the official PuppetLabs repository version but for Wheezy there are several bugs.  &lt;/p&gt;
 &lt;h4&gt;Dowloading official Package&lt;/h4&gt;
 &lt;p&gt;Do this:&lt;/p&gt;
 
@@ -4920,7 +4906,7 @@ for completeness.&lt;/p&gt;
                 <title>making debs with rake</title>
                 <link rel="alternate" href="/2013/07/12/making-debs-with-rake/" type="text/html" />
                 <id>/2013/07/12/making-debs-with-rake/</id>
-                <updated>2013-07-12T03:27:00Z</updated>
+                <updated>2013-07-12T21:38:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -4975,7 +4961,7 @@ dpkg-buildpackage: full upload (original source is included)
                 <title>memcollective tricks</title>
                 <link rel="alternate" href="/2013/07/10/memcollective-tricks/" type="text/html" />
                 <id>/2013/07/10/memcollective-tricks/</id>
-                <updated>2013-07-10T05:38:00Z</updated>
+                <updated>2013-07-10T21:38:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5009,14 +4995,10 @@ else
                 <title>when search tells the story</title>
                 <link rel="alternate" href="/2013/07/08/when-search-tells-the-story/" type="text/html" />
                 <id>/2013/07/08/when-search-tells-the-story/</id>
-                <updated>2013-07-08T03:27:00Z</updated>
+                <updated>2013-07-08T21:38:00Z</updated>
                 
-                <summary type="html">The first and second results for &amp;#39;linux emoji font&amp;#39; are from&lt;br&gt;
-the same person, and in total opposition.  I don&amp;#39;t know this&lt;br&gt;
-person at all; I just found the rankings humorous.</summary>
-                <content type="html">&lt;p&gt;The first and second results for &amp;#39;linux emoji font&amp;#39; are from&lt;br&gt;
-the same person, and in total opposition.  I don&amp;#39;t know this&lt;br&gt;
-person at all; I just found the rankings humorous.&lt;/p&gt;
+                <summary type="html">The first and second results for &amp;#39;linux emoji font&amp;#39; are from the same person, and in total opposition.  I don&amp;#39;t know this person at all; I just found the rankings humorous.</summary>
+                <content type="html">&lt;p&gt;The first and second results for &amp;#39;linux emoji font&amp;#39; are from the same person, and in total opposition.  I don&amp;#39;t know this person at all; I just found the rankings humorous.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/emojinope.png&#34; alt=&#34;enabling emoji&#34; title=&#34;Emoji&#34;&gt;&lt;/p&gt;
 
@@ -5030,7 +5012,7 @@ person at all; I just found the rankings humorous.&lt;/p&gt;
                 <title>puppetmaster_3 on debian</title>
                 <link rel="alternate" href="/2013/06/27/puppetmaster3-on-debian/" type="text/html" />
                 <id>/2013/06/27/puppetmaster3-on-debian/</id>
-                <updated>2013-06-27T03:27:00Z</updated>
+                <updated>2013-06-27T21:38:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5095,7 +5077,7 @@ aptitude install puppetmaster
                 <title>simple site loadtesting</title>
                 <link rel="alternate" href="/2013/06/25/simple-site-loadtesting/" type="text/html" />
                 <id>/2013/06/25/simple-site-loadtesting/</id>
-                <updated>2013-06-25T17:23:00Z</updated>
+                <updated>2013-06-25T21:38:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5272,7 +5254,7 @@ the launching system.&lt;/p&gt;
                 <title>carna internet map</title>
                 <link rel="alternate" href="/2013/06/17/carna-internet-map/" type="text/html" />
                 <id>/2013/06/17/carna-internet-map/</id>
-                <updated>2013-06-17T03:25:00Z</updated>
+                <updated>2013-06-17T21:26:00Z</updated>
                 
                 <summary type="html">&lt;img src=&#34;/assets/images/carna.gif&#34; alt=&#34;carna&#34; title=&#34;botnet map&#34;&gt;</summary>
                 <content type="html">&lt;p&gt;&lt;img src=&#34;/assets/images/carna.gif&#34; alt=&#34;carna&#34; title=&#34;botnet map&#34;&gt;&lt;/p&gt;
@@ -5289,7 +5271,7 @@ the launching system.&lt;/p&gt;
                 <title>debian graphite install</title>
                 <link rel="alternate" href="/2013/06/15/debian-graphite-install/" type="text/html" />
                 <id>/2013/06/15/debian-graphite-install/</id>
-                <updated>2013-06-15T01:11:00Z</updated>
+                <updated>2013-06-15T21:38:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5449,7 +5431,7 @@ sudo chmod -R a+w /opt/graphite/storage
                 <title>code test beginnings</title>
                 <link rel="alternate" href="/2013/06/07/unit-test-beginnings/" type="text/html" />
                 <id>/2013/06/07/unit-test-beginnings/</id>
-                <updated>2013-06-07T17:22:00Z</updated>
+                <updated>2013-06-07T21:37:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5466,10 +5448,10 @@ sudo chmod -R a+w /opt/graphite/storage
 
 &lt;ul&gt;
 &lt;li&gt; Run integration tests&lt;/li&gt;
-&lt;li&gt; Run QA/Functionality testing&lt;/li&gt;
-&lt;li&gt; Test at scale&lt;/li&gt;
+&lt;li&gt; Run QA/Functionality testing (this could be one and the same with previous)&lt;/li&gt;
 &lt;li&gt; Test monitoring&lt;/li&gt;
-&lt;li&gt; Test Security&lt;/li&gt;
+&lt;li&gt; Test security&lt;/li&gt;
+&lt;li&gt; Test at scale&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;p&gt;There are a lot of ways to break down this basic idea.  Some much better than this.  But I feel like if you can visualize these 7 you are going in the right direction.&lt;/p&gt;
@@ -5660,7 +5642,7 @@ OK
                 <title>IOS DDOS detection</title>
                 <link rel="alternate" href="/2013/06/05/cisco-ios-ddos-detection/" type="text/html" />
                 <id>/2013/06/05/cisco-ios-ddos-detection/</id>
-                <updated>2013-06-05T03:24:00Z</updated>
+                <updated>2013-06-05T21:37:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -5729,13 +5711,11 @@ Half Open Aggressive Aging Period Off, Event Count: 0
                 <title>using snort on pcap</title>
                 <link rel="alternate" href="/2013/06/03/using-snort-on-pcap/" type="text/html" />
                 <id>/2013/06/03/using-snort-on-pcap/</id>
-                <updated>2013-06-03T03:24:00Z</updated>
+                <updated>2013-06-03T21:37:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort&lt;br&gt;
-is running as as service inline or at least continually.  Sometimes things happen&lt;br&gt;
-outside of Snort&amp;#39;s purview or you are testing what Snort picks ups.&lt;/p&gt;
+&lt;p&gt;Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort is running as as service inline or at least continually.  Sometimes things happen outside of Snort&amp;#39;s purview or you are testing what Snort picks ups.&lt;/p&gt;
 &lt;h4&gt;Install tools&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install snort snort-rules
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Capture your traffic&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;sudo tcpdump -w test
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Generate snort report&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;snort -r test -c /etc/snort/snort.conf -l .
@@ -5753,8 +5733,7 @@ TCP TTL:47 TOS:0x0 ID:22893 IpLen:20 DgmLen:44
 Seq: 0x654B5258
 ** END OF DUMP
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;You can edit your snort.conf for what kinds of signatures to look for.  ICMP can be a good indicator&lt;br&gt;
-of shenanigans but is also very noisy.&lt;/p&gt;
+&lt;p&gt;You can edit your snort.conf for what kinds of signatures to look for.  ICMP can be a good indicator of shenanigans but is also very noisy.&lt;/p&gt;
 </content>
             </entry>
         
@@ -5762,7 +5741,7 @@ of shenanigans but is also very noisy.&lt;/p&gt;
                 <title>bash boiler plate troubleshooting</title>
                 <link rel="alternate" href="/2013/05/30/bash-boiler-plate-troubleshooting/" type="text/html" />
                 <id>/2013/05/30/bash-boiler-plate-troubleshooting/</id>
-                <updated>2013-05-30T03:24:00Z</updated>
+                <updated>2013-05-30T21:36:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -5821,10 +5800,54 @@ Arguments:
             </entry>
         
             <entry>
+                <title>cisco lights out failsafe</title>
+                <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
+                <id>/2013/05/29/cisco-lights-out-failsafe/</id>
+                <updated>2013-05-29T21:36:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some nice &amp;quot;fail back to my previous config&amp;quot;, and Cisco now in some cases provides the archive rollback feature.  Which is awesome.  But it may not be available or if for any reason the more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best you can do.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt; &lt;/p&gt;
+
+&lt;p&gt;Updated preamble to reference rollback option.&lt;/p&gt;
+
+&lt;p&gt;So...if it suits your needs use &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;archive&lt;/a&gt; &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback&lt;/a&gt;&lt;/p&gt;
+&lt;h4&gt;Walk through:&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;It&amp;#39;s 2 AM and I&amp;#39;m up for maintenace&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload in 30
+System configuration has been modified. Save? [yes/no]: no
+Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+Proceed with reload? [confirm]
+myrtr#
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** Making changes *** &lt;/p&gt;
+
+&lt;p&gt;*** How long until a reset? ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#show reload
+Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
+Reload reason: Reload Command
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;*** test everything is good -- ok clear scheduled reload ***&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;myrtr#reload cancel
+***
+*** --- SHUTDOWN ABORTED ---
+***
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/fundamentals/configuration/guide/cf_config-rollback.html&#34;&gt;replace and rollback&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/config-mgmt/configuration/xe-3s/asr1000/cm-config-rollback.html&#34;&gt;ios-xe replace and rollback&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.techrepublic.com/blog/data-center/use-the-cisco-ios-archive-command-to-archive-your-routers-configuration/&#34;&gt;archive intro&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback example&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
                 <title>launching a syn flood test</title>
                 <link rel="alternate" href="/2013/05/29/launching-a-syn-flood-test/" type="text/html" />
                 <id>/2013/05/29/launching-a-syn-flood-test/</id>
-                <updated>2013-05-29T17:21:00Z</updated>
+                <updated>2013-05-29T21:36:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -5838,7 +5861,7 @@ Arguments:
 &lt;li&gt;You can mitigate those weaknesses&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h4&gt;Picking a tool&lt;/h4&gt;
-&lt;p&gt;A tool that is simple to use: &lt;a href=&#34;https://github.com/merces/t50&#34;&gt;https://github.com/merces/t50&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;A tool that is simple to use is &lt;a href=&#34;https://github.com/merces/t50&#34;&gt;t50&lt;/a&gt;&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;git clone https://github.com/merces/t50.git
 cd t50/
 make
@@ -5948,60 +5971,14 @@ for i in {1..100}; do ./t50 &amp;lt;target&amp;gt; --threshold 10000 -S; sleep 3
             </entry>
         
             <entry>
-                <title>cisco lights out failsafe</title>
-                <link rel="alternate" href="/2013/05/29/cisco-lights-out-failsafe/" type="text/html" />
-                <id>/2013/05/29/cisco-lights-out-failsafe/</id>
-                <updated>2013-05-29T16:45:00Z</updated>
-                
-                
-                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some nice &amp;quot;fail back to my previous config&amp;quot;, and Cisco now in some cases provides the archive rollback feature.  Which is awesome.  But it may not be available or if for any reason the more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will obviously cause an outage, but in a true &amp;#39;lights out&amp;#39; remote scenario this may be the best you can do.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;EDIT&lt;/strong&gt; &lt;/p&gt;
-
-&lt;p&gt;Updated preamble to reference rollback option.&lt;/p&gt;
-
-&lt;p&gt;So...if it suits your needs use &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;archive&lt;/a&gt; &lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback&lt;/a&gt;&lt;/p&gt;
-&lt;h4&gt;Walk through:&lt;/h4&gt;
-&lt;p&gt;&lt;strong&gt;&lt;em&gt;It&amp;#39;s 2 AM and I&amp;#39;m up for maintenace&lt;/em&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#reload in 30
-System configuration has been modified. Save? [yes/no]: no
-Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
-Reload reason: Reload Command
-Proceed with reload? [confirm]
-myrtr#
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;*** Making changes *** &lt;/p&gt;
-
-&lt;p&gt;*** How long until a reset? ***&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#show reload
-Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &amp;lt;me&amp;gt; on vty0 (&amp;lt;vty_ip&amp;gt;)
-Reload reason: Reload Command
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;*** test everything is good -- ok clear scheduled reload ***&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;myrtr#reload cancel
-***
-*** --- SHUTDOWN ABORTED ---
-***
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios/fundamentals/configuration/guide/cf_config-rollback.html&#34;&gt;replace and rollback&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.cisco.com/en/US/docs/ios-xml/ios/config-mgmt/configuration/xe-3s/asr1000/cm-config-rollback.html&#34;&gt;ios-xe replace and rollback&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://www.techrepublic.com/blog/data-center/use-the-cisco-ios-archive-command-to-archive-your-routers-configuration/&#34;&gt;archive intro&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/&#34;&gt;rollback example&lt;/a&gt;&lt;/p&gt;
-</content>
-            </entry>
-        
-            <entry>
                 <title>syn cookies</title>
                 <link rel="alternate" href="/2013/05/23/syn-cookies/" type="text/html" />
                 <id>/2013/05/23/syn-cookies/</id>
-                <updated>2013-05-23T03:22:00Z</updated>
+                <updated>2013-05-23T21:35:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;When you&amp;#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like&lt;br&gt;
-syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known&lt;br&gt;
-defenses is syn cookies.&lt;/p&gt;
+&lt;p&gt;When you&amp;#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known defenses is syn cookies.&lt;/p&gt;
 &lt;h4&gt;Who doesn&amp;#39;t like cookies?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;SYN cookies are particular choices of initial TCP sequence numbers by TCP servers.
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Linux&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@&amp;lt;server&amp;gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
 0
@@ -6009,19 +5986,16 @@ defenses is syn cookies.&lt;/p&gt;
 root@&amp;lt;server&amp;gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
 1
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of &lt;br&gt;
-enabling does not persist through a reboot.&lt;/p&gt;
-&lt;h4&gt;Cisco IOS Zone Based FW&lt;/h4&gt;
+&lt;p&gt;Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of  enabling does not persist through a reboot.&lt;/p&gt;
+&lt;h4&gt;Cisco IOS Zone Based FW Syn Cookies&lt;/h4&gt;
 &lt;p&gt;Global:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;parameter-map type inspect global
     tcp syn-flood limit 20000
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Zone:&lt;/p&gt;
+&lt;p&gt;Zone Specific:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;parameter-map type inspect-zone ddos-detection
    tcp syn-flood rate per-destination 20000
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;NOTES:&lt;/p&gt;
-
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;NOTES:&lt;/h4&gt;
 &lt;p&gt;SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.&lt;/p&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://cr.yp.to/syncookies.html&#34;&gt;syncookies readme&lt;/a&gt;&lt;br&gt;
@@ -6039,12 +6013,11 @@ enabling does not persist through a reboot.&lt;/p&gt;
                 <title>postfix ssl weak ciphers</title>
                 <link rel="alternate" href="/2013/05/21/postfix-ssl-weak-ciphers/" type="text/html" />
                 <id>/2013/05/21/postfix-ssl-weak-ciphers/</id>
-                <updated>2013-05-21T03:21:00Z</updated>
+                <updated>2013-05-21T21:35:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Vuln&lt;/h4&gt;
-&lt;p&gt;Weak ciphers are detected as a level 4 vuln for most scanners.&lt;br&gt;&lt;br&gt;
-If you have to deal with PCI you know all level 4 and 5 vulns must be resolved.&lt;/p&gt;
+&lt;p&gt;Weak ciphers are detected as a level 4 vuln for most scanners.  If you have to deal with PCI you know all level 4 and 5 vulns must be resolved.&lt;/p&gt;
 &lt;h4&gt;Resolution&lt;/h4&gt;
 &lt;p&gt;/etc/postfix/main.cf&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;# TLS parameters
@@ -6065,9 +6038,8 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
 &lt;pre&gt;&lt;code&gt;ssl_only_use_tls = true.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;So if you have need for non-tls capable clients use caution.&lt;/p&gt;
-
-&lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;https://community.qualys.com/docs/DOC-1141&#34;&gt;QID 38140&lt;/a&gt;&lt;br&gt;
+&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://community.qualys.com/docs/DOC-1141&#34;&gt;QID 38140&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.postfix.org/TLS_README.html#server_enable&#34;&gt;postfix server enable&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
@@ -6076,15 +6048,11 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
                 <title>using graphite events</title>
                 <link rel="alternate" href="/2013/05/17/using-graphite-events/" type="text/html" />
                 <id>/2013/05/17/using-graphite-events/</id>
-                <updated>2013-05-17T19:47:00Z</updated>
+                <updated>2013-05-17T21:34:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Graphite events allow you to overlay vertical bars on graphs for correlation of events&lt;br&gt;
-and trending data.  I know the &lt;a href=&#34;http://codeascraft.com/2010/12/08/track-every-release/&#34; title=&#34;etsy events&#34;&gt;etsy&lt;/a&gt;&lt;br&gt;
-guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That&lt;br&gt;
-is a nice and reliable way to do it, but if you are looking for more flexbility using the &lt;br&gt;
-native (&amp;#39;experimental&amp;#39;) events feature may be useful.&lt;/p&gt;
+&lt;p&gt;Graphite events allow you to overlay vertical bars on graphs for correlation of events and trending data.  I know the &lt;a href=&#34;http://codeascraft.com/2010/12/08/track-every-release/&#34; title=&#34;etsy events&#34;&gt;etsy&lt;/a&gt; guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That is a nice and reliable way to do it, but if you are looking for more flexbility using the  native (&amp;#39;experimental&amp;#39;) events feature may be useful.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/events.png&#34; alt=&#34;diagram&#34; title=&#34;events&#34;&gt;&lt;/p&gt;
 &lt;h4&gt;Posting an event:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
@@ -6123,9 +6091,8 @@ https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(event
 
 #Now code syncs from a specific user:
 https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(events(&amp;#39;code_sync&amp;#39;, &amp;#39;user&amp;#39;))
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html&#34;&gt;graphite docs&lt;/a&gt;&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://graphite.readthedocs.org/en/1.0/functions.html&#34;&gt;graphite docs&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142&#34;&gt;garphite events&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
@@ -6134,17 +6101,15 @@ https://graphite/render?target=my.metic.path&amp;amp;target=drawAsInfinite(event
                 <title>ops guy says timemachine</title>
                 <link rel="alternate" href="/2013/05/16/ops-guy-says-timemachine/" type="text/html" />
                 <id>/2013/05/16/ops-guy-says-timemachine/</id>
-                <updated>2013-05-16T18:17:00Z</updated>
+                <updated>2013-05-16T21:34:00Z</updated>
                 
                 <summary type="html">OPS: &amp;quot;When does it need to be done?&amp;quot;&lt;br&gt;
 PM: &amp;quot;Next week at the latest.&amp;quot;&lt;br&gt;
-OPS: &amp;quot;OK, we spend from now to next week working on a time machine.  If we&lt;br&gt;
-had a time machine it would &lt;em&gt;already&lt;/em&gt; be done.&amp;quot;&lt;br&gt;
+OPS: &amp;quot;OK, we spend from now to next week working on a time machine.  If we had a time machine it would &lt;em&gt;already&lt;/em&gt; be done.&amp;quot;&lt;br&gt;
 PM: &amp;quot;How so?&amp;quot;</summary>
                 <content type="html">&lt;p&gt;OPS: &amp;quot;When does it need to be done?&amp;quot;&lt;br&gt;
 PM: &amp;quot;Next week at the latest.&amp;quot;&lt;br&gt;
-OPS: &amp;quot;OK, we spend from now to next week working on a time machine.  If we&lt;br&gt;
-had a time machine it would &lt;em&gt;already&lt;/em&gt; be done.&amp;quot;&lt;br&gt;
+OPS: &amp;quot;OK, we spend from now to next week working on a time machine.  If we had a time machine it would &lt;em&gt;already&lt;/em&gt; be done.&amp;quot;&lt;br&gt;
 PM: &amp;quot;How so?&amp;quot;&lt;/p&gt;
 </content>
             </entry>
@@ -6209,7 +6174,7 @@ iptables -P OUTPUT ACCEPT
                 <title>beginning bgp</title>
                 <link rel="alternate" href="/2013/04/18/beginning-bgp/" type="text/html" />
                 <id>/2013/04/18/beginning-bgp/</id>
-                <updated>2013-04-18T16:48:00Z</updated>
+                <updated>2013-04-18T21:34:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -6286,10 +6251,10 @@ Mozilla: &lt;a href=&#34;http://whois.arin.net/rest/customer/C01111858&#34;&gt;h
                 <title>beginning bgp configuration</title>
                 <link rel="alternate" href="/2013/04/16/beginning-bgp-configuration/" type="text/html" />
                 <id>/2013/04/16/beginning-bgp-configuration/</id>
-                <updated>2013-04-16T16:46:00Z</updated>
+                <updated>2013-04-16T21:34:00Z</updated>
                 
                 
-                <content type="html">&lt;h5&gt;Preamble&lt;/h5&gt;
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Getting started with BGP&lt;/p&gt;
 &lt;h4&gt;Configuring Basic BGP (full table)&lt;/h4&gt;
 &lt;p&gt;This configuration is Cisco based but JunOS isn&amp;#39;t too far of a stretch in my experience.&lt;/p&gt;
@@ -6505,11 +6470,11 @@ Total number of prefixes 1
                 <title>virsh halting a host</title>
                 <link rel="alternate" href="/2013/04/10/virsh-halting-a-host/" type="text/html" />
                 <id>/2013/04/10/virsh-halting-a-host/</id>
-                <updated>2013-04-10T19:05:00Z</updated>
+                <updated>2013-04-10T21:33:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;KVM is great but I&amp;#39;m aking a note so I remember because this command gives me pause every time.&lt;/p&gt;
+&lt;p&gt;KVM is great but I&amp;#39;m making a note so I remember because this command gives me pause every time.&lt;/p&gt;
 &lt;h4&gt;Sometimes &amp;#39;shutdown&amp;#39; in the virtual shell for KVM fails.&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;virsh # shutdown myvm
 Domain myvm is being shutdown
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;But...&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;114 myvm            running
@@ -6521,12 +6486,10 @@ command.  Destroy is like pulling the plug.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;virsh #destroy myvm
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;The command that does what I would expect destroy to do is: &amp;#39;undefine&amp;#39;.&lt;/p&gt;
-&lt;h4&gt;the &amp;#39;Sometimes&amp;#39;&lt;/h4&gt;
-&lt;p&gt;When a new VM has no OS or doesn&amp;#39;t make it past the bootloader it appears to be&lt;br&gt;
-non-responsive for the graceful shutdown command.&lt;/p&gt;
-
-&lt;p&gt;Reference&lt;br&gt;
-&lt;a href=&#34;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&#34;&gt;fedora project virsh doc&lt;/a&gt;&lt;br&gt;
+&lt;h4&gt;the &amp;#39;Sometimes&amp;#39; update&lt;/h4&gt;
+&lt;p&gt;When a new VM has no OS or doesn&amp;#39;t make it past the bootloader it appears to be non-responsive for the graceful shutdown command.&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://docs.fedoraproject.org/en-US/Fedora/13/html/Virtualization_Guide/chap-Virtualization-Managing_guests_with_virsh.html&#34;&gt;fedora project virsh doc&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://www.cyberciti.biz/faq/linux-kvm-stop-start-guest-virtual-machine/&#34;&gt;cyberciti doc&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
@@ -6618,7 +6581,7 @@ Skipping run of Puppet configuration client; administratively disabled
                 <title>basic redis python pubsub</title>
                 <link rel="alternate" href="/2013/03/26/basic-redis-python-pubsub/" type="text/html" />
                 <id>/2013/03/26/basic-redis-python-pubsub/</id>
-                <updated>2013-03-26T16:43:00Z</updated>
+                <updated>2013-03-26T21:33:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -6697,12 +6660,11 @@ except redis.exceptions.ConnectionError as e:
                 <title>query puppetdb facts from cli</title>
                 <link rel="alternate" href="/2013/03/15/query-puppetdb-facts-from-cli/" type="text/html" />
                 <id>/2013/03/15/query-puppetdb-facts-from-cli/</id>
-                <updated>2013-03-15T19:30:00Z</updated>
+                <updated>2013-03-15T21:33:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;A need to get host facts when the host itself is not available.  PuppetDB&lt;br&gt;
-has cached them, and I like the CLI.&lt;/p&gt;
+&lt;p&gt;A need to get host facts when the host itself is not available.  PuppetDB has cached them, and I like the CLI.&lt;/p&gt;
 &lt;h4&gt;This doesn&amp;#39;t work like you think it does&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;puppet facts find &amp;lt;myhost.com&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This always returns the facts for the &lt;em&gt;puppetmaster&lt;/em&gt; itself.&lt;/p&gt;
@@ -6722,14 +6684,13 @@ has cached them, and I like the CLI.&lt;/p&gt;
                 <title>puppet file resources in masterless mode</title>
                 <link rel="alternate" href="/2013/03/06/puppet-file-resources-in-masterless-mode/" type="text/html" />
                 <id>/2013/03/06/puppet-file-resources-in-masterless-mode/</id>
-                <updated>2013-03-06T19:30:00Z</updated>
+                <updated>2013-03-06T21:33:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Accessing file stores via puppet manifests in the real world.&lt;/p&gt;
 
-&lt;p&gt;If you use Puppet to distribute file resources and you also test&lt;br&gt;
-configuration changes locally it can be a pain.&lt;/p&gt;
+&lt;p&gt;If you use Puppet to distribute file resources and you also test configuration changes locally it can be a pain.&lt;/p&gt;
 &lt;h4&gt;Define a file resource for Puppet:&lt;/h4&gt;
 &lt;p&gt;&lt;em&gt;fileserver.conf:&lt;/em&gt;&lt;/p&gt;
 
@@ -6796,7 +6757,7 @@ failing because of this falsly accussed dependency now can be debugged.&lt;/p&gt
                 <title>allowing env magic via sudo</title>
                 <link rel="alternate" href="/2013/02/25/allowing-env-magic-via-sudo/" type="text/html" />
                 <id>/2013/02/25/allowing-env-magic-via-sudo/</id>
-                <updated>2013-02-25T16:43:00Z</updated>
+                <updated>2013-02-25T21:32:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -6835,7 +6796,7 @@ Defaults env_keep += &amp;#34;LD_PRELOAD&amp;#34;
                 <title>making trivial debian packages</title>
                 <link rel="alternate" href="/2013/02/19/making-trivial-debian-packages/" type="text/html" />
                 <id>/2013/02/19/making-trivial-debian-packages/</id>
-                <updated>2013-02-19T22:06:00Z</updated>
+                <updated>2013-02-19T21:32:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -6966,12 +6927,11 @@ All right, you win.
                 <title>simple nat outbound cisco asa</title>
                 <link rel="alternate" href="/2013/01/23/simple-nat-outbound-asa/" type="text/html" />
                 <id>/2013/01/23/simple-nat-outbound-asa/</id>
-                <updated>2013-01-23T19:28:00Z</updated>
+                <updated>2013-01-23T21:32:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;NAT on the ASA can get complicated but 90% of remote sites need&lt;br&gt;
-some version of this basic configuration.&lt;/p&gt;
+&lt;p&gt;NAT on the ASA can get complicated but 90% of remote sites need some version of this basic configuration.&lt;/p&gt;
 &lt;h4&gt;Interfaces&lt;/h4&gt;
 &lt;p&gt;Establish your NAT roles.&lt;/p&gt;
 
@@ -7016,12 +6976,11 @@ nat (Inside,Outside) source dynamic NAT-CLIENTS interface
                 <title>cli password generation</title>
                 <link rel="alternate" href="/2013/01/15/cli-password-generation/" type="text/html" />
                 <id>/2013/01/15/cli-password-generation/</id>
-                <updated>2013-01-15T19:27:00Z</updated>
+                <updated>2013-01-15T21:32:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I notice people using online password generators such as &lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;pctools&lt;/a&gt; and similar sites.  This &lt;br&gt;
-is less than ideal.  APG is my generator of choice.&lt;/p&gt;
+&lt;p&gt;I notice people using online password generators such as &lt;a href=&#34;http://www.pctools.com/guides/password/&#34;&gt;pctools&lt;/a&gt; and similar sites.  This is less than ideal.  APG is my generator of choice.&lt;/p&gt;
 &lt;h4&gt;Six twelve character choices&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;root@vm:~# apg -m 12
 recEbrArkyan
 eevocdeirpUd
@@ -7055,14 +7014,14 @@ yufNifEyLyff (yuf-Nif-Ey-Lyff) yankee-uniform-foxtrot-November-india-foxtrot-Ech
                 <title>mysql cleanup</title>
                 <link rel="alternate" href="/2013/01/11/mysql-cleanup/" type="text/html" />
                 <id>/2013/01/11/mysql-cleanup/</id>
-                <updated>2013-01-11T01:08:00Z</updated>
+                <updated>2013-01-11T21:32:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Show me my non-default databases:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;for d in $(mysql -u root -e &amp;#34;show databases&amp;#34; | \
-grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
+    grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
 do echo $d; done
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Clean non-default databases:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;for d in $(mysql -u root -e &amp;#34;show databases&amp;#34; | \
-grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
+    grep -v &amp;#39;Database\|mysql\|performance_schema\|information_schema&amp;#39;); \
 do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
 &lt;/code&gt;&lt;/pre&gt;</content>
             </entry>
@@ -7071,7 +7030,7 @@ do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
                 <title>linux format code academy python bug</title>
                 <link rel="alternate" href="/2012/12/20/linux-format-code-academy-python-bug/" type="text/html" />
                 <id>/2012/12/20/linux-format-code-academy-python-bug/</id>
-                <updated>2012-12-20T15:54:00Z</updated>
+                <updated>2012-12-20T21:32:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7108,10 +7067,12 @@ do echo $d; mysql -u root -e &amp;#34;drop database $d;&amp;#34;; done
                 <title>cisco ios xe monitoring oid collection</title>
                 <link rel="alternate" href="/2012/12/13/cisco-ios-xe-monitoring-oid-collection/" type="text/html" />
                 <id>/2012/12/13/cisco-ios-xe-monitoring-oid-collection/</id>
-                <updated>2012-12-13T00:59:00Z</updated>
+                <updated>2012-12-13T21:31:00Z</updated>
                 
                 
-                <content type="html">&lt;h3&gt;Cisco IOS-XE OID&amp;#39;s for monitoring&lt;/h3&gt;&lt;h4&gt;Memory Walk OID&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;.1.3.6.1.4.1.9.9.48.1.1.1
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Cisco IOS-XE OID&amp;#39;s for monitoring&lt;/p&gt;
+&lt;h4&gt;Memory Walk OID&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;.1.3.6.1.4.1.9.9.48.1.1.1
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;This should provide your memory bank OID space.&lt;/p&gt;
 &lt;h4&gt;OID keys for memory stats&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;mem_bank = 1.3.6.1.4.1.9.9.48.1.1.1.2.
@@ -7218,7 +7179,7 @@ rasessions = 1.3.6.1.4.1.9.9.392.1.3.1.0&lt;/p&gt;
                 <title>bash then and now</title>
                 <link rel="alternate" href="/2012/12/03/bash-then-and-now/" type="text/html" />
                 <id>/2012/12/03/bash-then-and-now/</id>
-                <updated>2012-12-03T19:26:00Z</updated>
+                <updated>2012-12-03T21:31:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7371,7 +7332,7 @@ exten =&amp;gt; 2112,2,MusicOnHold(rush)
                 <title>cisco ios-xe history size</title>
                 <link rel="alternate" href="/2012/11/21/cisco-ios-history-size/" type="text/html" />
                 <id>/2012/11/21/cisco-ios-history-size/</id>
-                <updated>2012-11-21T19:25:00Z</updated>
+                <updated>2012-11-21T21:31:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7399,15 +7360,13 @@ line vty 5 15
                 <title>puppet tagged runs</title>
                 <link rel="alternate" href="/2012/11/08/puppet-tagged-runs/" type="text/html" />
                 <id>/2012/11/08/puppet-tagged-runs/</id>
-                <updated>2012-11-08T19:25:00Z</updated>
+                <updated>2012-11-08T21:31:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Updating only relevant Puppet configuration sections&lt;/p&gt;
 
-&lt;p&gt;As a puppet installation grows the list of used modules can get large.  Especially,&lt;br&gt;
-if you are pulling from &lt;a href=&#34;https://forge.puppetlabs.com/&#34;&gt;puppetlabs&lt;/a&gt;.  Testing in its final stages&lt;br&gt;
-is usually done via puppet to ensure repeatability.  The test runs get longer and longer.&lt;/p&gt;
+&lt;p&gt;As a puppet installation grows the list of used modules can get large.  Especially, if you are pulling from &lt;a href=&#34;https://forge.puppetlabs.com/&#34;&gt;puppetlabs&lt;/a&gt;.  Testing in its final stages is usually done via puppet to ensure repeatability.  The test runs get longer and longer.&lt;/p&gt;
 &lt;h4&gt;A full catalog run with no expected changes&lt;/h4&gt;
 &lt;p&gt;&lt;pre&gt;&lt;code&gt;&lt;br&gt;
 sudo /usr/bin/puppet agent --test --logdest syslog&lt;br&gt;
@@ -7473,7 +7432,7 @@ Finished catalog run in 12.39 seconds&lt;br&gt;
                 <title>mysql full partition</title>
                 <link rel="alternate" href="/2012/11/02/mysql-full-partition/" type="text/html" />
                 <id>/2012/11/02/mysql-full-partition/</id>
-                <updated>2012-11-02T16:37:00Z</updated>
+                <updated>2012-11-02T21:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7569,7 +7528,7 @@ Starting MySQL (Percona Server) database server: mysqld already running.
                 <title>mib basics</title>
                 <link rel="alternate" href="/2012/10/29/mib-basics/" type="text/html" />
                 <id>/2012/10/29/mib-basics/</id>
-                <updated>2012-10-29T19:24:00Z</updated>
+                <updated>2012-10-29T21:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7643,14 +7602,13 @@ DISMAN-EVENT-MIB::sysUpTimeInstance = Timeticks: (151866995) 17 days, 13:51:09.9
                 <title>email log alerts</title>
                 <link rel="alternate" href="/2012/10/23/email-log-alerts/" type="text/html" />
                 <id>/2012/10/23/email-log-alerts/</id>
-                <updated>2012-10-23T23:15:00Z</updated>
+                <updated>2012-10-23T21:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;Getting emails based on strings that appear in a log file.&lt;/p&gt;
 
-&lt;p&gt;Heavy duty logging platforms are nice but sometimes you have&lt;br&gt;
-to make do with the basics.&lt;/p&gt;
+&lt;p&gt;Heavy duty logging platforms are nice but sometimes you have to make do with the basics.&lt;/p&gt;
 &lt;h4&gt;Install&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install log2mail rsyslog
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Rsyslog configuration&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#one dir/file per receiver IP
 $template FILENAME,&amp;#34;/var/log/%fromhost-ip%/syslog.log&amp;#34;
@@ -7833,7 +7791,7 @@ done
                 <title>monitor interface usage</title>
                 <link rel="alternate" href="/2012/09/13/monitor-interface-usage/" type="text/html" />
                 <id>/2012/09/13/monitor-interface-usage/</id>
-                <updated>2012-09-13T23:14:00Z</updated>
+                <updated>2012-09-13T21:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7906,7 +7864,7 @@ done
                 <title>puppet cert signing</title>
                 <link rel="alternate" href="/2012/09/03/puppet-cert-signing/" type="text/html" />
                 <id>/2012/09/03/puppet-cert-signing/</id>
-                <updated>2012-09-03T23:14:00Z</updated>
+                <updated>2012-09-03T21:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -7933,7 +7891,7 @@ Signed certificate request for blah.com
                 <title>examining PXE boot</title>
                 <link rel="alternate" href="/2012/08/29/examining-pxe-boot/" type="text/html" />
                 <id>/2012/08/29/examining-pxe-boot/</id>
-                <updated>2012-08-29T23:14:00Z</updated>
+                <updated>2012-08-29T21:30:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -8040,7 +7998,7 @@ IP lab01.da.49155 &gt; &lt;pxe/tftp/server&gt;.da.tftp:  39 RRQ &#34;initrd.gz&#
                 <title>ssh go forth and do my will</title>
                 <link rel="alternate" href="/2012/08/21/ssh-go-forth-and-do-my-will/" type="text/html" />
                 <id>/2012/08/21/ssh-go-forth-and-do-my-will/</id>
-                <updated>2012-08-21T23:14:00Z</updated>
+                <updated>2012-08-21T21:29:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -8068,9 +8026,8 @@ ls -R       -- for fun we need that file list
 bin
 git
 test.txt
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://en.wikipedia.org/wiki/Nohup&#34;&gt;nohup wiki&lt;/a&gt;&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/Nohup&#34;&gt;nohup wiki&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://stackoverflow.com/questions/954302/how-to-make-a-programme-continue-to-run-after-log-out-from-ssh&#34;&gt;so notes&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
@@ -8079,7 +8036,7 @@ test.txt
                 <title>puppet core dump control</title>
                 <link rel="alternate" href="/2012/08/17/puppet-core-dump-control/" type="text/html" />
                 <id>/2012/08/17/puppet-core-dump-control/</id>
-                <updated>2012-08-17T18:44:00Z</updated>
+                <updated>2012-08-17T21:29:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;If you have crashes you can enable core dumps via Puppet&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;file { &amp;#39;/var/core&amp;#39;:
@@ -8091,9 +8048,8 @@ test.txt
 # %t = timestamp
 # %p = pid
 sysctl { &amp;#39;kernel.core_pattern&amp;#39;: value =&amp;gt; &amp;#39;/var/core/core.%e.%t.%p&amp;#39; }
-&lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;Reference:&lt;br&gt;
-&lt;a href=&#34;http://www.cyberciti.biz/tips/linux-core-dumps.html&#34;&gt;cyberciti notes&lt;/a&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.cyberciti.biz/tips/linux-core-dumps.html&#34;&gt;cyberciti notes&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
@@ -8101,7 +8057,7 @@ sysctl { &amp;#39;kernel.core_pattern&amp;#39;: value =&amp;gt; &amp;#39;/var/co
                 <title>last puppet update</title>
                 <link rel="alternate" href="/2012/08/16/last-puppet-update/" type="text/html" />
                 <id>/2012/08/16/last-puppet-update/</id>
-                <updated>2012-08-16T18:44:00Z</updated>
+                <updated>2012-08-16T21:29:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;When was this host last updated via puppet?&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;#!/bin/bash
@@ -8140,14 +8096,11 @@ minutes: 22
                 <title>simple deb from github python</title>
                 <link rel="alternate" href="/2012/08/08/simple-deb-from-github-python/" type="text/html" />
                 <id>/2012/08/08/simple-deb-from-github-python/</id>
-                <updated>2012-08-08T22:06:00Z</updated>
+                <updated>2012-08-08T21:29:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;One of the things I do often is download projects from github.  Pypi (py-pee-eye) is nice and so is pip, but I like &lt;br&gt;
-to have one reference for packages on a host.  If at all possible I prefer to make binaries.  It is nice for &lt;br&gt;
-reporting, and because we run our own internal repostories it affords us certain advantages for reporting and &lt;br&gt;
-dependency handling.&lt;/p&gt;
+&lt;p&gt;One of the things I do often is download projects from github.  Pypi (py-pee-eye) is nice and so is pip, but I like to have one reference for packages on a host.  If at all possible I prefer to make binaries.  It is nice for reporting, and because we run our own internal repostories it affords us certain advantages for reporting and dependency handling.&lt;/p&gt;
 &lt;h4&gt;Install a few packages:&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install build-essential python-dev python-setuptools python-stdeb python-support
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Download a project: &lt;a href=&#34;https://github.com/xb95/nagios-api.git&#34;&gt;https://github.com/xb95/nagios-api.git&lt;/a&gt;&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;git clone https://github.com/xb95/nagios-api.git
 cd nagios-api/
@@ -8413,13 +8366,11 @@ you
                 <title>asa vpn user admin</title>
                 <link rel="alternate" href="/2012/03/19/asa-vpn-user-admin/" type="text/html" />
                 <id>/2012/03/19/asa-vpn-user-admin/</id>
-                <updated>2012-03-19T23:13:00Z</updated>
+                <updated>2012-03-19T21:28:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;The ASA does VPN quite well.  I use some form of &lt;a href=&#34;http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a00808efbd2.shtml&#34;&gt;this&lt;/a&gt; setup &lt;br&gt;
-involving a self-signed CA on the ASA and the anyconnect client.  I also like to use the downloadable ACL feature &lt;br&gt;
-with Cisco ACS or Freeradius.  If you get this going you need to administer users.  This is a brief showing of that.&lt;/p&gt;
+&lt;p&gt;The ASA does VPN quite well.  I use some form of &lt;a href=&#34;http://www.cisco.com/en/US/products/ps6120/products_configuration_example09186a00808efbd2.shtml&#34;&gt;this&lt;/a&gt; setup involving a self-signed CA on the ASA and the anyconnect client.  I also like to use the downloadable ACL feature with Cisco ACS or Freeradius.  If you get this going you need to administer users.  This is a brief showing of that.&lt;/p&gt;
 &lt;h4&gt;Summary&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;asa# show vpn-sessiondb summary
 &lt;/code&gt;&lt;/pre&gt;
 &lt;pre&gt;&lt;code&gt;
@@ -8492,17 +8443,15 @@ VLAN Mapping : N/A                    VLAN         : none
                 <title>proxychains</title>
                 <link rel="alternate" href="/2012/02/18/proxychains/" type="text/html" />
                 <id>/2012/02/18/proxychains/</id>
-                <updated>2012-02-18T23:13:00Z</updated>
+                <updated>2012-02-18T21:28:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;Some commands do not support a proxy (RE: telnet).  Other times it is just easier to do a one-off instance rather &lt;br&gt;
-than mess with environment settings.  A lot of people use this with Tor.&lt;/p&gt;
+&lt;p&gt;Some commands do not natively support a proxy (RE: telnet).  Other times it is just easier to do a one-off instance rather than mess with environment settings.  A lot of people use this with Tor.&lt;/p&gt;
 &lt;h4&gt;ProxyChains&lt;/h4&gt;
-&lt;p&gt;Allows you to send traffic through a proxy without the command&lt;br&gt;
-itself having foreknowledge.&lt;/p&gt;
+&lt;p&gt;Allows you to send traffic through a proxy without the command itself having foreknowledge.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;aptitude install proxychains
-&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Config files&lt;/h4&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Config file options&lt;/h4&gt;
 &lt;p&gt;Pick one:&lt;/p&gt;
 
 &lt;p&gt;1  ./proxychains.conf&lt;br&gt;
@@ -8545,8 +8494,7 @@ Connected to google.com.
 Escape character is &#39;^]&#39;.
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Excluding traffic from your proxy&lt;/h4&gt;
-&lt;p&gt;In theory you can set the localnet option in your configuration file to exclude the local LAN by default from proxy &lt;br&gt;
-behavior.  This has not worked for me with proxychains under Debian 6.0&lt;/p&gt;
+&lt;p&gt;In theory you can set the localnet option in your configuration file to exclude the local LAN by default from proxy  behavior.  This has not worked for me with proxychains under Debian 6.0&lt;/p&gt;
 
 &lt;p&gt;In case you are interested though: &lt;a href=&#34;https://github.com/haad/proxychains/issues/6#issuecomment-4041824&#34;&gt;localnet docs&lt;/a&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
@@ -8559,20 +8507,12 @@ behavior.  This has not worked for me with proxychains under Debian 6.0&lt;/p&gt
         
             <entry>
                 <title>internet notoriety</title>
-                <link rel="alternate" href="/2012/02/07/internet-famous-one/" type="text/html" />
-                <id>/2012/02/07/internet-famous-one/</id>
-                <updated>2012-02-07T23:13:00Z</updated>
+                <link rel="alternate" href="/2012/02/07/internet-notoriety-one/" type="text/html" />
+                <id>/2012/02/07/internet-notoriety-one/</id>
+                <updated>2012-02-07T21:26:00Z</updated>
                 
-                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors and I set off an insane alarm.  Strobe &lt;br&gt;
-lights were in effect.  I left a voicemail for my boss that has become something of urban legend.  One of my &lt;br&gt;
-coworkers posted it on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and it got picked up &lt;br&gt;
-by someone who blogs regularly at Microsoft.  It was associated with another urban legend story at MS about a new &lt;br&gt;
-employee dinging the car of someone with the lastname Gates.</summary>
-                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors and I set off an insane alarm.  Strobe &lt;br&gt;
-lights were in effect.  I left a voicemail for my boss that has become something of urban legend.  One of my &lt;br&gt;
-coworkers posted it on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and it got picked up &lt;br&gt;
-by someone who blogs regularly at Microsoft.  It was associated with another urban legend story at MS about a new &lt;br&gt;
-employee dinging the car of someone with the lastname Gates.&lt;/p&gt;
+                <summary type="html">My second day at my last job I showed up early.  I came in the unlocked doors and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail for my boss that has become something of urban legend.  One of my coworkers posted it on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and it got picked up by someone who blogs regularly at Microsoft.  It was associated with another urban legend story at MS about a new employee dinging the car of someone with the lastname Gates.</summary>
+                <content type="html">&lt;p&gt;My second day at my last job I showed up early.  I came in the unlocked doors and I set off an insane alarm.  Strobe lights were in effect.  I left a voicemail for my boss that has become something of urban legend.  One of my coworkers posted it on his &lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;blog&lt;/a&gt; and it got picked up by someone who blogs regularly at Microsoft.  It was associated with another urban legend story at MS about a new employee dinging the car of someone with the lastname Gates.&lt;/p&gt;
 
 &lt;p&gt;The original post:&lt;/p&gt;
 
@@ -8582,8 +8522,7 @@ employee dinging the car of someone with the lastname Gates.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&#34;/assets/images/ione/ione-back2.png&#34; alt=&#34;backtrace&#34; title=&#34;backtrace&#34;&gt;&lt;/p&gt;
 
-&lt;p&gt;I find the whole thing funny.  It is part of my history now.  Someday I may&lt;br&gt;
-own up my second &amp;#39;Internet Notorious&amp;#39; moment.&lt;/p&gt;
+&lt;p&gt;I find the whole thing funny.  It is part of my history now.  Someday I may own up my second &amp;#39;Internet Notorious&amp;#39; moment.&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://www.caffeinatedcoder.com/new-employee-hall-of-fame/&#34;&gt;caffeine coder&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://blogs.msdn.com/b/oldnewthing/archive/2007/09/26/5131601.aspx&#34;&gt;msdn traceback&lt;/a&gt;&lt;/p&gt;

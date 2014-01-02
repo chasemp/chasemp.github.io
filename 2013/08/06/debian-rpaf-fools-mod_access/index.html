@@ -90,10 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>If you have a reverse proxy in front of apache you need a way to<br>
-persist the original host IP for logging, etc.  <a href="http://stderr.net/apache/rpaf/">rpaf</a> does<br>
-this.  Essentially handles letting apache see the proxy provided<br>
-field of <a href="http://en.wikipedia.org/wiki/X-Forwarded-For">x-forward-for</a> so things are handled in a sane manner.</p>
+<p>If you have a reverse proxy in front of apache you need a way to persist the original host IP for logging, etc.  <a href="http://stderr.net/apache/rpaf/">rpaf</a> does this.  Essentially handles letting apache see the proxy provided field of <a href="http://en.wikipedia.org/wiki/X-Forwarded-For">x-forward-for</a> so things are handled in a sane manner.</p>
 
 <p>Unfortunately this seems to have problems working with  <a href="http://httpd.apache.org/docs/2.0/mod/mod_access.html">mod_access</a>.</p>
 

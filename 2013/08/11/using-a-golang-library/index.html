@@ -90,8 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p><a href="http://golang.org/">Go</a> is rather strict and has a &#39;one right way&#39; methodology.  I<br>
-am going to demonstrate using a Golang tool that mimicks tcpdump.</p>
+<p><a href="http://golang.org/">Go</a> is rather strict and has a &#39;one right way&#39; methodology.  I am going to demonstrate using a Golang tool that mimicks tcpdump.</p>
 <h4>Installing</h4><pre><code>aptitude install golang libpcap0.8-dev 
 </code></pre>
 <pre><code>
@@ -129,7 +128,6 @@ mkdir -p $HOME/go/src
 export GOPATH=$HOME/go
 #including &#39;go install&#39; binaries in our normal $PATH
 export PATH=$PATH:$GOPATH/bin
-
 
 cd ~/go/src/
 git clone https://github.com/akrennmair/gopcap.git
@@ -219,8 +217,7 @@ me@vm:~/go/src/gopcap/tools/tcpdump# tree ~/go/
                 └── tcpdump.go
 </code></pre>
 <h4>Go and Paths</h4>
-<p>So tcpdump is obviously already a *nix tool.  Right now if I issue the command I am<br>
-getting the Go version.</p>
+<p>So tcpdump is obviously already a *nix tool.  Right now if I issue the command I am getting the Go version.</p>
 <pre><code>&gt;which tcpdump
 /root/go/bin/tcpdump
 

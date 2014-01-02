@@ -90,10 +90,10 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Show me my non-default databases:</h4><pre><code>for d in $(mysql -u root -e &#34;show databases&#34; | \
-grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
+    grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
 do echo $d; done
 </code></pre><h4>Clean non-default databases:</h4><pre><code>for d in $(mysql -u root -e &#34;show databases&#34; | \
-grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
+    grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
 do echo $d; mysql -u root -e &#34;drop database $d;&#34;; done
 </code></pre>
         </div>

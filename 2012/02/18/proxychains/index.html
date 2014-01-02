@@ -90,13 +90,11 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Some commands do not support a proxy (RE: telnet).  Other times it is just easier to do a one-off instance rather <br>
-than mess with environment settings.  A lot of people use this with Tor.</p>
+<p>Some commands do not natively support a proxy (RE: telnet).  Other times it is just easier to do a one-off instance rather than mess with environment settings.  A lot of people use this with Tor.</p>
 <h4>ProxyChains</h4>
-<p>Allows you to send traffic through a proxy without the command<br>
-itself having foreknowledge.</p>
+<p>Allows you to send traffic through a proxy without the command itself having foreknowledge.</p>
 <pre><code>aptitude install proxychains
-</code></pre><h4>Config files</h4>
+</code></pre><h4>Config file options</h4>
 <p>Pick one:</p>
 
 <p>1  ./proxychains.conf<br>
@@ -139,8 +137,7 @@ Connected to google.com.
 Escape character is '^]'.
 </code></pre>
 <h4>Excluding traffic from your proxy</h4>
-<p>In theory you can set the localnet option in your configuration file to exclude the local LAN by default from proxy <br>
-behavior.  This has not worked for me with proxychains under Debian 6.0</p>
+<p>In theory you can set the localnet option in your configuration file to exclude the local LAN by default from proxy  behavior.  This has not worked for me with proxychains under Debian 6.0</p>
 
 <p>In case you are interested though: <a href="https://github.com/haad/proxychains/issues/6#issuecomment-4041824">localnet docs</a></p>
 <h4>Reference</h4>

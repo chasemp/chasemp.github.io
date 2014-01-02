@@ -90,9 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort<br>
-is running as as service inline or at least continually.  Sometimes things happen<br>
-outside of Snort&#39;s purview or you are testing what Snort picks ups.</p>
+<p>Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort is running as as service inline or at least continually.  Sometimes things happen outside of Snort&#39;s purview or you are testing what Snort picks ups.</p>
 <h4>Install tools</h4><pre><code>aptitude install snort snort-rules
 </code></pre><h4>Capture your traffic</h4><pre><code>sudo tcpdump -w test
 </code></pre><h4>Generate snort report</h4><pre><code>snort -r test -c /etc/snort/snort.conf -l .
@@ -110,8 +108,7 @@ TCP TTL:47 TOS:0x0 ID:22893 IpLen:20 DgmLen:44
 Seq: 0x654B5258
 ** END OF DUMP
 </code></pre>
-<p>You can edit your snort.conf for what kinds of signatures to look for.  ICMP can be a good indicator<br>
-of shenanigans but is also very noisy.</p>
+<p>You can edit your snort.conf for what kinds of signatures to look for.  ICMP can be a good indicator of shenanigans but is also very noisy.</p>
 
         </div>
     </div>

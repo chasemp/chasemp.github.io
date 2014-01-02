@@ -90,8 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Vuln</h4>
-<p>Weak ciphers are detected as a level 4 vuln for most scanners.<br><br>
-If you have to deal with PCI you know all level 4 and 5 vulns must be resolved.</p>
+<p>Weak ciphers are detected as a level 4 vuln for most scanners.  If you have to deal with PCI you know all level 4 and 5 vulns must be resolved.</p>
 <h4>Resolution</h4>
 <p>/etc/postfix/main.cf</p>
 <pre><code># TLS parameters
@@ -112,9 +111,8 @@ smtpd_tls_mandatory_protocols = !SSLv2, !SSLv3
 <pre><code>ssl_only_use_tls = true.
 </code></pre>
 <p>So if you have need for non-tls capable clients use caution.</p>
-
-<p>Reference:<br>
-<a href="https://community.qualys.com/docs/DOC-1141">QID 38140</a><br>
+<h4>Reference:</h4>
+<p><a href="https://community.qualys.com/docs/DOC-1141">QID 38140</a><br>
 <a href="http://www.postfix.org/TLS_README.html#server_enable">postfix server enable</a></p>
 
         </div>

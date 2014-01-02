@@ -90,9 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>When you&#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like<br>
-syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known<br>
-defenses is syn cookies.</p>
+<p>When you&#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known defenses is syn cookies.</p>
 <h4>Who doesn&#39;t like cookies?</h4><pre><code>SYN cookies are particular choices of initial TCP sequence numbers by TCP servers.
 </code></pre><h4>Linux</h4><pre><code>root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
 0
@@ -100,19 +98,16 @@ defenses is syn cookies.</p>
 root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
 1
 </code></pre>
-<p>Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of <br>
-enabling does not persist through a reboot.</p>
-<h4>Cisco IOS Zone Based FW</h4>
+<p>Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of  enabling does not persist through a reboot.</p>
+<h4>Cisco IOS Zone Based FW Syn Cookies</h4>
 <p>Global:</p>
 <pre><code>parameter-map type inspect global
     tcp syn-flood limit 20000
 </code></pre>
-<p>Zone:</p>
+<p>Zone Specific:</p>
 <pre><code>parameter-map type inspect-zone ddos-detection
    tcp syn-flood rate per-destination 20000
-</code></pre>
-<p>NOTES:</p>
-
+</code></pre><h4>NOTES:</h4>
 <p>SYN cookies are not without problems.  They can cause latency, sometimes very noticeable latency.</p>
 <h4>Reference:</h4>
 <p><a href="http://cr.yp.to/syncookies.html">syncookies readme</a><br>
