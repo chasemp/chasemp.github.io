@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-01-02T21:45:22Z</updated>
+        <updated>2014-01-13T22:00:17Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>google oauth2 reverse proxy</title>
                 <link rel="alternate" href="/2014/01/02/google-oauth2-reverse-proxy/" type="text/html" />
                 <id>/2014/01/02/google-oauth2-reverse-proxy/</id>
-                <updated>2014-01-02T21:15:00Z</updated>
+                <updated>2014-01-02T22:00:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -68,10 +68,10 @@ server {
 /usr/lib/go/bin/google_auth_proxy \
 
     #this is our redirection domain if auth is happy
-    --redirect-url=&#34;https://staff.deviantart.net&#34; \
+    --redirect-url=&#34;https://mydomain.com&#34; \
 
     #this is the registered domain
-    --google-apps-domain=&#34;http://staff.deviantart.net&#34; \
+    --google-apps-domain=&#34;http://mydomain.com&#34; \
 
     #this is your protected resource
     --upstream=http://127.0.0.1:80/ \
@@ -101,9 +101,19 @@ server {
 &lt;/ul&gt;
 
 &lt;pre&gt;&lt;code&gt;
+    #apache2.0 style
     Redirect /oauth/callback /
     Redirect /oauth2/callback /
 &lt;/code&gt;&lt;/pre&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;If you have mydomain.org and you authenticate to &lt;a href=&#34;mailto:you@funtimes.org&#34;&gt;you@funtimes.org&lt;/a&gt; with google it will be rejected by the service.  You can whitelist emails to allow the domain/google email domain mismatch.&lt;/p&gt;
+
+&lt;p&gt;--authenticated-emails-file=&amp;quot;/root/email&amp;quot; #one email per line&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;You can also force the cookie domain&lt;/p&gt;
+
+&lt;p&gt;--cookie-domain=&amp;quot;&lt;a href=&#34;http://mydomain.org&#34;&gt;http://mydomain.org&lt;/a&gt;&amp;quot; \&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/bitly/google_auth_proxy&#34;&gt;bitly provider&lt;/a&gt;&lt;/p&gt;
 </content>
@@ -483,10 +493,10 @@ wr mem
                 <title>lets not do opsdev</title>
                 <link rel="alternate" href="/2013/10/17/lets-not-do-opsdev/" type="text/html" />
                 <id>/2013/10/17/lets-not-do-opsdev/</id>
-                <updated>2013-10-17T21:23:00Z</updated>
+                <updated>2013-10-17T16:26:00Z</updated>
                 
-                <summary type="html">This is a talk I gave to the &lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/events/142487902/&#34;&gt;devops KC&lt;/a&gt; group at &lt;a href=&#34;October%20Meetup%20Open%20Format&#34;&gt;kauffman labs&lt;/a&gt;.</summary>
-                <content type="html">&lt;p&gt;This is a talk I gave to the &lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/events/142487902/&#34;&gt;devops KC&lt;/a&gt; group at &lt;a href=&#34;October%20Meetup%20Open%20Format&#34;&gt;kauffman labs&lt;/a&gt;.&lt;/p&gt;
+                <summary type="html">This is a talk I gave to the &lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/events/142487902/&#34;&gt;devops KC&lt;/a&gt; group at &lt;a href=&#34;http://www.kauffman.org/what-we-do/programs/entrepreneurship/kauffman-laboratories-for-enterprise-creation&#34;&gt;kauffman labs&lt;/a&gt;.</summary>
+                <content type="html">&lt;p&gt;This is a talk I gave to the &lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/events/142487902/&#34;&gt;devops KC&lt;/a&gt; group at &lt;a href=&#34;http://www.kauffman.org/what-we-do/programs/entrepreneurship/kauffman-laboratories-for-enterprise-creation&#34;&gt;kauffman labs&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/27298299&#34; width=&#34;427&#34; height=&#34;356&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34; style=&#34;border:1px solid #CCC;border-width:1px 1px 0;margin-bottom:5px&#34; allowfullscreen&gt; &lt;/iframe&gt; &lt;div style=&#34;margin-bottom:5px&#34;&gt; &lt;strong&gt; &lt;a href=&#34;https://www.slideshare.net/chasepettet/lets-not-doopsdev&#34; title=&#34;Lets not do_opsdev&#34; target=&#34;_blank&#34;&gt;Lets not do_opsdev&lt;/a&gt; &lt;/strong&gt; from &lt;strong&gt;&lt;a href=&#34;http://www.slideshare.net/chasepettet&#34; target=&#34;_blank&#34;&gt;chase pettet&lt;/a&gt;&lt;/strong&gt; &lt;/div&gt;&lt;/center&gt;&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;

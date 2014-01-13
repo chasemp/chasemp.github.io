@@ -135,10 +135,10 @@ server {
 /usr/lib/go/bin/google_auth_proxy \
 
     #this is our redirection domain if auth is happy
-    --redirect-url="https://staff.deviantart.net" \
+    --redirect-url="https://mydomain.com" \
 
     #this is the registered domain
-    --google-apps-domain="http://staff.deviantart.net" \
+    --google-apps-domain="http://mydomain.com" \
 
     #this is your protected resource
     --upstream=http://127.0.0.1:80/ \
@@ -168,9 +168,19 @@ server {
 </ul>
 
 <pre><code>
+    #apache2.0 style
     Redirect /oauth/callback /
     Redirect /oauth2/callback /
 </code></pre>
+
+<ul>
+<li><p>If you have mydomain.org and you authenticate to <a href="mailto:you@funtimes.org">you@funtimes.org</a> with google it will be rejected by the service.  You can whitelist emails to allow the domain/google email domain mismatch.</p>
+
+<p>--authenticated-emails-file=&quot;/root/email&quot; #one email per line</p></li>
+<li><p>You can also force the cookie domain</p>
+
+<p>--cookie-domain=&quot;<a href="http://mydomain.org">http://mydomain.org</a>&quot; \</p></li>
+</ul>
 <h4>Reference</h4>
 <p><a href="https://github.com/bitly/google_auth_proxy">bitly provider</a></p>
 
