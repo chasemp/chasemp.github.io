@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>Archives  &rsaquo; 2014 &ndash; devops type thoughts</title>
+    <title>pfx from crt and key and into your ASA &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -82,21 +82,64 @@ function toggleDiv(divId) {
         
         <div id="content">
             
-    <h2><a href="/archives/">Archives</a> &rsaquo; 2014</h2>
-    <dl class="archives">
+    <div class="item">
+        <div class="header">
+            <h1>pfx from crt and key and into your ASA</h1>
+            <h2>Tuesday, January 21, 2014 <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/pfx/">pfx</a></h2>
+        </div>
         
-            
-                <dt>Jan 21</dt>
-                <dd><a href="/2014/01/21/pfx-from-crt-and-key/">pfx from crt and key and into your ASA</a><small>Tagged <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/pfx/">pfx</a></small></dd>
-            
-                <dt>Jan 17</dt>
-                <dd><a href="/2014/01/17/gahh...tmpreaper/">gahh...tmpreaper</a><small>Tagged <span>&raquo;</span> <a href="/tags/find/">find</a>, <a href="/tags/linux/">linux</a>, <a href="/tags/tmp/">tmp</a></small></dd>
-            
-                <dt>Jan 02</dt>
-                <dd><a href="/2014/01/02/google-oauth2-reverse-proxy/">google oauth2 reverse proxy</a><small>Tagged <span>&raquo;</span> <a href="/tags/google/">google</a>, <a href="/tags/oauth/">oauth</a>, <a href="/tags/proxy/">proxy</a></small></dd>
-            
-        
-    </dl>
+        <div class="body">
+            <h4>Preamble</h4>
+<p>Some devices that use certificates require them to be uploaded in pfx format.</p>
+
+<p>What is pfx?</p>
+
+<pre><code>
+    In cryptography, PKCS #12 defines an archive file format \
+    for storing many cryptography objects as a single file. \
+    It is commonly used to bundle a private key with its X.509 \
+    certificate or to bundle all the members of a chain of trust. \
+    A PKCS #12 file may be encrypted and signed.
+</code></pre>
+
+<p>Typically when you generate an SSL certificate you get a mine.key file and a mine.crt file</p>
+
+<p>This PFX format is used by Cisco ASA devices</p>
+<h4>Installing OpenSSL</h4><pre><code>aptitude install openssl
+</code></pre><h4>Make sure your .key file is valid</h4><pre><code>openssl x509 -text -in myfile.key
+</code></pre><h5>Making a PFX file</h5>
+<pre><code>
+openssl pkcs12 \                 
+        -export \                #We are exporting!
+        -out myfile.pfx \        #Your intended .pfx
+        -inkey myfile.key \      #Your file.key
+        -in myfile.crt \         #Your file.crt
+        -certfile digicertca.crt #Your CA certificate
+</code></pre>
+<h5>Adding your .pfx to your ASA</h5>
+<p>I am using ASDM for this as it&#39;s far easier.  This is one of the few things I think the GUI has right.  My device management.</p>
+
+<p>Manage your identitfy certs<br>
+<img src="/assets/images/pfx/my-device-cert-management.png" alt="cert1" title="cert1"></p>
+
+<p>Add a new one<br>
+<img src="/assets/images/pfx/my-device-add-cert.png" alt="cert2" title="cert2"></p>
+
+<p>Browse to your pfx (note: the pfx must have a passphrase)<br>
+<img src="/assets/images/pfx/my-device-cert-upload.png" alt="cert3" title="cert3"></p>
+
+<p>Now go to the SSL Settings section<br>
+<img src="/assets/images/pfx/my-device-cert-to-int.png" alt="cert4" title="cert4"></p>
+
+<p>Select and interface and edit.  Choose your new pfx.<br>
+<img src="/assets/images/pfx/my-device-interface-pick.png" alt="cert5" title="cert5"></p>
+<h4>Notes</h4>
+<p><a href="http://www.cisco.com/en/US/products/ps6120/">Cisco ASA</a><br>
+<a href="http://en.wikipedia.org/wiki/PKCS_12">PFX</a><br>
+<a href="http://www.openssl.org/">OpenSSL</a></p>
+
+        </div>
+    </div>
 
         </div>
         
