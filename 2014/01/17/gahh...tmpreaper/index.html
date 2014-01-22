@@ -92,7 +92,7 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>I am seeing the same issue as this <a href="https://lists.debian.org/debian-user/2005/06/msg00799.html">gentlemen</a> when trying to use <a href="http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html">tmpreaper</a>.</p>
 
-<p>If you use the --test switch you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&#39;t read &#39;/hi/hello&#39; with &#39;/hi*&#39; if you use --protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) /tmp extensively.</p>
+<p>If you use the --test switch you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&#39;t read &#39;/hi/hello&#39; with &#39;/hi*&#39; if you use --protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) &#39;/tmp&#39; extensively.</p>
 
 <p>Example of files passenger can land in /tmp:</p>
 
@@ -111,7 +111,7 @@ function toggleDiv(divId) {
     `-- web_server.txt
 </code></pre>
 <h4>Using &#39;find&#39;</h4>
-<p>The goal is to remove files and directories left in /tmp and not touched within the last hour.  Cleaning /tmp is one of those problems that is so common there are solutions all over the Internet.  This seems to be a version of the sanest approach.</p>
+<p>The goal is to remove files and directories left in &#39;/tmp&#39; and not touched within the last hour.  Cleaning &#39;/tmp&#39; is one of those problems that is so common there are solutions all over the Internet.  This seems to be a version of the sanest approach.</p>
 
 <pre><code>
 #path to find files in /tmp (uses shell globbing) and have the full path
@@ -125,7 +125,7 @@ function toggleDiv(divId) {
 
 <p>The whole idea is to be able to protect (as in not remove) a file by path in a sane way.</p>
 
-<p>If I exclude &#39;/tmp/yo&#39; I want the option to match /tmp/yo/foo and /tmp/yo/bar.  This kind of flexibility implies regex. </p>
+<p>If I exclude &#39;/tmp/yo&#39; I want the option to match &#39;/tmp/yo/foo&#39; and &#39;/tmp/yo/bar&#39;.  This kind of flexibility implies regex. </p>
 
 <pre><code>
 /usr/bin/find /tmp/* -mmin +60 -type f | \
@@ -165,7 +165,7 @@ function toggleDiv(divId) {
     xargs -d '\n' -r rmdir --ignore-fail-on-non-empty
 </code></pre>
 <h4>Final Version</h4>
-<p>Exclusion file with one regex per line:</p>
+<p>My exclusions file with one regex per line:</p>
 
 <p>mystuff.exclusions<br>
 <pre><code><br>
@@ -177,7 +177,7 @@ function toggleDiv(divId) {
 #!/bin/bash
 #file cleanup
 #I am using head to keep the limit of files artificially down that we 
-#try to remove.  xargs should do the 'right thing' if given large lists.
+#try to remove.  However, xargs should do the 'right thing' if given large lists.
 /usr/bin/find /tmp/* -mmin +60 -type f | \
     grep -v -E -f mystuff.exclusions | \
     head -n 1000 | \
@@ -193,7 +193,7 @@ function toggleDiv(divId) {
 </code></pre><h4>Notes</h4>
 <p>Much as been said about the harm of xargs.  I tried this originally using the -print0 option in find, and the -0 option for xargs to appropriately handle files with space in them.  I wasn&#39;t able to wrangle that in a way that made sense with my exclusion logic.  I really wanted to read in my list of exclusions from a file for use-case specific reasons.  With xargs it seems, don&#39;t use it until you need to use it is the best advice.</p>
 
-<p>There is a <a href="https://code.google.com/p/phusion-passenger/issues/detail?id=365">way</a> to tell Passenger not to use /tmp.  It would probably be a good regardless.</p>
+<p>There is a <a href="https://code.google.com/p/phusion-passenger/issues/detail?id=365">way</a> to tell Passenger not to use /tmp.  It would probably be a good idea no matter what.</p>
 <h4>Reference</h4>
 <p><a href="https://www.phusionpassenger.com/">passenger</a><br>
 <a href="http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html">tmpreaper</a></p>

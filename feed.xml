@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-01-22T17:48:28Z</updated>
+        <updated>2014-01-22T17:57:32Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -77,13 +77,13 @@ openssl pkcs12 \
                 <title>gahh...tmpreaper</title>
                 <link rel="alternate" href="/2014/01/17/gahh...tmpreaper/" type="text/html" />
                 <id>/2014/01/17/gahh...tmpreaper/</id>
-                <updated>2014-01-17T17:47:00Z</updated>
+                <updated>2014-01-17T17:57:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
 &lt;p&gt;I am seeing the same issue as this &lt;a href=&#34;https://lists.debian.org/debian-user/2005/06/msg00799.html&#34;&gt;gentlemen&lt;/a&gt; when trying to use &lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html&#34;&gt;tmpreaper&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;If you use the --test switch you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&amp;#39;t read &amp;#39;/hi/hello&amp;#39; with &amp;#39;/hi*&amp;#39; if you use --protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) /tmp extensively.&lt;/p&gt;
+&lt;p&gt;If you use the --test switch you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&amp;#39;t read &amp;#39;/hi/hello&amp;#39; with &amp;#39;/hi*&amp;#39; if you use --protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) &amp;#39;/tmp&amp;#39; extensively.&lt;/p&gt;
 
 &lt;p&gt;Example of files passenger can land in /tmp:&lt;/p&gt;
 
@@ -102,7 +102,7 @@ openssl pkcs12 \
     `-- web_server.txt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Using &amp;#39;find&amp;#39;&lt;/h4&gt;
-&lt;p&gt;The goal is to remove files and directories left in /tmp and not touched within the last hour.  Cleaning /tmp is one of those problems that is so common there are solutions all over the Internet.  This seems to be a version of the sanest approach.&lt;/p&gt;
+&lt;p&gt;The goal is to remove files and directories left in &amp;#39;/tmp&amp;#39; and not touched within the last hour.  Cleaning &amp;#39;/tmp&amp;#39; is one of those problems that is so common there are solutions all over the Internet.  This seems to be a version of the sanest approach.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 #path to find files in /tmp (uses shell globbing) and have the full path
@@ -116,7 +116,7 @@ openssl pkcs12 \
 
 &lt;p&gt;The whole idea is to be able to protect (as in not remove) a file by path in a sane way.&lt;/p&gt;
 
-&lt;p&gt;If I exclude &amp;#39;/tmp/yo&amp;#39; I want the option to match /tmp/yo/foo and /tmp/yo/bar.  This kind of flexibility implies regex. &lt;/p&gt;
+&lt;p&gt;If I exclude &amp;#39;/tmp/yo&amp;#39; I want the option to match &amp;#39;/tmp/yo/foo&amp;#39; and &amp;#39;/tmp/yo/bar&amp;#39;.  This kind of flexibility implies regex. &lt;/p&gt;
 
 &lt;pre&gt;&lt;code&gt;
 /usr/bin/find /tmp/* -mmin +60 -type f | \
@@ -156,7 +156,7 @@ openssl pkcs12 \
     xargs -d &#39;\n&#39; -r rmdir --ignore-fail-on-non-empty
 &lt;/code&gt;&lt;/pre&gt;
 &lt;h4&gt;Final Version&lt;/h4&gt;
-&lt;p&gt;Exclusion file with one regex per line:&lt;/p&gt;
+&lt;p&gt;My exclusions file with one regex per line:&lt;/p&gt;
 
 &lt;p&gt;mystuff.exclusions&lt;br&gt;
 &lt;pre&gt;&lt;code&gt;&lt;br&gt;
@@ -168,7 +168,7 @@ openssl pkcs12 \
 #!/bin/bash
 #file cleanup
 #I am using head to keep the limit of files artificially down that we 
-#try to remove.  xargs should do the &#39;right thing&#39; if given large lists.
+#try to remove.  However, xargs should do the &#39;right thing&#39; if given large lists.
 /usr/bin/find /tmp/* -mmin +60 -type f | \
     grep -v -E -f mystuff.exclusions | \
     head -n 1000 | \
@@ -184,7 +184,7 @@ openssl pkcs12 \
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
 &lt;p&gt;Much as been said about the harm of xargs.  I tried this originally using the -print0 option in find, and the -0 option for xargs to appropriately handle files with space in them.  I wasn&amp;#39;t able to wrangle that in a way that made sense with my exclusion logic.  I really wanted to read in my list of exclusions from a file for use-case specific reasons.  With xargs it seems, don&amp;#39;t use it until you need to use it is the best advice.&lt;/p&gt;
 
-&lt;p&gt;There is a &lt;a href=&#34;https://code.google.com/p/phusion-passenger/issues/detail?id=365&#34;&gt;way&lt;/a&gt; to tell Passenger not to use /tmp.  It would probably be a good regardless.&lt;/p&gt;
+&lt;p&gt;There is a &lt;a href=&#34;https://code.google.com/p/phusion-passenger/issues/detail?id=365&#34;&gt;way&lt;/a&gt; to tell Passenger not to use /tmp.  It would probably be a good idea no matter what.&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.phusionpassenger.com/&#34;&gt;passenger&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html&#34;&gt;tmpreaper&lt;/a&gt;&lt;/p&gt;
