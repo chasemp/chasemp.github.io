@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-01-22T17:43:12Z</updated>
+        <updated>2014-01-22T17:48:17Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -77,13 +77,13 @@ openssl pkcs12 \
                 <title>gahh...tmpreaper</title>
                 <link rel="alternate" href="/2014/01/17/gahh...tmpreaper/" type="text/html" />
                 <id>/2014/01/17/gahh...tmpreaper/</id>
-                <updated>2014-01-17T17:42:00Z</updated>
+                <updated>2014-01-17T17:47:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
-&lt;p&gt;I am seeing the same issue as this &lt;a href=&#34;https://lists.debian.org/debian-user/2005/06/msg00799.html&#34;&gt;gentlemen&lt;/a&gt; when trying to use &lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html&#34;&gt;tmpreaper&lt;/a&gt;..&lt;/p&gt;
+&lt;p&gt;I am seeing the same issue as this &lt;a href=&#34;https://lists.debian.org/debian-user/2005/06/msg00799.html&#34;&gt;gentlemen&lt;/a&gt; when trying to use &lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html&#34;&gt;tmpreaper&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;If you use the --test mechanism you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&amp;#39;t read /hi/hello with /hi* if you use --protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) /tmp extensively.&lt;/p&gt;
+&lt;p&gt;If you use the --test switch you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&amp;#39;t read &amp;#39;/hi/hello&amp;#39; with &amp;#39;/hi*&amp;#39; if you use --protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) /tmp extensively.&lt;/p&gt;
 
 &lt;p&gt;Example of files passenger can land in /tmp:&lt;/p&gt;
 
@@ -183,6 +183,8 @@ openssl pkcs12 \
 &lt;pre&gt;&lt;code&gt;0 * * * * /usr/local/bin/myscript.sh &amp;gt;/dev/null 2&amp;gt;&amp;amp;1
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Notes&lt;/h4&gt;
 &lt;p&gt;Much as been said about the harm of xargs.  I tried this originally using the -print0 option in find, and the -0 option for xargs to appropriately handle files with space in them.  I wasn&amp;#39;t able to wrangle that in a way that made sense with my exclusion logic.  I really wanted to read in my list of exclusions from a file for use-case specific reasons.  With xargs it seems, don&amp;#39;t use it until you need to use it is the best advice.&lt;/p&gt;
+
+&lt;p&gt;There is a &lt;a href=&#34;https://code.google.com/p/phusion-passenger/issues/detail?id=365&#34;&gt;way&lt;/a&gt; to tell Passenger not to use /tmp.  It would probably be a good regardless.&lt;/p&gt;
 &lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.phusionpassenger.com/&#34;&gt;passenger&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html&#34;&gt;tmpreaper&lt;/a&gt;&lt;/p&gt;
