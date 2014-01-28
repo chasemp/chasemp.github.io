@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-01-22T17:57:32Z</updated>
+        <updated>2014-01-28T00:43:08Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,104 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>cisco ssl vpn from cli</title>
+                <link rel="alternate" href="/2014/01/27/cisco-ssl-vpn-from-cli/" type="text/html" />
+                <id>/2014/01/27/cisco-ssl-vpn-from-cli/</id>
+                <updated>2014-01-27T00:43:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;Using a Cisco SSL VPN without a GUI.&lt;/p&gt;
+&lt;h4&gt;Install packages&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install openconnect links vpnc-scripts
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+/.
+/usr
+/usr/bin
+/usr/bin/openconnect
+/usr/share
+/usr/share/doc
+/usr/share/doc/openconnect
+/usr/share/doc/openconnect/AUTHORS
+/usr/share/doc/openconnect/copyright
+/usr/share/doc/openconnect/changelog.Debian.gz
+/usr/share/doc/openconnect/TODO
+/usr/lib
+/usr/lib/NetworkManager
+/usr/lib/NetworkManager/nm-openconnect-auth-dialog
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Get your certificate&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;links https://yourdomain/+CSCOCA+/login.html
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;looks like&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+Cisco Logo ASA - Local Certificate Authority                                           
+                                                                                         
+  ASA - Local Certificate Authority                                                      
+                                                                                         
+  Username          _____________________                                                
+  One-time Password _____________________                                                
+  [ Submit ]   [ Reset ]                                                                 
+  NOTE: On successful authentication:                                                    
+    * Open or Save the generated                                                         
+      certificate                                                                        
+    * Install the certificate in the                                                     
+      browser store                                                                      
+    * Close all the browser windows, and                                                 
+    * Restart the SSL VPN connection                                                     
+   (c)Cisco Systems, Inc. All rights reserved
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Fill in the fields and [Submit].  Your cert will download.&lt;/p&gt;
+&lt;h4&gt;Connect to your VPN endpoint&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;
+#Try to connect
+openconnect -c $certificate -b\
+            --key-password=$keypass  \
+            -u $vpnuser $vpnendpoint
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;looks like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+Shutting down openconnect vpn tunnel.
+openconnect: no process found
+Attempting to connect to 199.15.160.254:443
+SSL negotiation with ra.deviantart.net
+Connected to HTTPS on ra.deviantart.net
+GET https://ra.deviantart.net/
+Got HTTP response: HTTP/1.0 302 Object Moved
+SSL negotiation with ra.deviantart.net
+Connected to HTTPS on ra.deviantart.net
+GET https://ra.deviantart.net/+webvpn+/index.html
+Please enter your username and password.
+Password: --your pass here ;) --
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Using your connection&lt;/h4&gt;
+&lt;p&gt;You should see your tunnel interface if you run:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;ifconfig | grep tun0 | awk &amp;#39;{print $1}&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Add routing for your remote network&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;route add -net 192.168.0.0 netmask 255.255.0.0 dev tun0
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Now you should be able to hit an IP across the tunnel.&lt;/p&gt;
+&lt;h4&gt;Notes&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;You can install and use the vpnc-script to manage DNS and things smartly.  You can use the --script flag:&lt;/p&gt;
+
+&lt;p&gt;--script /usr/share/vpnc-scripts/vpnc-script&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Your certificate passphrase is probably the OTP you used&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;If you make a script for managing connections you may need to clear out stale ones at the top&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;killall openconnect
+iptables -F
+&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.infradead.org/openconnect/&#34;&gt;openconnect&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>pfx from crt and key and into your ASA</title>
