@@ -232,10 +232,9 @@ No fixtures found.
 <h4>Enable site in Apache</h4><pre><code>a2dissite default
 a2ensite graphite
 sudo chmod -R a+w /opt/graphite/storage
-</code></pre><h4>Start things</h4>
-<p>/opt/graphite/bin/carbon-cache.py start<br>
-/etc/init.d/apache2 restart</p>
-<h4>Notes</h4>
+</code></pre><h4>Start things</h4><pre><code>/opt/graphite/bin/carbon-cache.py start
+/etc/init.d/apache2 restart
+</code></pre><h4>Notes</h4>
 <p>Logs are located here: /opt/graphite/storage/log/webapp/</p>
 <h4>Reference</h4>
 <p><a href="http://greenlegos.wordpress.com/2012/09/09/graphite-installation/">graphite install doc</a></p>
