@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-02-26T05:14:47Z</updated>
+        <updated>2014-02-27T19:02:32Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -16,19 +16,45 @@
         
         
             <entry>
-                <title>screen shots</title>
+                <title>python monitoring with diamond statsd graphite</title>
+                <link rel="alternate" href="/2014/02/27/python-monitoring-with-diamond-statsd-graphite/" type="text/html" />
+                <id>/2014/02/27/python-monitoring-with-diamond-statsd-graphite/</id>
+                <updated>2014-02-27T19:01:00Z</updated>
+                
+                <summary type="html">If you stayed late at the DevOpsKC meetup last night you have may have caught me giving this talk about getting a monitoring system going using python from end-to-end.  The meet was at offices of &lt;a href=&#34;http://www.codero.com/&#34;&gt;codero&lt;/a&gt; who were gracious hosts, and the food was provided by Cerner.  Thanks again to the folks put this stuff together.  </summary>
+                <content type="html">&lt;p&gt;If you stayed late at the DevOpsKC meetup last night you have may have caught me giving this talk about getting a monitoring system going using python from end-to-end.  The meet was at offices of &lt;a href=&#34;http://www.codero.com/&#34;&gt;codero&lt;/a&gt; who were gracious hosts, and the food was provided by Cerner.  Thanks again to the folks put this stuff together.  &lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;iframe src=&#34;http://www.slideshare.net/slideshow/embed_code/31729631&#34; width=&#34;476&#34; height=&#34;400&#34; frameborder=&#34;0&#34; marginwidth=&#34;0&#34; marginheight=&#34;0&#34; scrolling=&#34;no&#34;&gt;&lt;/iframe&gt;&lt;/center&gt;&lt;/p&gt;
+&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;/assets/slides/python_and_trending_data_ops.pdf&#34;&gt;slides pdf&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.meetup.com/DevOps-Kansas-City/&#34;&gt;devops kc&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>screen shots I have saved</title>
                 <link rel="alternate" href="/2014/02/25/screen-shots/" type="text/html" />
                 <id>/2014/02/25/screen-shots/</id>
-                <updated>2014-02-25T05:02:00Z</updated>
+                <updated>2014-02-25T18:57:00Z</updated>
                 
-                <summary type="html">&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/hagrif.png&#34; alt=&#34;grif&#34; title=&#34;grif&#34;&gt;&lt;/center&gt;</summary>
-                <content type="html">&lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/hagrif.png&#34; alt=&#34;grif&#34; title=&#34;grif&#34;&gt;&lt;/center&gt;&lt;/p&gt;
-
-&lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/hajs.png&#34; alt=&#34;js&#34; title=&#34;js&#34;&gt;&lt;/center&gt;&lt;/p&gt;
+                <summary type="html">Gotta love the Python community.</summary>
+                <content type="html">&lt;p&gt;Gotta love the Python community.&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/hapython.png&#34; alt=&#34;py&#34; title=&#34;py&#34;&gt;&lt;/center&gt;&lt;/p&gt;
 
+&lt;p&gt;I&amp;#39;m not math genius but this seems wrong.&lt;/p&gt;
+
 &lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/haqualys.png&#34; alt=&#34;q&#34; title=&#34;q&#34;&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;p&gt;Everyone has one of these days.  &amp;#39;G&amp;#39; is a friend of mine.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/hagrif.png&#34; alt=&#34;grif&#34; title=&#34;grif&#34;&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;p&gt;Seems legit.&lt;/p&gt;
+
+&lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/hajs.png&#34; alt=&#34;js&#34; title=&#34;js&#34;&gt;&lt;/center&gt;&lt;/p&gt;
+
+&lt;p&gt;I just like the formality of it.&lt;/p&gt;
 
 &lt;p&gt;&lt;center&gt;&lt;img src=&#34;/assets/images/ha/feb_25_2014/haerror.png&#34; alt=&#34;error&#34; title=&#34;error&#34;&gt;&lt;/center&gt;&lt;/p&gt;
 </content>
