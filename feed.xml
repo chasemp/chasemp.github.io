@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-03-18T16:58:56Z</updated>
+        <updated>2014-03-18T17:02:40Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -16,10 +16,10 @@
         
         
             <entry>
-                <title>osx clang error unknown argument</title>
-                <link rel="alternate" href="/2014/03/18/osx-clang-error-unknown-argument/" type="text/html" />
-                <id>/2014/03/18/osx-clang-error-unknown-argument/</id>
-                <updated>2014-03-18T16:58:00Z</updated>
+                <title>osx clang compiler unknown option</title>
+                <link rel="alternate" href="/2014/03/18/osx-clang-compiler-unknown-option/" type="text/html" />
+                <id>/2014/03/18/osx-clang-compiler-unknown-option/</id>
+                <updated>2014-03-18T17:02:00Z</updated>
                 
                 <summary type="html">As of OSX Xcode tools &amp;lt;=5.1 the clang compiler treats any unknown flag as an error.  This can cause&lt;br&gt;
 some issues with existing tools that have old flags, or uncommon flags, or who knows what.</summary>
@@ -38,7 +38,9 @@ pip install mynt
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;I have read you can also ditch the OSX native python and install it from brew and things work out.&lt;/p&gt;
 &lt;h4&gt;Reference:&lt;/h4&gt;
-&lt;p&gt;(so)&lt;a href=&#34;compiler%20docs&#34;&gt;http://stackoverflow.com/questions/22313407/clang-error-unknown-argument-mno-fused-madd-python-package-installation-fa&lt;/a&gt;&lt;a href=&#34;ruby%20guys%20are%20seeing%20it%20too&#34;&gt;http://clang.llvm.org/docs/UsersManual.html&lt;/a&gt;[&lt;a href=&#34;https://github.com/rmagick/rmagick/issues/96&#34;&gt;https://github.com/rmagick/rmagick/issues/96&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;http://stackoverflow.com/questions/22313407/clang-error-unknown-argument-mno-fused-madd-python-package-installation-fa&#34;&gt;so&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://clang.llvm.org/docs/UsersManual.html&#34;&gt;compiler docs&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/rmagick/rmagick/issues/96&#34;&gt;ruby guys are seeing it too&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
