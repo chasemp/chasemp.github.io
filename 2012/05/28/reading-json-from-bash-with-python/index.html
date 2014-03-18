@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -97,15 +97,15 @@ function toggleDiv(divId) {
 <p>file: <pre><code>/var/myfile</code></pre></p>
 
 <p>json contents: <pre><code>{&#39;this&#39;: &#39;you&#39;}</code></pre></p>
-<h4>Create a script that can access this data</h4><pre><code>#!/bin/bash
+<h4>Create a script that can access this data</h4><pre><code>#!&#47;bin&#47;bash
 set -e
-FILE=&#39;/var/file&#39;
+FILE=&#39;&#47;var&#47;file&#39;
 if [[ ! -a $FILE ]]; then
     exit 0
 fi
-dict_value=`python -c &#39;import json, os; d=json.loads(open(&#34;/var/file&#34;).read()); print d[&#34;this&#34;]&#39;`
+dict_value=`python -c &#39;import json, os; d=json.loads(open(&quot;&#47;var&#47;file&quot;).read()); print d[&quot;this&quot;]&#39;`
 echo $dict_value
-</code></pre><h4>Run it as a command</h4><pre><code>#./script.sh
+</code></pre><h4>Run it as a command</h4><pre><code>#.&#47;script.sh
 you
 </code></pre>
 <p>There really doesn&#39;t seem to be a better way to parse json from bash, but this isn&#39;t too bad.</p>

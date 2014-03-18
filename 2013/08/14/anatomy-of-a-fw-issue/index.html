@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -288,7 +288,7 @@ me@HOST2# ping 10.0.0.230
 PING 10.0.0.230 (10.0.0.230) 56(84) bytes of data.
 </code></pre>
 
-<p>What do I see with debug enabled for ICMP on FW1 -- the opposing end of the VPN from Host2.</p>
+<p>What do I see with debug enabled for ICMP on FW1 &ndash; the opposing end of the VPN from Host2.</p>
 
 <pre><code>
 FW1(config)# debug ICMP trace 
@@ -350,12 +350,12 @@ peer address: 1.1.1.1
 
 <p>This now stands out to me:</p>
 
-<p>--&gt; pkts encaps: 0, #pkts encrypt: 0, #pkts digest: 0<br>
---&gt; pkts decaps: 391, #pkts decrypt: 391, #pkts verify: 391</p>
+<p>&ndash;&gt; pkts encaps: 0, #pkts encrypt: 0, #pkts digest: 0<br>
+&ndash;&gt; pkts decaps: 391, #pkts decrypt: 391, #pkts verify: 391</p>
 
 <p>As far as I know that means we are receiving encrypted traffic but we are not <br>
 responding.  We have decrypted but not encrypted traffic.  It seems like the &#39;black box&#39;<br>
-is not to blame...FW1 is not doing its job.  </p>
+is not to blame&hellip;FW1 is not doing its job.  </p>
 <h3>Checking my sysopt parameters</h3>
 <p>These are global options similar to sysctl.conf in linux</p>
 
@@ -500,7 +500,7 @@ Subtype: vpn-user
 Result: DROP
 </code></pre>
 
-<p>--&gt; Drop-reason: (acl-drop) Flow is denied by configured rule</p>
+<p>&ndash;&gt; Drop-reason: (acl-drop) Flow is denied by configured rule</p>
 <h3>The Problem</h3>
 <pre><code>
 FW1(config)# sh run tun

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -97,7 +97,7 @@ function toggleDiv(divId) {
 Fun
 HI Im Fun!
 </code></pre><h4>Using <a href="http://docs.python.org/2/library/functions.html#eval">Eval</a></h4>
-<p>Well...<a href="http://docs.python.org/2/library/functions.html#eval">eval</a> can ultimately be used for good or evil. This is pretty much evil but does work.</p>
+<p>Well&hellip;<a href="http://docs.python.org/2/library/functions.html#eval">eval</a> can ultimately be used for good or evil. This is pretty much evil but does work.</p>
 
 <pre><code>
 import sys
@@ -113,12 +113,12 @@ instance = myclass()
 </code></pre>
 
 <p>The obvious fear here is someone doing something harmful that could start like:</p>
-<pre><code>python test.py &#34;sys.path.append(&#39;/opt&#39;)&#34;
+<pre><code>python test.py &quot;sys.path.append(&#39;&#47;opt&#39;)&quot;
 </code></pre>
 <p>Which just results in:</p>
-<pre><code>sys.path.append(&#39;/opt&#39;)
+<pre><code>sys.path.append(&#39;&#47;opt&#39;)
 Traceback (most recent call last):
-File &#34;test.py&#34;, line 10, in &lt;module&gt;
+File &quot;test.py&quot;, line 10, in &lt;module&gt;
 instance = myclass()
 </code></pre>
 <p>But does show harm potential as we can see &#39;/opt&#39; in our modified path.</p>

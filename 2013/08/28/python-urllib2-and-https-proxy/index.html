@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -228,7 +228,7 @@ This uses our urllib2 opener to connect through a proxy using the CONNECT method
 
 I am saving this file as __proxied.py__.
 
-#### Now let's say there is a job that calls both.
+#### Now let&rsquo;s say there is a job that calls both.
 
 We have three files:
 
@@ -238,7 +238,7 @@ We have three files:
 
 We will make two scripts that call both of these and see what happens.
 
-##### First script...
+##### First script&hellip;
 
 <pre><code>
 from basic import post
@@ -255,7 +255,7 @@ print request('https://remotehost', '/info')
 #string response
 hello!
 </code></pre>
-<h5>Second script...</h5>
+<h5>Second script&hellip;</h5>
 <pre><code>
 from basic import post
 from proxied import request

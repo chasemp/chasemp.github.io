@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -149,10 +149,10 @@ server {
     --cookie-secret=wtfmysecrettokenreplacethis
 
 </code></pre>
-<h4>Visit your Nginx service in a browser...</h4>
-<p>...and get redirected to the google oauth2 handler.</p>
+<h4>Visit your Nginx service in a browser&hellip;</h4>
+<p>&hellip;and get redirected to the google oauth2 handler.</p>
 
-<p>--redacted site--</p>
+<p>&ndash;redacted site&ndash;</p>
 
 <p><img src="/assets/images/googleoauth/googleoauthpage.jpg" alt="two"></p>
 
@@ -176,10 +176,10 @@ server {
 <ul>
 <li><p>If you have mydomain.org and you authenticate to <a href="mailto:you@funtimes.org">you@funtimes.org</a> with google it will be rejected by the service.  You can whitelist emails to allow the domain/google email domain mismatch.</p>
 
-<p>--authenticated-emails-file=&quot;/root/email&quot; #one email per line</p></li>
+<p>&ndash;authenticated-emails-file=&ldquo;/root/email&rdquo; #one email per line</p></li>
 <li><p>You can also force the cookie domain</p>
 
-<p>--cookie-domain=&quot;<a href="http://mydomain.org">http://mydomain.org</a>&quot; \</p></li>
+<p>&ndash;cookie-domain=&ldquo;<a href="http://mydomain.org">http://mydomain.org</a>&rdquo; \</p></li>
 </ul>
 <h4>Reference</h4>
 <p><a href="https://github.com/bitly/google_auth_proxy">bitly provider</a></p>

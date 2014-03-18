@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -92,27 +92,27 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>IOS has come with a <a href="http://en.wikipedia.org/wiki/Tcl">TCL</a> interpreter baked in for awhile now.  It is suprisingly full featured and awesome.  These are some basic ideas and things I have included in my own scripts.</p>
 <h4>Printing out a message from your script</h4>
-<p>puts &quot;\nHello World!&quot;</p>
+<p>puts &ldquo;\nHello World!&rdquo;</p>
 <h4>Shut down an interface</h4>
-<p>puts &quot;\nShutdown loopback&quot;<br>
-ios_config &quot;interface Loopback0&quot; &quot;shutdown&quot;</p>
+<p>puts &ldquo;\nShutdown loopback&rdquo;<br>
+ios_config &ldquo;interface Loopback0&rdquo; &ldquo;shutdown&rdquo;</p>
 <h4>Removing an advertised network from BGP</h4>
-<p>puts &quot;\nRemoving &#39;network 1.0.0.0 mask 255.255.255.0&#39;&quot;<br>
-ios_config &quot;router bgp l335&quot; &quot;address-family ipv4&quot; &quot;no network 1.0.0.0 mask 255.255.255.0&quot;</p>
+<p>puts &ldquo;\nRemoving &#39;network 1.0.0.0 mask 255.255.255.0&#39;&rdquo;<br>
+ios_config &ldquo;router bgp l335&rdquo; &ldquo;address-family ipv4&rdquo; &ldquo;no network 1.0.0.0 mask 255.255.255.0&rdquo;</p>
 <h4>Echoing an affected portion of the configuration during execution</h4>
-<p>puts &quot;\nShow section BGP&quot;<br>
-puts [ exec &quot;show run | section bgp&quot; ]</p>
+<p>puts &ldquo;\nShow section BGP&rdquo;<br>
+puts [ exec &ldquo;show run | section bgp&rdquo; ]</p>
 <h4>Sleep for a certain amount of time then run a command</h4>
 <p>after 1000<br>
-puts [ exec &quot;show ip interface brief&quot; ]</p>
+puts [ exec &ldquo;show ip interface brief&rdquo; ]</p>
 <h4>Change MOTD banner to reflect some system status</h4>
-<p>puts &quot;\nsetting appropriate banner&quot;<br>
-ios_config &quot;no banner motd&quot;<br>
-ios_config &quot;banner motd c CURRENTLY UPDATING THIS CONFIGURATION c&quot;</p>
+<p>puts &ldquo;\nsetting appropriate banner&rdquo;<br>
+ios_config &ldquo;no banner motd&rdquo;<br>
+ios_config &ldquo;banner motd c CURRENTLY UPDATING THIS CONFIGURATION c&rdquo;</p>
 <h4>Integration a TCL script</h4>
-<p>Instead of constantly running things like &quot;tclsh mystuff.tcl&quot; you can set an alias so the command is easier to use.</p>
+<p>Instead of constantly running things like &ldquo;tclsh mystuff.tcl&rdquo; you can set an alias so the command is easier to use.</p>
 
-<p>Write your script and &#39;copy tftp flash:&#39;...</p>
+<p>Write your script and &#39;copy tftp flash:&#39;&hellip;</p>
 
 <p>So you see something like</p>
 

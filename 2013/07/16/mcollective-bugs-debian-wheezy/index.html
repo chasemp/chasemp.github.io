@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -95,7 +95,7 @@ function toggleDiv(divId) {
 <p>Do this:</p>
 
 <p><a href="http://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html">http://docs.puppetlabs.com/guides/puppetlabs_package_repositories.html</a></p>
-<pre><code>wget http://apt-enterprise.puppetlabs.com/puppetlabs-enterprise-release-extras_1.0-2_all.deb
+<pre><code>wget http:&#47;&#47;apt-enterprise.puppetlabs.com&#47;puppetlabs-enterprise-release-extras_1.0-2_all.deb
 sudo dpkg -i puppetlabs-enterprise-release-extras_1.0-2_all.deb
 sudo apt-get update
 aptitude install mcollective
@@ -127,13 +127,13 @@ the main binary uses the environment settings.  This mismatch causes issues.</p>
 <p>vi bin/mcollectived</p>
 
 <p>This:</p>
-<pre><code>#!/usr/bin/env ruby 
+<pre><code>#!&#47;usr&#47;bin&#47;env ruby 
 </code></pre>
 <p>Becomes:</p>
-<pre><code>#!/usr/bin/ruby1.8
+<pre><code>#!&#47;usr&#47;bin&#47;ruby1.8
 </code></pre><h4>Bug 2: <a href="http://projects.puppetlabs.com/issues/17804">ubuntu/debian mcollective missing package dependencies</a></h4>
 <p>Depencies are not complete for Debian.</p>
-<h4>Looks Like</h4><pre><code>/usr/lib/ruby/vendor_ruby/1.8/rubygems/custom_require.rb:36:in
+<h4>Looks Like</h4><pre><code>&#47;usr&#47;lib&#47;ruby&#47;vendor_ruby&#47;1.8&#47;rubygems&#47;custom_require.rb:36:in
 `gem_original_require&#39;: no such file to load - -- stomp
 </code></pre><h4>Simple Fix</h4><pre><code>sudo apt-get install ruby-stomp
 </code></pre><h4>Stomp Connector Not Included</h4>

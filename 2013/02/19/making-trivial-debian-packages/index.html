@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -106,16 +106,16 @@ dpkg: /usr/bin/dpkg-debø
 <h4>Package: my-files.</h4>
 <p>Starting at version 1.0 and meant for all architectures.  &#39;all&#39; is a common assignment for architecture when the files/scripts are interpreted such as with python or ruby.</p>
 <pre><code>mkdir my-files_1.0_all
-</code></pre><h4>Making my package tree</h4><pre><code>mkdir -p my-files_1.0_all/usr/local/bin/
-mkdir -p my-files_1.0_all/DEBIAN
-</code></pre><h4>My script: aptitude easter eggs</h4><pre><code>nano my-files_1.0_all/usr/local/bin/moo
+</code></pre><h4>Making my package tree</h4><pre><code>mkdir -p my-files_1.0_all&#47;usr&#47;local&#47;bin&#47;
+mkdir -p my-files_1.0_all&#47;DEBIAN
+</code></pre><h4>My script: aptitude easter eggs</h4><pre><code>nano my-files_1.0_all&#47;usr&#47;local&#47;bin&#47;moo
 </code></pre>
 <pre><code>
 #!/bin/bash
 aptitude -v -v -v -v -v moo
 </code></pre>
 <h4>Adding my &#39;control&#39; file</h4><pre><code>#this file contains my package metadata
-nano my-files_1.0_all/DEBIAN/control
+nano my-files_1.0_all&#47;DEBIAN&#47;control
 </code></pre><h4>Looks Like</h4>
 <pre><code>
 Package: my-files
@@ -127,9 +127,9 @@ Version: 1.0
 Description: stuff I need
 </code></pre>
 <h4>Making my script executable on install</h4><pre><code>#postint will be run at the tail end of install by default
-echo &#34;chmod +x /usr/local/bin/moo&#34; &gt; my-files_1.0_all/DEBIAN/postinst
+echo &quot;chmod +x &#47;usr&#47;local&#47;bin&#47;moo&quot; &gt; my-files_1.0_all&#47;DEBIAN&#47;postinst
 #set correct permissions to avoid build errors
-chmod 555 my-files_1.0_all/DEBIAN/postinst
+chmod 555 my-files_1.0_all&#47;DEBIAN&#47;postinst
 </code></pre><h4>My full package tree</h4>
 <pre><code>
 my-files_1.0_all
@@ -146,7 +146,7 @@ my-files_1.0_all
 dpkg-deb.  So if you build with a user that does not exist on a host that installs<br>
 this package things break.  But even if you don&#39;t run into that it is considered<br>
 bad form to leave your user permissions as artifacts on binary packaged files.</p>
-<pre><code>fakeroot dpkg-deb -b my-files_1.0_all/
+<pre><code>fakeroot dpkg-deb -b my-files_1.0_all&#47;
 </code></pre><h4>Looks Like</h4><pre><code>dpkg-deb: building package `my-files&#39; in `my-files_1.0_all.deb&#39;.
 </code></pre><h4>Installing and Examining my package</h4>
 <pre><code>

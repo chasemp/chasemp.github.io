@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -89,17 +89,17 @@ function toggleDiv(divId) {
         </div>
         
         <div class="body">
-            <h4>When was this host last updated via puppet?</h4><pre><code>#!/bin/bash
+            <h4>When was this host last updated via puppet?</h4><pre><code>#!&#47;bin&#47;bash
 #prints time since last recorded puppet update
 #you know...for debugging
-last=`grep last_run /var/lib/puppet/state/last_run_summary.yaml | awk {&#39;print $2&#39;}`
+last=`grep last_run &#47;var&#47;lib&#47;puppet&#47;state&#47;last_run_summary.yaml | awk {&#39;print $2&#39;}`
 now=`date +%s`
 SECONDS=`expr $nowa - $last`
-MIN=`expr $SECONDS / 60`
-HOURS=`expr $MIN / 60`
-DAYS=`expr $HOURS / 24`
+MIN=`expr $SECONDS &#47; 60`
+HOURS=`expr $MIN &#47; 60`
+DAYS=`expr $HOURS &#47; 24`
 
-echo &#34;Since last puppet update&#34;
+echo &quot;Since last puppet update&quot;
 echo &#39;seconds: &#39;$SECONDS
 echo &#39;minutes: &#39;$MIN
 if [ $HOURS -gt 0 ]; then

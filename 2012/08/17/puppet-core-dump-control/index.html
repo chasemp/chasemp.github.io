@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -89,7 +89,7 @@ function toggleDiv(divId) {
         </div>
         
         <div class="body">
-            <h4>If you have crashes you can enable core dumps via Puppet</h4><pre><code>file { &#39;/var/core&#39;:
+            <h4>If you have crashes you can enable core dumps via Puppet</h4><pre><code>file { &#39;&#47;var&#47;core&#39;:
     ensure =&gt; directory,
     mode   =&gt; &#39;1777&#39;,
 }
@@ -97,7 +97,7 @@ function toggleDiv(divId) {
 # %e = executable name
 # %t = timestamp
 # %p = pid
-sysctl { &#39;kernel.core_pattern&#39;: value =&gt; &#39;/var/core/core.%e.%t.%p&#39; }
+sysctl { &#39;kernel.core_pattern&#39;: value =&gt; &#39;&#47;var&#47;core&#47;core.%e.%t.%p&#39; }
 </code></pre><h4>Reference:</h4>
 <p><a href="http://www.cyberciti.biz/tips/linux-core-dumps.html">cyberciti notes</a></p>
 

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -89,7 +89,7 @@ function toggleDiv(divId) {
         </div>
         
         <div class="body">
-            <h4>Allow ssh from only 192 network (presumably your internal)</h4><pre><code>iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0/16 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
+            <h4>Allow ssh from only 192 network (presumably your internal)</h4><pre><code>iptables -A INPUT -i eth0 -p tcp -s 192.168.0.0&#47;16 --dport 22 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -o eth0 -p tcp --sport 22 -m state --state ESTABLISHED -j ACCEPT
 </code></pre><h4>Allow SCCP (VOIP Protocol)</h4><pre><code>iptables -A INPUT -i eth0 -p tcp --dport 1720 -m state --state NEW,ESTABLISHED -j ACCEPT
 iptables -A OUTPUT -o eth0 -p tcp --sport 1720 -m state --state ESTABLISHED -j ACCEPT

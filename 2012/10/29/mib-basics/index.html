@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -93,29 +93,29 @@ function toggleDiv(divId) {
 <p>SNMP is nice but MIB translations can be a pain.  It can also be necessary for figuring<br>
 out what certain numbers mean in the MIB tree.</p>
 <h4>Where does SNMP look for MIBs?</h4><pre><code>net-snmp-config --default-mibdirs
-</code></pre><h4>Make user specific directory (needs to be in above path)</h4><pre><code>mkdir -p /home/&lt;me&gt;/.snmp/mibs
+</code></pre><h4>Make user specific directory (needs to be in above path)</h4><pre><code>mkdir -p &#47;home&#47;&lt;me&gt;&#47;.snmp&#47;mibs
 </code></pre><h4>Grab MIB data from Cisco (or wherever)</h4>
 <p>Example MIB for Firewall info:</p>
-<pre><code>ftp://ftp.cisco.com/pub/mibs/v2/CISCO-UNIFIED-FIREWALL-MIB.my
+<pre><code>ftp:&#47;&#47;ftp.cisco.com&#47;pub&#47;mibs&#47;v2&#47;CISCO-UNIFIED-FIREWALL-MIB.my
 </code></pre>
 <p>Copy to:</p>
-<pre><code>/home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+<pre><code>&#47;home&#47;&lt;me&gt;&#47;.snmp&#47;mibs&#47;CISCO-UNIFIED-FIREWALL-MIB
 </code></pre><h4>Enable MIB</h4>
 <p>Find out where SNMP is looking for configuration parameters:</p>
 <pre><code>net-snmp-config --snmpconfpath
 </code></pre>
 <p>Edit your user snmp configuration (if path is included in above command)</p>
-<pre><code>n /home/&lt;me&gt;/.snmp/snmp.conf
+<pre><code>n &#47;home&#47;&lt;me&gt;&#47;.snmp&#47;snmp.conf
 mib +CISCO-UNIFIED-FIREWALL-MIB
 </code></pre><h4>Try walking the top OID tree</h4><pre><code>snmpwalk -v2c &lt;community&gt; &lt;remote_device_ip&gt;
 
-MIB search path: /home/&lt;me&gt;/.snmp/mibs:/usr/share/mibs/site:/usr/share/snmp/mibs:/usr/share/mibs/iana:/usr/share/mibs/ietf:/usr/share/mibs/netsnmp
-Cannot find module (CISCO-SMI): At line 37 in /home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
-Cannot find module (CISCO-FIREWALL-TC): At line 46 in /home/&lt;me&gt;/.snmp/mibs/CISCO-UNIFIED-FIREWALL-MIB
+MIB search path: &#47;home&#47;&lt;me&gt;&#47;.snmp&#47;mibs:&#47;usr&#47;share&#47;mibs&#47;site:&#47;usr&#47;share&#47;snmp&#47;mibs:&#47;usr&#47;share&#47;mibs&#47;iana:&#47;usr&#47;share&#47;mibs&#47;ietf:&#47;usr&#47;share&#47;mibs&#47;netsnmp
+Cannot find module (CISCO-SMI): At line 37 in &#47;home&#47;&lt;me&gt;&#47;.snmp&#47;mibs&#47;CISCO-UNIFIED-FIREWALL-MIB
+Cannot find module (CISCO-FIREWALL-TC): At line 46 in &#47;home&#47;&lt;me&gt;&#47;.snmp&#47;mibs&#47;CISCO-UNIFIED-FIREWALL-MIB
 </code></pre><h4>What&#39;s with?  &#39;Cannot find module&#39;</h4>
 <p>This means there are MIB dependencies.  You can probably retrieve these from <a href="ftp://ftp.cisco.com/pub/mibs/v2">ftp://ftp.cisco.com/pub/mibs/v2</a>.</p>
-<pre><code>/home/&lt;me&gt;/.snmp/mibs/CISCO-SMI
-/home/&lt;me&gt;/.snmp/mibs/CISCO-FIREWALL-TC
+<pre><code>&#47;home&#47;&lt;me&gt;&#47;.snmp&#47;mibs&#47;CISCO-SMI
+&#47;home&#47;&lt;me&gt;&#47;.snmp&#47;mibs&#47;CISCO-FIREWALL-TC
 </code></pre>
 <p>Enable these MIBs as well.</p>
 <h4>Walk the tree and enjoy MIB goodness</h4><pre><code>&lt;me&gt;@&lt;box&gt;:~# snmpwalk -v2c -c &lt;community&gt; &lt;remote_device_ip&gt; &gt;&gt; snmpinfo.txt

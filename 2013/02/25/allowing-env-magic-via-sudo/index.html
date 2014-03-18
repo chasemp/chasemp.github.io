@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -91,9 +91,9 @@ function toggleDiv(divId) {
         <div class="body">
             <h4>Preamble</h4>
 <p>In an environment with heavy automation and numerous service account users it is easy to end up in a situation where compromising one service becomes compromising an entire system.</p>
-<h4>Granting permission to a single command</h4><pre><code>vi /etc/sudoers.d/makingpie
+<h4>Granting permission to a single command</h4><pre><code>vi &#47;etc&#47;sudoers.d&#47;makingpie
 
-myuser ALL = NOPASSWD: /usr/local/bin/makepie
+myuser ALL = NOPASSWD: &#47;usr&#47;local&#47;bin&#47;makepie
 </code></pre><h4>Looks Like</h4><pre><code>myuser:#sudo makepie
 &gt;&gt;&gt;&gt;mmmmm...pie
 </code></pre><h4>What if my user needs to call out to a proxy but &#39;makepie&#39; doesn&#39;t support it?</h4>
@@ -107,10 +107,10 @@ myuser ALL = NOPASSWD: /usr/local/bin/makepie
 <pre><code>visudo
 </code></pre>
 <p>Replace: “Defaults env_reset” with: “Defaults !env_reset”</p>
-<h4>Piecemeal way</h4><pre><code>vi /etc/sudoers.d/ld_preload
+<h4>Piecemeal way</h4><pre><code>vi &#47;etc&#47;sudoers.d&#47;ld_preload
 
 #allow users to use proxychains env variable (using sudo)
-Defaults env_keep += &#34;LD_PRELOAD&#34;
+Defaults env_keep += &quot;LD_PRELOAD&quot;
 </code></pre><h4>Reference</h4>
 <p><a href="http://brandonhutchinson.com/wiki/Sudo_and_environment_variables">sudo and env blog</a><br>
 <a href="http://unixhelp.ed.ac.uk/CGI/man-cgi?sudoers+5">unix help doc</a><br>

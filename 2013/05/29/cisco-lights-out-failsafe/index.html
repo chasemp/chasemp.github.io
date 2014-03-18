@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -90,17 +90,17 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4>
-<p>If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some nice &quot;fail back to my previous config&quot;, and Cisco now in some cases provides the archive rollback feature.  Which is awesome.  But it may not be available or if for any reason the more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will obviously cause an outage, but in a true &#39;lights out&#39; remote scenario this may be the best you can do.</p>
+<p>If you are remote and are at risk of locking yourself out.  For Cisco or IOS based devices your best bet is to schedule a reload at the beginning of your maintenance.  This mitigates the possible outage.  Better 30 minutes than 30 hours, if you are using JunOS they have some nice &ldquo;fail back to my previous config&rdquo;, and Cisco now in some cases provides the archive rollback feature.  Which is awesome.  But it may not be available or if for any reason the more straightfoward and heavy-handed approached is necessary it is there.  Yes, this will obviously cause an outage, but in a true &#39;lights out&#39; remote scenario this may be the best you can do.</p>
 
 <p><strong>EDIT</strong> </p>
 
 <p>Updated preamble to reference rollback option.</p>
 
-<p>So...if it suits your needs use <a href="http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/">archive</a> <a href="http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/">rollback</a></p>
+<p>So&hellip;if it suits your needs use <a href="http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/">archive</a> <a href="http://packetpushers.net/cisco-configuration-archive-rollback-using-revert-instead-of-reload/">rollback</a></p>
 <h4>Walk through:</h4>
 <p><strong><em>It&#39;s 2 AM and I&#39;m up for maintenace</em></strong></p>
 <pre><code>myrtr#reload in 30
-System configuration has been modified. Save? [yes/no]: no
+System configuration has been modified. Save? [yes&#47;no]: no
 Reload scheduled for 13:20:23 PDT Wed May 29 2013 (in 30 minutes) by &lt;me&gt; on vty0 (&lt;vty_ip&gt;)
 Reload reason: Reload Command
 Proceed with reload? [confirm]
@@ -113,7 +113,7 @@ myrtr#
 Reload scheduled for 13:20:24 PDT Wed May 29 2013 (in 12 minutes) by &lt;me&gt; on vty0 (&lt;vty_ip&gt;)
 Reload reason: Reload Command
 </code></pre>
-<p>*** test everything is good -- ok clear scheduled reload ***</p>
+<p>*** test everything is good &ndash; ok clear scheduled reload ***</p>
 <pre><code>myrtr#reload cancel
 ***
 *** --- SHUTDOWN ABORTED ---

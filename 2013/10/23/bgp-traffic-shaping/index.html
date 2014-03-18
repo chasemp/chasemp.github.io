@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -99,9 +99,9 @@ function toggleDiv(divId) {
 <li>prefer the path with the shortest AS_PATH (unless &#39;bestpath as-path ignore&#39;)</li>
 <li>prefer the path with the lowest origin type (ex. IGP is lower than EGP)</li>
 <li>prefer the path with the lowest multi-exit discriminator (MED value)
--- first AS must be the same for this to matter unless &#39;bgp always-compare-med&#39;
--- no med means med is 0 unless &#39;bgp bestpath med missing-as-worst&#39;
--- bgp deterministic-med command can change this</li>
+&ndash; first AS must be the same for this to matter unless &#39;bgp always-compare-med&#39;
+&ndash; no med means med is 0 unless &#39;bgp bestpath med missing-as-worst&#39;
+&ndash; bgp deterministic-med command can change this</li>
 <li>prefer eBGP over iBGP paths.</li>
 <li>prefer the path with the lowest IGP metric to the BGP next hop (continue on even if bestpath is already selected)</li>
 <li>determine if multiple paths require installation in the routing table for BGP Multipath</li>

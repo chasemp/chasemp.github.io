@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -93,7 +93,7 @@ function toggleDiv(divId) {
 <p>Getting puppetmaster 3.0 on Debian (still squeeze)</p>
 
 <p>I am trying to test and I keep seeing:</p>
-<pre><code>Syntax error at &#39;(&#39;; expected &#39;)&#39; at /repo/modules/apache/manifests/module.pp:34 on node test
+<pre><code>Syntax error at &#39;(&#39;; expected &#39;)&#39; at &#47;repo&#47;modules&#47;apache&#47;manifests&#47;module.pp:34 on node test
 </code></pre>
 <p>I have seen this before and I know it is a result of manifests written for &gt;3.0, at least for this</p>
 
@@ -107,11 +107,11 @@ aptitude -t squeeze-backports install puppetmaster
 <h4>Using the Official Repo</h4>
 <p>Luckily, PuppetEnterprises publishes a deb for adding their repo.  Similar to what rpmforge does for any<br>
 CentOS folks.</p>
-<pre><code>wget http://apt.puppetlabs.com/puppetlabs-release-sqeeze.deb
+<pre><code>wget http:&#47;&#47;apt.puppetlabs.com&#47;puppetlabs-release-sqeeze.deb
 </code></pre>
-<p>--&gt; 2013-06-27 16:11:21 (159 MB/s) - “puppetlabs-release-squeeze.deb” saved [3440/3440]</p>
+<p>&ndash;&gt; 2013-06-27 16:11:21 (159 MB/s) - “puppetlabs-release-squeeze.deb” saved [3440/3440]</p>
 <pre><code>dpkg -i puppetlabs-release-squeeze.deb 
-cat /etc/apt/sources.list.d/puppetlabs.list
+cat &#47;etc&#47;apt&#47;sources.list.d&#47;puppetlabs.list
 </code></pre>
 <pre><code>
 # Puppetlabs products

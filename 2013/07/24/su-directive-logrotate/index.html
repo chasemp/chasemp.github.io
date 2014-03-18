@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -110,7 +110,7 @@ drwxrwxrwx  2 appuser appuser   4096 Jul 24 13:45 .
     create 644 appuser appuser
 }
 </code></pre>
-<h4>Manual logrotate</h4><pre><code>/usr/sbin/logrotate --verbose /etc/logrotate.conf
+<h4>Manual logrotate</h4><pre><code>&#47;usr&#47;sbin&#47;logrotate --verbose &#47;etc&#47;logrotate.conf
 </code></pre><h4>Looks Like</h4>
 <pre><code>
 rotating pattern: /var/log/myapp/*.log  weekly (4 rotations)
@@ -145,7 +145,7 @@ considering log /var/log/myapp/default.log
 <h4>Other solution</h4>
 <p>Depending on why you need the above permissions on your log directory.  This<br>
 may not be the way to go.  But if you can less permissive is always better.</p>
-<pre><code>chmod 0640 /var/log/myapp/
+<pre><code>chmod 0640 &#47;var&#47;log&#47;myapp&#47;
 </code></pre><h4>Reference</h4>
 <p><a href="http://linux.die.net/man/8/logrotate">logrotate man</a></p>
 

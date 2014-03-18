@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -93,8 +93,8 @@ function toggleDiv(divId) {
 <p>Graphite events allow you to overlay vertical bars on graphs for correlation of events and trending data.  I know the <a href="http://codeascraft.com/2010/12/08/track-every-release/" title="etsy events">etsy</a> guys use normal whisper files; presumabley with a 0.0xFacter and sum rollup instead of average.  That is a nice and reliable way to do it, but if you are looking for more flexbility using the  native (&#39;experimental&#39;) events feature may be useful.</p>
 
 <p><img src="/assets/images/events.png" alt="diagram" title="events"></p>
-<h4>Posting an event:</h4><pre><code>#!/bin/bash
-curl -X POST http://graphite/events/ -d &#39;{&#34;what&#34;: &#34;did_stuff&#34;, &#34;tags&#34; : &#34;fun,times&#34;}&#39;
+<h4>Posting an event:</h4><pre><code>#!&#47;bin&#47;bash
+curl -X POST http:&#47;&#47;graphite&#47;events&#47; -d &#39;{&quot;what&quot;: &quot;did_stuff&quot;, &quot;tags&quot; : &quot;fun,times&quot;}&#39;
 </code></pre>
 <p>OR</p>
 
@@ -111,24 +111,24 @@ r = urllib2.urlopen(req)
 
 print r.read()
 </code></pre>
-<h4>Retrieving events:</h4><pre><code>curl -X GET http://graphite/events/
+<h4>Retrieving events:</h4><pre><code>curl -X GET http:&#47;&#47;graphite&#47;events&#47;
 
-curl -X GET http://graphite/events/?tags=fun
-</code></pre><h4>Show me only stuff starting at an epoch time:</h4><pre><code>curl -X GET http://graphite/events/?from=1368778407
+curl -X GET http:&#47;&#47;graphite&#47;events&#47;?tags=fun
+</code></pre><h4>Show me only stuff starting at an epoch time:</h4><pre><code>curl -X GET http:&#47;&#47;graphite&#47;events&#47;?from=1368778407
 </code></pre><h4>Getting lines on graphs</h4>
 <p>Now you have an event that shows up on http://graphite/events and is retrievable by curl.</p>
-<h4>Place it over your graph:</h4><pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;))
+<h4>Place it over your graph:</h4><pre><code>https:&#47;&#47;graphite&#47;render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;))
 </code></pre>
 <p>You can also go two tags deep which is similar in logic to a SQL join.  So the previous example<br>
 retrieves all &#39;fun&#39; tagged events.  Now we want to get &#39;fun&#39; and correlate with &#39;times&#39;.</p>
-<pre><code>https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;, &#39;times&#39;))
+<pre><code>https:&#47;&#47;graphite&#47;render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;fun&#39;, &#39;times&#39;))
 </code></pre>
 <p>This returns all &#39;fun&#39; tagged events that also have &#39;times&#39; tags.</p>
 <h4>Where this is useful in real world:</h4><pre><code>#all syncs
-https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;))
+https:&#47;&#47;graphite&#47;render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;))
 
 #Now code syncs from a specific user:
-https://graphite/render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;, &#39;user&#39;))
+https:&#47;&#47;graphite&#47;render?target=my.metic.path&amp;target=drawAsInfinite(events(&#39;code_sync&#39;, &#39;user&#39;))
 </code></pre><h4>Reference:</h4>
 <p><a href="http://graphite.readthedocs.org/en/1.0/functions.html">graphite docs</a><br>
 <a href="https://code.launchpad.net/%7Elucio.torre/graphite/add-events/+merge/69142">garphite events</a></p>

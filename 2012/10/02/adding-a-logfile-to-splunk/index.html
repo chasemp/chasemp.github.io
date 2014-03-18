@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -91,13 +91,13 @@ function toggleDiv(divId) {
         <div class="body">
             <h4>Getting standard logfiles into Splunk</h4>
 <p>inputs.conf</p>
-<pre><code>[monitor:///var/log/my/file.log]
+<pre><code>[monitor:&#47;&#47;&#47;var&#47;log&#47;my&#47;file.log]
 disabled = false
 followTail = 0
 host = &lt;HOST&gt;
 host_segment = 4
 sourcetype = &lt;SOURCE_TYPE_NAME&gt;
-</code></pre><h4>Notes</h4><pre><code>You should add it to to logrotate, Splunk will &#34;tail&#34; it correctly
+</code></pre><h4>Notes</h4><pre><code>You should add it to to logrotate, Splunk will &quot;tail&quot; it correctly
 </code></pre>
         </div>
     </div>

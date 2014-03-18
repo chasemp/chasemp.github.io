@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -105,12 +105,12 @@ else
 
 </code></pre>
 <pre><code>mc-find-hosts
-</code></pre><h4>Find host by name matching</h4><pre><code>mc-find-hosts --with-id /foo/
-</code></pre><h4>Find hosts by puppet class</h4><pre><code>/usr/sbin/mc-find-hosts --with-class &lt;class_name&gt; | sort
-</code></pre><h4>Query service status by class</h4><pre><code>mco service --with-class /apache/ apache2 status
+</code></pre><h4>Find host by name matching</h4><pre><code>mc-find-hosts --with-id &#47;foo&#47;
+</code></pre><h4>Find hosts by puppet class</h4><pre><code>&#47;usr&#47;sbin&#47;mc-find-hosts --with-class &lt;class_name&gt; | sort
+</code></pre><h4>Query service status by class</h4><pre><code>mco service --with-class &#47;apache&#47; apache2 status
 </code></pre><h4>Getting stats about the service itself</h4><pre><code>mco rpc rpcutil daemon_stats
 </code></pre><h4>Restarting a service</h4><pre><code>mco service --with-identity &lt;host&gt; &lt;service&gt; restart
-</code></pre><h4>Find agents directory</h4><pre><code>sudo find / -name rpcutil.ddl -exec dirname {} \;
+</code></pre><h4>Find agents directory</h4><pre><code>sudo find &#47; -name rpcutil.ddl -exec dirname {} \;
 </code></pre><h4>Query a fact</h4><pre><code>mco facts &lt;fact_name&gt;
 </code></pre><h4>Query Puppet Status and get JSON in return</h4><pre><code>mco rpc puppet status -j
 </code></pre>

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -90,7 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <h4>Preamble</h4><pre><code>I want to use mp3&#39;s for hold music, and for fun.
-</code></pre><h4>Convert all mp3&#39;s in a directory for use with asterisk.</h4><pre><code>#!/bin/bash
+</code></pre><h4>Convert all mp3&#39;s in a directory for use with asterisk.</h4><pre><code>#!&#47;bin&#47;bash
 for f in `ls *.mp3` ; do FILE=$(basename $f .mp3) ; \
 ffmpeg -i $FILE.mp3 -ar 8000 -ac 1 -ab 64 $FILE.wav -ar 8000 \
 -ac 1 -ab 64 -f mulaw $FILE.pcm -map 0:0 -map 0:0 ; done

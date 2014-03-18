@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -92,7 +92,7 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>I am seeing the same issue as this <a href="https://lists.debian.org/debian-user/2005/06/msg00799.html">gentlemen</a> when trying to use <a href="http://manpages.ubuntu.com/manpages/hardy/man8/tmpreaper.8.html">tmpreaper</a>.</p>
 
-<p>If you use the --test switch you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&#39;t read &#39;/hi/hello&#39; with &#39;/hi*&#39; if you use --protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) &#39;/tmp&#39; extensively.</p>
+<p>If you use the &ndash;test switch you can see the internals of how tmpreaper recognizes files and it is without the container directory context so it doesn&#39;t read &#39;/hi/hello&#39; with &#39;/hi*&#39; if you use &ndash;protect.  It only sees the hello file individually.  This is not the behavior I need at the moment.  I do not know the name of each file I need to protect.  Some things like passenger use (and maybe abuse) &#39;/tmp&#39; extensively.</p>
 
 <p>Example of files passenger can land in /tmp:</p>
 
@@ -189,7 +189,7 @@ function toggleDiv(divId) {
 </code></pre>
 
 <p>Place in file and run this hourly:</p>
-<pre><code>0 * * * * /usr/local/bin/myscript.sh &gt;/dev/null 2&gt;&amp;1
+<pre><code>0 * * * * &#47;usr&#47;local&#47;bin&#47;myscript.sh &gt;&#47;dev&#47;null 2&gt;&amp;1
 </code></pre><h4>Notes</h4>
 <p>Much as been said about the harm of xargs.  I tried this originally using the -print0 option in find, and the -0 option for xargs to appropriately handle files with space in them.  I wasn&#39;t able to wrangle that in a way that made sense with my exclusion logic.  I really wanted to read in my list of exclusions from a file for use-case specific reasons.  With xargs it seems, don&#39;t use it until you need to use it is the best advice.</p>
 

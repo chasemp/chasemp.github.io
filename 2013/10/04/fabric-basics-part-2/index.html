@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -192,12 +192,12 @@ sys 0m0.116s
 </code></pre>
 <h4>running commands on remote in bg</h4>
 <p>Because of how remote shells are spawned running commands in the background remotely can be tricky.  This example is provided in the wiki.  I did not get this to work reliably.</p>
-<pre><code>run(&#34;nohup %s &gt;&amp; /dev/null &lt; /dev/null &amp;&#34; % (cmd,))
+<pre><code>run(&quot;nohup %s &gt;&amp; &#47;dev&#47;null &lt; &#47;dev&#47;null &amp;&quot; % (cmd,))
 </code></pre>
 <p>I prefer using <a href="http://stackoverflow.com/questions/8775598/start-a-background-process-with-nohup-using-fabric">dtach</a></p>
 <pre><code>aptitude install dtach
 def bg_cmd(cmd):
-    run(&#39;dtach -n `mktemp -u /tmp/%s.XXXX` %s&#39; % (env.user, cmd)
+    run(&#39;dtach -n `mktemp -u &#47;tmp&#47;%s.XXXX` %s&#39; % (env.user, cmd)
 </code></pre>
 <p>This way if a job runs long or hangs you can always remote in and attach to the session to investigate.</p>
 <h4>Using sudo</h4>
@@ -216,7 +216,7 @@ def bg_cmd(cmd):
 <li><p>If this is a lab scenario with constantly changing host names and keys you can use <a href="http://docs.fabfile.org/en/1.4.2/usage/env.html#disable-known-hosts">disable known hosts</a></p></li>
 </ol>
 
-<p>in order to avoid...</p>
+<p>in order to avoid&hellip;</p>
 <pre><code>fabric.exceptions.NetworkError: \
 Host key for OLDHOST did not match pre-existing key! \
 Server&#39;s key was changed recently, or possible man-in-the-middle attack.

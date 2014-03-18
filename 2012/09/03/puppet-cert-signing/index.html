@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -93,14 +93,14 @@ function toggleDiv(divId) {
 <p>Setting up a new host with Puppet.  This assumes you have a Puppet Master already going.  One nice thing to do is <br>
 have a cname that forwards the &#39;puppet&#39; name to your Puppet Master so that hosts find it easily as the default.</p>
 <h4>Did a host have this name previously?</h4><pre><code>me@pmaster:~# puppet cert -l -all | g foo.com
-+ &#34;foo.com&#34;           (SHA1) &lt;hash&gt;
++ &quot;foo.com&quot;           (SHA1) &lt;hash&gt;
 </code></pre><h4>Remove old serverside cert</h4><pre><code>me@pmaster:~# puppet cert --clean foo.com 
 Revoked certificate with serial 596
-Removing file Puppet::SSL::Certificate foo.com at &#39;/var/lib/puppet/ssl/ca/signed/foo.com.pem&#39;
-Removing file Puppet::SSL::Certificate foo.com at &#39;/var/lib/puppet/ssl/certs/foo.com.pem&#39;
+Removing file Puppet::SSL::Certificate foo.com at &#39;&#47;var&#47;lib&#47;puppet&#47;ssl&#47;ca&#47;signed&#47;foo.com.pem&#39;
+Removing file Puppet::SSL::Certificate foo.com at &#39;&#47;var&#47;lib&#47;puppet&#47;ssl&#47;certs&#47;foo.com.pem&#39;
 </code></pre><h4>Request new cert on the client</h4><pre><code>puppet agent --test
 </code></pre><h4>Verify the request is now pending server side</h4><pre><code>me@pmaster:~# puppet cert -l
-&#34;blah.com&#34;           (SHA256) &lt;hash&gt;
+&quot;blah.com&quot;           (SHA256) &lt;hash&gt;
 </code></pre><h4>Sign your cert</h4><pre><code>me@pmaster:~# puppet cert -s blah.com
 Signed certificate request for blah.com
 </code></pre><h4>Run Puppet client side:</h4><pre><code>puppet agent --test

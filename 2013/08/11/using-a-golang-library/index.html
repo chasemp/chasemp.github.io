@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -123,15 +123,15 @@ Setting up golang (2:1.0.2-1.1) ...
 <h4>Setting up our environment</h4>
 <p>We need to setup our environment so Go knows where to find our library for building.</p>
 <pre><code>#can be anywhere the convention is $HOME
-mkdir -p $HOME/go/src
+mkdir -p $HOME&#47;go&#47;src
 #Goland looks for env GOPATH
-export GOPATH=$HOME/go
+export GOPATH=$HOME&#47;go
 #including &#39;go install&#39; binaries in our normal $PATH
-export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOPATH&#47;bin
 
-cd ~/go/src/
-git clone https://github.com/akrennmair/gopcap.git
-cd gopcap/
+cd ~&#47;go&#47;src&#47;
+git clone https:&#47;&#47;github.com&#47;akrennmair&#47;gopcap.git
+cd gopcap&#47;
 #compile
 go build
 #place in our bin directory
@@ -164,13 +164,13 @@ me@vm:~/go# tree
                 └── tcpdump.go
 
 </code></pre>
-<h4>Build tcpdump written in Go</h4><pre><code>cd ~/go/src/gopcap/tools/tcpdump
+<h4>Build tcpdump written in Go</h4><pre><code>cd ~&#47;go&#47;src&#47;gopcap&#47;tools&#47;tcpdump
 </code></pre>
-<p>-&gt; Change the &quot;github.com/akrennmair/gopcap&quot; to &#39;gopcp&#39; as we are using our local lib.</p>
+<p>-&gt; Change the &ldquo;github.com/akrennmair/gopcap&rdquo; to &#39;gopcp&#39; as we are using our local lib.</p>
 <pre><code>go build
 </code></pre>
 <p>Now there is a binary in our directory</p>
-<pre><code>me@vm:~/go/src/gopcap/tools/tcpdump# ls
+<pre><code>me@vm:~&#47;go&#47;src&#47;gopcap&#47;tools&#47;tcpdump# ls
 tcpdump  tcpdump.go
 </code></pre>
 <p>We can run it like any program</p>
@@ -184,7 +184,7 @@ CDT TCP 172.16.104.131:22 > 172.16.104.1:54048 [ack psh] SEQ=2666230607 ACK=3090
 2013-08-10 03:43:37.400268 -0500 CDT 2013-08-10 03:43:37.400268 -0500 \
 CDT TCP 172.16.104.1:54048 > 172.16.104.131:22 [ack] SEQ=3090816906 ACK=2666230815 LEN=52
 </code></pre>
-<h4>Place this in our Go path</h4><pre><code>me@vm:~/go/src/gopcap/tools/tcpdump# go install
+<h4>Place this in our Go path</h4><pre><code>me@vm:~&#47;go&#47;src&#47;gopcap&#47;tools&#47;tcpdump# go install
 </code></pre>
 <p>Now our Go path tree looks like</p>
 
@@ -219,10 +219,10 @@ me@vm:~/go/src/gopcap/tools/tcpdump# tree ~/go/
 <h4>Go and Paths</h4>
 <p>So tcpdump is obviously already a *nix tool.  Right now if I issue the command I am getting the Go version.</p>
 <pre><code>&gt;which tcpdump
-/root/go/bin/tcpdump
+&#47;root&#47;go&#47;bin&#47;tcpdump
 
-&gt;file ~/go/bin/tcpdump 
-/root/go/bin/tcpdump: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), \
+&gt;file ~&#47;go&#47;bin&#47;tcpdump 
+&#47;root&#47;go&#47;bin&#47;tcpdump: ELF 64-bit LSB executable, x86-64, version 1 (SYSV), \
 dynamically linked (uses shared libs), not stripped
 </code></pre><h4>Useful</h4>
 <p>Clean up our build</p>

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -94,9 +94,9 @@ function toggleDiv(divId) {
 <p>Go to your VM Settings page =&gt; Sharing =&gt; +(add new share) =&gt; &#39;shared&#39;</p>
 
 <p><img src="/assets/images/vmwareshared/vmwareshared.png" alt="vmwareshared"></p>
-<h4>Mount your share</h4><pre><code>cd /mnt/
+<h4>Mount your share</h4><pre><code>cd &#47;mnt&#47;
 mkdir ops
-sudo mount -t vmhgfs .host:/ops /mnt/ops
+sudo mount -t vmhgfs .host:&#47;ops &#47;mnt&#47;ops
 </code></pre><h4>References</h4>
 <p><a href="http://www.howtogeek.com/howto/ubuntu/how-to-share-folders-with-your-ubuntu-virtual-machine-guest/">howto geek</a><br>
 <a href="http://askubuntu.com/questions/29284/how-do-i-mount-shared-folders-win7-host-in-ubuntu-guest-using-vmwaretools-v">ask ubuntu</a></p>

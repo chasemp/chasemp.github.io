@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -112,7 +112,7 @@ dpkg -i percona-toolkit_2.2.4_all.deb
 
 <p>Make sure it has the tool we want</p>
 <pre><code>root@vm:~# which pt-query-digest
-/usr/bin/pt-query-digest
+&#47;usr&#47;bin&#47;pt-query-digest
 </code></pre><h4>Capture Query Traffic</h4><pre><code>tcpdump -s 65535 -x -nn -q -tttt -i any port 3306 &gt; mysql.netdump.txt
 </code></pre><h4>Translating Network Dump into MySQL details</h4><pre><code>pt-query-digest --type tcpdump mysql.tcp.txt &gt; dump.log
 </code></pre>

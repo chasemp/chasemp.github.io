@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -90,7 +90,7 @@ function toggleDiv(divId) {
         
         <div class="body">
             <p>Squid defaults to logging things using epoch time.  Which can be a pain to decypher if you are in a hurry.</p>
-<pre><code>1378405786.009      0 127.0.0.1 TCP_DENIED/400 1342 GET NONE:// - NONE/- text/html
+<pre><code>1378405786.009      0 127.0.0.1 TCP_DENIED&#47;400 1342 GET NONE:&#47;&#47; - NONE&#47;- text&#47;html
 </code></pre>
 <p>You see: <strong>1378405786.009</strong><br>
 It means: <strong>GMT: Thu, 05 Sep 2013 18:29:46 GMT</strong></p>
@@ -98,12 +98,12 @@ It means: <strong>GMT: Thu, 05 Sep 2013 18:29:46 GMT</strong></p>
 <p>Years ago I wrote a <a href="https://raw.github.com/chasemp/archive/master/parse_squid.py">script</a> to handle this on-the-fly as I was looking for information I needed to pass an audit.  In a pinch, on an unfamiliar server, it works.  But it&#39;s not ideal.</p>
 
 <p>This configuration in /etc/squid/squid.conf makes timestamps natively sane:</p>
-<pre><code>logformat sanelogfrmt %tl.%03tu %6tr %&gt;a %Ss/%03Hs %&lt;st %rm %ru %un %Sh/%&lt;A %mt
-access_log /var/log/squid/access.log sanelogfrmt
+<pre><code>logformat sanelogfrmt %tl.%03tu %6tr %&gt;a %Ss&#47;%03Hs %&lt;st %rm %ru %un %Sh&#47;%&lt;A %mt
+access_log &#47;var&#47;log&#47;squid&#47;access.log sanelogfrmt
 </code></pre>
 <p>Looks like:</p>
-<pre><code>05/Sep/2013:11:30:46 -0700      0 127.0.0.1 TCP_DENIED/400 1342 \
-GET NONE:// - NONE/- text/html
+<pre><code>05&#47;Sep&#47;2013:11:30:46 -0700      0 127.0.0.1 TCP_DENIED&#47;400 1342 \
+GET NONE:&#47;&#47; - NONE&#47;- text&#47;html
 </code></pre>
 <p>For a nice explaination of the fields in this log see the <a href="http://trafficserver.apache.org/docs/trunk/admin/working-log-files/log-formats.en.html">docs</a></p>
 

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -94,8 +94,8 @@ function toggleDiv(divId) {
 
 <p>Heavy duty logging platforms are nice but sometimes you have to make do with the basics.</p>
 <h4>Install</h4><pre><code>aptitude install log2mail rsyslog
-</code></pre><h4>Rsyslog configuration</h4><pre><code>#one dir/file per receiver IP
-$template FILENAME,&#34;/var/log/%fromhost-ip%/syslog.log&#34;
+</code></pre><h4>Rsyslog configuration</h4><pre><code>#one dir&#47;file per receiver IP
+$template FILENAME,&quot;&#47;var&#47;log&#47;%fromhost-ip%&#47;syslog.log&quot;
 *.* ?FILENAME
 </code></pre><h4>Editing log2mail config</h4>
 <p>We want to match a text string in our log file.</p>
@@ -111,7 +111,7 @@ file = /var/log/<IP>/syslog.log
 <p>Once your string is matched you should get an email:</p>
 <pre><code>Hello!
 
-We have matched your pattern &#34;&lt;YOUR_TEXT_PATTERN&gt;&#34; in &#34;&lt;YOUR_LOG_FILE&gt;&#34; 5 times:
+We have matched your pattern &quot;&lt;YOUR_TEXT_PATTERN&gt;&quot; in &quot;&lt;YOUR_LOG_FILE&gt;&quot; 5 times:
 
 &lt;YOUR LOG FILE MATCHES&gt;
 

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -115,13 +115,13 @@ in your current directory or a fabfile/<strong>init</strong>.py module somewhere
 </code></pre>
 
 <p>List the available fabric commands using the &#39;fab&#39; utility:</p>
-<pre><code>root@vm:~/fabric# fab -l
+<pre><code>root@vm:~&#47;fabric# fab -l
 Available commands:
 
     hello
 </code></pre>
 <p>Execute the &#39;hello&#39; function.</p>
-<pre><code>root@vm:~/fabric# fab hello
+<pre><code>root@vm:~&#47;fabric# fab hello
 Hello World!
 
 Done.
@@ -129,12 +129,12 @@ Done.
 <p>Add the following to fabfile.py</p>
 <pre><code>from fabric.api import local
 def localetcissue():
-    print local(&#39;cat /etc/issue&#39;)
+    print local(&#39;cat &#47;etc&#47;issue&#39;)
 </code></pre>
 <p>Execute your command:</p>
-<pre><code>root@vm:~/fabric# fab localetcissue
-[localhost] run: cat /etc/issue
-Debian GNU/Linux 7.1 \n \l
+<pre><code>root@vm:~&#47;fabric# fab localetcissue
+[localhost] run: cat &#47;etc&#47;issue
+Debian GNU&#47;Linux 7.1 \n \l
 
 Done.
 </code></pre><h4>Fabric can run remote commands</h4>
@@ -146,7 +146,7 @@ def whoami():
     print run(&#39;whoami&#39;)
 </code></pre>
 <p>Execute your command:</p>
-<pre><code>root@vm:~/fabric# fab -H remotehost.com whoami
+<pre><code>root@vm:~&#47;fabric# fab -H remotehost.com whoami
 [&#39;remotehost.com&#39;]
 [remotehost.com] run: whoami
 [remotehost.com] out: root
@@ -173,7 +173,7 @@ def fail():
 
 <p>Execute your commands:</p>
 
-<p>Success...</p>
+<p>Success&hellip;</p>
 
 <pre><code>
 root@vm:~/fabric# fab -H remotehost.com success
@@ -187,7 +187,7 @@ Done.
 Disconnecting from remotehost.com... done.
 </code></pre>
 
-<p>Falure...(as an exception)</p>
+<p>Falure&hellip;(as an exception)</p>
 
 <pre><code>
 ['remotehost.com']
@@ -212,7 +212,7 @@ def fail():
     print result
 </code></pre>
 
-<p>Failure (handled gracefully)...</p>
+<p>Failure (handled gracefully)&hellip;</p>
 
 <pre><code>
 root@vm:~/fabric# fab -H remotehost.com fail
@@ -245,7 +245,7 @@ def whoami():
     print run('whoami')
 </code></pre>
 
-<p>This execution...</p>
+<p>This execution&hellip;</p>
 
 <pre><code>
 root@vm:~/fabric# fab whoami
@@ -259,7 +259,7 @@ Done.
 Disconnecting from remotehost.com... done.
 </code></pre>
 
-<p>Looks the same as this execution...</p>
+<p>Looks the same as this execution&hellip;</p>
 
 <pre><code>
 root@vm:~/fabric# fab -H remotehost.com whoami
@@ -296,9 +296,9 @@ def command(cmd):
         print run(cmd)
 </code></pre>
 
-<p>Execution runs as me with my ssh key (with argument passing)...</p>
-<pre><code>rush@vm:~/fabric$ fab -H remotehost2.com command:cmd=&#39;uname -a&#39;
-Linux remotehost2.com 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1 x86_64 GNU/Linux
+<p>Execution runs as me with my ssh key (with argument passing)&hellip;</p>
+<pre><code>rush@vm:~&#47;fabric$ fab -H remotehost2.com command:cmd=&#39;uname -a&#39;
+Linux remotehost2.com 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1 x86_64 GNU&#47;Linux
 
 Done.
 Disconnecting from remotehost2.com... done.
@@ -320,7 +320,7 @@ def cmd(host, cmd, user):
 print cmd(sys.argv[1], sys.argv[2], 'serviceuser')
 </code></pre>
 
-<p>Execution...</p>
+<p>Execution&hellip;</p>
 
 <pre><code>
 root@vm:~/fabric# python cmd.py remotehost2.com 'ls -al'

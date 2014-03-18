@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -93,10 +93,10 @@ function toggleDiv(divId) {
 <p>Ever go to start mysql and there is not enough disk space.  We need to get MySQL past disk full warnings.</p>
 
 <p>I tried to:</p>
-<pre><code>/etc/init.d/mysql start
+<pre><code>&#47;etc&#47;init.d&#47;mysql start
 </code></pre>
 <p>And saw:</p>
-<pre><code>/etc/init.d/mysql: ERROR: The partition with /var/lib/mysql is too full! ... failed!
+<pre><code>&#47;etc&#47;init.d&#47;mysql: ERROR: The partition with &#47;var&#47;lib&#47;mysql is too full! ... failed!
 </code></pre><h4>Usage</h4><pre><code>df -Th
 </code></pre>
 <pre><code>
@@ -128,7 +128,7 @@ overflow     tmpfs    1.0M  1.0M     0 100% /tmp
 
 <p>Looks like /var/log and apt cache are out of control.</p>
 
-<p>many rm -fR&#39;s later...</p>
+<p>many rm -fR&#39;s later&hellip;</p>
 
 <pre><code>
 /dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
@@ -139,7 +139,7 @@ overflow     tmpfs    1.0M  1.0M     0 100% /tmp
 </code></pre>
 
 <p>Let&#39;s try to start:</p>
-<pre><code>/etc/init.d/mysql start
+<pre><code>&#47;etc&#47;init.d&#47;mysql start
 </code></pre>
 <pre><code>
 Starting MySQL (Percona Server) database server: mysqld ..
@@ -158,7 +158,7 @@ udev         tmpfs    244M  172K  244M   1% /dev
 tmpfs        tmpfs    249M     0  249M   0% /dev/shm
 overflow     tmpfs    1.0M  1.0M     0 100% /tmp
 </code></pre>
-<pre><code>rm -fR /tmp/*
+<pre><code>rm -fR &#47;tmp&#47;*
 </code></pre>
 <pre><code>
 /dev/sda1     ext3    7.6G  5.5G  1.7G  77% /
@@ -167,7 +167,7 @@ udev         tmpfs    244M  172K  244M   1% /dev
 tmpfs        tmpfs    249M     0  249M   0% /dev/shm
 overflow     tmpfs    1.0M     0  1.0M   0% /tmp
 </code></pre>
-<h4>Ta-da</h4><pre><code>/etc/init.d/mysql start
+<h4>Ta-da</h4><pre><code>&#47;etc&#47;init.d&#47;mysql start
 
 Starting MySQL (Percona Server) database server: mysqld already running.
 </code></pre><h4>Notes</h4><pre><code>aptitude install tmpreaper

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -99,7 +99,7 @@ function toggleDiv(divId) {
 <li> Run unit tests</li>
 </ul>
 
-<p>It continues on ...</p>
+<p>It continues on &hellip;</p>
 
 <ul>
 <li> Run integration tests</li>
@@ -126,10 +126,10 @@ if __name__ == &#39;__main__&#39;:
 
 <p>Doctest is a way to write small tests into the docstring.  Some people do not consider this to be valid unittesting.  I think it&#39;s a good start.</p>
 <pre><code>def what():
-    &#34;&#34;&#34;
+    &quot;&quot;&quot;
     &gt;&gt;&gt; what()
     &#39;123&#39;
-    &#34;&#34;&#34;
+    &quot;&quot;&quot;
     return &#39;123&#39;
 
 if __name__ == &#39;__main__&#39;:
@@ -157,10 +157,10 @@ Test passed.
 
 <p>Change it to:</p>
 <pre><code>def what():
-    &#34;&#34;&#34;
+    &quot;&quot;&quot;
     &gt;&gt;&gt; what()
     &#39;1234&#39;
-    &#34;&#34;&#34;
+    &quot;&quot;&quot;
     return &#39;123&#39;
 </code></pre>
 <p>Now we see:</p>
@@ -195,12 +195,12 @@ git init
 nano pre-commit
 </code></pre>
 <p>Contents:</p>
-<pre><code>#!/bin/bash
+<pre><code>#!&#47;bin&#47;bash
 python -m doctest *
 
-cd .git/hooks/
-ln -s ../../pre-commit pre-commit
-cd ../..
+cd .git&#47;hooks&#47;
+ln -s ..&#47;..&#47;pre-commit pre-commit
+cd ..&#47;..
 git add -A
 git commit -m &#39;test&#39;
 </code></pre>
@@ -229,7 +229,7 @@ Got:
 nano pre-commit
 </code></pre>
 <p>Contents:</p>
-<pre><code>#!/bin/bash
+<pre><code>#!&#47;bin&#47;bash
 nosetests --all-modules --traverse-namespace --with-doctest --exe
 </code></pre>
 <p>This output is more readable as your tests grow:</p>

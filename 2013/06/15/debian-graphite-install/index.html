@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -175,7 +175,7 @@ cp graphite.wsgi.example graphite.wsgi
 cp carbon.conf.example carbon.conf
 cp storage-schemas.conf.example storage-schemas.conf
 </code></pre>
-<h4>Setup django db</h4><pre><code>cd /opt/graphite/webapp/graphite
+<h4>Setup django db</h4><pre><code>cd &#47;opt&#47;graphite&#47;webapp&#47;graphite
 python manage.py syncdb
 </code></pre><h4>Looks Like</h4>
 <p><a href="javascript:toggleDiv('hideme');">Show Output</a></p>
@@ -231,9 +231,9 @@ No fixtures found.
 </div>
 <h4>Enable site in Apache</h4><pre><code>a2dissite default
 a2ensite graphite
-sudo chmod -R a+w /opt/graphite/storage
-</code></pre><h4>Start things</h4><pre><code>/opt/graphite/bin/carbon-cache.py start
-/etc/init.d/apache2 restart
+sudo chmod -R a+w &#47;opt&#47;graphite&#47;storage
+</code></pre><h4>Start things</h4><pre><code>&#47;opt&#47;graphite&#47;bin&#47;carbon-cache.py start
+&#47;etc&#47;init.d&#47;apache2 restart
 </code></pre><h4>Notes</h4>
 <p>Logs are located here: /opt/graphite/storage/log/webapp/</p>
 <h4>Reference</h4>

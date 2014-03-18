@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -109,7 +109,7 @@ function toggleDiv(divId) {
 /usr/lib/NetworkManager
 /usr/lib/NetworkManager/nm-openconnect-auth-dialog
 </code></pre>
-<h4>Get your certificate</h4><pre><code>links https://yourdomain/+CSCOCA+/login.html
+<h4>Get your certificate</h4><pre><code>links https:&#47;&#47;yourdomain&#47;+CSCOCA+&#47;login.html
 </code></pre>
 <p>looks like</p>
 
@@ -166,9 +166,9 @@ Password: --your pass here ;) --
 <p>Now you should be able to hit an IP across the tunnel.</p>
 <h4>Notes</h4>
 <ul>
-<li><p>You can install and use the vpnc-script to manage DNS and things smartly.  You can use the --script flag:</p>
+<li><p>You can install and use the vpnc-script to manage DNS and things smartly.  You can use the &ndash;script flag:</p>
 
-<p>--script /usr/share/vpnc-scripts/vpnc-script</p></li>
+<p>&ndash;script /usr/share/vpnc-scripts/vpnc-script</p></li>
 <li><p>Your certificate passphrase is probably the OTP you used</p></li>
 <li><p>If you make a script for managing connections you may need to clear out stale ones at the top</p>
 <pre><code>killall openconnect

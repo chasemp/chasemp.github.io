@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -89,12 +89,12 @@ function toggleDiv(divId) {
         </div>
         
         <div class="body">
-            <h4>Show me my non-default databases:</h4><pre><code>for d in $(mysql -u root -e &#34;show databases&#34; | \
+            <h4>Show me my non-default databases:</h4><pre><code>for d in $(mysql -u root -e &quot;show databases&quot; | \
     grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
 do echo $d; done
-</code></pre><h4>Clean non-default databases:</h4><pre><code>for d in $(mysql -u root -e &#34;show databases&#34; | \
+</code></pre><h4>Clean non-default databases:</h4><pre><code>for d in $(mysql -u root -e &quot;show databases&quot; | \
     grep -v &#39;Database\|mysql\|performance_schema\|information_schema&#39;); \
-do echo $d; mysql -u root -e &#34;drop database $d;&#34;; done
+do echo $d; mysql -u root -e &quot;drop database $d;&quot;; done
 </code></pre>
         </div>
     </div>

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -92,10 +92,10 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>When you&#39;re being hit with DDOS of any flavor it sucks mightily.  Some of the old school attacks like syn floods have been around so long there are decent defenses.  One of the (seemingly) lesser known defenses is syn cookies.</p>
 <h4>Who doesn&#39;t like cookies?</h4><pre><code>SYN cookies are particular choices of initial TCP sequence numbers by TCP servers.
-</code></pre><h4>Linux</h4><pre><code>root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+</code></pre><h4>Linux</h4><pre><code>root@&lt;server&gt;:~# cat &#47;proc&#47;sys&#47;net&#47;ipv4&#47;tcp_syncookies
 0
 
-root@&lt;server&gt;:~# cat /proc/sys/net/ipv4/tcp_syncookies
+root@&lt;server&gt;:~# cat &#47;proc&#47;sys&#47;net&#47;ipv4&#47;tcp_syncookies
 1
 </code></pre>
 <p>Now syn cookies are enabled.  This not a foolproof defense but can help.  Remember this method of  enabling does not persist through a reboot.</p>

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -92,12 +92,12 @@ function toggleDiv(divId) {
             <h4>Preamble</h4>
 <p>One of the things I do often is download projects from github.  Pypi (py-pee-eye) is nice and so is pip, but I like to have one reference for packages on a host.  If at all possible I prefer to make binaries.  It is nice for reporting, and because we run our own internal repostories it affords us certain advantages for reporting and dependency handling.</p>
 <h4>Install a few packages:</h4><pre><code>aptitude install build-essential python-dev python-setuptools python-stdeb python-support
-</code></pre><h4>Download a project: <a href="https://github.com/xb95/nagios-api.git">https://github.com/xb95/nagios-api.git</a></h4><pre><code>git clone https://github.com/xb95/nagios-api.git
-cd nagios-api/
+</code></pre><h4>Download a project: <a href="https://github.com/xb95/nagios-api.git">https://github.com/xb95/nagios-api.git</a></h4><pre><code>git clone https:&#47;&#47;github.com&#47;xb95&#47;nagios-api.git
+cd nagios-api&#47;
 </code></pre><h4>Making a Deb</h4>
 <p>This where with traditional disutils you would do <em>python setup.py install</em></p>
 
-<p>But we can also do...</p>
+<p>But we can also do&hellip;</p>
 <pre><code>sudo python setup.py --command-packages=stdeb.command bdist_deb
 
 &lt;pre&gt;&lt;code&gt;
@@ -107,24 +107,24 @@ working around Debian #548392, changing XS-Python-Version: to &#39;current&#39;
 CALLING dpkg-source -b nagios-api-1.2.1 nagios-api_1.2.1.orig.tar.gz (in dir deb_dist)
 dpkg-source: info: using source format `1.0&#39;
 ...
-dpkg-deb: building package `python-nagios-api&#39; in `../python-nagios-api_1.2.1-1_all.deb&#39;.
+dpkg-deb: building package `python-nagios-api&#39; in `..&#47;python-nagios-api_1.2.1-1_all.deb&#39;.
 dpkg-deb: warning: ignoring 1 warning about the control file(s)
-dpkg-genchanges -b &gt;../nagios-api_1.2.1-1_amd64.changes
+dpkg-genchanges -b &gt;..&#47;nagios-api_1.2.1-1_amd64.changes
 dpkg-genchanges: binary-only upload - not including any source code
 dpkg-source --after-build nagios-api-1.2.1
 dpkg-buildpackage: binary only upload (no source included)
-&lt;/code&gt;&lt;/pre&gt;
+&lt;&#47;code&gt;&lt;&#47;pre&gt;
 </code></pre>
 <p>That was all it took to create a fully installable binary package:</p>
-<pre><code>dpkg -i deb_dist/python-nagios-api_1.2.1-1_all.deb 
+<pre><code>dpkg -i deb_dist&#47;python-nagios-api_1.2.1-1_all.deb 
 
 &lt;pre&gt;&lt;code&gt;
 Selecting previously deselected package python-nagios-api.
 (Reading database ... 38260 files and directories currently installed.)
-Unpacking python-nagios-api (from .../python-nagios-api_1.2.1-1_all.deb) ...
+Unpacking python-nagios-api (from ...&#47;python-nagios-api_1.2.1-1_all.deb) ...
 Setting up python-nagios-api (1.2.1-1) ...
 Processing triggers for python-support ...
-&lt;/code&gt;&lt;/pre&gt;
+&lt;&#47;code&gt;&lt;&#47;pre&gt;
 </code></pre><h4>Changing package particulars</h4>
 <p>stdeb allows you to specify many options you would normally need to provide in a debian control file.  For example<br>
 in order to change the name of the package we end up with from &#39;python-nagios-api&#39; to just nagios-api we can do<br>

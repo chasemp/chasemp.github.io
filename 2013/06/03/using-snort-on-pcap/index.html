@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -93,12 +93,12 @@ function toggleDiv(divId) {
 <p>Grabbing tcpdump output during a crisis can be hard to remember.  Ideally, snort is running as as service inline or at least continually.  Sometimes things happen outside of Snort&#39;s purview or you are testing what Snort picks ups.</p>
 <h4>Install tools</h4><pre><code>aptitude install snort snort-rules
 </code></pre><h4>Capture your traffic</h4><pre><code>sudo tcpdump -w test
-</code></pre><h4>Generate snort report</h4><pre><code>snort -r test -c /etc/snort/snort.conf -l .
+</code></pre><h4>Generate snort report</h4><pre><code>snort -r test -c &#47;etc&#47;snort&#47;snort.conf -l .
 </code></pre><h4>View Alerts</h4><pre><code>less alert 
 
 [**] [1:485:4] ICMP Destination Unreachable Communication Administratively Prohibited [**]
 [Classification: Misc activity] [Priority: 3] 
-05/19-01:23:00.201765 74.76.148.114 -&gt; &lt;my_ext_ip&gt;
+05&#47;19-01:23:00.201765 74.76.148.114 -&gt; &lt;my_ext_ip&gt;
 ICMP TTL:241 TOS:0x0 ID:32480 IpLen:20 DgmLen:56
 Type:3  Code:13  DESTINATION UNREACHABLE: ADMINISTRATIVELY PROHIBITED,
 PACKET FILTERED

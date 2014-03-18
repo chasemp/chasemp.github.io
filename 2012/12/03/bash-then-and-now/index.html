@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -100,13 +100,13 @@ Bash behavior that are small but overtime I think make me more productive.</p>
 <pre><code>cd
 </code></pre><h4>Erasing the contents of a file</h4>
 <p>then:</p>
-<pre><code>cat /dev/null &gt; file
+<pre><code>cat &#47;dev&#47;null &gt; file
 </code></pre>
 <p>now:</p>
 <pre><code>&gt; file
 </code></pre><h4>Navigating relative dir&#39;s with cd</h4>
 <p>then:</p>
-<pre><code>cd ../../..
+<pre><code>cd ..&#47;..&#47;..
 </code></pre>
 <p>now:</p>
 <pre><code>uuu
@@ -123,17 +123,17 @@ alias uuuuuuuu='cd ../../../../../../../.. && ls'
 </code></pre>
 <h4>Switching between directories</h4>
 <p>then:</p>
-<pre><code>cd /get/me/there
-cd /back/to/you
-cd /get/me/there
+<pre><code>cd &#47;get&#47;me&#47;there
+cd &#47;back&#47;to&#47;you
+cd &#47;get&#47;me&#47;there
 </code></pre>
 <p>now:</p>
-<pre><code>cd /get/me/there
-cd /back/to/you
+<pre><code>cd &#47;get&#47;me&#47;there
+cd &#47;back&#47;to&#47;you
 cd -
 
 env | grep OLDPWD
-OLDPWD=/back/to/you
+OLDPWD=&#47;back&#47;to&#47;you
 </code></pre><h4>Realizing I&#39;m not ready to run a command yet</h4>
 <p>then:</p>
 <pre><code>~#get#### stuff#### done &lt;realizing now ready&gt;
@@ -157,7 +157,7 @@ OLDPWD=/back/to/you
 </code></pre>
 <p>now:</p>
 <pre><code>#ips
-eth0 10.0.0.1/16
+eth0 10.0.0.1&#47;16
 </code></pre>
 <p>bash aliases</p>
 <pre><code>alias ips=&#39;ip brief&#39;
@@ -183,27 +183,27 @@ ip () {
 </code></pre>
 <h4>Grepping files</h4>
 <p>then:</p>
-<pre><code> cat /etc/services | grep telnet
+<pre><code> cat &#47;etc&#47;services | grep telnet
 </code></pre>
 <p>now:</p>
-<pre><code>grep telnet /etc/services
-</code></pre><h4>Exiting (hey...saves a few keystrokes)</h4>
+<pre><code>grep telnet &#47;etc&#47;services
+</code></pre><h4>Exiting (hey&hellip;saves a few keystrokes)</h4>
 <p>then:</p>
 <pre><code>#exit
 </code></pre>
 <p>now:</p>
 <pre><code>#e
 
-alias EXIT=&#34;exit&#34;
+alias EXIT=&quot;exit&quot;
 alias e=&#39;exit&#39;
 </code></pre><h4>New dir trees</h4>
 <p>Then:</p>
-<pre><code>mkdir /one
-mkdir /one/two
-mkdir /one/two/three
+<pre><code>mkdir &#47;one
+mkdir &#47;one&#47;two
+mkdir &#47;one&#47;two&#47;three
 </code></pre>
 <p>Now:</p>
-<pre><code>mkdir -p one/two/three
+<pre><code>mkdir -p one&#47;two&#47;three
 </code></pre><h4>Show routing table</h4>
 <p>Then:</p>
 <pre><code>route -n

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -94,15 +94,15 @@ function toggleDiv(divId) {
 <h4>Install user land tools:</h4><pre><code>aptitude install inotify-tools
 </code></pre><h4>Waiting for a delete</h4>
 <p>This waits for a file to be deleted and then echo&#39;s:</p>
-<pre><code>#!/bin/bash
-inotifywait -e delete_self ./hi/yes  &amp;&amp; echo &#34;gone&#34;
+<pre><code>#!&#47;bin&#47;bash
+inotifywait -e delete_self .&#47;hi&#47;yes  &amp;&amp; echo &quot;gone&quot;
 </code></pre><h4>Waiting for a create</h4>
 <p>This watches for files created in a directory and then echo&#39;s.  This<br>
 is more appropriately done with the -m option in real life:</p>
-<pre><code>#!/bin/bash
+<pre><code>#!&#47;bin&#47;bash
 while true; do
 
-inotifywait -e create ./hi  &amp;&amp; echo &#34;yo&#34;
+inotifywait -e create .&#47;hi  &amp;&amp; echo &quot;yo&quot;
 done
 </code></pre><h3>Watching for changes in /home</h3>
 <pre><code>

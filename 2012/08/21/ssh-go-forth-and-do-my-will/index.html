@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -96,19 +96,19 @@ function toggleDiv(divId) {
 failure isn&#39;t a big deal I sometimes use the following method.</p>
 <h4>ls remotely</h4>
 <p>Let&#39;s say I badly need a recursive ls on a box</p>
-<pre><code>ssh &lt;me&gt;@&lt;server&gt; &#39;nohup ls -R &amp;&gt; /tmp/ls.txt &amp;&#39;
+<pre><code>ssh &lt;me&gt;@&lt;server&gt; &#39;nohup ls -R &amp;&gt; &#47;tmp&#47;ls.txt &amp;&#39;
 </code></pre><h4>Breaking it down</h4><pre><code>ssh         -- obviously you need the client and server
 &lt;me&gt;@&lt;server&gt;   -- Please be using key based authentication
 &#39;&#39;          -- ssh will accept a one and done command instead of going fully interactive
 nohup       -- tell the command do not listen to HUP signal
 ls -R       -- for fun we need that file list
 &amp;&gt;          -- redirect output.  this is a newer version of this.
-/tmp/ls.txt     -- for me to look at later.  note /tmp does not survive reboots.
+&#47;tmp&#47;ls.txt     -- for me to look at later.  note &#47;tmp does not survive reboots.
 &amp;           -- run me in the background!
-</code></pre><h4>Looks like</h4><pre><code>rush:~$ ssh rush@&lt;server&gt; &#39;nohup sudo ls -R &amp;&gt; /tmp/ls.txt &amp;&#39;
+</code></pre><h4>Looks like</h4><pre><code>rush:~$ ssh rush@&lt;server&gt; &#39;nohup sudo ls -R &amp;&gt; &#47;tmp&#47;ls.txt &amp;&#39;
 </code></pre>
-<p>No output to speak of...like I said just go do it.</p>
-<h4>What happened</h4><pre><code>rush:~$ ssh rush@&lt;server&gt; &#39;cat /tmp/ls.txt&#39;
+<p>No output to speak of&hellip;like I said just go do it.</p>
+<h4>What happened</h4><pre><code>rush:~$ ssh rush@&lt;server&gt; &#39;cat &#47;tmp&#47;ls.txt&#39;
 .:
 1.TXT
 bin

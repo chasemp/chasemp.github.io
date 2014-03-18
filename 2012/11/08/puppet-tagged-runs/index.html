@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -124,8 +124,8 @@ Finished catalog run in 8.46 seconds<br>
 say, Puppet still runs in the usual way figuring out dependencies and such, but when it <br>
 comes to applicable changes it only looks for changes at the specified tagged resources.</p>
 
-<p>If you put &#39;--debug&#39; into the update command you will see a lot of:</p>
-<pre><code>Debug: /Stage[main]/Mcollective::Client/Package[mcollective-client]: Not tagged with dhcp
+<p>If you put &#39;&ndash;debug&#39; into the update command you will see a lot of:</p>
+<pre><code>Debug: &#47;Stage[main]&#47;Mcollective::Client&#47;Package[mcollective-client]: Not tagged with dhcp
 </code></pre>
 <p>This resource does not match the tag specified, and as such will not be updated.</p>
 

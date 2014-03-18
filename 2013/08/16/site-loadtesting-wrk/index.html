@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -91,7 +91,7 @@ function toggleDiv(divId) {
         <div class="body">
             <h4>Preamble</h4>
 <p>Although tools like <a href="http://httpd.apache.org/docs/2.2/programs/ab.html">ab</a> and <a href="http://www.joedog.org/siege-home/">siege</a> are common place wrk seems really interesting.</p>
-<h4>Installing</h4><pre><code>git clone https://github.com/wg/wrk.git
+<h4>Installing</h4><pre><code>git clone https:&#47;&#47;github.com&#47;wg&#47;wrk.git
 aptitude update
 aptitude install -y build-essential libssl-dev
 cd wrk
@@ -293,7 +293,7 @@ Usage: wrk <options> <url>
   Numeric arguments may include a SI unit (1k, 1M, 1G)
   Time arguments may include a time unit (2s, 2m, 2h)
 </code></pre>
-<h4>WRK test: 1</h4><pre><code>me@box:~/wrk# ./wrk -c 100 -d 60 -t 30 http://webdos
+<h4>WRK test: 1</h4><pre><code>me@box:~&#47;wrk# .&#47;wrk -c 100 -d 60 -t 30 http:&#47;&#47;webdos
 </code></pre>
 <p><img src="/assets/images/wrk/wrk1load.png" alt="diagram" title="wrk1load"></p>
 
@@ -311,7 +311,7 @@ Transfer/sec:      4.06MB
 
 <p>Minimal load all around.  Less than 1.0 in top.  Htop shows 20% CPU and <br>
 a small memory footprint.</p>
-<h4>WRK test: 2</h4><pre><code>me@box:~/wrk# ./wrk -c 1000 -d 60 -t 300 http://webdos
+<h4>WRK test: 2</h4><pre><code>me@box:~&#47;wrk# .&#47;wrk -c 1000 -d 60 -t 300 http:&#47;&#47;webdos
 </code></pre>
 <p><img src="/assets/images/wrk/wrk2cpu.png" alt="diagram" title="wrk2cpu"></p>
 
@@ -329,7 +329,7 @@ Transfer/sec:      3.94MB
 
 <p>Load kicks up to 1.5-ish, and CPU hovers around 40-45%.  Memory<br>
 footprint stills manageable.</p>
-<h4>WRK test: 3</h4><pre><code>me@box:~/wrk# ./wrk -c 10000 -d 60 -t 1000 http://webdos
+<h4>WRK test: 3</h4><pre><code>me@box:~&#47;wrk# .&#47;wrk -c 10000 -d 60 -t 1000 http:&#47;&#47;webdos
 </code></pre>
 <p><img src="/assets/images/wrk/wrk3cpu.png" alt="diagram" title="wrk3cpu"></p>
 
@@ -348,9 +348,9 @@ Transfer/sec:      4.11MB
 <p>CPU is finally taking a hit.  Now using 70% of available resources most of the time, but wrk seems to be distributing load well.  Memory is now showing some definite usage, but still a CPU intensive operation.</p>
 <h4>WRK Test: 4</h4>
 <p>This is going well beyond our means to see what happens.</p>
-<pre><code>./wrk -c 100000 -d 60 -t 10000 http://webdos
+<pre><code>.&#47;wrk -c 100000 -d 60 -t 10000 http:&#47;&#47;webdos
 </code></pre>
-<p>...aaaaaaand the box completely died.</p>
+<p>&hellip;aaaaaaand the box completely died.</p>
 <h4>Reference</h4>
 <p><a href="https://github.com/wg/wrk">wrk on gh</a></p>
 

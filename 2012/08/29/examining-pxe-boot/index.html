@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -157,14 +157,14 @@ listening on eth0, link-type EN10MB (Ethernet), capture size 65535 bytes
 default
 </code></pre>
 <p>If you look in &#39;/var/tftp/PXElinux.cfg&#39; you see this:</p>
-<pre><code>&lt;me&gt;@&lt;pxe/tftp/server&gt;:/var/tftp/PXElinux.cfg# ls -al
+<pre><code>&lt;me&gt;@&lt;pxe&#47;tftp&#47;server&gt;:&#47;var&#47;tftp&#47;PXElinux.cfg# ls -al
 -rw-r--r--  1 &lt;me&gt; &lt;me&gt; 1833 May  6 16:58 default
 -rw-r--r--  1 &lt;me&gt; &lt;me&gt; 1833 May  6 16:58 reinstall
 </code></pre>
 <p>This means PXE found the default correctly but I wanted it to find another profile</p>
 <h4>Create a new match:</h4><pre><code>ln -s reinstall 01-00-30-48-60-f3-ca
 
-&lt;me&gt;@&lt;pxe/tftp/server&gt;:/var/tftp/PXElinux.cfg# ls -al
+&lt;me&gt;@&lt;pxe&#47;tftp&#47;server&gt;:&#47;var&#47;tftp&#47;PXElinux.cfg# ls -al
 lrwxrwxrwx  1 &lt;me&gt; &lt;me&gt;    9 May 24 15:02 01-00-30-48-60-f3-ca -&gt; reinstall
 -rw-r--r--  1 &lt;me&gt; &lt;me&gt;  166 May  6 16:58 unattended
 -rw-r--r--  1 &lt;me&gt; &lt;me&gt; 1833 May  6 16:58 reinstall

@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -93,9 +93,9 @@ function toggleDiv(divId) {
 <p>I have seen an all-in-one configure script for linux security mentioned several times on <a href="http://reddit.com/r/linuxadmin">/r/linuxadmin</a> and I am giving it a quick runthrough to explore.</p>
 <h4>Install</h4>
 <p>Linux wheezytester 3.2.0-4-amd64 #1 SMP Debian 3.2.46-1 x86_64 GNU/Linux</p>
-<pre><code>wget http://configserver.com/free/csf.tgz
+<pre><code>wget http:&#47;&#47;configserver.com&#47;free&#47;csf.tgz
 tar zxfv csf.tgz
-cd csf/
+cd csf&#47;
 sh install.sh
 </code></pre>
 <p><a href="javascript:toggleDiv('hideme');">Show Install Output</a></p>
@@ -331,7 +331,7 @@ update-rc.d: using dependency based boot sequencing
 Installation Completed
 </code></pre>
 </div>
-<h4>Checking out default status</h4><pre><code>/etc/init.d/csf status
+<h4>Checking out default status</h4><pre><code>&#47;etc&#47;init.d&#47;csf status
 </code></pre>
 <pre><code>
 Status of csf:Chain INPUT (policy ACCEPT 1622 packets, 145K bytes)
@@ -357,7 +357,7 @@ num   pkts bytes target     prot opt in     out     source               destina
 *WARNING* TESTING mode is enabled - do not forget to disable it in the configuration
 </code></pre>
 
-<p>Notice --- Testing Mode is the install default so it doesn&#39;t mess up your system.</p>
+<p>Notice &mdash; Testing Mode is the install default so it doesn&#39;t mess up your system.</p>
 
 <p>That is cool.</p>
 <h4>Configuring</h4>
@@ -395,7 +395,7 @@ have shortened the default descriptions to my own line notes.</p>
 <em>Log Scanner</em><br>
 <em>Statistics Settings</em><br>
 <em>OS Specific Settings</em></p>
-<pre><code>nano /etc/csf/csf.conf
+<pre><code>nano &#47;etc&#47;csf&#47;csf.conf
 </code></pre>
 <pre><code>
 #for real
@@ -483,7 +483,7 @@ WATCH_MODE = "0"
 </code></pre>
 <h4>Resetting Configuration</h4>
 <p>If you try to restart the service you see</p>
-<pre><code>/etc/init.d/csf restart
+<pre><code>&#47;etc&#47;init.d&#47;csf restart
 WARNING: This script should ONLY be used by the init process. To restart csf use the CLI command &#39;csf -r&#39;
 </code></pre>
 <p>So</p>
@@ -679,7 +679,7 @@ LEN=328 TOS=0x00 PREC=0x00 TTL=64 ID=0 DF PROTO=UDP SPT=68 DPT=67 LEN=308 UID=0 
 <p>Syslog analyzer</p>
 <pre><code>Aug  5 15:48:20 wheezytester lfd[2394]: SYSLOG check [zRX2uBS2T5C3gm33v9BCJDVK5]
 </code></pre><h4>Removal</h4>
-<p>Uninstalling csf and lfd...</p>
+<p>Uninstalling csf and lfd&hellip;</p>
 
 <pre><code>
 Flushing chain `INPUT'

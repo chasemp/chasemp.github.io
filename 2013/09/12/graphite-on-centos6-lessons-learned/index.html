@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -108,7 +108,7 @@ yum install twisted
 <pre><code>pip install whisper
 pip install carbon
 pip install graphite-web
-</code></pre><h4>Check for missing dependencies</h4><pre><code>me@vm:~# python /tmp/pip-build-me/graphite-web/check-dependencies.py
+</code></pre><h4>Check for missing dependencies</h4><pre><code>me@vm:~# python &#47;tmp&#47;pip-build-me&#47;graphite-web&#47;check-dependencies.py
 
 All necessary dependencies are met.
 All optional dependencies are met.
@@ -164,8 +164,8 @@ DATABASES = {
 </code></pre>
 <h4>Configuring HTTPD</h4>
 <p>cat /etc/httpd/conf.d/wsgi.conf </p>
-<pre><code>WSGISocketPrefix /var/run/wsgi
-LoadModule wsgi_module modules/mod_wsgi.so
+<pre><code>WSGISocketPrefix &#47;var&#47;run&#47;wsgi
+LoadModule wsgi_module modules&#47;mod_wsgi.so
 </code></pre>
 <p>cat /etc/httpd/conf.d/graphite.conf</p>
 
@@ -197,10 +197,10 @@ _<_/Directory_>_
 </code></pre>
 
 <p>Remove welcome default</p>
-<pre><code>rm -f /etc/httpd/conf.d/welcome.conf
-chown -R apache:apache /opt/graphite/storage
-</code></pre><h4>Carbon LSB init script</h4><pre><code>n /etc/init.d/carbon
-chmod +x  /etc/init.d/carbon
+<pre><code>rm -f &#47;etc&#47;httpd&#47;conf.d&#47;welcome.conf
+chown -R apache:apache &#47;opt&#47;graphite&#47;storage
+</code></pre><h4>Carbon LSB init script</h4><pre><code>n &#47;etc&#47;init.d&#47;carbon
+chmod +x  &#47;etc&#47;init.d&#47;carbon
 </code></pre>
 <p>contents:</p>
 
@@ -281,7 +281,7 @@ esac
 
 <p>You need to update your local_settings.py as noted above.  And anytime you edit local_settings.py you need to rerun your <br>
 db sync.</p>
-<pre><code>&lt;pre&gt;&lt;code&gt;python /opt/graphite/webapp/graphite/manage.py syncdb&lt;/code&gt;&lt;/pre&gt;
+<pre><code>&lt;pre&gt;&lt;code&gt;python &#47;opt&#47;graphite&#47;webapp&#47;graphite&#47;manage.py syncdb&lt;&#47;code&gt;&lt;&#47;pre&gt;
 </code></pre>
 <ol>
 <li><p>You can list all grouped installs via yum</p>

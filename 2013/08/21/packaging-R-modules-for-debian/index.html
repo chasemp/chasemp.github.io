@@ -6,7 +6,7 @@
 
 <meta name="author" content="Chase Pettet">
 <meta name="description" content="notes and useful(?) things">
-<meta name="generator" content="mynt v0.2.2">
+<meta name="generator" content="mynt v0.2.3">
 
 <link rel="shortcut icon" href="/assets/images/favicon.ico" type="image/x-icon">
 
@@ -158,13 +158,13 @@ The downloaded source packages are in
 <p>Your library is in /usr/local/lib/R/site-library/</p>
 <h4>Prepping your package</h4>
 <p>We are going to make a package named r-spec-rsvgdevice</p>
-<pre><code>mkdir -p r-spec-rsvgdevice/src/usr/local/lib/R/site-library/
+<pre><code>mkdir -p r-spec-rsvgdevice&#47;src&#47;usr&#47;local&#47;lib&#47;R&#47;site-library&#47;
 cd r-spec-rsvgdevice
-mkdir -p ./src/DEBIAN/
-cp -R /src/usr/local/lib/R/site-library/RSvgDevice ./src/usr/local/lib/R/site-library/
+mkdir -p .&#47;src&#47;DEBIAN&#47;
+cp -R &#47;src&#47;usr&#47;local&#47;lib&#47;R&#47;site-library&#47;RSvgDevice .&#47;src&#47;usr&#47;local&#47;lib&#47;R&#47;site-library&#47;
 </code></pre>
 <p>Making your control file</p>
-<pre><code>vim ./src/DEBIAN/CONTROL
+<pre><code>vim .&#47;src&#47;DEBIAN&#47;CONTROL
 </code></pre>
 <pre><code>
 Package: r-spec-rsvgdevice
