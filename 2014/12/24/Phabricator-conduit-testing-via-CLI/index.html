@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>Tag  &rsaquo; phabricator &ndash; devops type thoughts</title>
+    <title>Phabricator conduit testing via CLI &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -82,25 +82,40 @@ function toggleDiv(divId) {
         
         <div id="content">
             
-    <h2>Tag &rsaquo; phabricator</h2>
-    
-        <dl class="archives">
-            <dt><a href="/archives/2014/">2014</a></dt>
-            <dd>
-                <dl>
-                    
-                        
-                            <dt>Dec 24</dt>
-                            <dd><a href="/2014/12/24/Phabricator-conduit-testing-via-CLI/">Phabricator conduit testing via CLI</a><small>Tagged <span>&raquo;</span> <a href="/tags/conduit/">conduit</a>, <a href="/tags/phabricator/">phabricator</a></small></dd>
-                        
-                            <dt>Dec 24</dt>
-                            <dd><a href="/2014/12/24/Getting-Phabricator-Conduit-end-points/">Getting Phabricator Conduit end points</a><small>Tagged <span>&raquo;</span> <a href="/tags/phabricator/">phabricator</a>, <a href="/tags/python/">python</a></small></dd>
-                        
-                    
-                </dl>
-            </dd>
-        </dl>
-    
+    <div class="item">
+        <div class="header">
+            <h1>Phabricator conduit testing via CLI</h1>
+            <h2>Wednesday, December 24, 2014 <span>&raquo;</span> <a href="/tags/conduit/">conduit</a>, <a href="/tags/phabricator/">phabricator</a></h2>
+        </div>
+        
+        <div class="body">
+            <p>Search for a user by username:</p>
+<pre><code>echo &#39;{&quot;usernames&quot;: [&quot;admin&quot;]}&#39; | \
+&#47;srv&#47;phab&#47;arcanist&#47;bin&#47;arc call-conduit user.query
+</code></pre>
+<p>Get task information by id:</p>
+<pre><code>echo &#39;{&quot;task_id&quot;: &quot;9&quot;}&#39; | \
+&#47;srv&#47;phab&#47;arcanist&#47;bin&#47;arc call-conduit maniphest.info
+</code></pre>
+<p>Add comments to a task:</p>
+<pre><code>echo &#39;{&quot;id&quot;: &quot;9&quot;, &quot;comments&quot;: &quot;this is comment1&quot;}&#39; | \
+&#47;srv&#47;phab&#47;arcanist&#47;bin&#47;arc call-conduit maniphest.update
+</code></pre>
+<p>Create a task:</p>
+<pre><code>echo &#39;{&quot;title&quot;:&quot;foo 123&quot;}&#39; | \
+&#47;srv&#47;phab&#47;arcanist&#47;bin&#47;arc call-conduit maniphest.createtask
+</code></pre>
+<p>Create a task while supplying a <a href="https://secure.phabricator.com/book/phabricator/article/custom_fields/">custom field value</a>:</p>
+<pre><code>echo &#39;{&quot;title&quot;:&quot;foo 234&quot;, &quot;auxiliary&quot;:{&quot;std:maniphest:external_id&quot;:&quot;789&quot;}}&#39; | \
+&#47;srv&#47;phab&#47;arcanist&#47;bin&#47;arc call-conduit maniphest.createtask
+</code></pre>
+<p>If you want more debugging information on any call you can add &ndash;trace.</p>
+<h4>References</h4>
+<p><a href="https://secure.phabricator.com/book/phabricator/article/custom_fields/">https://secure.phabricator.com/book/phabricator/article/custom_fields/</a><br>
+<a href="https://secure.phabricator.com/book/phabdev/article/conduit/">https://secure.phabricator.com/book/phabdev/article/conduit/</a></p>
+
+        </div>
+    </div>
 
         </div>
         
