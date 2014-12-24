@@ -86,6 +86,28 @@ function toggleDiv(divId) {
         
         <div class="item">
             <div class="header">
+                <h1><a href="/2014/12/24/Huge-TCP-TIME_WAIT-count/">Huge TCP TIME_WAIT count</a></h1>
+                <h2>Wednesday, December 24, 2014 <span>&raquo;</span> <a href="/tags/tcp/">tcp</a>, <a href="/tags/timewait/">timewait</a></h2>
+            </div>
+            
+            <div class="body">
+                <p>
+                       Recently I was running a job that parses a large backlog of items and updates<br>
+MySQL based on their outcome.  The items were being updated via API by a<br>
+webservice on the same host.  I was restricted to processing 10 jobs in parallel or<br>
+I would get connection errors and random connection issues.  The webservice returned<br>
+a generic failure but my own code returned OS code 99.
+                   </p>
+            </div>
+
+            <div class="footer">
+                <p><a href="/2014/12/24/Huge-TCP-TIME_WAIT-count/">Continue Reading</a></p>
+            </div>
+        </div>
+    
+        
+        <div class="item">
+            <div class="header">
                 <h1><a href="/2014/12/24/Phabricator-conduit-testing-via-CLI/">Phabricator conduit testing via CLI</a></h1>
                 <h2>Wednesday, December 24, 2014 <span>&raquo;</span> <a href="/tags/conduit/">conduit</a>, <a href="/tags/phabricator/">phabricator</a></h2>
             </div>
@@ -684,27 +706,6 @@ some issues with existing tools that have old flags, or uncommon flags, or who k
 
             <div class="footer">
                 <p><a href="/2013/08/21/packaging-R-modules-for-debian/">Continue Reading</a></p>
-            </div>
-        </div>
-    
-        
-        <div class="item">
-            <div class="header">
-                <h1><a href="/2013/08/20/asa-hairpinning/">asa hairpinning</a></h1>
-                <h2>Tuesday, August 20, 2013 <span>&raquo;</span> <a href="/tags/asa/">asa</a>, <a href="/tags/cisco/">cisco</a>, <a href="/tags/hairpinning/">hairpinning</a></h2>
-            </div>
-            
-            <div class="body">
-                <p>
-                       
-                           <h4>Preamble</h4>
-<p>Hairpinning is when you exit a firewall on the via on the same interface you terminate a VPN.  Essentially, you usually establish a dynamic tunnel on the exter
-                       
-                   </p>
-            </div>
-
-            <div class="footer">
-                <p><a href="/2013/08/20/asa-hairpinning/">Continue Reading</a></p>
             </div>
         </div>
     

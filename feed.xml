@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-12-24T22:12:21Z</updated>
+        <updated>2014-12-24T22:27:58Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,42 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>Huge TCP TIME_WAIT count</title>
+                <link rel="alternate" href="/2014/12/24/Huge-TCP-TIME_WAIT-count/" type="text/html" />
+                <id>/2014/12/24/Huge-TCP-TIME_WAIT-count/</id>
+                <updated>2014-12-24T22:27:00Z</updated>
+                
+                <summary type="html">Recently I was running a job that parses a large backlog of items and updates&lt;br&gt;
+MySQL based on their outcome.  The items were being updated via API by a&lt;br&gt;
+webservice on the same host.  I was restricted to processing 10 jobs in parallel or&lt;br&gt;
+I would get connection errors and random connection issues.  The webservice returned&lt;br&gt;
+a generic failure but my own code returned OS code 99.</summary>
+                <content type="html">&lt;p&gt;Recently I was running a job that parses a large backlog of items and updates&lt;br&gt;
+MySQL based on their outcome.  The items were being updated via API by a&lt;br&gt;
+webservice on the same host.  I was restricted to processing 10 jobs in parallel or&lt;br&gt;
+I would get connection errors and random connection issues.  The webservice returned&lt;br&gt;
+a generic failure but my own code returned OS code 99.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;OS error code  99:  Cannot assign requested address
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;I was regularly tracking TIME_WAIT connections into the thousands.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;netstat -anp | grep WAIT | wc -l
+2034
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;It turns out that client side I was exhausting my available port range for new connections.&lt;br&gt;
+After a bit of reading I decided on changing the following system control parameters:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;echo 30 &amp;gt; &amp;#47;proc&amp;#47;sys&amp;#47;net&amp;#47;ipv4&amp;#47;tcp_fin_timeout
+echo 1 &amp;gt; &amp;#47;proc&amp;#47;sys&amp;#47;net&amp;#47;ipv4&amp;#47;tcp_tw_recycle
+echo 15000 65000 &amp;gt; &amp;#47;proc&amp;#47;sys&amp;#47;net&amp;#47;ipv4&amp;#47;ip_local_port_range
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Shout out to the best DBA I know Springle for the insights and help in debugging MySQL.&lt;/p&gt;
+&lt;h4&gt;References&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://serverfault.com/questions/212093/how-to-reduce-number-of-sockets-in-time-wait&#34;&gt;http://serverfault.com/questions/212093/how-to-reduce-number-of-sockets-in-time-wait&lt;/a&gt;&lt;br&gt;
+lxr.linux.no/#linux+v3.2.8/Documentation/networking/ip-sysctl.txt#L464&lt;br&gt;
+&lt;a href=&#34;http://www.speedguide.net/articles/linux-tweaking-121&#34;&gt;http://www.speedguide.net/articles/linux-tweaking-121&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>Phabricator conduit testing via CLI</title>
