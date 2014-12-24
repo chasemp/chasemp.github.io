@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-12-24T21:59:11Z</updated>
+        <updated>2014-12-24T22:05:59Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,30 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>Testing email</title>
+                <link rel="alternate" href="/2014/12/24/Testing-email/" type="text/html" />
+                <id>/2014/12/24/Testing-email/</id>
+                <updated>2014-12-24T22:05:00Z</updated>
+                
+                <summary type="html">I&amp;#39;ve always tested email via Telnet, and have even sat in on interviews where&lt;br&gt;
+how to test email this way was one of the debugging problems.  Recently though&lt;br&gt;
+I have come to use Swaks as a slicker alternative.</summary>
+                <content type="html">&lt;p&gt;I&amp;#39;ve always tested email via Telnet, and have even sat in on interviews where&lt;br&gt;
+how to test email this way was one of the debugging problems.  Recently though&lt;br&gt;
+I have come to use Swaks as a slicker alternative.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;aptitude install swaks
+
+ swaks --to task@example.com \
+ --from me@example.com \
+ --h-Subject: &amp;#39;my email&amp;#39; \
+ --server localhost
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;References&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;http://www.jetmore.org/john/code/swaks/&#34;&gt;http://www.jetmore.org/john/code/swaks/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://exchange.mvps.org/smtp_frames.htm&#34;&gt;http://exchange.mvps.org/smtp_frames.htm&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>Getting Phabricator Conduit end points</title>
