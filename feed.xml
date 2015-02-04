@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2014-12-24T22:27:58Z</updated>
+        <updated>2015-02-04T23:04:29Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,17 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>dyn bakers dozen</title>
+                <link rel="alternate" href="/2015/02/04/dyn-bakers-dozen/" type="text/html" />
+                <id>/2015/02/04/dyn-bakers-dozen/</id>
+                <updated>2015-02-04T23:04:00Z</updated>
+                
+                <summary type="html">&lt;a href=&#34;http://research.dyn.com/2015/02/bakers-dozen-2014-edition/&#34;&gt;http://research.dyn.com/2015/02/bakers-dozen-2014-edition/&lt;/a&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;a href=&#34;http://research.dyn.com/2015/02/bakers-dozen-2014-edition/&#34;&gt;http://research.dyn.com/2015/02/bakers-dozen-2014-edition/&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>Huge TCP TIME_WAIT count</title>
