@@ -102,9 +102,9 @@ function toggleDiv(divId) {
     A PKCS #12 file may be encrypted and signed.
 </code></pre>
 
-<p>Typically when you generate an SSL certificate you get a mine.key file and a mine.crt file</p>
+<p>Typically, when you generate an SSL certificate you get a mine.key file and a mine.crt file</p>
 
-<p>This PFX format is used by Cisco ASA devices</p>
+<p>PFX format is used by Cisco ASA devices</p>
 <h4>Installing OpenSSL</h4><pre><code>aptitude install openssl
 </code></pre><h4>Make sure your .key file is valid</h4><pre><code>openssl x509 -text -in myfile.key
 </code></pre><h5>Making a PFX file</h5>

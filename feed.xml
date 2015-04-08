@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2015-03-24T19:58:40Z</updated>
+        <updated>2015-04-08T23:13:48Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,1227 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>RIPE Atlas Getting Started</title>
+                <link rel="alternate" href="/2015/04/08/RIPE-Atlas-Getting-Started/" type="text/html" />
+                <id>/2015/04/08/RIPE-Atlas-Getting-Started/</id>
+                <updated>2015-04-08T23:11:00Z</updated>
+                
+                
+                <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;http://en.wikipedia.org/wiki/R%C3%A9seaux_IP_Europ%C3%A9ens_Network_Coordination_Centre&#34;&gt;RIPE NCC&lt;/a&gt; is one of the Regional Internet Registries.  There are 5 (RIR&amp;#39;s) and RIPE NCC&lt;br&gt;
+serves Europe.  RIPE NCC runs one of the neatest open projects on the Internet today called&lt;br&gt;
+&lt;a href=&#34;https://atlas.ripe.net/&#34;&gt;RIPE ATLAS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&amp;ldquo;With your help, the RIPE NCC is building the largest &lt;br&gt;
+Internet measurement network ever made. RIPE Atlas &lt;br&gt;
+employs a global network of probes that measure Internet &lt;br&gt;
+connectivity and reachability, providing an unprecedented &lt;br&gt;
+understanding of the state of the Internet in real time.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;Imagine we have 8000+ probes scattered around that all &lt;br&gt;
+report metrics back to a central place. The data would &lt;br&gt;
+allow us to get a holistic view of overall trends, outages, &lt;br&gt;
+and performance.  This is precisely RIPE Atlas.&lt;/p&gt;
+
+&lt;p&gt;There are a few ways to get &lt;a href=&#34;https://atlas.ripe.net/get-involved/&#34;&gt;involved&lt;/a&gt; in RIPE Atlas:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Host a &lt;a href=&#34;https://atlas.ripe.net/get-involved/become-a-host//&#34;&gt;probe&lt;/a&gt; (A small hardware device that collects metrics)&lt;/li&gt;
+&lt;li&gt;Host an &lt;a href=&#34;https://atlas.ripe.net/get-involved/become-an-anchor-host/&#34;&gt;anchor&lt;/a&gt; (A larger device &lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://atlas.ripe.net/get-involved/become-a-sponsor/&#34;&gt;Sponsor&lt;/a&gt; the effort&lt;/li&gt;
+&lt;li&gt;Become an &lt;a href=&#34;https://atlas.ripe.net/get-involved/become-a-ripe-atlas-ambassador/&#34;&gt;Ambassador&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;As you host a probe, an anchor, or sponsor you get //credits//.  Credits are a system to allow&lt;br&gt;
+those who contribute to benefit.  Each User-Defined Measurement will cost Credits.&lt;/p&gt;
+&lt;h3&gt;Understanding User-Defined Measurements and Credits&lt;/h3&gt;
+&lt;p&gt;Atlas allows users of the system to earn Credits by participating.  These credits are in turn&lt;br&gt;
+used to purchase custom actions.  If you want to see the result of 10 probes world wide checking&lt;br&gt;
+the SSL certificate of your endpoint it will cost 200 Credits.  There are a few controls to keep&lt;br&gt;
+any one user from abusing the system: max number of parallel measurements (100),&lt;br&gt;
+maximum number of probes per measurement (500), and maximum number of measurements &lt;br&gt;
+towards the same target (10).&lt;/p&gt;
+
+&lt;p&gt;If we &lt;a href=&#34;https://atlas.ripe.net/measurements/form/&#34;&gt;create&lt;/a&gt; a measurement in the UI the system will&lt;br&gt;
+indicate how many points we have currently and how long the measurement can run at the current interval.&lt;/p&gt;
+
+&lt;p&gt;Examples of use by the day for a measurement every 10 minutes from 50 global probes:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;An IPv4 ICMP ping will use 21,600 credits
+An IPv4 ICMP Traceroute will use 144,000 credits
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Results from a UDM can be specified as public (default) or private.  I believe probe existence&lt;br&gt;
+in general can be hidden if it is undesirable to have random users running measurements.&lt;/p&gt;
+&lt;h3&gt;Anchors&lt;/h3&gt;
+&lt;p&gt;My current employer hosts 3 anchors:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&#34;https://atlas.ripe.net/probes/6092/&#34;&gt;https://atlas.ripe.net/probes/6092/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://atlas.ripe.net/probes/6093/&#34;&gt;https://atlas.ripe.net/probes/6093/&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&#34;https://atlas.ripe.net/probes/6095/&#34;&gt;https://atlas.ripe.net/probes/6095/&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Anchors come with some constant measurements that do not cost in credits (one of &lt;br&gt;
+the nice advantages of hosting an anchor).  A seismograph for the ICMPv4 Ping &lt;br&gt;
+for 6092 can be seen here: &lt;a href=&#34;https://atlas.ripe.net/probes/6095/&#34;&gt;https://atlas.ripe.net/probes/6095/&lt;/a&gt;.  There is also&lt;br&gt;
+a constant ICMPv6 Ping, v4 Traceroute, and v6 Traceroute.  Anchors also earn&lt;br&gt;
+Credits at a rate higher than probes.&lt;/p&gt;
+&lt;h4&gt;Running a UDM&lt;/h4&gt;
+&lt;p&gt;If you are hosting a probe now and earning credits you can login and generate&lt;br&gt;
+an API key for using the REST interface.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://atlas.ripe.net/keys/&#34;&gt;https://atlas.ripe.net/keys/&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Launch a one time TCP traceroute from 5 random world wide hosts to en.wikipedia.org:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;
+curl --dump-header - -H &#34;Content-Type: application/json&#34; -H &#34;Accept: application/json&#34; -X POST -d {
+ &#34;definitions&#34;: [
+  {
+   &#34;target&#34;: &#34;en.wikipedia.org&#34;,
+   &#34;af&#34;: 4,
+   &#34;timeout&#34;: 4000,
+   &#34;interval&#34;: 900,
+   &#34;description&#34;: &#34;Traceroute measurement to en.wikipedia.org&#34;,
+   &#34;protocol&#34;: &#34;TCP&#34;,
+   &#34;resolve_on_probe&#34;: false,
+   &#34;packets&#34;: 3,
+   &#34;size&#34;: 48,
+   &#34;firsthop&#34;: 1,
+   &#34;destination_option_size&#34;: 0,
+   &#34;port&#34;: 443,
+   &#34;paris&#34;: 16,
+   &#34;maxhops&#34;: 32,
+   &#34;hop_by_hop_option_size&#34;: 0,
+   &#34;dontfrag&#34;: false,
+   &#34;type&#34;: &#34;traceroute&#34;
+  }
+ ],
+ &#34;probes&#34;: [
+  {
+   &#34;tags&#34;: {
+    &#34;include&#34;: [],
+    &#34;exclude&#34;: []
+   },
+   &#34;type&#34;: &#34;area&#34;,
+   &#34;value&#34;: &#34;WW&#34;,
+   &#34;requested&#34;: 5
+  }
+ ],
+ &#34;is_oneoff&#34;: true
+} https://atlas.ripe.net/api/v1/measurement/?key=YOUR_KEY_HERE
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The results of this test can be seen in the &lt;a href=&#34;https://atlas.ripe.net/measurements/1945703/&#34;&gt;UI&lt;/a&gt; or&lt;br&gt;
+fetched from the CLI:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl https:&amp;#47;&amp;#47;atlas.ripe.net&amp;#47;api&amp;#47;v1&amp;#47;measurement&amp;#47;1945703&amp;#47;result&amp;#47;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&#34;javascript:toggleDiv(&#39;hideme&#39;);&#34;&gt;Show Console Traceroute Results&lt;/a&gt;&lt;br&gt;
+&lt;div id=&#34;hideme&#34; style=&#34;display:none;&#34;&gt;&lt;br&gt;
+&lt;pre&gt;&lt;code&gt;&lt;br&gt;
+[&lt;br&gt;
+    {&lt;br&gt;
+        &amp;quot;af&amp;quot;: 4,&lt;br&gt;
+        &amp;quot;dst_addr&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;dst_name&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;endtime&amp;quot;: 1428526981,&lt;br&gt;
+        &amp;quot;from&amp;quot;: &amp;quot;38.97.90.93&amp;quot;,&lt;br&gt;
+        &amp;quot;fw&amp;quot;: 4680,&lt;br&gt;
+        &amp;quot;group_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;lts&amp;quot;: 131,&lt;br&gt;
+        &amp;quot;msm_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;msm_name&amp;quot;: &amp;quot;Traceroute&amp;quot;,&lt;br&gt;
+        &amp;quot;paris_id&amp;quot;: 1,&lt;br&gt;
+        &amp;quot;prb_id&amp;quot;: 10488,&lt;br&gt;
+        &amp;quot;proto&amp;quot;: &amp;quot;TCP&amp;quot;,&lt;br&gt;
+        &amp;quot;result&amp;quot;: [&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 1,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 2,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 3,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 4,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 5,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 255,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 91.818,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 52&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 100.733,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 52&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 91.175,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 52&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            }&lt;br&gt;
+        ],&lt;br&gt;
+        &amp;quot;size&amp;quot;: 48,&lt;br&gt;
+        &amp;quot;src_addr&amp;quot;: &amp;quot;192.168.254.180&amp;quot;,&lt;br&gt;
+        &amp;quot;timestamp&amp;quot;: 1428526921,&lt;br&gt;
+        &amp;quot;type&amp;quot;: &amp;quot;traceroute&amp;quot;&lt;br&gt;
+    },&lt;br&gt;
+    {&lt;br&gt;
+        &amp;quot;af&amp;quot;: 4,&lt;br&gt;
+        &amp;quot;dst_addr&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;dst_name&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;endtime&amp;quot;: 1428526924,&lt;br&gt;
+        &amp;quot;from&amp;quot;: &amp;quot;88.167.64.190&amp;quot;,&lt;br&gt;
+        &amp;quot;fw&amp;quot;: 4680,&lt;br&gt;
+        &amp;quot;group_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;lts&amp;quot;: 90,&lt;br&gt;
+        &amp;quot;msm_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;msm_name&amp;quot;: &amp;quot;Traceroute&amp;quot;,&lt;br&gt;
+        &amp;quot;paris_id&amp;quot;: 1,&lt;br&gt;
+        &amp;quot;prb_id&amp;quot;: 12438,&lt;br&gt;
+        &amp;quot;proto&amp;quot;: &amp;quot;TCP&amp;quot;,&lt;br&gt;
+        &amp;quot;result&amp;quot;: [&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 1,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.1.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.634,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.1.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.494,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.1.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.475,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 2,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;88.167.64.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 18.663,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;88.167.64.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 17.382,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;88.167.64.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 18.105,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 3,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.33.190&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 18.531,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.33.190&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 19.627,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.33.190&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 19.286,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 4,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.51.113&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 22.306,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.51.113&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 19.809,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.51.113&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 19.336,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 5,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.160.133&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 20.541,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.160.133&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 20.812,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.160.133&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 20.104,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 6,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.249.197&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 22.469,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.249.197&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 21.755,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.249.197&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 21.857,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 7,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.59.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 26.74,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.59.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 29.898,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.59.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 29.885,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 8,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.250.217&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 27.328,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.250.217&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 30.498,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.250.217&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 29.046,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 9,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.30&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 29.912,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 247&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.30&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 29.314,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 247&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.30&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 29.492,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 247&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 10,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.38&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 37.092,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 246&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.38&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 37.719,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 246&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.38&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 37.739,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 246&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 11,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 50.213,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 245&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 38.974,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 245&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 37.763,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 245&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 12,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 38.009,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 53&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 37.662,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 53&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 37.743,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 53&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            }&lt;br&gt;
+        ],&lt;br&gt;
+        &amp;quot;size&amp;quot;: 48,&lt;br&gt;
+        &amp;quot;src_addr&amp;quot;: &amp;quot;192.168.1.10&amp;quot;,&lt;br&gt;
+        &amp;quot;timestamp&amp;quot;: 1428526922,&lt;br&gt;
+        &amp;quot;type&amp;quot;: &amp;quot;traceroute&amp;quot;&lt;br&gt;
+    },&lt;br&gt;
+    {&lt;br&gt;
+        &amp;quot;af&amp;quot;: 4,&lt;br&gt;
+        &amp;quot;dst_addr&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;dst_name&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;endtime&amp;quot;: 1428526922,&lt;br&gt;
+        &amp;quot;from&amp;quot;: &amp;quot;82.227.109.71&amp;quot;,&lt;br&gt;
+        &amp;quot;fw&amp;quot;: 4680,&lt;br&gt;
+        &amp;quot;group_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;lts&amp;quot;: 192,&lt;br&gt;
+        &amp;quot;msm_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;msm_name&amp;quot;: &amp;quot;Traceroute&amp;quot;,&lt;br&gt;
+        &amp;quot;paris_id&amp;quot;: 1,&lt;br&gt;
+        &amp;quot;prb_id&amp;quot;: 17039,&lt;br&gt;
+        &amp;quot;proto&amp;quot;: &amp;quot;TCP&amp;quot;,&lt;br&gt;
+        &amp;quot;result&amp;quot;: [&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 1,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.0.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 1.089,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.0.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.923,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.0.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.824,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 2,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;82.227.109.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 39.822,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;82.227.109.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 38.573,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;82.227.109.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 39.478,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 3,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.8.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 39.041,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.8.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 39.493,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.8.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 40.031,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 4,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.9&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 42.75,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.9&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 45.663,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.9&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 45.935,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 5,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.114&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 39.734,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.114&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 47.683,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.114&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 40.024,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 6,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.238&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 48.961,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.238&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 45.305,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;194.149.161.238&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 46.711,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 7,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 54.716,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 53.405,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 55.026,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 8,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 55.611,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 55.197,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 54.512,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 9,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 54.765,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 56&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 55.599,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 56&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 54.781,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 56&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            }&lt;br&gt;
+        ],&lt;br&gt;
+        &amp;quot;size&amp;quot;: 48,&lt;br&gt;
+        &amp;quot;src_addr&amp;quot;: &amp;quot;192.168.0.14&amp;quot;,&lt;br&gt;
+        &amp;quot;timestamp&amp;quot;: 1428526920,&lt;br&gt;
+        &amp;quot;type&amp;quot;: &amp;quot;traceroute&amp;quot;&lt;br&gt;
+    },&lt;br&gt;
+    {&lt;br&gt;
+        &amp;quot;af&amp;quot;: 4,&lt;br&gt;
+        &amp;quot;dst_addr&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;dst_name&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;endtime&amp;quot;: 1428526921,&lt;br&gt;
+        &amp;quot;from&amp;quot;: &amp;quot;82.246.14.179&amp;quot;,&lt;br&gt;
+        &amp;quot;fw&amp;quot;: 4680,&lt;br&gt;
+        &amp;quot;group_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;lts&amp;quot;: 56,&lt;br&gt;
+        &amp;quot;msm_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;msm_name&amp;quot;: &amp;quot;Traceroute&amp;quot;,&lt;br&gt;
+        &amp;quot;paris_id&amp;quot;: 1,&lt;br&gt;
+        &amp;quot;prb_id&amp;quot;: 17174,&lt;br&gt;
+        &amp;quot;proto&amp;quot;: &amp;quot;TCP&amp;quot;,&lt;br&gt;
+        &amp;quot;result&amp;quot;: [&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 1,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.0.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.63,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.0.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.472,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;192.168.0.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 0.477,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 64&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 2,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;82.246.14.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 6.526,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;82.246.14.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 5.47,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;82.246.14.254&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 5.253,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 88,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 63&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 3,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.26.190&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 5.481,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.26.190&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 5.331,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;213.228.26.190&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 7.4,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 253&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 4,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.50.209&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 9.41,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.50.209&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 9.985,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.50.209&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 9.51,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 252&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 5,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.59.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 13.742,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.59.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 13.712,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.59.42&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 17.792,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 251&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 6,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.250.217&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 14.821,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.250.217&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 13.654,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;78.254.250.217&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 13.857,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 250&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 7,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.30&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 208.262,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.30&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 106.709,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.30&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 42.256,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 249&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 8,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.38&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 26.323,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.38&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 24.66,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;212.27.56.38&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 26.256,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 68,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 248&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 9,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 25.272,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 247&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 25.727,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 247&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;80.249.209.176&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 25.049,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 247&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 10,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 25.339,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 55&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 28.423,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 55&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;flags&amp;quot;: &amp;quot;SA&amp;quot;,&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 25.608,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 4,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 55&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            }&lt;br&gt;
+        ],&lt;br&gt;
+        &amp;quot;size&amp;quot;: 48,&lt;br&gt;
+        &amp;quot;src_addr&amp;quot;: &amp;quot;192.168.0.25&amp;quot;,&lt;br&gt;
+        &amp;quot;timestamp&amp;quot;: 1428526920,&lt;br&gt;
+        &amp;quot;type&amp;quot;: &amp;quot;traceroute&amp;quot;&lt;br&gt;
+    },&lt;br&gt;
+    {&lt;br&gt;
+        &amp;quot;af&amp;quot;: 4,&lt;br&gt;
+        &amp;quot;dst_addr&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;dst_name&amp;quot;: &amp;quot;91.198.174.192&amp;quot;,&lt;br&gt;
+        &amp;quot;endtime&amp;quot;: 1428527000,&lt;br&gt;
+        &amp;quot;from&amp;quot;: &amp;quot;94.125.83.239&amp;quot;,&lt;br&gt;
+        &amp;quot;fw&amp;quot;: 4680,&lt;br&gt;
+        &amp;quot;group_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;lts&amp;quot;: 171,&lt;br&gt;
+        &amp;quot;msm_id&amp;quot;: 1945703,&lt;br&gt;
+        &amp;quot;msm_name&amp;quot;: &amp;quot;Traceroute&amp;quot;,&lt;br&gt;
+        &amp;quot;paris_id&amp;quot;: 1,&lt;br&gt;
+        &amp;quot;prb_id&amp;quot;: 20002,&lt;br&gt;
+        &amp;quot;proto&amp;quot;: &amp;quot;TCP&amp;quot;,&lt;br&gt;
+        &amp;quot;result&amp;quot;: [&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 1,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;from&amp;quot;: &amp;quot;10.81.8.2&amp;quot;,&lt;br&gt;
+                        &amp;quot;rtt&amp;quot;: 1.256,&lt;br&gt;
+                        &amp;quot;size&amp;quot;: 28,&lt;br&gt;
+                        &amp;quot;ttl&amp;quot;: 254&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 2,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 3,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 4,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 5,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 6,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            },&lt;br&gt;
+            {&lt;br&gt;
+                &amp;quot;hop&amp;quot;: 255,&lt;br&gt;
+                &amp;quot;result&amp;quot;: [&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;&lt;/em&gt;&amp;quot;&lt;br&gt;
+                    },&lt;br&gt;
+                    {&lt;br&gt;
+                        &amp;quot;x&amp;quot;: &amp;quot;*&amp;quot;&lt;br&gt;
+                    }&lt;br&gt;
+                ]&lt;br&gt;
+            }&lt;br&gt;
+        ],&lt;br&gt;
+        &amp;quot;size&amp;quot;: 48,&lt;br&gt;
+        &amp;quot;src_addr&amp;quot;: &amp;quot;10.81.8.30&amp;quot;,&lt;br&gt;
+        &amp;quot;timestamp&amp;quot;: 1428526920,&lt;br&gt;
+        &amp;quot;type&amp;quot;: &amp;quot;traceroute&amp;quot;&lt;br&gt;
+    }&lt;br&gt;
+]&lt;br&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;br&gt;
+&lt;/div&gt;&lt;/p&gt;
+&lt;h3&gt;Reference&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://www-static.ripe.net/static/rnd-ui/atlas/media/apply/RIPE_Atlas_flyer_2014.pdf&#34;&gt;flyer&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/RIPE-NCC/ripe.atlas.sagan&#34;&gt;sagan&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://github.com/RIPE-NCC/ripe-atlas-cousteau&#34;&gt;cousteau&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>linux permissions</title>
+                <link rel="alternate" href="/2015/03/24/linux-permissions/" type="text/html" />
+                <id>/2015/03/24/linux-permissions/</id>
+                <updated>2015-03-24T23:13:00Z</updated>
+                
+                <summary type="html">&lt;strong&gt;This Post is A Work in Progress&lt;/strong&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;strong&gt;This Post is A Work in Progress&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;There are a ton of linux permissions references around but I have referenced a new&lt;br&gt;
+nuances lately and it has prompted me to write my own :)  Both as a way to dig into&lt;br&gt;
+a fun topic and as somewhere to point people with questions I trust.  Best beginning&lt;br&gt;
+overview &lt;a href=&#34;https://en.wikipedia.org/wiki/File_system_permissions&#34;&gt;https://en.wikipedia.org/wiki/File_system_permissions&lt;/a&gt; but I have noticed&lt;br&gt;
+that what happens is a user comes across an aspect of permissions they have never seen.&lt;br&gt;&lt;br&gt;
+Suddenly they question everything they know, or maybe that&amp;#39;s just me.&lt;/p&gt;
+
+&lt;p&gt;Tools:&lt;/p&gt;
+
+&lt;p&gt;chmod&lt;br&gt;
+chown&lt;/p&gt;
+&lt;h3&gt;Chmod&lt;/h3&gt;
+&lt;p&gt;We want to change what abilities for the existing categories of:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;owner&lt;/li&gt;
+&lt;li&gt;group&lt;/li&gt;
+&lt;li&gt;everyone&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The same settings have different meanings in the case of files and folders.&lt;/p&gt;
+&lt;h3&gt;Chown&lt;/h3&gt;
+&lt;p&gt;We want to change who the owner and/or group refers too.&lt;/p&gt;
+&lt;h3&gt;visudo&lt;/h3&gt;
+&lt;p&gt;We want to change what escalated permissions a user can access safely.&lt;/p&gt;
+
+&lt;p&gt;root    ALL=(ALL) ALL&lt;/p&gt;
+&lt;h3&gt;su&lt;/h3&gt;
+&lt;p&gt;Becoming or executing commands as another user&lt;/p&gt;
+&lt;h3&gt;chattr (i.e. can root protect a file so well even they can&amp;#39;t remove it?)&lt;/h3&gt;
+&lt;p&gt;Change attributes on a file (usually to set an immutable bit)&lt;/p&gt;
+
+&lt;p&gt;chattr +i filename.ext or remove chattr -i filename.ext&lt;/p&gt;
+&lt;h3&gt;setcap&lt;/h3&gt;
+&lt;p&gt;Setting capabilities&lt;/p&gt;
+&lt;h3&gt;setuid&lt;/h3&gt;
+&lt;p&gt;Setting a uid for a particular file&lt;/p&gt;
+&lt;h3&gt;setgid&lt;/h3&gt;
+&lt;p&gt;Setting the gid for a particular file&lt;/p&gt;
+&lt;h3&gt;concepts&lt;/h3&gt;
+&lt;p&gt;CAP_DAC_OVERRIDE &amp;ndash; capability root has to &amp;ldquo;ignore&amp;rdquo; permissions&lt;/p&gt;
+&lt;h3&gt;Reference&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Chmod&#34;&gt;chmod&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Chown&#34;&gt;chown&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.linuxnix.com/2012/01/sticky-bit-set-linux.html&#34;&gt;sticky bit&lt;/a&gt; &lt;br&gt;
+&lt;a href=&#34;http://ss64.com/bash/sudo.html&#34;&gt;man sudo&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://help.ubuntu.com/community/Sudoers&#34;&gt;sudoers&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://linux.die.net/man/7/capabilities&#34;&gt;Capabilities&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://www.symantec.com/connect/articles/introduction-linux-capabilities-and-acls&#34;&gt;Capabilities 2&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://blog.siphos.be/2013/05/overview-of-linux-capabilities-part-1/&#34;&gt;Capabilities 3&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://unix.stackexchange.com/questions/128394/passing-capabilities-through-exec&#34;&gt;so passing capabilities&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://unix.stackexchange.com/questions/51874/root-owned-program-with-setuid-bit-on&#34;&gt;ping setuid&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Setuid&#34;&gt;setuid&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Group_identifier&#34;&gt;groups&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;http://unix.stackexchange.com/questions/21251/why-do-directories-need-the-executable-x-permission-to-be-opened&#34;&gt;so directory perms&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Inode&#34;&gt;inode&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>dyn bakers dozen</title>
@@ -140,12 +1361,14 @@ the API specs.  This is a command that has been useful.&lt;/p&gt;
                 <title>osx clang compiler unknown option</title>
                 <link rel="alternate" href="/2014/03/18/osx-clang-compiler-unknown-option/" type="text/html" />
                 <id>/2014/03/18/osx-clang-compiler-unknown-option/</id>
-                <updated>2014-03-18T17:02:00Z</updated>
+                <updated>2014-03-18T22:25:00Z</updated>
                 
-                <summary type="html">As of OSX Xcode tools &amp;lt;=5.1 the clang compiler treats any unknown flag as an error.  This can cause&lt;br&gt;
-some issues with existing tools that have old flags, or uncommon flags, or who knows what.</summary>
-                <content type="html">&lt;p&gt;As of OSX Xcode tools &amp;lt;=5.1 the clang compiler treats any unknown flag as an error.  This can cause&lt;br&gt;
-some issues with existing tools that have old flags, or uncommon flags, or who knows what.&lt;/p&gt;
+                <summary type="html">As of OSX Xcode tools &amp;lt;=5.1 the clang compiler treats any unknown flag as an error.&lt;br&gt;
+This can cause some issues with existing tools that have old flags, or uncommon flags,&lt;br&gt;
+or who knows what.</summary>
+                <content type="html">&lt;p&gt;As of OSX Xcode tools &amp;lt;=5.1 the clang compiler treats any unknown flag as an error.&lt;br&gt;
+This can cause some issues with existing tools that have old flags, or uncommon flags,&lt;br&gt;
+or who knows what.&lt;/p&gt;
 
 &lt;p&gt;You see something like:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;clang: error: unknown argument: &amp;#39;-mno-fused-madd&amp;#39; [-Wunused-command-line-argument-hard-error-in-future]
@@ -214,7 +1437,7 @@ pip install mynt
                 <title>cisco ssl vpn from cli</title>
                 <link rel="alternate" href="/2014/01/27/cisco-ssl-vpn-from-cli/" type="text/html" />
                 <id>/2014/01/27/cisco-ssl-vpn-from-cli/</id>
-                <updated>2014-01-27T00:43:00Z</updated>
+                <updated>2014-01-27T22:25:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -293,17 +1516,15 @@ Password: --your pass here ;) --
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;Now you should be able to hit an IP across the tunnel.&lt;/p&gt;
 &lt;h4&gt;Notes&lt;/h4&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;You can install and use the vpnc-script to manage DNS and things smartly.  You can use the &amp;ndash;script flag:&lt;/p&gt;
+&lt;p&gt;You can install and use the vpnc-script to manage DNS and things smartly.  You can use the &amp;ndash;script flag:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;--script &amp;#47;usr&amp;#47;share&amp;#47;vpnc-scripts&amp;#47;vpnc-script
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Your certificate passphrase is probably the OTP you used&lt;/p&gt;
 
-&lt;p&gt;&amp;ndash;script /usr/share/vpnc-scripts/vpnc-script&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Your certificate passphrase is probably the OTP you used&lt;/p&gt;&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;If you make a script for managing connections you may need to clear out stale ones at the top&lt;/p&gt;
-&lt;pre&gt;&lt;code&gt;killall openconnect
-iptables -F
-&lt;/code&gt;&lt;/pre&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;If you make a script for managing connections you may need to clear out stale ones at the top&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;    killall openconnect
+    iptables -F
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;http://www.infradead.org/openconnect/&#34;&gt;openconnect&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
@@ -312,7 +1533,7 @@ iptables -F
                 <title>pfx from crt and key and into your ASA</title>
                 <link rel="alternate" href="/2014/01/21/pfx-from-crt-and-key/" type="text/html" />
                 <id>/2014/01/21/pfx-from-crt-and-key/</id>
-                <updated>2014-01-21T01:59:00Z</updated>
+                <updated>2014-01-21T22:28:00Z</updated>
                 
                 
                 <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
@@ -328,9 +1549,9 @@ iptables -F
     A PKCS #12 file may be encrypted and signed.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Typically when you generate an SSL certificate you get a mine.key file and a mine.crt file&lt;/p&gt;
+&lt;p&gt;Typically, when you generate an SSL certificate you get a mine.key file and a mine.crt file&lt;/p&gt;
 
-&lt;p&gt;This PFX format is used by Cisco ASA devices&lt;/p&gt;
+&lt;p&gt;PFX format is used by Cisco ASA devices&lt;/p&gt;
 &lt;h4&gt;Installing OpenSSL&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;aptitude install openssl
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Make sure your .key file is valid&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;openssl x509 -text -in myfile.key
 &lt;/code&gt;&lt;/pre&gt;&lt;h5&gt;Making a PFX file&lt;/h5&gt;

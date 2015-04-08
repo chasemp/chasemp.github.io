@@ -165,17 +165,15 @@ Password: --your pass here ;) --
 </code></pre>
 <p>Now you should be able to hit an IP across the tunnel.</p>
 <h4>Notes</h4>
-<ul>
-<li><p>You can install and use the vpnc-script to manage DNS and things smartly.  You can use the &ndash;script flag:</p>
+<p>You can install and use the vpnc-script to manage DNS and things smartly.  You can use the &ndash;script flag:</p>
+<pre><code>--script &#47;usr&#47;share&#47;vpnc-scripts&#47;vpnc-script
+</code></pre>
+<p>Your certificate passphrase is probably the OTP you used</p>
 
-<p>&ndash;script /usr/share/vpnc-scripts/vpnc-script</p></li>
-<li><p>Your certificate passphrase is probably the OTP you used</p></li>
-<li><p>If you make a script for managing connections you may need to clear out stale ones at the top</p>
-<pre><code>killall openconnect
-iptables -F
-</code></pre></li>
-</ul>
-<h4>Reference</h4>
+<p>If you make a script for managing connections you may need to clear out stale ones at the top</p>
+<pre><code>    killall openconnect
+    iptables -F
+</code></pre><h4>Reference</h4>
 <p><a href="http://www.infradead.org/openconnect/">openconnect</a></p>
 
         </div>
