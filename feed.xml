@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2015-04-08T23:13:48Z</updated>
+        <updated>2015-04-09T03:05:24Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,7 +19,7 @@
                 <title>RIPE Atlas Getting Started</title>
                 <link rel="alternate" href="/2015/04/08/RIPE-Atlas-Getting-Started/" type="text/html" />
                 <id>/2015/04/08/RIPE-Atlas-Getting-Started/</id>
-                <updated>2015-04-08T23:11:00Z</updated>
+                <updated>2015-04-08T23:15:00Z</updated>
                 
                 
                 <content type="html">&lt;h3&gt;Preamble&lt;/h3&gt;
@@ -1164,7 +1164,32 @@ fetched from the CLI:&lt;/p&gt;
 &lt;h3&gt;Reference&lt;/h3&gt;
 &lt;p&gt;&lt;a href=&#34;https://www-static.ripe.net/static/rnd-ui/atlas/media/apply/RIPE_Atlas_flyer_2014.pdf&#34;&gt;flyer&lt;/a&gt;&lt;br&gt;
 &lt;a href=&#34;https://github.com/RIPE-NCC/ripe.atlas.sagan&#34;&gt;sagan&lt;/a&gt;&lt;br&gt;
-&lt;a href=&#34;https://github.com/RIPE-NCC/ripe-atlas-cousteau&#34;&gt;cousteau&lt;/a&gt;&lt;/p&gt;
+&lt;a href=&#34;https://github.com/RIPE-NCC/ripe-atlas-cousteau&#34;&gt;cousteau&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://atlas.ripe.net/docs/rest/#measurement&#34;&gt;REST measurements&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>internet culture</title>
+                <link rel="alternate" href="/2015/04/08/internet-culture/" type="text/html" />
+                <id>/2015/04/08/internet-culture/</id>
+                <updated>2015-04-08T03:05:00Z</updated>
+                
+                <summary type="html">Getting help and soliciting feedback on the Internet essential reading:</summary>
+                <content type="html">&lt;p&gt;Getting help and soliciting feedback on the Internet essential reading:&lt;/p&gt;
+
+&lt;p&gt;Great presentation directed at tech folks from India primarily looking&lt;br&gt;
+to enter into an Open Source mentor relationship&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.shakthimaan.com/downloads/glv/presentations/i-want-2-do-project-tell-me-wat-2-do.pdf&#34;&gt;I want 2 do project tell me how&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;Phabricator great page pleading for users to provide the actual error.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;https://secure.phabricator.com/book/phabflavor/article/please_please_please/&#34;&gt;please please please&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;The essential text from ESR&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&#34;http://www.catb.org/%7Eesr/faqs/smart-questions.html&#34;&gt;How to ask smart questions&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
