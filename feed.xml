@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2015-04-09T03:12:31Z</updated>
+        <updated>2015-04-29T22:21:12Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,131 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>gpg getting started</title>
+                <link rel="alternate" href="/2015/04/29/gpg-getting-started/" type="text/html" />
+                <id>/2015/04/29/gpg-getting-started/</id>
+                <updated>2015-04-29T22:21:00Z</updated>
+                
+                
+                <content type="html">&lt;h4&gt;Preamble&lt;/h4&gt;
+&lt;p&gt;I am regenerating my GPG key&lt;/p&gt;
+
+&lt;p&gt;( This is not my actual key shown )&lt;/p&gt;
+&lt;h4&gt;PGP&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Pretty_Good_Privacy&#34;&gt;PGP&lt;/a&gt; is an encryption standard.  GNU PG (GPG) is a common implementation.  GPG is&lt;br&gt;
+used to transmit items securely, verify the integrity of source material, or to&lt;br&gt;
+verify the identities of two parties.&lt;/p&gt;
+
+&lt;p&gt;See reference for a download link and install a GPG implementation.&lt;/p&gt;
+&lt;h4&gt;Generating a key pair&lt;/h4&gt;
+&lt;p&gt;Options: RSA/RSA, 4096, Valid for a year or more (this can be updated later)&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gpg --gen-key
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code&gt;
+gpg (GnuPG/MacGPG2) 2.0.27; Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+Please select what kind of key you want:
+   (1) RSA and RSA (default)
+   (2) DSA and Elgamal
+   (3) DSA (sign only)
+   (4) RSA (sign only)
+Your selection? 1
+RSA keys may be between 1024 and 8192 bits long.
+What keysize do you want? (2048) 4096
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      &lt;n&gt;  = key expires in n days
+      &lt;n&gt;w = key expires in n weeks
+      &lt;n&gt;m = key expires in n months
+      &lt;n&gt;y = key expires in n years
+Key is valid for? (0)
+Key does not expire at all
+Is this correct? (y/N) y
+
+GnuPG needs to construct a user ID to identify your key.
+
+Real name: My Name
+Email address: me@email.com
+Comment: test key
+You selected this USER-ID:
+    &#34;My Name (test key) &lt;me@email.com&gt;&#34;
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? O
+You need a Passphrase to protect your secret key.
+
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+We need to generate a lot of random bytes. It is a good idea to perform
+some other action (type on the keyboard, move the mouse, utilize the
+disks) during the prime generation; this gives the random number
+generator a better chance to gain enough entropy.
+gpg: key 9C6095EA marked as ultimately trusted
+public and secret key created and signed.
+
+gpg: checking the trustdb
+gpg: 3 marginal(s) needed, 1 complete(s) needed, PGP trust model
+gpg: depth: 0  valid:   3  signed:   0  trust: 0-, 0q, 0n, 0m, 0f, 3u
+gpg: next trustdb check due at 2016-04-29
+pub   4096R/9C6095EA 2015-04-29
+      Key fingerprint = B670 6F65 43A0 76A3 FAF7  42DF D7F9 EDD5 9C60 95EA
+uid       [ultimate] My Name (test key) &lt;me@email.com&gt;
+sub   4096R/9A8C2CA5 2015-04-29
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h4&gt;Show my key&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;gpg --list-key me@email.com
+
+pub   4096R&amp;#47;9C6095EA 2015-04-29
+uid       [ultimate] My Name (test key) &amp;lt;me@email.com&amp;gt;
+sub   4096R&amp;#47;9A8C2CA5 2015-04-29
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is my 32 bit identifier for this key: 9C6095EA.  Use the full fingerprint usually.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gpg --fingerprint 9C6095EA
+
+pub   4096R&amp;#47;9C6095EA 2015-04-29
+    Key fingerprint = B670 6F65 43A0 76A3 FAF7  42DF D7F9 EDD5 9C60 95EA
+uid       [ultimate] My Name (test key) &amp;lt;me@email.com&amp;gt;
+sub    4096R&amp;#47;9A8C2CA5 2015-04-29
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;This is your key fingerprint: &lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;B670 6F65 43A0 76A3 FAF7  42DF D7F9 EDD5 9C60 95EA
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Now we can publish our key for others to find&lt;/h4&gt;
+&lt;p&gt;Make sure a keyserver pool is configured such as &amp;#39;keyserver hkps://hkps.pool.sks-keyservers.net&amp;#39;.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;grep -E ^keyserver * | grep pool
+gpg.conf:keyserver hkps:&amp;#47;&amp;#47;hkps.pool.sks-keyservers.net
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Upload your new key:&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gpg --send-keys
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Search for your new key (this may take a minute to propogate):&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;gpg  --search-keys &amp;#39;test key&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Finding keys for other people&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;gpg  --search-keys &amp;#39;linus torvalds&amp;#39;
+
+Linus Torvalds &amp;lt;torvalds@linux-foundation.org&amp;gt;
+2048 bit RSA key 00411886, created: 2011-09-20
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Remove a key from the keyring (private key)&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;gpg --delete-secret-keys me@email.com
+
+gpg (GnuPG&amp;#47;MacGPG2) 2.0.27; Copyright (C) 2015 Free Software Foundation, Inc.
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+
+sec  4096R&amp;#47;9C6095EA 2015-04-29 My Name (test key) &amp;lt;me@email.com&amp;gt;
+
+Delete this key from the keyring? (y&amp;#47;N) y
+This is a secret key! - really delete? (y&amp;#47;N) y
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://gnupg.org/download/index.html&#34;&gt;download&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://sks-keyservers.net&#34;&gt;key servers&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://evil32.com/&#34;&gt;evil 32bit&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://en.wikipedia.org/wiki/Web_of_trust&#34;&gt;web of trust&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://www.gnupg.org/gph/en/manual/x110.html&#34;&gt;encrypt a file with gpg&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>RIPE Atlas Getting Started</title>
