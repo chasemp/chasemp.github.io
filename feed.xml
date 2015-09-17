@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2015-04-29T22:21:12Z</updated>
+        <updated>2015-09-17T20:27:29Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -14,6 +14,105 @@
             <uri>/</uri>
         </author>
         
+        
+            <entry>
+                <title>post mortems</title>
+                <link rel="alternate" href="/2015/08/13/post-mortems/" type="text/html" />
+                <id>/2015/08/13/post-mortems/</id>
+                <updated>2015-08-13T18:44:00Z</updated>
+                
+                <summary type="html">&lt;a href=&#34;https://github.com/danluu/post-mortems&#34;&gt;https://github.com/danluu/post-mortems&lt;/a&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;a href=&#34;https://github.com/danluu/post-mortems&#34;&gt;https://github.com/danluu/post-mortems&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
+        
+            <entry>
+                <title>exploring elasticsearch</title>
+                <link rel="alternate" href="/2015/08/05/elasticsearch/" type="text/html" />
+                <id>/2015/08/05/elasticsearch/</id>
+                <updated>2015-08-05T19:13:00Z</updated>
+                
+                <summary type="html">==== Preamble</summary>
+                <content type="html">&lt;p&gt;==== Preamble&lt;/p&gt;
+
+&lt;p&gt;If you want to index and search your documents with lucene then&lt;br&gt;
+Elasticsearch seems to be the popular way to do so while adding&lt;br&gt;
+redundandcy, clustering, and an API on top of Lucene.  Elasticsearch&lt;br&gt;
+has a collection of REST API&amp;#39;s with one subset not returning json at all.&lt;br&gt;
+The _cat API is meant for humans.  While there are CLI tools made&lt;br&gt;
+for parsing json most of the popular tools we are used to are more&lt;br&gt;
+natively served with raw textual data.&lt;/p&gt;
+&lt;h4&gt;Making sure the API is responding&lt;/h4&gt;
+&lt;p&gt;It&amp;#39;s worth noting that when a cluster is new and has no designated&lt;br&gt;
+master nodes this API seems to hang indefinitely.  If there is a splitbrain&lt;br&gt;
+problem the same thing occurs.  This can be really concerning if you are&lt;br&gt;
+in trouble master role wise as the API you expect to query will not respond.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;[2015-09-16 17:04:08,233][DEBUG][action.admin.cluster.health] \
+[elastic2001] no known master node, scheduling a retry
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;There can be duplicate information across API calls.  For instance, in order&lt;br&gt;
+to make sense of the shards you undoubtably need the index status.  Whatever&lt;br&gt;
+endpoint is more appropriate is ultimately a matter of perspective.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl -s &amp;#39;http:&amp;#47;&amp;#47;localhost:9200&amp;#47;&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;{&lt;br&gt;
+  &amp;ldquo;status&amp;rdquo; : 200,&lt;br&gt;
+  &amp;ldquo;name&amp;rdquo; : &amp;ldquo;elastic2001&amp;rdquo;,&lt;br&gt;
+  &amp;ldquo;cluster_name&amp;rdquo; : &amp;ldquo;production-search-codfw&amp;rdquo;,&lt;br&gt;
+  &amp;ldquo;version&amp;rdquo; : {&lt;br&gt;
+    &amp;ldquo;number&amp;rdquo; : &amp;ldquo;1.7.1&amp;rdquo;,&lt;br&gt;
+    &amp;ldquo;build_hash&amp;rdquo; : &amp;ldquo;b88f43fc40b0bcd7f173a1f9ee2e97816de80b19&amp;rdquo;,&lt;br&gt;
+    &amp;ldquo;build_timestamp&amp;rdquo; : &amp;ldquo;2015-07-29T09:54:16Z&amp;rdquo;,&lt;br&gt;
+    &amp;ldquo;build_snapshot&amp;rdquo; : false,&lt;br&gt;
+    &amp;ldquo;lucene_version&amp;rdquo; : &amp;ldquo;4.10.4&amp;rdquo;&lt;br&gt;
+  },&lt;br&gt;
+  &amp;ldquo;tagline&amp;rdquo; : &amp;ldquo;You Know, for Search&amp;rdquo;&lt;br&gt;
+}&lt;/p&gt;
+&lt;h4&gt;Cat&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -s localhost:9200&amp;#47;_cat&amp;#47;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-aliases.html&#34;&gt;aliases&lt;/a&gt;&lt;br&gt;
+&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/current/index-modules-allocation.html&#34;&gt;allocation&lt;/a&gt;&lt;br&gt;
+count - document count&lt;br&gt;
+fielddata   -   field data by index&lt;br&gt;
+health      -   cluster health&lt;br&gt;
+indices     -   index overview and status&lt;br&gt;
+master      -   find current master node&lt;br&gt;
+nodes       -   node status(es)&lt;br&gt;
+pending_tasks   -   task backlog information &lt;br&gt;
+plugins     -   plugins and versions across all nodes&lt;br&gt;
+recovery    -   index/shard status with movement info&lt;br&gt;
+thread pool -   tons of info on active threads across nodes&lt;br&gt;
+shards      -   tons of info on shard states&lt;br&gt;
+&lt;a href=&#34;https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-segments.html&#34;&gt;segments&lt;/a&gt;   -   low level segment info&lt;/p&gt;
+&lt;h4&gt;_cat tricks&lt;/h4&gt;&lt;h3&gt;Seeing all possible columns&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;curl &amp;#39;localhost:9200&amp;#47;_cat&amp;#47;master?help&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;id   |   | node id&lt;br&gt;
+host | h | host name&lt;br&gt;
+ip   |   | ip address&lt;br&gt;
+node | n | node name&lt;/p&gt;
+&lt;h3&gt;Column headers&lt;/h3&gt;
+&lt;p&gt;A note is this will not show columns for which there are no data.  This is&lt;br&gt;
+noticeable for a few endpoints such as fielddata especially.&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;curl &amp;#39;localhost:9200&amp;#47;_cat&amp;#47;master?v&amp;#39;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;id                     host        ip            node&lt;br&gt;
+6wYvPnhcTsupr8iT8kMt-w elastic2007 10.192.16.143 elastic2007&lt;/p&gt;
+&lt;h3&gt;Picking relevant column headers&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;curl localhost:9200&amp;#47;_cat&amp;#47;master?h=&amp;#39;host&amp;#39;
+
+elastic2007
+
+curl localhost:9200&amp;#47;_cat&amp;#47;master?h=&amp;#39;host,ip&amp;#39;
+
+elastic2007 10.192.16.143
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Watching shard movement&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -s &amp;#39;localhost:9200&amp;#47;_cat&amp;#47;recovery?active_only=true&amp;#39; | \
+awk &amp;#39;{printf &amp;quot;%-19s %6s %-12s =&amp;gt; %-12s\n&amp;quot;, $1, $13, $6, $7}&amp;#39; | \
+sort -n -k2 -r
+
+enwiki_general_1432193140  59.1% elastic1023  =&amp;gt; elastic1006
+&lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&#34;https://aphyr.com/posts/323-call-me-maybe-elasticsearch-1-5-0&#34;&gt;https://aphyr.com/posts/323-call-me-maybe-elasticsearch-1-5-0&lt;/a&gt;&lt;/p&gt;
+</content>
+            </entry>
         
             <entry>
                 <title>gpg getting started</title>
