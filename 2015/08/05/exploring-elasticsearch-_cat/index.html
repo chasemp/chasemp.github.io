@@ -29,7 +29,7 @@
     </script>
 
     
-    <title>exploring elasticsearch &ndash; devops type thoughts</title>
+    <title>exploring elasticsearch _cat &ndash; devops type thoughts</title>
 </head>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"></script>
@@ -84,8 +84,8 @@ function toggleDiv(divId) {
             
     <div class="item">
         <div class="header">
-            <h1>exploring elasticsearch</h1>
-            <h2>Wednesday, August 05, 2015</h2>
+            <h1>exploring elasticsearch _cat</h1>
+            <h2>Wednesday, August 05, 2015 <span>&raquo;</span> <a href="/tags/elasticsearch/">elasticsearch</a></h2>
         </div>
         
         <div class="body">
@@ -104,7 +104,7 @@ master nodes this API seems to hang indefinitely.  If there is a splitbrain<br>
 problem the same thing occurs.  This can be really concerning if you are<br>
 in trouble master role wise as the API you expect to query will not respond.</p>
 <pre><code>[2015-09-16 17:04:08,233][DEBUG][action.admin.cluster.health] \
-[elastic2001] no known master node, scheduling a retry
+[elastic-node] no known master node, scheduling a retry
 </code></pre>
 <p>There can be duplicate information across API calls.  For instance, in order<br>
 to make sense of the shards you undoubtably need the index status.  Whatever<br>
@@ -113,11 +113,11 @@ endpoint is more appropriate is ultimately a matter of perspective.</p>
 </code></pre>
 <p>{<br>
   &ldquo;status&rdquo; : 200,<br>
-  &ldquo;name&rdquo; : &ldquo;elastic2001&rdquo;,<br>
-  &ldquo;cluster_name&rdquo; : &ldquo;production-search-codfw&rdquo;,<br>
+  &ldquo;name&rdquo; : &ldquo;elastic-node&rdquo;,<br>
+  &ldquo;cluster_name&rdquo; : &ldquo;my-cluster-name&rdquo;,<br>
   &ldquo;version&rdquo; : {<br>
     &ldquo;number&rdquo; : &ldquo;1.7.1&rdquo;,<br>
-    &ldquo;build_hash&rdquo; : &ldquo;b88f43fc40b0bcd7f173a1f9ee2e97816de80b19&rdquo;,<br>
+    &ldquo;build_hash&rdquo; : &ldquo;&rdquo;,<br>
     &ldquo;build_timestamp&rdquo; : &ldquo;2015-07-29T09:54:16Z&rdquo;,<br>
     &ldquo;build_snapshot&rdquo; : false,<br>
     &ldquo;lucene_version&rdquo; : &ldquo;4.10.4&rdquo;<br>
@@ -152,19 +152,19 @@ noticeable for a few endpoints such as fielddata especially.</p>
 <pre><code>curl &#39;localhost:9200&#47;_cat&#47;master?v&#39;
 </code></pre>
 <p>id                     host        ip            node<br>
-6wYvPnhcTsupr8iT8kMt-w elastic2007 10.192.16.143 elastic2007</p>
+1234         elastic-node 10.0.0.143 elastic-node</p>
 <h3>Picking relevant column headers</h3><pre><code>curl localhost:9200&#47;_cat&#47;master?h=&#39;host&#39;
 
-elastic2007
+elastic-node
 
 curl localhost:9200&#47;_cat&#47;master?h=&#39;host,ip&#39;
 
-elastic2007 10.192.16.143
+elastic-node 10.0.0.143
 </code></pre><h4>Watching shard movement</h4><pre><code>curl -s &#39;localhost:9200&#47;_cat&#47;recovery?active_only=true&#39; | \
 awk &#39;{printf &quot;%-19s %6s %-12s =&gt; %-12s\n&quot;, $1, $13, $6, $7}&#39; | \
 sort -n -k2 -r
 
-enwiki_general_1432193140  59.1% elastic1023  =&gt; elastic1006
+myindex  59.1% elastic-node1  =&gt; elastic-node2
 </code></pre><h4>Reference</h4>
 <p><a href="https://aphyr.com/posts/323-call-me-maybe-elasticsearch-1-5-0">https://aphyr.com/posts/323-call-me-maybe-elasticsearch-1-5-0</a></p>
 

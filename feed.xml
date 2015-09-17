@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2015-09-17T20:27:29Z</updated>
+        <updated>2015-09-17T21:01:58Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -27,10 +27,10 @@
             </entry>
         
             <entry>
-                <title>exploring elasticsearch</title>
-                <link rel="alternate" href="/2015/08/05/elasticsearch/" type="text/html" />
-                <id>/2015/08/05/elasticsearch/</id>
-                <updated>2015-08-05T19:13:00Z</updated>
+                <title>exploring elasticsearch _cat</title>
+                <link rel="alternate" href="/2015/08/05/exploring-elasticsearch-_cat/" type="text/html" />
+                <id>/2015/08/05/exploring-elasticsearch-_cat/</id>
+                <updated>2015-08-05T21:01:00Z</updated>
                 
                 <summary type="html">==== Preamble</summary>
                 <content type="html">&lt;p&gt;==== Preamble&lt;/p&gt;
@@ -48,7 +48,7 @@ master nodes this API seems to hang indefinitely.  If there is a splitbrain&lt;b
 problem the same thing occurs.  This can be really concerning if you are&lt;br&gt;
 in trouble master role wise as the API you expect to query will not respond.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;[2015-09-16 17:04:08,233][DEBUG][action.admin.cluster.health] \
-[elastic2001] no known master node, scheduling a retry
+[elastic-node] no known master node, scheduling a retry
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;There can be duplicate information across API calls.  For instance, in order&lt;br&gt;
 to make sense of the shards you undoubtably need the index status.  Whatever&lt;br&gt;
@@ -57,11 +57,11 @@ endpoint is more appropriate is ultimately a matter of perspective.&lt;/p&gt;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;{&lt;br&gt;
   &amp;ldquo;status&amp;rdquo; : 200,&lt;br&gt;
-  &amp;ldquo;name&amp;rdquo; : &amp;ldquo;elastic2001&amp;rdquo;,&lt;br&gt;
-  &amp;ldquo;cluster_name&amp;rdquo; : &amp;ldquo;production-search-codfw&amp;rdquo;,&lt;br&gt;
+  &amp;ldquo;name&amp;rdquo; : &amp;ldquo;elastic-node&amp;rdquo;,&lt;br&gt;
+  &amp;ldquo;cluster_name&amp;rdquo; : &amp;ldquo;my-cluster-name&amp;rdquo;,&lt;br&gt;
   &amp;ldquo;version&amp;rdquo; : {&lt;br&gt;
     &amp;ldquo;number&amp;rdquo; : &amp;ldquo;1.7.1&amp;rdquo;,&lt;br&gt;
-    &amp;ldquo;build_hash&amp;rdquo; : &amp;ldquo;b88f43fc40b0bcd7f173a1f9ee2e97816de80b19&amp;rdquo;,&lt;br&gt;
+    &amp;ldquo;build_hash&amp;rdquo; : &amp;ldquo;&amp;rdquo;,&lt;br&gt;
     &amp;ldquo;build_timestamp&amp;rdquo; : &amp;ldquo;2015-07-29T09:54:16Z&amp;rdquo;,&lt;br&gt;
     &amp;ldquo;build_snapshot&amp;rdquo; : false,&lt;br&gt;
     &amp;ldquo;lucene_version&amp;rdquo; : &amp;ldquo;4.10.4&amp;rdquo;&lt;br&gt;
@@ -96,19 +96,19 @@ noticeable for a few endpoints such as fielddata especially.&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;curl &amp;#39;localhost:9200&amp;#47;_cat&amp;#47;master?v&amp;#39;
 &lt;/code&gt;&lt;/pre&gt;
 &lt;p&gt;id                     host        ip            node&lt;br&gt;
-6wYvPnhcTsupr8iT8kMt-w elastic2007 10.192.16.143 elastic2007&lt;/p&gt;
+1234         elastic-node 10.0.0.143 elastic-node&lt;/p&gt;
 &lt;h3&gt;Picking relevant column headers&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;curl localhost:9200&amp;#47;_cat&amp;#47;master?h=&amp;#39;host&amp;#39;
 
-elastic2007
+elastic-node
 
 curl localhost:9200&amp;#47;_cat&amp;#47;master?h=&amp;#39;host,ip&amp;#39;
 
-elastic2007 10.192.16.143
+elastic-node 10.0.0.143
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Watching shard movement&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;curl -s &amp;#39;localhost:9200&amp;#47;_cat&amp;#47;recovery?active_only=true&amp;#39; | \
 awk &amp;#39;{printf &amp;quot;%-19s %6s %-12s =&amp;gt; %-12s\n&amp;quot;, $1, $13, $6, $7}&amp;#39; | \
 sort -n -k2 -r
 
-enwiki_general_1432193140  59.1% elastic1023  =&amp;gt; elastic1006
+myindex  59.1% elastic-node1  =&amp;gt; elastic-node2
 &lt;/code&gt;&lt;/pre&gt;&lt;h4&gt;Reference&lt;/h4&gt;
 &lt;p&gt;&lt;a href=&#34;https://aphyr.com/posts/323-call-me-maybe-elasticsearch-1-5-0&#34;&gt;https://aphyr.com/posts/323-call-me-maybe-elasticsearch-1-5-0&lt;/a&gt;&lt;/p&gt;
 </content>
