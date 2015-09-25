@@ -6,7 +6,7 @@
         <link rel="alternate" href="/" />
         <link rel="self" href="/feed.xml" type="application/atom+xml" />
         <id>/</id>
-        <updated>2015-09-25T20:26:52Z</updated>
+        <updated>2015-09-25T20:29:23Z</updated>
         
         <author>
             <name>Chase Pettet</name>
@@ -19,14 +19,14 @@
                 <title>IPv4 pool is empty</title>
                 <link rel="alternate" href="/2015/09/25/IPv4-pool-is-empty/" type="text/html" />
                 <id>/2015/09/25/IPv4-pool-is-empty/</id>
-                <updated>2015-09-25T20:26:00Z</updated>
+                <updated>2015-09-25T20:29:00Z</updated>
                 
-                <summary type="html">(ARIN IPv4 Free Pool Reaches Zero)[&lt;a href=&#34;https://www.arin.net/announcements/2015/20150924.html&#34;&gt;https://www.arin.net/announcements/2015/20150924.html&lt;/a&gt;]</summary>
-                <content type="html">&lt;p&gt;(ARIN IPv4 Free Pool Reaches Zero)[&lt;a href=&#34;https://www.arin.net/announcements/2015/20150924.html&#34;&gt;https://www.arin.net/announcements/2015/20150924.html&lt;/a&gt;]&lt;/p&gt;
+                <summary type="html">&lt;a href=&#34;https://www.arin.net/announcements/2015/20150924.html&#34;&gt;ARIN IPv4 Free Pool Reaches Zero&lt;/a&gt;</summary>
+                <content type="html">&lt;p&gt;&lt;a href=&#34;https://www.arin.net/announcements/2015/20150924.html&#34;&gt;ARIN IPv4 Free Pool Reaches Zero&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Wow.&lt;/p&gt;
 
-&lt;p&gt;(Related)[&lt;a href=&#34;https://www.google.com/intl/en/ipv6/statistics.html&#34;&gt;https://www.google.com/intl/en/ipv6/statistics.html&lt;/a&gt;]&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.google.com/intl/en/ipv6/statistics.html&#34;&gt;Related&lt;/a&gt;&lt;/p&gt;
 </content>
             </entry>
         
