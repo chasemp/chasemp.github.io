@@ -99,18 +99,18 @@ function toggleDiv(divId) {
 <p>Assumes a common/combined access log file format:</p>
 <pre><code>apachetop -f &#47;var&#47;log&#47;apache&#47;access.log
 </code></pre>
-<p><center><pre><code><br>
-last hit: 19:37:04         atop runtime:  0 days, 00:01:15             19:37:05<br>
-All:          429 reqs (   5.8/sec)       4742.7K (   64.1K/sec)      11.1K/req<br>
-2xx:     228 (53.1%) 3xx:      57 (13.3%) 4xx:     0 ( 0.0%) 5xx:   144 (33.6%)<br>
-R ( 30s):     194 reqs (   6.5/sec)       2514.0K (   83.8K/sec)      13.0K/req<br>
-2xx:      95 (49.0%) 3xx:      35 (18.0%) 4xx:     0 ( 0.0%) 5xx:    64 (33.0%)</p>
+<pre><code>
+last hit: 19:37:04         atop runtime:  0 days, 00:01:15             19:37:05
+All:          429 reqs (   5.8/sec)       4742.7K (   64.1K/sec)      11.1K/req
+2xx:     228 (53.1%) 3xx:      57 (13.3%) 4xx:     0 ( 0.0%) 5xx:   144 (33.6%)
+R ( 30s):     194 reqs (   6.5/sec)       2514.0K (   83.8K/sec)      13.0K/req
+2xx:      95 (49.0%) 3xx:      35 (18.0%) 4xx:     0 ( 0.0%) 5xx:    64 (33.0%)
 
-<p>REQS REQ/S    KB KB/S URL<br>
-   72  2.40 873.6 29.1*/robots.txt<br>
-   28  0.93  12.3  0.4 /foo/bar<br>
-    2  0.18   1.7  0.2 /login/refresh/<br>
-</center></code></pre></p>
+ REQS REQ/S    KB KB/S URL
+   72  2.40 873.6 29.1*/robots.txt
+   28  0.93  12.3  0.4 /foo/bar
+    2  0.18   1.7  0.2 /login/refresh/
+</code></pre>
 
 <p>You can specify how many Hits (-H) or second (-T) to remember stats across (mutually exclusive).</p>
 
@@ -129,17 +129,18 @@ R ( 30s):     194 reqs (   6.5/sec)       2514.0K (   83.8K/sec)      13.0K/req<
 <p><a href="https://github.com/fr3nd/apache-top/blob/master/apache-top.py">https://github.com/fr3nd/apache-top/blob/master/apache-top.py</a></p>
 <pre><code>apache-top -u http:&#47;&#47;127.0.0.1&#47;server-status
 </code></pre>
-<p><center><pre><code><br>
-Parent Server Config. Generation: 3, Current Time: Friday, 09-Oct-2015 19:53:25 UTC<br>
-Server uptime:  1 day 18 hours 36 minutes 29 seconds<br>
-Server load: 2.62 2.77 2.77, Active/Idle: Total/Traffic:<br>
-<strong><em>.</em>._....</strong>...<em>.....W</em><em>.</em><em>...</em>.<strong>..</strong>.K<em>..._W</em>.<strong><em>..</em>...._...</strong><em>...</em>.....<em>....</em>.<em>....</em>..<strong>.</strong><em>.</em>.<em>.</em>...<em>.</em>.___........<br>
-.........................................................................................................................<br>
-.........................................................................................................................<br>
-PID   M SS     CPU  VHost           IP              Request<br>
-37059 K 1   338.81  myhost.com10.1.1.1    GET /foo HTTP/1.1<br>
-5537  K 0   142.38  myhost.com10.1.1.2    GET /bar/ HTTP/1.1<br>
-</center></code></pre></p>
+<pre><code>
+Parent Server Config. Generation: 3,
+Current Time: Friday, 09-Oct-2015 19:53:25 UTC
+Server uptime:  1 day 18 hours 36 minutes 29 seconds
+Server load: 2.62 2.77 2.77, Active/Idle: Total/Traffic:
+___._._....__..._.....W__.__..._.__..__.K_..._W_.___.._.
+........................................................
+........................................................
+PID   M SS     CPU  VHost           IP              Request
+37059 K 1   338.81  myhost.com10.1.1.1    GET /foo HTTP/1.1
+5537  K 0   142.38  myhost.com10.1.1.2    GET /bar/ HTTP/1.1
+</code></pre>
 
 <p>You can sort the live output by a few criteria:</p>
 <pre><code>P   Sort by PID
@@ -168,10 +169,10 @@ I have intiated a <a href="https://github.com/gwillem/apachetop/pull/1">Pull Req
 
 <p>Show all non-idle workers (default output):</p>
 
-<p><center><pre><code><br>
-pid  21019 sec 1 state W client 10.1.1.1 host mysite.com:80 uri GET /bar HTTP/1.1<br>
-pid   5774 sec 0 state K client 10.1.1.2 host mysite.com:80 uri GET /foo<br>
-</center></code></pre></p>
+<pre><code>
+pid  21019 sec 1 state W client 10.1.1.1 host mysite.com:80 uri GET /bar HTTP/1.1
+pid   5774 sec 0 state K client 10.1.1.2 host mysite.com:80 uri GET /foo
+</code></pre>
 
 <p>There are a number of cool and useful examples in the <a href="https://github.com/gwillem/apachetop/blob/master/README.md">Readme</a></p>
 
@@ -203,8 +204,6 @@ pid   5774 sec 0 state K client 10.1.1.2 host mysite.com:80 uri GET /foo<br>
 - Bash ;)</p>
 
 <p><a href="http://mossiso.com/2014/04/02/atop-apache-top-for-keeping-tabs-on-the-web-servers.html">atop for web servers</a></p>
-<h4>More</h4>
-<p><a href="https://github.com/JeremyJones/Apachetop">https://github.com/JeremyJones/Apachetop</a></p>
 <h4>Reference</h4>
 <p><a href="http://httpd.apache.org/docs/2.4/mod/mod_status.html">mod_status</a><br>
 <a href="http://www.cyberciti.biz/faq/apache-server-status/">nixcraft mod_status</a><br>
