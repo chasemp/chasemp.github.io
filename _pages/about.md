@@ -3,6 +3,10 @@ permalink: /about/
 title: "About"
 ---
 
-Tempor velit sint sunt ipsum tempor enim ad qui ullamco. Est dolore anim ad velit duis dolore minim sunt aliquip amet commodo labore. Ut eu pariatur aute ea aute excepteur laborum. Esse ea esse excepteur minim mollit qui cillum excepteur ex dolore magna. Labore deserunt fugiat incididunt incididunt sint ea. Consequat dolore aute laboris quis proident quis non et est consectetur ex eiusmod sit culpa.
+I enjoy translating What We Are Trying To Achieve into How Are We Going To Achieve It when it comes to implementing and scaling technical infrastructure, building tooling to improve developer experience, and refining real world digital use cases with security of assets as a first class citizen.
 
-Cupidatat ea do et in excepteur in. Ad nostrud ut est esse eu duis ea sunt eiusmod. Aliquip tempor veniam sint elit fugiat. Velit incididunt laboris amet incididunt labore dolore irure velit excepteur commodo deserunt laborum. Consectetur eu fugiat veniam veniam Lorem labore magna eiusmod. Ea occaecat reprehenderit pariatur consectetur minim labore ut aliquip.
+I strive to be pragmatic in a manner informed by my earnest desire to build solutions I am content to live with myself.
+
+I am a policy and process nerd who believes navigating the corridors of too much or too little is an expected constant over the evolution of a team and organization.
+
+I embrace GRC as a means to an end, automation as a way of life, deep bites into nuanced scaling issues as key forks in the road, and change as the only constant.
