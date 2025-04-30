@@ -7,7 +7,7 @@ tags:
   - IR
 ---
 
-![A building with heavy damage in the 2020 Aegean Sea earthquake from https://commons.wikimedia.org](assets/images/post/21musingsheader.png)
+![A building with heavy damage in the 2020 Aegean Sea earthquake from https://commons.wikimedia.org](/assets/images/post/21musingsheader.png)
 
 These are my personal anecdotal conclusions and I totally appreciate it may not line up with anyone else's. This is US centric, as that is my experience, and I learned IR “on the job” over a few decades.  YMMV.
 
