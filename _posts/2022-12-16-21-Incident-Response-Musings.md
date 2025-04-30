@@ -1,4 +1,17 @@
+---
+title: "21 Musings From Incident Response"
+excerpt_separator: "<!--more-->"
+categories:
+  - Blog
+tags:
+  - IR
+---
+
+![A building with heavy damage in the 2020 Aegean Sea earthquake from https://commons.wikimedia.org](assets/images/post/21musingsheader.png)
+
 These are my personal anecdotal conclusions and I totally appreciate it may not line up with anyone else's. This is US centric, as that is my experience, and I learned IR “on the job” over a few decades.  YMMV.
+
+<!--more-->
 
 1. Operational and security incidents often begin the same way, and may have the same impacts. Sometimes the separation boils down to intent.  That means your infrastructure operations team and your security operations team have to agree on what escalation means, when it matters, and how to document an ongoing investigation. 
 
