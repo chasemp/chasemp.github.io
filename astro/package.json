@@ -4,7 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "predev": "npm run generate",
     "dev": "astro dev",
+    "prebuild": "npm run generate",
     "build": "astro build",
     "preview": "astro preview",
     "fetch:readwise": "node --experimental-strip-types scripts/fetch-readwise.mts",
