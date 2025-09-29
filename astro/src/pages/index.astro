@@ -1,0 +1,61 @@
+---
+import Timeline from "../components/Timeline.astro";
+import timeline from "../data/timeline.json";
+
+const items = (timeline as any[]);
+---
+
+<main>
+  <header class="header">
+    <h1>Timeline</h1>
+    <p>All historic blog posts are represented as nodes. Newest first.</p>
+  </header>
+
+  <section class="controls" aria-label="Filters">
+    <div class="filters" role="group" aria-label="Content types">
+      <label><input type="checkbox" name="type" value="blog" checked> Blog</label>
+      <label><input type="checkbox" name="type" value="saved" checked> Saved</label>
+      <label><input type="checkbox" name="type" value="bluesky" checked> Bluesky</label>
+    </div>
+  </section>
+
+  <Timeline items={items} />
+</main>
+
+<style is:global>
+  :root {
+    --bg: #0b0e13;
+    --panel: #11161f;
+    --text: #e7ecf3;
+    --muted: #97a3b6;
+    --accent: #6aa0ff;
+    --spine: #263141;
+  }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+  main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  .header h1 { margin: 0 0 4px; font-size: 28px; }
+  .header p { margin: 0 0 16px; color: var(--muted); }
+  .controls { position: sticky; top: 0; background: linear-gradient(var(--bg), color-mix(in oklab, var(--bg), transparent 100%)); padding: 12px 0; z-index: 10; }
+  .filters { display: flex; gap: 12px; flex-wrap: wrap; }
+  label { background: var(--panel); padding: 6px 10px; border-radius: 999px; border: 1px solid #1f2937; }
+  input[type="checkbox"] { vertical-align: middle; margin-right: 6px; }
+</style>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const selected = new Set((params.get('types') ?? 'blog,saved,bluesky').split(',').filter(Boolean));
+  document.querySelectorAll('input[name="type"]').forEach((el) => {
+    const input = el as HTMLInputElement;
+    input.checked = selected.has(input.value);
+    input.addEventListener('change', () => {
+      const values = Array.from(document.querySelectorAll('input[name="type"]'))
+        .map((i) => (i as HTMLInputElement))
+        .filter((i) => i.checked)
+        .map((i) => i.value);
+      params.set('types', values.join(','));
+      history.replaceState({}, '', `?${params.toString()}`);
+      document.dispatchEvent(new CustomEvent('filters:changed', { detail: { types: values } }));
+    });
+  });
+</script>
+
