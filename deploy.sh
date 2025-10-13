@@ -9,11 +9,12 @@ echo "🚀 Building Astro site..."
 cd astro
 npm run build
 
-echo "📦 Deploying to root directory..."
+echo "📦 Deploying to docs directory..."
 cd ..
-cp astro/dist/index.html index.html
-cp -r astro/dist/assets .
-cp astro/dist/CNAME .
+mkdir -p docs
+cp astro/dist/index.html docs/index.html
+cp -r astro/dist/assets docs/
+cp astro/dist/CNAME docs/
 
 echo "✅ Deployment complete!"
 echo "The site should now show the timeline instead of the old Jekyll content."
