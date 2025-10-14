@@ -39,6 +39,33 @@ const items = (timeline as any[]);
 
     <Timeline items={items} />
   </div>
+
+  <div class="backdrop" id="panel-backdrop" hidden></div>
+  <aside class="panel" id="detail-panel" role="complementary" aria-labelledby="panel-title">
+    <header class="panel-header">
+      <h2 id="panel-title">About</h2>
+      <button id="panel-close" aria-label="Close" hidden>×</button>
+    </header>
+    <div id="panel-content">
+      <div class="intro">
+        <p>This is a chronological archive of my online presence, bringing together different content streams into a single unified view.</p>
+        
+        <h4>Content Types</h4>
+        <ul class="legend">
+          <li><span class="legend-dot" data-dot-type="blog"></span> <strong>Blog Posts</strong> — Technical writing and essays</li>
+          <li><span class="legend-dot" data-dot-type="saved"></span> <strong>Articles</strong> — Bookmarks from Readwise</li>
+          <li><span class="legend-dot" data-dot-type="bluesky"></span> <strong>Bluesky</strong> — Social media posts and thoughts</li>
+          <li><span class="legend-dot" data-dot-type="release"></span> <strong>Releases</strong> — GitHub project releases and tags</li>
+          <li><span class="legend-dot" data-dot-type="wikipedia"></span> <strong>Wikipedia</strong> — Contributions to Wikipedia</li>
+        </ul>
+        
+        <h4>How to Use</h4>
+        <p>Click on any item in the timeline to read more. Use the filters above to show or hide different content types. Hover over the colored dots to see timestamps.</p>
+        
+        <p class="muted-text">Built with Astro • Data fetched from multiple sources</p>
+      </div>
+    </div>
+  </aside>
 </main>
 
 <style is:global>
@@ -67,9 +94,41 @@ const items = (timeline as any[]);
   label:hover { background: var(--panel); border-color: var(--accent); }
   input[type="checkbox"] { vertical-align: middle; margin-right: 6px; accent-color: var(--accent); }
   
+  /* Panel styles */
+  .panel { position: sticky; top: 12px; align-self: start; height: calc(100dvh - 24px); background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; overflow: auto; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
+  .panel-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--border); padding-bottom: 14px; margin-bottom: 20px; }
+  .panel-header h2 { margin: 0; font-size: 22px; color: #8b4513; font-weight: 600; text-align: center; flex: 1; }
+  #panel-close { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 18px; line-height: 1; transition: all 0.2s; }
+  #panel-close:hover { background: var(--bg); border-color: var(--accent); }
+  #panel-content { line-height: 1.7; }
+  #panel-content h3 { margin: 0 0 14px; font-size: 20px; color: #6d4c41; font-weight: 600; }
+  #panel-content h4 { margin: 24px 0 10px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); font-weight: 700; font-family: system-ui, sans-serif; }
+  #panel-content p { margin: 10px 0; color: var(--text); }
+  #panel-content a { color: #c17a4f; text-decoration: underline; text-decoration-color: rgba(193, 122, 79, 0.3); text-decoration-thickness: 1px; }
+  #panel-content a:hover { text-decoration-color: var(--accent); }
+  .muted-text { color: var(--muted); font-size: 13px; font-style: italic; }
+  .legend { list-style: none; padding: 0; margin: 12px 0; }
+  .legend li { display: flex; align-items: center; gap: 12px; margin: 10px 0; line-height: 1.5; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.1); flex-shrink: 0; }
+  .legend-dot[data-dot-type="blog"] { background: #5d4037; }
+  .legend-dot[data-dot-type="saved"] { background: #7cb342; }
+  .legend-dot[data-dot-type="bluesky"] { background: #1e88e5; }
+  .legend-dot[data-dot-type="release"] { background: #fb8c00; }
+  .legend-dot[data-dot-type="wikipedia"] { background: #636466; }
+  .detail-meta { font-size: 12px; color: var(--muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.05em; font-family: system-ui, sans-serif; }
+  .detail-title { margin: 0 0 16px; font-size: 22px; color: #6d4c41; line-height: 1.3; }
+  .detail-content { margin: 16px 0; }
+  .detail-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 12px 0; border: 1px solid var(--border); }
+  .detail-link { display: inline-block; margin-top: 16px; padding: 10px 18px; background: var(--card-bg); color: var(--accent); text-decoration: none; border: 1px solid var(--border); border-radius: 8px; font-weight: 600; transition: all 0.2s; }
+  .detail-link:hover { background: var(--bg); border-color: var(--accent); }
+  .backdrop { display: none; position: fixed; inset: 0; background: rgba(61, 40, 23, 0.6); backdrop-filter: blur(4px); z-index: 99; }
+
   @media (max-width: 980px) {
     main { display: block; }
     .timeline-content { grid-column: auto; }
+    .panel { position: fixed; inset: auto 0 0 0; height: 80dvh; border-radius: 20px 20px 0 0; z-index: 100; transform: translateY(100%); transition: transform 0.3s ease-out; }
+    .panel.mobile-open { transform: translateY(0); }
+    .backdrop:not([hidden]) { display: block; }
   }
 </style>
 
