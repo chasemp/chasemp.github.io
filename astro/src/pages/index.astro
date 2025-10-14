@@ -88,8 +88,14 @@ const items = (timeline as any[]);
     const values = Array.from(checkboxes)
       .filter((i) => i.checked)
       .map((i) => i.value);
-    params.set('types', values.join(','));
-    history.replaceState({}, '', `?${params.toString()}`);
+    
+    if (values.length === 0) {
+      params.delete('types');
+    } else {
+      params.set('types', values.join(','));
+    }
+    
+    history.replaceState({}, '', params.toString() ? `?${params.toString()}` : location.pathname);
     document.dispatchEvent(new CustomEvent('filters:changed', { detail: { types: values } }));
   }
   
