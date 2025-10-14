@@ -11,36 +11,43 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
         <div class="spine">
           <span class="dot" data-dot-type={item.type} data-timestamp={item.timestamp} title={new Date(item.timestamp).toLocaleString()}></span>
         </div>
-        {item.type === 'blog' ? (
-          <a href={`/blog/${item.id.replace('blog:', '')}`} class="card card-link" data-id={item.id} data-type={item.type}>
-            <div class="meta">
-              <span class="type">{item.type}</span>
-              <time datetime={item.timestamp}>{new Date(item.timestamp).toLocaleString()}</time>
-            </div>
-            <div class="title">{item.title}</div>
-            {item.summary && <p class="summary">{item.summary}</p>}
-          </a>
-        ) : (
-          <button class="card" data-id={item.id} data-type={item.type} aria-haspopup="dialog">
-            <div class="meta">
-              <span class="type">{item.type}</span>
-              <time datetime={item.timestamp}>{new Date(item.timestamp).toLocaleString()}</time>
-            </div>
-            <div class="title">{item.title}</div>
-            {item.summary && <p class="summary">{item.summary}</p>}
-          </button>
-        )}
+        <button class="card" data-id={item.id} data-type={item.type} data-url={item.type === 'blog' ? `/blog/${item.id.replace('blog:', '')}` : (item.url || '')} aria-haspopup="dialog">
+          <div class="meta">
+            <span class="type">{item.type}</span>
+            <time datetime={item.timestamp}>{new Date(item.timestamp).toLocaleString()}</time>
+          </div>
+          <div class="title">{item.title}</div>
+          {item.summary && <p class="summary">{item.summary}</p>}
+        </button>
       </li>
     ))}
   </ol>
 
   <div class="backdrop" id="panel-backdrop" hidden></div>
-  <aside class="panel" id="detail-panel" role="dialog" aria-modal="true" aria-labelledby="panel-title" hidden>
+  <aside class="panel" id="detail-panel" role="complementary" aria-labelledby="panel-title">
     <header class="panel-header">
-      <h2 id="panel-title">Details</h2>
-      <button id="panel-close" aria-label="Close">×</button>
+      <h2 id="panel-title">About</h2>
+      <button id="panel-close" aria-label="Close" hidden>×</button>
     </header>
-    <div id="panel-content"></div>
+    <div id="panel-content">
+      <div class="intro">
+        <h3>Welcome to my timeline</h3>
+        <p>This is a chronological archive of my online presence, bringing together different content streams into a single unified view.</p>
+        
+        <h4>Content Types</h4>
+        <ul class="legend">
+          <li><span class="legend-dot" data-dot-type="blog"></span> <strong>Blog Posts</strong> — Technical writing and essays</li>
+          <li><span class="legend-dot" data-dot-type="saved"></span> <strong>Saved Articles</strong> — Bookmarks from Readwise</li>
+          <li><span class="legend-dot" data-dot-type="bluesky"></span> <strong>Bluesky</strong> — Social media posts and thoughts</li>
+          <li><span class="legend-dot" data-dot-type="release"></span> <strong>Releases</strong> — GitHub project releases and tags</li>
+        </ul>
+        
+        <h4>How to Use</h4>
+        <p>Click on any item in the timeline to read more. Use the filters above to show or hide different content types. Hover over the colored dots to see timestamps.</p>
+        
+        <p class="muted-text">Built with Astro • Data fetched from multiple sources</p>
+      </div>
+    </div>
   </aside>
 
   <div id="tooltip" role="tooltip" hidden>
@@ -70,16 +77,39 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   .type { text-transform: uppercase; letter-spacing: .06em; }
   .title { font-weight: 600; margin-top: 6px; }
   .summary { margin: 6px 0 0; color: var(--muted); }
-  .panel { position: sticky; top: 12px; align-self: start; height: calc(100dvh - 24px); background: var(--panel); border: 1px solid #1f2937; border-radius: 12px; padding: 12px; overflow: auto; }
-  .panel[hidden] { display: none; }
-  .panel-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1f2937; padding-bottom: 8px; margin-bottom: 8px; }
-  #panel-close { background: transparent; color: var(--text); border: 1px solid #334155; border-radius: 6px; padding: 2px 8px; cursor: pointer; }
+  .panel { position: sticky; top: 12px; align-self: start; height: calc(100dvh - 24px); background: var(--panel); border: 1px solid #1f2937; border-radius: 12px; padding: 16px; overflow: auto; }
+  .panel-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #1f2937; padding-bottom: 12px; margin-bottom: 16px; }
+  .panel-header h2 { margin: 0; font-size: 20px; }
+  #panel-close { background: transparent; color: var(--text); border: 1px solid #334155; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 18px; line-height: 1; }
+  #panel-close:hover { background: #1f2937; }
+  #panel-content { line-height: 1.6; }
+  #panel-content h3 { margin: 0 0 12px; font-size: 18px; }
+  #panel-content h4 { margin: 20px 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 0.05em; color: var(--muted); }
+  #panel-content p { margin: 8px 0; color: var(--text); }
+  #panel-content a { color: #60a5fa; text-decoration: none; }
+  #panel-content a:hover { text-decoration: underline; }
+  .muted-text { color: var(--muted); font-size: 13px; margin-top: 20px; }
+  .legend { list-style: none; padding: 0; margin: 8px 0; }
+  .legend li { display: flex; align-items: center; gap: 10px; margin: 8px 0; }
+  .legend-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+  .legend-dot[data-dot-type="blog"] { background: #1a1a1a; border: 1px solid #4a4a4a; }
+  .legend-dot[data-dot-type="saved"] { background: #10b981; }
+  .legend-dot[data-dot-type="bluesky"] { background: #0085ff; }
+  .legend-dot[data-dot-type="release"] { background: #f59e0b; }
+  .detail-meta { font-size: 13px; color: var(--muted); margin-bottom: 12px; }
+  .detail-title { font-size: 22px; font-weight: 600; margin: 0 0 16px; line-height: 1.3; }
+  .detail-content { color: var(--text); }
+  .detail-content img { max-width: 100%; height: auto; border-radius: 8px; margin: 12px 0; }
+  .detail-link { display: inline-block; margin-top: 16px; padding: 8px 16px; background: #1f2937; border: 1px solid #334155; border-radius: 6px; color: var(--text); text-decoration: none; }
+  .detail-link:hover { background: #2a3441; }
   .backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 49; }
   .backdrop[hidden] { display: none; }
 
   @media (max-width: 980px) {
     .timeline { grid-template-columns: 1fr; }
-    .panel { position: fixed; inset: 0; z-index: 50; border-radius: 0; height: 100dvh; }
+    .panel { position: fixed; inset: 0; z-index: 50; border-radius: 0; height: 100dvh; display: none; }
+    .panel.mobile-open { display: block; }
+    #panel-close { display: block !important; }
   }
 
   #tooltip { position: fixed; z-index: 60; pointer-events: none; }
@@ -112,44 +142,103 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
 
   const panel = document.getElementById('detail-panel')!;
   const panelContent = document.getElementById('panel-content')!;
+  const panelTitle = document.getElementById('panel-title')!;
   const closeBtn = document.getElementById('panel-close')!;
   const backdrop = document.getElementById('panel-backdrop')!;
+  const isMobile = () => window.innerWidth <= 980;
+
+  const introHTML = panelContent.innerHTML; // Save intro content
 
   function lockScroll(lock = true) {
-    if (lock) {
-      document.documentElement.classList.add('modal-open');
+    if (lock && isMobile()) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.documentElement.classList.remove('modal-open');
       document.body.style.overflow = '';
+    }
+  }
+
+  async function loadBlogPost(url: string): Promise<string> {
+    try {
+      const response = await fetch(url);
+      const html = await response.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const article = doc.querySelector('article') || doc.querySelector('main') || doc.querySelector('.content');
+      return article ? article.innerHTML : '<p>Unable to load content</p>';
+    } catch {
+      return '<p>Error loading content</p>';
     }
   }
 
   async function openPanelFor(id: string) {
     const entry = (window as any).__TIMELINE__.find((i: any) => i.id === id);
     if (!entry) return;
-    panel.removeAttribute('hidden');
-    backdrop.removeAttribute('hidden');
-    lockScroll(true);
-    panelContent.innerHTML = `<div class="meta"><span class="type">${entry.type}</span> · <time datetime="${entry.timestamp}">${new Date(entry.timestamp).toLocaleString()}</time></div>
-      <h3 style="margin:8px 0 6px">${entry.title ?? ''}</h3>
-      ${entry.content_html ?? `<p>${(entry.summary ?? '').toString()}</p>`}
-      ${entry.url ? `<p><a href="${entry.url}" target="_blank" rel="noopener">Open source ↗</a></p>` : ''}`;
-    const p = new URLSearchParams(location.search); p.set('id', id); history.replaceState({}, '', `?${p.toString()}`);
+    
+    // Mobile: show backdrop and lock scroll
+    if (isMobile()) {
+      backdrop.removeAttribute('hidden');
+      panel.classList.add('mobile-open');
+      closeBtn.removeAttribute('hidden');
+      lockScroll(true);
+    } else {
+      closeBtn.setAttribute('hidden', '');
+    }
+
+    panelTitle.textContent = 'Details';
+    
+    // Show loading state
+    panelContent.innerHTML = '<p>Loading...</p>';
+    
+    // Load content based on type
+    let content = '';
+    if (entry.type === 'blog') {
+      const blogUrl = `/blog/${entry.id.replace('blog:', '')}`;
+      const blogContent = await loadBlogPost(blogUrl);
+      content = `<div class="detail-meta">${entry.type.toUpperCase()} · ${new Date(entry.timestamp).toLocaleString()}</div>
+        <h3 class="detail-title">${entry.title || ''}</h3>
+        <div class="detail-content">${blogContent}</div>`;
+    } else {
+      content = `<div class="detail-meta">${entry.type.toUpperCase()} · ${new Date(entry.timestamp).toLocaleString()}</div>
+        <h3 class="detail-title">${entry.title || ''}</h3>
+        <div class="detail-content">${entry.content_html || `<p>${entry.summary || ''}</p>`}</div>
+        ${entry.url ? `<a href="${entry.url}" target="_blank" rel="noopener" class="detail-link">Open source ↗</a>` : ''}`;
+    }
+    
+    panelContent.innerHTML = content;
+    
+    const p = new URLSearchParams(location.search); 
+    p.set('id', id); 
+    history.replaceState({}, '', `?${p.toString()}`);
   }
+
   function closePanel() {
-    panel.setAttribute('hidden', '');
-    backdrop.setAttribute('hidden', '');
-    lockScroll(false);
-    const p = new URLSearchParams(location.search); p.delete('id'); history.replaceState({}, '', `?${p.toString()}`);
+    if (isMobile()) {
+      backdrop.setAttribute('hidden', '');
+      panel.classList.remove('mobile-open');
+      lockScroll(false);
+    }
+    panelTitle.textContent = 'About';
+    panelContent.innerHTML = introHTML;
+    closeBtn.setAttribute('hidden', '');
+    const p = new URLSearchParams(location.search); 
+    p.delete('id'); 
+    history.replaceState({}, '', `?${p.toString()}`);
   }
+
   closeBtn.addEventListener('click', closePanel);
   backdrop.addEventListener('click', closePanel);
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hasAttribute('hidden')) closePanel(); });
+  document.addEventListener('keydown', (e) => { 
+    if (e.key === 'Escape' && (isMobile() ? panel.classList.contains('mobile-open') : panelContent.innerHTML !== introHTML)) {
+      closePanel();
+    }
+  });
 
-  // Only add click handlers to button cards (not link cards for blog posts)
-  document.querySelectorAll('.card:not(.card-link)').forEach((btn) => {
-    btn.addEventListener('click', () => openPanelFor((btn as HTMLElement).dataset.id!));
+  // Add click handlers to all cards
+  document.querySelectorAll('.card').forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openPanelFor((btn as HTMLElement).dataset.id!);
+    });
   });
 
   // Tooltip
