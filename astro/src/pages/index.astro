@@ -17,22 +17,24 @@ const items = (timeline as any[]);
 <body>
 
 <main>
-  <header class="header">
-    <h1>timeline.523.life</h1>
-    <p>A timeline of my public online activity.</p>
-  </header>
+  <div class="timeline-content">
+    <header class="header">
+      <h1>timeline.523.life</h1>
+      <p>A timeline of my public online activity.</p>
+    </header>
 
-  <section class="controls" aria-label="Filters">
-    <div class="filters" role="group" aria-label="Content types">
-      <label><input type="checkbox" name="type" value="blog" checked> Blog</label>
-      <label><input type="checkbox" name="type" value="saved" checked> Articles</label>
-      <label><input type="checkbox" name="type" value="bluesky" checked> Bluesky</label>
-      <label><input type="checkbox" name="type" value="release" checked> Releases</label>
-      <label><input type="checkbox" name="type" value="wikipedia" checked> Wikipedia</label>
-    </div>
-  </section>
+    <section class="controls" aria-label="Filters">
+      <div class="filters" role="group" aria-label="Content types">
+        <label><input type="checkbox" name="type" value="blog" checked> Blog</label>
+        <label><input type="checkbox" name="type" value="saved" checked> Articles</label>
+        <label><input type="checkbox" name="type" value="bluesky" checked> Bluesky</label>
+        <label><input type="checkbox" name="type" value="release" checked> Releases</label>
+        <label><input type="checkbox" name="type" value="wikipedia" checked> Wikipedia</label>
+      </div>
+    </section>
 
-  <Timeline items={items} />
+    <Timeline items={items} />
+  </div>
 </main>
 
 <style is:global>
@@ -47,15 +49,21 @@ const items = (timeline as any[]);
     --card-bg: #fdfbf7;
   }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Georgia, "Times New Roman", serif; }
-  main { max-width: 1200px; margin: 0 auto; padding: 24px; }
-  .header { text-align: center; }
+  main { max-width: 1200px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr minmax(320px, 420px); gap: 24px; }
+  .timeline-content { grid-column: 1; }
+  .header { text-align: center; margin-bottom: 16px; }
   .header h1 { margin: 0 0 4px; font-size: 32px; font-weight: 600; color: #8b4513; letter-spacing: -0.02em; }
   .header p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
-  .controls { position: sticky; top: 0; background: linear-gradient(var(--bg), rgba(244, 236, 216, 0.95)); padding: 12px 0; z-index: 10; backdrop-filter: blur(8px); }
+  .controls { position: sticky; top: 0; background: linear-gradient(var(--bg), rgba(244, 236, 216, 0.95)); padding: 12px 0; z-index: 10; backdrop-filter: blur(8px); margin-bottom: 12px; }
   .filters { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
   label { background: var(--card-bg); padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border); color: var(--text); font-size: 14px; cursor: pointer; transition: all 0.2s; }
   label:hover { background: var(--panel); border-color: var(--accent); }
   input[type="checkbox"] { vertical-align: middle; margin-right: 6px; accent-color: var(--accent); }
+  
+  @media (max-width: 980px) {
+    main { display: block; }
+    .timeline-content { grid-column: auto; }
+  }
 </style>
 
 <script>
