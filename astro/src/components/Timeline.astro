@@ -62,7 +62,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
 </section>
 
 <style>
-  .timeline { display: grid; grid-template-columns: 1fr minmax(320px, 420px); gap: 24px; }
+  .timeline { display: contents; }
   .list { list-style: none; margin: 0; padding: 0; position: relative; }
   .row { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; margin: 12px 0; }
   .spine { position: relative; height: 100%; }
@@ -117,7 +117,6 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   .backdrop[hidden] { display: none; }
 
   @media (max-width: 980px) {
-    .timeline { grid-template-columns: 1fr; }
     .panel { position: fixed; inset: 0; z-index: 50; border-radius: 0; height: 100dvh; display: none; }
     .panel.mobile-open { display: block; }
     #panel-close { display: block !important; }
