@@ -38,6 +38,9 @@ async function fetchWithAuth(url: string) {
   
   const response = await fetch(url, { headers });
   if (!response.ok) {
+    if (response.status === 403) {
+      throw new Error('RATE_LIMIT');
+    }
     throw new Error(`GitHub API error: ${response.status} ${response.statusText}`);
   }
   return response.json();
@@ -147,6 +150,11 @@ async function main() {
 }
 
 main().catch((err) => {
+  if (err.message === 'RATE_LIMIT') {
+    console.warn('⚠️  GitHub API rate limit exceeded. Using existing data.');
+    console.warn('   Set GITHUB_TOKEN environment variable to increase limits.');
+    process.exit(0); // Exit successfully with existing data
+  }
   console.error('❌ Error fetching GitHub releases:', err.message);
   process.exit(1);
 });
