@@ -133,6 +133,31 @@ function convertToTimelineEntry(post: BlueskyPost): TimelineEntry {
       if (text.length < 20 && images.length > 0) {
         summary = `${text} [${images.length} image${images.length > 1 ? 's' : ''}]`;
       }
+    } else if (embedType === 'app.bsky.embed.external#view') {
+      // Extract external link preview
+      const external = post.embed.external;
+      if (external) {
+        const linkTitle = external.title || '';
+        const linkDesc = external.description || '';
+        const linkUrl = external.uri || '';
+        const linkThumb = external.thumb || '';
+        
+        // Add external link card to content
+        contentHtml += `
+          <div style="margin: 16px 0; border: 1px solid var(--border, #d4c4a8); border-radius: 8px; overflow: hidden; background: var(--card-bg, #fdfbf7);">
+            ${linkThumb ? `<img src="${linkThumb}" alt="${linkTitle}" style="width: 100%; height: auto; display: block; max-height: 200px; object-fit: cover;">` : ''}
+            <div style="padding: 12px;">
+              ${linkTitle ? `<div style="font-weight: 600; margin-bottom: 4px; color: var(--text, #3d2817);">${linkTitle}</div>` : ''}
+              ${linkDesc ? `<div style="font-size: 13px; color: var(--muted, #7a6b5d); margin-bottom: 8px;">${linkDesc}</div>` : ''}
+              ${linkUrl ? `<div style="font-size: 12px; color: var(--accent, #c17a4f); overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">🔗 ${linkUrl}</div>` : ''}
+            </div>
+          </div>`;
+        
+        // Enhance summary with link info
+        if (linkTitle) {
+          summary = `${text} — ${linkTitle}`;
+        }
+      }
     }
   }
   
