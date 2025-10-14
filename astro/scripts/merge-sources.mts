@@ -32,6 +32,9 @@ function normalize(entry: any) {
     media: entry.media || [],
     content_html: entry.content_html || null,
     content_text: entry.content_text || null,
+    embed_uri: entry.embed_uri || null,
+    embed_cid: entry.embed_cid || null,
+    metadata: entry.metadata || null,
   };
 }
 

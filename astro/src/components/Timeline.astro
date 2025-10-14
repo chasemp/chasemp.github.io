@@ -11,14 +11,25 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
         <div class="spine">
           <span class="dot" title={item.type}></span>
         </div>
-        <button class="card" data-id={item.id} data-type={item.type} aria-haspopup="dialog">
-          <div class="meta">
-            <span class="type">{item.type}</span>
-            <time datetime={item.timestamp}>{new Date(item.timestamp).toLocaleString()}</time>
-          </div>
-          <div class="title">{item.title}</div>
-          {item.summary && <p class="summary">{item.summary}</p>}
-        </button>
+        {item.type === 'blog' ? (
+          <a href={`/blog/${item.id.replace('blog:', '')}`} class="card card-link" data-id={item.id} data-type={item.type}>
+            <div class="meta">
+              <span class="type">{item.type}</span>
+              <time datetime={item.timestamp}>{new Date(item.timestamp).toLocaleString()}</time>
+            </div>
+            <div class="title">{item.title}</div>
+            {item.summary && <p class="summary">{item.summary}</p>}
+          </a>
+        ) : (
+          <button class="card" data-id={item.id} data-type={item.type} aria-haspopup="dialog">
+            <div class="meta">
+              <span class="type">{item.type}</span>
+              <time datetime={item.timestamp}>{new Date(item.timestamp).toLocaleString()}</time>
+            </div>
+            <div class="title">{item.title}</div>
+            {item.summary && <p class="summary">{item.summary}</p>}
+          </button>
+        )}
       </li>
     ))}
   </ol>
@@ -49,6 +60,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   .dot { position: absolute; left: 5px; top: 10px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 2px #0b1220; }
   .card { text-align: left; background: var(--panel); color: var(--text); border: 1px solid #1f2937; border-radius: 10px; padding: 12px; cursor: pointer; width: 100%; }
   .card:hover { border-color: #334155; }
+  .card-link { display: block; text-decoration: none; }
   .meta { display: flex; gap: 10px; font-size: 12px; color: var(--muted); }
   .type { text-transform: uppercase; letter-spacing: .06em; }
   .title { font-weight: 600; margin-top: 6px; }
@@ -71,7 +83,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   .tooltip-meta { font-size: 12px; color: var(--muted); }
  </style>
 
-<script id="__timeline_data__" type="application/json">{JSON.stringify(sorted)}</script>
+<script is:inline set:html={`window.__TIMELINE__ = ${JSON.stringify(sorted)};`} />
 
 <script>
   const params = new URLSearchParams(location.search);
@@ -130,7 +142,8 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   backdrop.addEventListener('click', closePanel);
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !panel.hasAttribute('hidden')) closePanel(); });
 
-  document.querySelectorAll('.card').forEach((btn) => {
+  // Only add click handlers to button cards (not link cards for blog posts)
+  document.querySelectorAll('.card:not(.card-link)').forEach((btn) => {
     btn.addEventListener('click', () => openPanelFor((btn as HTMLElement).dataset.id!));
   });
 
@@ -163,6 +176,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
     tooltip.setAttribute('hidden', '');
   }
 
+  // Tooltips work for all cards (both links and buttons)
   document.querySelectorAll('.card').forEach((el) => {
     const h = el as HTMLElement;
     h.addEventListener('mouseenter', () => showTooltipFor(h));
@@ -170,13 +184,6 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
     h.addEventListener('focus', () => showTooltipFor(h));
     h.addEventListener('blur', () => hideTooltipFor(h));
   });
-
-  (function bootstrapData(){
-    const dataEl = document.currentScript?.previousElementSibling as HTMLElement | null;
-  })();
-
-  // Inject data global for the panel
-  (window as any).__TIMELINE__ = JSON.parse(document.getElementById('__timeline_data__')!.textContent!);
 
   const selectedId = params.get('id');
   if (selectedId) openPanelFor(selectedId);
