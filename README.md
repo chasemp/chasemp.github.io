@@ -160,7 +160,9 @@ Get your Readwise token: https://readwise.io/access_token
 
 ## Deployment
 
-The site automatically deploys via GitHub Actions every 4 hours. To manually deploy:
+The site is deployed by building locally and pushing to the `/docs` directory, which GitHub Pages serves.
+
+### Manual Deploy
 
 ```bash
 # Build and deploy to docs/
@@ -169,6 +171,18 @@ bash deploy.sh
 # Commit and push
 git add docs/
 git commit -m "Deploy timeline update"
+git push origin master
+```
+
+### After Data Updates
+
+When GitHub Actions fetches new data (every 4 hours), pull and rebuild:
+
+```bash
+git pull origin master    # Get updated data
+bash deploy.sh           # Build site with new data
+git add docs/
+git commit -m "Deploy timeline with updated data"
 git push origin master
 ```
 
@@ -199,9 +213,9 @@ The GitHub Actions workflow requires the following repository secrets to be conf
 
 | Secret Name | Purpose | Setup Required? |
 |-------------|---------|-----------------|
-| `GITHUB_TOKEN` | Push commits and deploy to GitHub Pages | ❌ No (automatic) |
+| `GITHUB_TOKEN` | Push data commits back to repository | ❌ No (automatic) |
 
-The workflow has `contents: write` permission configured in `.github/workflows/fetch-timeline.yml` to allow automated commits.
+The workflow has `contents: write` permission configured in `.github/workflows/fetch-timeline.yml` to allow automated data commits.
 
 ## GitHub Actions Workflow
 
@@ -211,14 +225,24 @@ The workflow (`.github/workflows/fetch-timeline.yml`) runs every 4 hours and:
 2. Fetches new blog posts (from `_posts/` directory)
 3. Fetches new Readwise documents (if `READWISE_TOKEN` provided)
 4. Merges all sources into `timeline.json`
-5. Builds the Astro site
-6. Deploys to `/docs` directory
-7. Commits and pushes changes using `GITHUB_TOKEN`
+5. Commits and pushes data changes using `GITHUB_TOKEN`
+
+**Note:** The workflow **only fetches and commits data**. Building and deploying to `/docs` is done locally via `deploy.sh`.
 
 **Trigger Conditions:**
 - **Schedule:** Every 4 hours via cron
 - **Manual:** Via workflow_dispatch
-- **Push:** When scripts or workflow file changes
+- **Push:** When fetch scripts or workflow file changes
+
+**Local Build & Deploy:**
+After GitHub Actions updates the data, pull changes and deploy:
+```bash
+git pull origin master
+bash deploy.sh
+git add docs/
+git commit -m "Deploy timeline update"
+git push origin master
+```
 
 ## Features
 
