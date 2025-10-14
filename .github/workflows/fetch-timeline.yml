@@ -49,6 +49,12 @@ jobs:
         working-directory: ./astro
         run: npm run fetch:blog
       
+      - name: Fetch GitHub releases
+        working-directory: ./astro
+        run: npm run fetch:github
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      
       - name: Fetch Readwise (optional)
         working-directory: ./astro
         run: npm run fetch:readwise || echo "Readwise fetch failed or skipped"
@@ -71,7 +77,7 @@ jobs:
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
           git add astro/data/sources/ astro/src/data/timeline.json
-          git commit -m "🤖 Auto-fetch timeline data (Bluesky, Readwise, Blog)"
+          git commit -m "🤖 Auto-fetch timeline data (Bluesky, GitHub Releases, Readwise, Blog)"
           git push
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

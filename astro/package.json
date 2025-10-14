@@ -12,8 +12,9 @@
     "fetch:readwise": "node --experimental-strip-types scripts/fetch-readwise-reader.mts",
     "fetch:blog": "node --experimental-strip-types scripts/fetch-blog.mts",
     "fetch:bluesky": "node --experimental-strip-types scripts/fetch-bluesky.mts",
+    "fetch:github": "node --experimental-strip-types scripts/fetch-github-releases.mts",
     "merge": "node --experimental-strip-types scripts/merge-sources.mts",
-    "generate": "npm run fetch:readwise && npm run fetch:blog && npm run fetch:bluesky && npm run merge"
+    "generate": "npm run fetch:readwise && npm run fetch:blog && npm run fetch:bluesky && npm run fetch:github && npm run merge"
   },
   "dependencies": {
     "astro": "^4.14.0",
