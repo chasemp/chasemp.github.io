@@ -186,6 +186,30 @@ git commit -m "Deploy timeline with updated data"
 git push origin master
 ```
 
+### Version Management & Cache Busting
+
+The site includes a version system to force cache invalidation when needed. The version is displayed in the footer and embedded in the HTML.
+
+**To bump the version:**
+
+1. Edit `astro/src/pages/index.astro`
+2. Change `const VERSION = "1.0.0";` to a new version (e.g., `"1.0.1"`, `"1.1.0"`, `"2.0.0"`)
+3. Run `bash deploy.sh`
+4. Commit and push
+
+**Version is visible in:**
+- Footer: `© 2025 Chase Pettet — 523.life v1.0.0`
+- Meta tag: `<meta name="version" content="1.0.0">`
+- Body attribute: `<body data-version="1.0.0">`
+
+**When to bump the version:**
+- Major UI/theme changes
+- Significant feature additions
+- When you want to ensure users see the latest version
+- After fixing critical bugs
+
+Users can verify they have the latest version by checking the footer.
+
 ## Repository Secrets
 
 The GitHub Actions workflow requires the following repository secrets to be configured:
