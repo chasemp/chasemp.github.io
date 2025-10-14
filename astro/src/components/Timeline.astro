@@ -94,6 +94,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   const panel = document.getElementById('detail-panel')!;
   const panelContent = document.getElementById('panel-content')!;
   const panelTitle = document.getElementById('panel-title')!;
+  const panelSource = document.getElementById('panel-source')! as HTMLAnchorElement;
   const closeBtn = document.getElementById('panel-close')!;
   const backdrop = document.getElementById('panel-backdrop')!;
   const isMobile = () => window.innerWidth <= 980;
@@ -145,6 +146,14 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
 
     panelTitle.textContent = 'Details';
     
+    // Show/hide and update source link
+    if (entry.url) {
+      panelSource.href = entry.url;
+      panelSource.removeAttribute('hidden');
+    } else {
+      panelSource.setAttribute('hidden', '');
+    }
+    
     // Show loading state
     panelContent.innerHTML = '<p>Loading...</p>';
     
@@ -159,8 +168,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
     } else {
       content = `<div class="detail-meta">${entry.type.toUpperCase()} · ${new Date(entry.timestamp).toLocaleString()}</div>
         <h3 class="detail-title">${entry.title || ''}</h3>
-        <div class="detail-content">${entry.content_html || `<p>${entry.summary || ''}</p>`}</div>
-        ${entry.url ? `<a href="${entry.url}" target="_blank" rel="noopener" class="detail-link">Source ↗</a>` : ''}`;
+        <div class="detail-content">${entry.content_html || `<p>${entry.summary || ''}</p>`}</div>`;
     }
     
     panelContent.innerHTML = content;
@@ -177,6 +185,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
       lockScroll(false);
     }
     panelTitle.textContent = 'About';
+    panelSource.setAttribute('hidden', '');
     panelContent.innerHTML = introHTML;
     closeBtn.setAttribute('hidden', '');
     const p = new URLSearchParams(location.search); 
