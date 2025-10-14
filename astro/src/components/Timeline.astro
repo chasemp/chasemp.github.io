@@ -34,7 +34,6 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
     </header>
     <div id="panel-content">
       <div class="intro">
-        <h3>Welcome to my timeline</h3>
         <p>This is a chronological archive of my online presence, bringing together different content streams into a single unified view.</p>
         
         <h4>Content Types</h4>
@@ -91,7 +90,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   .summary { margin: 8px 0 0; color: var(--muted); font-size: 14px; line-height: 1.5; }
   .panel { position: sticky; top: 12px; align-self: start; height: calc(100dvh - 24px); background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 20px; overflow: auto; box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
   .panel-header { display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid var(--border); padding-bottom: 14px; margin-bottom: 20px; }
-  .panel-header h2 { margin: 0; font-size: 22px; color: #8b4513; font-weight: 600; }
+  .panel-header h2 { margin: 0; font-size: 22px; color: #8b4513; font-weight: 600; text-align: center; flex: 1; }
   #panel-close { background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 18px; line-height: 1; transition: all 0.2s; }
   #panel-close:hover { background: var(--bg); border-color: var(--accent); }
   #panel-content { line-height: 1.7; }
