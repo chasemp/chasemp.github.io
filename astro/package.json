@@ -9,7 +9,7 @@
     "prebuild": "npm run generate",
     "build": "astro build",
     "preview": "astro preview",
-    "fetch:readwise": "node --experimental-strip-types scripts/fetch-readwise.mts",
+    "fetch:readwise": "node --experimental-strip-types scripts/fetch-readwise-reader.mts",
     "fetch:blog": "node --experimental-strip-types scripts/fetch-blog.mts",
     "fetch:bluesky": "node --experimental-strip-types scripts/fetch-bluesky.mts",
     "merge": "node --experimental-strip-types scripts/merge-sources.mts",

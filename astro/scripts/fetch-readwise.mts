@@ -71,11 +71,12 @@ interface TimelineEntry {
 
 /**
  * Fetch all books/articles from Readwise with pagination
+ * Fetches ALL categories to ensure we don't miss tagged items
  */
 async function fetchBooks(): Promise<ReadwiseBook[]> {
-  console.log('📚 Fetching books/articles from Readwise...');
+  console.log('📚 Fetching all saved items from Readwise...');
   const books: ReadwiseBook[] = [];
-  let nextUrl: string | null = 'https://readwise.io/api/v2/books/?page_size=1000&category=articles';
+  let nextUrl: string | null = 'https://readwise.io/api/v2/books/?page_size=1000';
   
   while (nextUrl) {
     const response = await fetch(nextUrl, {
@@ -92,7 +93,7 @@ async function fetchBooks(): Promise<ReadwiseBook[]> {
     books.push(...data.results);
     nextUrl = data.next;
     
-    console.log(`  Fetched ${books.length} articles so far...`);
+    console.log(`  Fetched ${books.length} items so far...`);
     
     // Rate limiting: 20 requests per minute for LIST endpoints
     if (nextUrl) {
@@ -163,11 +164,26 @@ function filterByTag(books: ReadwiseBook[]): ReadwiseBook[] {
     return books;
   }
   
-  const filtered = books.filter(book => 
-    book.tags.some(tag => tag.name.toLowerCase() === READWISE_TAG_FILTER.toLowerCase())
-  );
+  // Debug: Show some sample tags
+  const sampleWithTags = books.filter(b => b.tags && b.tags.length > 0).slice(0, 5);
+  console.log(`  Sample tags from first items:`, sampleWithTags.map(b => ({
+    title: b.title.substring(0, 50),
+    tags: b.tags.map(t => t.name)
+  })));
   
-  console.log(`✓ Filtered to ${filtered.length} books with tag "${READWISE_TAG_FILTER}"`);
+  const filtered = books.filter(book => {
+    if (!book.tags || !Array.isArray(book.tags)) {
+      return false;
+    }
+    return book.tags.some(tag => tag.name.toLowerCase() === READWISE_TAG_FILTER.toLowerCase());
+  });
+  
+  console.log(`✓ Filtered to ${filtered.length} items with tag "${READWISE_TAG_FILTER}"`);
+  
+  if (filtered.length > 0) {
+    console.log(`  Found items:`, filtered.map(b => b.title.substring(0, 60)));
+  }
+  
   return filtered;
 }
 
