@@ -26,12 +26,25 @@ npm run fetch:bluesky
 ```
 
 ### `fetch-readwise.mts`
-Fetches saved articles from Readwise API. Requires `READWISE_TOKEN` environment variable.
+Fetches saved articles and highlights from Readwise API using the v2 API. Requires `READWISE_TOKEN` environment variable.
+
+**Features:**
+- Fetches articles (not books/tweets/podcasts) with all highlights
+- Incremental updates (only fetches new/updated articles)
+- Optional tag filtering via `READWISE_TAG_FILTER`
+- Automatic rate limiting (20 req/min)
+- Stores highlights as HTML content
 
 **Usage:**
 ```bash
+# Basic usage
 READWISE_TOKEN=your_token npm run fetch:readwise
+
+# With tag filter (only articles tagged "timeline")
+READWISE_TOKEN=your_token READWISE_TAG_FILTER=timeline npm run fetch:readwise
 ```
+
+**Get your token:** https://readwise.io/access_token
 
 ### `merge-sources.mts`
 Merges all JSON files from `data/sources/` into a single `src/data/timeline.json` file, deduplicating entries and sorting by timestamp.
