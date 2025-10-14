@@ -69,6 +69,10 @@ const items = (timeline as any[]);
   </aside>
 </main>
 
+<footer>
+  <p>© 2025 Chase Pettet — <a href="https://523.life">523.life</a></p>
+</footer>
+
 <style is:global>
   :root {
     --bg: #f4ecd8;
@@ -82,6 +86,10 @@ const items = (timeline as any[]);
   }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Georgia, "Times New Roman", serif; }
   main { max-width: 1200px; margin: 0 auto; padding: 24px; display: grid; grid-template-columns: 1fr minmax(320px, 420px); gap: 24px; }
+  footer { max-width: 1200px; margin: 0 auto; padding: 24px 24px 32px; text-align: center; }
+  footer p { margin: 0; color: var(--muted); font-size: 14px; }
+  footer a { color: var(--accent); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
   .timeline-content { grid-column: 1; }
   .header { text-align: center; margin-bottom: 16px; }
   .header h1 { margin: 0 0 4px; font-size: 32px; font-weight: 600; color: #8b4513; letter-spacing: -0.02em; }
