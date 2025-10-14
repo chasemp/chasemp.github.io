@@ -48,10 +48,11 @@ const items = (timeline as any[]);
   }
   html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Georgia, "Times New Roman", serif; }
   main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+  .header { text-align: center; }
   .header h1 { margin: 0 0 4px; font-size: 32px; font-weight: 600; color: #8b4513; letter-spacing: -0.02em; }
   .header p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
   .controls { position: sticky; top: 0; background: linear-gradient(var(--bg), rgba(244, 236, 216, 0.95)); padding: 12px 0; z-index: 10; backdrop-filter: blur(8px); }
-  .filters { display: flex; gap: 12px; flex-wrap: wrap; }
+  .filters { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
   label { background: var(--card-bg); padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border); color: var(--text); font-size: 14px; cursor: pointer; transition: all 0.2s; }
   label:hover { background: var(--panel); border-color: var(--accent); }
   input[type="checkbox"] { vertical-align: middle; margin-right: 6px; accent-color: var(--accent); }
