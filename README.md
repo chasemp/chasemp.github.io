@@ -172,23 +172,53 @@ git commit -m "Deploy timeline update"
 git push origin master
 ```
 
+## Repository Secrets
+
+The GitHub Actions workflow requires the following repository secrets to be configured:
+
+### Required Secrets
+
+**None!** The workflow will run successfully with just the auto-provided `GITHUB_TOKEN` for blog and Bluesky posts.
+
+### Optional Secrets
+
+| Secret Name | Purpose | Required? | Setup Instructions |
+|-------------|---------|-----------|-------------------|
+| `READWISE_TOKEN` | Fetch saved articles from Readwise Reader | Optional | See [READWISE_SETUP.md](READWISE_SETUP.md) |
+| `READWISE_TAG_FILTER` | Filter Readwise documents by tag (e.g., "classic") | Optional | See [READWISE_SETUP.md](READWISE_SETUP.md) |
+
+### How to Add Secrets
+
+1. Go to your repository: https://github.com/chasemp/chasemp.github.io
+2. Click **Settings** → **Secrets and variables** → **Actions**
+3. Click **New repository secret**
+4. Enter the **Name** and **Value** from the table above
+5. Click **Add secret**
+
+### Auto-Provided Secrets
+
+| Secret Name | Purpose | Setup Required? |
+|-------------|---------|-----------------|
+| `GITHUB_TOKEN` | Push commits and deploy to GitHub Pages | ❌ No (automatic) |
+
+The workflow has `contents: write` permission configured in `.github/workflows/fetch-timeline.yml` to allow automated commits.
+
 ## GitHub Actions Workflow
 
 The workflow (`.github/workflows/fetch-timeline.yml`) runs every 4 hours and:
 
-1. Fetches new Bluesky posts
-2. Fetches new blog posts
-3. Fetches new Readwise documents (if token provided)
-4. Merges all sources
+1. Fetches new Bluesky posts (no auth required)
+2. Fetches new blog posts (from `_posts/` directory)
+3. Fetches new Readwise documents (if `READWISE_TOKEN` provided)
+4. Merges all sources into `timeline.json`
 5. Builds the Astro site
-6. Deploys to `/docs`
-7. Commits and pushes changes
+6. Deploys to `/docs` directory
+7. Commits and pushes changes using `GITHUB_TOKEN`
 
-**Secrets Required:**
-- `READWISE_TOKEN` (optional)
-- `READWISE_TAG_FILTER` (optional)
-
-The workflow uses `GITHUB_TOKEN` (automatically provided) with `contents: write` permission to push changes.
+**Trigger Conditions:**
+- **Schedule:** Every 4 hours via cron
+- **Manual:** Via workflow_dispatch
+- **Push:** When scripts or workflow file changes
 
 ## Features
 
