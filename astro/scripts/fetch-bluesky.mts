@@ -45,6 +45,11 @@ interface TimelineEntry {
   embed_uri?: string;
   embed_cid?: string;
   content_html?: string;
+  media?: {
+    type: 'image' | 'video' | 'external';
+    images?: string[];
+    alt?: string[];
+  };
   metadata?: {
     likes: number;
     reposts: number;
@@ -99,11 +104,46 @@ function convertToTimelineEntry(post: BlueskyPost): TimelineEntry {
   
   // Extract text content and truncate for summary
   let text = post.record.text;
-  const summary = text.length > 200 ? text.substring(0, 197) + '...' : text;
+  let summary = text.length > 200 ? text.substring(0, 197) + '...' : text;
+  
+  // Check for media embeds
+  let media: TimelineEntry['media'] = undefined;
+  let contentHtml = `<p>${text.replace(/\n/g, '<br>')}</p>`;
+  
+  if (post.embed) {
+    const embedType = post.embed.$type;
+    
+    if (embedType === 'app.bsky.embed.images#view') {
+      // Extract images
+      const images = post.embed.images?.map((img: any) => img.fullsize || img.thumb) || [];
+      const alts = post.embed.images?.map((img: any) => img.alt || '') || [];
+      
+      media = {
+        type: 'image',
+        images,
+        alt: alts
+      };
+      
+      // Add images to content HTML
+      contentHtml += images.map((imgUrl: string, i: number) => 
+        `<img src="${imgUrl}" alt="${alts[i] || 'Image from post'}" style="max-width: 100%; margin: 12px 0; border-radius: 8px;">`
+      ).join('');
+      
+      // If text is very short and there's an image, enhance the summary
+      if (text.length < 20 && images.length > 0) {
+        summary = `${text} [${images.length} image${images.length > 1 ? 's' : ''}]`;
+      }
+    }
+  }
   
   // Generate a title from the first line or first 60 chars
   const firstLine = text.split('\n')[0];
-  const title = firstLine.length > 60 ? firstLine.substring(0, 57) + '...' : firstLine;
+  let title = firstLine.length > 60 ? firstLine.substring(0, 57) + '...' : firstLine;
+  
+  // If title is very short and there's media, add indicator
+  if (title.length < 20 && media?.images && media.images.length > 0) {
+    title = `${title} 📷`;
+  }
   
   return {
     id: `bluesky:${postId}`,
@@ -114,7 +154,8 @@ function convertToTimelineEntry(post: BlueskyPost): TimelineEntry {
     url: url,
     embed_uri: post.uri,
     embed_cid: post.cid,
-    content_html: `<p>${text.replace(/\n/g, '<br>')}</p>`,
+    content_html: contentHtml,
+    media,
     metadata: {
       likes: post.likeCount || 0,
       reposts: post.repostCount || 0,
