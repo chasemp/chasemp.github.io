@@ -43,6 +43,7 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
           <li><span class="legend-dot" data-dot-type="saved"></span> <strong>Saved Articles</strong> — Bookmarks from Readwise</li>
           <li><span class="legend-dot" data-dot-type="bluesky"></span> <strong>Bluesky</strong> — Social media posts and thoughts</li>
           <li><span class="legend-dot" data-dot-type="release"></span> <strong>Releases</strong> — GitHub project releases and tags</li>
+          <li><span class="legend-dot" data-dot-type="wikipedia"></span> <strong>Wikipedia</strong> — Contributions to Wikipedia</li>
         </ul>
         
         <h4>How to Use</h4>
@@ -73,11 +74,13 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   .dot[data-dot-type="saved"]::after { content: "🔖"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
   .dot[data-dot-type="bluesky"]::after { content: "🦋"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
   .dot[data-dot-type="release"]::after { content: "🏷️"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+  .dot[data-dot-type="wikipedia"]::after { content: "🌐"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
   .dot:hover::after { opacity: 1; }
   .dot[data-dot-type="blog"] { background: #5d4037; color: #5d4037; }
   .dot[data-dot-type="saved"] { background: #7cb342; color: #7cb342; }
   .dot[data-dot-type="bluesky"] { background: #1e88e5; color: #1e88e5; }
   .dot[data-dot-type="release"] { background: #fb8c00; color: #fb8c00; }
+  .dot[data-dot-type="wikipedia"] { background: #636466; color: #636466; }
   .card { text-align: left; background: var(--card-bg); color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 14px; cursor: pointer; width: 100%; transition: all 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
   .card:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgba(0,0,0,0.1); transform: translateY(-1px); }
   .card-link { display: block; text-decoration: none; }
@@ -283,7 +286,8 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
       'blog': '📝',
       'saved': '🔖',
       'bluesky': '🦋',
-      'release': '🏷️'
+      'release': '🏷️',
+      'wikipedia': '🌐'
     };
     
     const emoji = emojiMap[type] || '';
