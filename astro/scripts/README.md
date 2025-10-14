@@ -25,26 +25,32 @@ Fetches posts from your Bluesky profile using the AT Protocol API. Stores posts 
 npm run fetch:bluesky
 ```
 
-### `fetch-readwise.mts`
-Fetches saved articles and highlights from Readwise API using the v2 API. Requires `READWISE_TOKEN` environment variable.
+### `fetch-readwise-reader.mts`
+Fetches saved documents from Readwise Reader using the Reader API v3 (not classic Readwise API). Requires `READWISE_TOKEN` environment variable.
 
 **Features:**
-- Fetches articles (not books/tweets/podcasts) with all highlights
-- Incremental updates (only fetches new/updated articles)
+- Fetches ALL Reader documents (articles, PDFs, tweets, etc.)
+- Fetches from ALL locations (archive, inbox, later)
+- Incremental updates (only fetches new/updated documents)
 - Optional tag filtering via `READWISE_TAG_FILTER`
-- Automatic rate limiting (20 req/min)
-- Stores highlights as HTML content
+- Handles Reader's object-based tag format
+- Includes document metadata (word count, reading progress, etc.)
 
 **Usage:**
 ```bash
 # Basic usage
 READWISE_TOKEN=your_token npm run fetch:readwise
 
-# With tag filter (only articles tagged "timeline")
-READWISE_TOKEN=your_token READWISE_TAG_FILTER=timeline npm run fetch:readwise
+# With tag filter (only documents tagged "classic")
+READWISE_TOKEN=your_token READWISE_TAG_FILTER=classic npm run fetch:readwise
 ```
 
 **Get your token:** https://readwise.io/access_token
+
+**API Differences:**
+- Uses `/api/v3/list/` (Reader) instead of `/api/v2/books/` (classic)
+- Tags stored as objects: `{"tag": {name, type, created}}` not arrays
+- Fetches from all document locations, not just one category
 
 ### `merge-sources.mts`
 Merges all JSON files from `data/sources/` into a single `src/data/timeline.json` file, deduplicating entries and sorting by timestamp.
@@ -65,9 +71,9 @@ npm run generate
 ## Data Flow
 
 ```
-_posts/*.md  ──→  fetch-blog.mts   ──→  data/sources/blog.json
-Bluesky API  ──→  fetch-bluesky.mts ──→  data/sources/bluesky.json    ──→  merge-sources.mts  ──→  src/data/timeline.json
-Readwise API ──→  fetch-readwise.mts ──→ data/sources/readwise.json
+_posts/*.md        ──→  fetch-blog.mts             ──→  data/sources/blog.json
+Bluesky API        ──→  fetch-bluesky.mts          ──→  data/sources/bluesky.json    ──→  merge-sources.mts  ──→  src/data/timeline.json
+Reader API (v3)    ──→  fetch-readwise-reader.mts  ──→  data/sources/readwise.json
 ```
 
 ## GitHub Actions

@@ -1,6 +1,8 @@
-# Readwise Integration Setup
+# Readwise Reader Integration Setup
 
-This guide explains how to set up Readwise integration for your timeline.
+This guide explains how to set up Readwise Reader integration for your timeline.
+
+**Note:** This integration uses the **Readwise Reader API (v3)**, not the classic Readwise API. Reader stores documents from various sources with your highlights and notes.
 
 ## Getting Your Readwise Token
 
@@ -115,16 +117,35 @@ You've hit the rate limit. The script should handle this automatically, but if y
 
 ## What Gets Fetched
 
-- **Category**: Articles (not books, tweets, or podcasts)
-- **Content**: Article title, author, URL, highlights, and notes
-- **Metadata**: Cover images, number of highlights, Readwise URL
-- **Tags**: All tags are preserved for filtering
+- **Sources**: All Readwise Reader documents (articles, PDFs, tweets, etc.)
+- **Locations**: Archive, Inbox, and Later (all locations fetched)
+- **Content**: Document title, author, URL, notes, and reading progress
+- **Metadata**: Cover images, word count, reading time, site name
+- **Tags**: All tags are preserved for filtering (stored as objects in Reader API)
 
 ## Data Storage
 
-Fetched articles are stored in:
-- `astro/data/sources/readwise.json` (raw Readwise data)
+Fetched documents are stored in:
+- `astro/data/sources/readwise.json` (raw Readwise Reader data)
 - `astro/src/data/timeline.json` (merged timeline data)
 
-The script only fetches NEW or UPDATED articles on subsequent runs (incremental updates).
+The script only fetches NEW or UPDATED documents on subsequent runs (incremental updates).
+
+## API Differences: Reader vs Classic Readwise
+
+This integration uses **Readwise Reader API (v3)**, not the classic Readwise API:
+
+| Feature | Classic Readwise API | Reader API (v3) | Our Choice |
+|---------|---------------------|-----------------|------------|
+| **Endpoint** | `/api/v2/books/` | `/api/v3/list/` | ✅ Reader |
+| **Tag Format** | Array: `["tag1", "tag2"]` | Object: `{"tag1": {...}, "tag2": {...}}` | ✅ Object |
+| **Sources** | Kindle, books, articles | All Reader sources (articles, PDFs, tweets, etc.) | ✅ All sources |
+| **Locations** | Single category filter | Archive, Inbox, Later | ✅ All locations |
+| **Data** | Highlights focused | Full document + metadata | ✅ Full document |
+
+**Why Reader API?**
+- Access to your full Reader library (not just synced highlights)
+- Better tag support and metadata
+- Includes documents from all sources and locations
+- More active development and features
 
