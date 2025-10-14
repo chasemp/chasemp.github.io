@@ -67,8 +67,13 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   .row { display: grid; grid-template-columns: 24px 1fr; gap: 12px; align-items: start; margin: 12px 0; }
   .spine { position: relative; height: 100%; }
   .spine::before { content: ""; position: absolute; top: 0; bottom: 0; left: 11px; width: 2px; background: var(--spine); }
-  .dot { position: absolute; left: 5px; top: 10px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--bg); cursor: help; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.1); }
-  .dot:hover { transform: scale(1.3); box-shadow: 0 0 0 4px var(--bg), 0 0 12px currentColor; }
+  .dot { position: absolute; left: 5px; top: 10px; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--bg); cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; border: 1px solid rgba(0,0,0,0.1); }
+  .dot:hover { transform: scale(1.4); box-shadow: 0 0 0 4px var(--bg), 0 0 16px currentColor; }
+  .dot[data-dot-type="blog"]::after { content: "📝"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+  .dot[data-dot-type="saved"]::after { content: "🔖"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+  .dot[data-dot-type="bluesky"]::after { content: "🦋"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+  .dot[data-dot-type="release"]::after { content: "🏷️"; position: absolute; top: -2px; left: -2px; font-size: 16px; opacity: 0; transition: opacity 0.2s; pointer-events: none; }
+  .dot:hover::after { opacity: 1; }
   .dot[data-dot-type="blog"] { background: #5d4037; color: #5d4037; }
   .dot[data-dot-type="saved"] { background: #7cb342; color: #7cb342; }
   .dot[data-dot-type="bluesky"] { background: #1e88e5; color: #1e88e5; }
@@ -258,32 +263,10 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
     tooltip.style.left = `${left}px`;
   }
 
-  function showTooltipFor(el: HTMLElement) {
-    const id = el.dataset.id!;
-    const entry = (window as any).__TIMELINE__.find((i: any) => i.id === id);
-    if (!entry) return;
-    el.setAttribute('aria-describedby', 'tooltip');
-    ttTitle.textContent = entry.title || '';
-    const date = new Date(entry.timestamp).toLocaleString();
-    ttMeta.textContent = `${entry.type} · ${date}`;
-    positionTooltip(el.getBoundingClientRect());
-    tooltip.removeAttribute('hidden');
-  }
-  function hideTooltipFor(el: HTMLElement) {
-    el.removeAttribute('aria-describedby');
-    tooltip.setAttribute('hidden', '');
-  }
+  // Tooltips only for dots (removed from cards)
+  // No tooltip function needed - using native title attribute on dots
 
-  // Tooltips work for all cards (both links and buttons)
-  document.querySelectorAll('.card').forEach((el) => {
-    const h = el as HTMLElement;
-    h.addEventListener('mouseenter', () => showTooltipFor(h));
-    h.addEventListener('mouseleave', () => hideTooltipFor(h));
-    h.addEventListener('focus', () => showTooltipFor(h));
-    h.addEventListener('blur', () => hideTooltipFor(h));
-  });
-
-  // Enhanced tooltips for dots showing date
+  // Enhanced tooltips for dots showing date with emoji
   function showDotTooltip(dot: HTMLElement) {
     const timestamp = dot.dataset.timestamp!;
     const type = dot.dataset.dotType!;
@@ -295,7 +278,16 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
       minute: '2-digit',
       hour12: true
     });
-    ttTitle.textContent = type.toUpperCase();
+    
+    const emojiMap: Record<string, string> = {
+      'blog': '📝',
+      'saved': '🔖',
+      'bluesky': '🦋',
+      'release': '🏷️'
+    };
+    
+    const emoji = emojiMap[type] || '';
+    ttTitle.textContent = `${emoji} ${type.toUpperCase()}`;
     ttMeta.textContent = date;
     positionTooltip(dot.getBoundingClientRect());
     tooltip.removeAttribute('hidden');
