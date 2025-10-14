@@ -59,13 +59,17 @@ npm run merge
 ```
 
 ### Environment Variables
+
+For local development:
 ```bash
-# Required for Readwise
+# Required for Readwise Reader
 export READWISE_TOKEN="your_token_here"
 
-# Optional: Filter Readwise by tag
+# Optional: Filter Readwise by tag (e.g., "classic")
 export READWISE_TAG_FILTER="classic"
 ```
+
+For GitHub Actions: Set these as repository secrets in GitHub Settings. See [Repository Secrets](../README.md#repository-secrets) in the main README.
 
 ## Scripts
 
