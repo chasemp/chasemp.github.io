@@ -143,10 +143,11 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   }
   applyFilters();
   document.addEventListener('filters:changed', (e: any) => {
-    const allowed = new Set(e.detail.types);
+    const allowed = new Set(e.detail.types.length ? e.detail.types : []);
     document.querySelectorAll('.row').forEach((row) => {
       const t = (row as HTMLElement).dataset.type;
-      (row as HTMLElement).style.display = allowed.has(t!) ? '' : 'none';
+      // If no filters selected (allowed.size === 0), hide all
+      (row as HTMLElement).style.display = allowed.size === 0 ? 'none' : (allowed.has(t!) ? '' : 'none');
     });
   });
 
@@ -157,7 +158,15 @@ const sorted = [...items].sort((a, b) => new Date(b.timestamp).getTime() - new D
   const backdrop = document.getElementById('panel-backdrop')!;
   const isMobile = () => window.innerWidth <= 980;
 
-  const introHTML = panelContent.innerHTML; // Save intro content
+  // Save intro content - ensure it's captured correctly
+  let introHTML = panelContent.innerHTML;
+  if (!introHTML || introHTML.trim() === '') {
+    console.warn('Panel intro content is empty, attempting to restore...');
+    // Fallback to re-reading from DOM
+    setTimeout(() => {
+      introHTML = panelContent.innerHTML;
+    }, 100);
+  }
 
   function lockScroll(lock = true) {
     if (lock && isMobile()) {
