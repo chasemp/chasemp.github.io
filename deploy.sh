@@ -13,8 +13,9 @@ echo "📦 Deploying to docs directory..."
 cd ..
 mkdir -p docs
 cp astro/dist/index.html docs/index.html
-cp -r astro/dist/assets docs/
-cp astro/dist/CNAME docs/
+cp -r astro/dist/assets docs/ 2>/dev/null || true
+cp astro/dist/CNAME docs/ 2>/dev/null || true
+cp -r astro/dist/blog docs/ 2>/dev/null || true
 
 echo "✅ Deployment complete!"
 echo "The timeline site has been deployed to /docs"
