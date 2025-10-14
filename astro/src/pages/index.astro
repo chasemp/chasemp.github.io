@@ -51,21 +51,24 @@ const items = (timeline as any[]);
 
 <style is:global>
   :root {
-    --bg: #0b0e13;
-    --panel: #11161f;
-    --text: #e7ecf3;
-    --muted: #97a3b6;
-    --accent: #6aa0ff;
-    --spine: #263141;
+    --bg: #f4ecd8;
+    --panel: #faf6ed;
+    --text: #3d2817;
+    --muted: #7a6b5d;
+    --accent: #c17a4f;
+    --spine: #d4c4a8;
+    --border: #d4c4a8;
+    --card-bg: #fdfbf7;
   }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.5 system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji"; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Georgia, "Times New Roman", serif; }
   main { max-width: 1200px; margin: 0 auto; padding: 24px; }
-  .header h1 { margin: 0 0 4px; font-size: 28px; }
-  .header p { margin: 0 0 16px; color: var(--muted); }
-  .controls { position: sticky; top: 0; background: linear-gradient(var(--bg), color-mix(in oklab, var(--bg), transparent 100%)); padding: 12px 0; z-index: 10; }
+  .header h1 { margin: 0 0 4px; font-size: 32px; font-weight: 600; color: #8b4513; letter-spacing: -0.02em; }
+  .header p { margin: 0 0 16px; color: var(--muted); font-size: 15px; }
+  .controls { position: sticky; top: 0; background: linear-gradient(var(--bg), rgba(244, 236, 216, 0.95)); padding: 12px 0; z-index: 10; backdrop-filter: blur(8px); }
   .filters { display: flex; gap: 12px; flex-wrap: wrap; }
-  label { background: var(--panel); padding: 6px 10px; border-radius: 999px; border: 1px solid #1f2937; }
-  input[type="checkbox"] { vertical-align: middle; margin-right: 6px; }
+  label { background: var(--card-bg); padding: 7px 14px; border-radius: 999px; border: 1px solid var(--border); color: var(--text); font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  label:hover { background: var(--panel); border-color: var(--accent); }
+  input[type="checkbox"] { vertical-align: middle; margin-right: 6px; accent-color: var(--accent); }
 </style>
 
 <script>
