@@ -16,6 +16,10 @@ on:
       - 'astro/scripts/fetch-*.mts'
       - '.github/workflows/fetch-timeline.yml'
 
+# Grant write permissions to the GITHUB_TOKEN
+permissions:
+  contents: write
+
 jobs:
   fetch-and-build:
     runs-on: ubuntu-latest
