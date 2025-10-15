@@ -13,7 +13,8 @@ if [ -f .env ]; then
   export $(cat .env | xargs)
 fi
 
-npm run build
+# Use npx astro build directly to skip prebuild hook (which would re-fetch data)
+npx astro build
 
 echo "📦 Deploying to docs directory..."
 cd ..
