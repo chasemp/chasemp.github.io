@@ -7,6 +7,12 @@ set -e
 
 echo "🚀 Building Astro site..."
 cd astro
+
+# Load environment variables from .env if it exists
+if [ -f .env ]; then
+  export $(cat .env | xargs)
+fi
+
 npm run build
 
 echo "📦 Deploying to docs directory..."
