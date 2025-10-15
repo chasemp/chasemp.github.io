@@ -3,7 +3,6 @@ dist/
 .astro/
 .DS_Store
 *.local
-data/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
