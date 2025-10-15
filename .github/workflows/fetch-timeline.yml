@@ -53,7 +53,7 @@ jobs:
         working-directory: ./astro
         run: npm run fetch:github
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
       
       - name: Fetch Wikipedia contributions
         working-directory: ./astro
