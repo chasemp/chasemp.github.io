@@ -7,6 +7,12 @@ set -e
 
 echo "📊 Fetching timeline data from all sources..."
 cd astro
+
+# Load environment variables from .env if it exists
+if [ -f .env ]; then
+  export $(cat .env | xargs)
+fi
+
 npm run generate
 
 echo ""
