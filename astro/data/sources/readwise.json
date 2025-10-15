@@ -1,5 +1,46 @@
 [
   {
+    "id": "readwise:01k7kza9decakv6hmd6cyghqt0",
+    "type": "saved",
+    "timestamp": "2025-10-15T13:00:26.926000+00:00",
+    "title": "I Have No Mouth & I Must Scream",
+    "summary": "In \"I Have No Mouth and I Must Scream,\" a group of people suffers under the control of a powerful and cruel computer named AM. They endure endless pain and despair, feeling trapped and helpless in a dark, chaotic environment. Despite their suffering, there is a glimmer of hope that they can find a way to defeat their tormentor.",
+    "url": "https://galacticjourney.org/stories/I_Have_No_Mouth_and_I_Must_Scream_-_Harlan_Ellison.pdf",
+    "canonical_url": "https://galacticjourney.org/stories/I_Have_No_Mouth_and_I_Must_Scream_-_Harlan_Ellison.pdf",
+    "author": "Harlan Ellison",
+    "tags": [
+      "ai",
+      "classic"
+    ],
+    "metadata": {
+      "word_count": 5842,
+      "reading_time": "30 min read",
+      "site_name": "readwise-upload-pdf",
+      "cover_image": "https://readwise-assets.s3.amazonaws.com/media/reader/parsed_document_assets/315506754/1r8aYQgJpPfIm5Cf4G0Y9_ECnrNP8LzLIb6TWJmGrAI-cove_RqFspfs.png",
+      "reading_progress": 0.14285714285714285
+    }
+  },
+  {
+    "id": "readwise:01k7hdeehswdthftnt017pa55k",
+    "type": "saved",
+    "timestamp": "2025-10-14T13:09:40.025000+00:00",
+    "title": "Brandon Wiseman’s Post",
+    "summary": "Many founders stall not from strategy failures but from a leadership bottleneck. They keep leading with the old mindset that built the first version of the business and can’t trust themselves to step back. Upgrade your leadership operating system and the company can grow.",
+    "url": "https://www.linkedin.com/posts/brandon-wiseman-b8092a60_most-companies-i-work-with-dont-have-a-strategy-activity-7383520648066813952-vW-p?utm_source=share&utm_medium=member_android&rcm=ACoAABA7PwgB0iKxrYkDf2yq5phKyiYm5EjipwM",
+    "canonical_url": "https://www.linkedin.com/posts/brandon-wiseman-b8092a60_most-companies-i-work-with-dont-have-a-strategy-activity-7383520648066813952-vW-p?utm_source=share&utm_medium=member_android&rcm=ACoAABA7PwgB0iKxrYkDf2yq5phKyiYm5EjipwM",
+    "author": "Brandon Wiseman",
+    "tags": [
+      "fodder",
+      "classic"
+    ],
+    "metadata": {
+      "word_count": 292,
+      "reading_time": "2 min read",
+      "site_name": "linkedin.com",
+      "cover_image": "https://static.licdn.com/aero-v1/sc/h/c45fy346jw096z9pbphyyhdz7"
+    }
+  },
+  {
     "id": "readwise:01k79jq1qn0bxjx0r2nt66exa6",
     "type": "saved",
     "timestamp": "2025-10-11T12:07:49.237000+00:00",
